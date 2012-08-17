@@ -1,0 +1,6 @@
+RewriteEngine on
+Rewritebase /
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond $1 !^(index\.php|image|robots\.txt)
+RewriteRule ^(.*)$ /saegeul/index.php/$1 [L]
