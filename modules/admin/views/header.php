@@ -19,6 +19,18 @@
                     <li <?php if($this->uri->segment(2)=='dashboard'):?> class="active" <?php endif;?>> 
                         <a href="<?=base_url()?>index.php/admin/dashboard">Dashboard</a>
                     </li>
+                    <li <?php if($this->uri->segment(2)=='dashboard'):?> class="active" <?php endif;?>> 
+                        <a href="<?=base_url()?>index.php/admin/dashboard">WEB Builder</a>
+                    </li>
+                    <li <?php if($this->uri->segment(2)=='webzine'):?> class="active" <?php endif;?>> 
+                        <a href="<?=base_url()?>index.php/admin/document/writeform">PAGE </a>
+                    </li>
+                    <li <?php if($this->uri->segment(2)=='webzine'):?> class="active" <?php endif;?>> 
+                        <a href="<?=base_url()?>index.php/admin/document/writeform">Layout </a>
+                    </li>
+                    <li <?php if($this->uri->segment(2)=='webzine'):?> class="active" <?php endif;?>> 
+                        <a href="<?=base_url()?>index.php/admin/document/writeform">WIDGET </a>
+                    </li>
                     <li <?php if($this->uri->segment(2)=='webzine'):?> class="active" <?php endif;?>> 
                         <a href="<?=base_url()?>index.php/admin/document/writeform">Document</a>
                     </li> 
@@ -30,8 +42,9 @@
                             <button class="btn btn-primary" ><i class="icon-plus icon-white"></i>&nbsp;NEW</button>
                             <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" ><span class="caret"></span></button>
                             <ul class="dropdown-menu"> 
-                                <li><a> 새글작성</a></li>
-                                <li><a> 파일업로드</a></li>
+                                <li><a><i class="icon-plus"></i> DOCUMENT</a></li>
+                                <li><a><i class="icon-plus"></i> FILE</a></li>
+                                <li><a><i class="icon-plus"></i> PAGE</a></li>
                             </ul> 
                         </div>
                     </li>
