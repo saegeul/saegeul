@@ -13,17 +13,17 @@ class File extends MX_Controller {
 		$this->load->helper(array('form', 'url'));
 
 		//Set relative Path with CI Constant
-		$this->setPath_img_upload_folder("assets/img/articles/");
-		$this->setPath_img_thumb_upload_folder("assets/img/articles/thumbnails/");
+		$this->setPath_img_upload_folder("assets/img/files/");
+		$this->setPath_img_thumb_upload_folder("assets/img/files/thumbnails/");
 
 
 		//Delete img url
-		$this->setDelete_img_url(base_url() . 'admin/deleteImage/');
+		$this->setDelete_img_url(base_url() . "assets/img/files/");
 
 
 		//Set url img with Base_url()
-		$this->setPath_url_img_upload_folder(base_url() . "assets/img/articles/");
-		$this->setPath_url_img_thumb_upload_folder(base_url() . "assets/img/articles/thumbnails/");
+		$this->setPath_url_img_upload_folder(base_url() . "assets/img/files/");
+		$this->setPath_url_img_thumb_upload_folder(base_url() . "assets/img/files/thumbnails/");
 	}
 
 
@@ -31,9 +31,26 @@ class File extends MX_Controller {
 		$this->load->view('file');
 	}
 
+	public function process() {
+		switch ($_SERVER['REQUEST_METHOD']) {
+			case 'OPTIONS':
+				break;
+			case 'HEAD':
+			case 'GET':
+				$this->get();
+				break;
+			case 'POST':
+				$this->upload();
+				break;
+			case 'DELETE':
+				$this->delete();
+				break;
+			default:
+				header('HTTP/1.1 405 Method Not Allowed');
+		}
+	}
 
-
-	public function upload_img() {
+	public function upload() {
 		$name = $_FILES['userfile']['name'];
 		$name = strtr($name, 'ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿ', 'AAAAAACEEEEIIIIOOOOOUUUUYaaaaaaceeeeiiiioooooouuuuyy');
 
@@ -45,7 +62,7 @@ class File extends MX_Controller {
 		$config['upload_path'] = $this->getPath_img_upload_folder();
 
 		$config['allowed_types'] = 'gif|jpg|png|JPG|GIF|PNG';
-		$config['max_size'] = '1000';
+		$config['max_size'] = '3000';
 		$config['file_name'] = $name;
 
 		//Load the upload library
@@ -83,9 +100,6 @@ class File extends MX_Controller {
 			//Return JSON data
 			if (IS_AJAX) {   //this is why we put this in the constants to pass only json data
 				echo json_encode(array($info));
-				//this has to be the only the only data returned or you will get an error.
-				//if you don't give this a json array it will give you a Empty file upload result error
-				//it you set this without the if(IS_AJAX)...else... you get ERROR:TRUE (my experience anyway)
 			} else {   // so that this will still work if javascript is not enabled
 				$file_data['upload_data'] = $this->upload->data();
 				echo json_encode(array($info));
@@ -98,28 +112,21 @@ class File extends MX_Controller {
 
 			echo json_encode(array($error));
 		}
-
-
 	}
 
 	//Function for the upload : return true/false
 	public function do_upload() {
-
 		if (!$this->upload->do_upload()) {
-
 			return false;
 		} else {
-			//$data = array('upload_data' => $this->upload->data());
-
+			$data = array('upload_data' => $this->upload->data());
 			return true;
 		}
 	}
 
-	public function deleteImage() {
-
-		//Get the name in the url
-		$file = $this->uri->segment(3);
-
+	public function delete() {
+		$file = isset($_REQUEST['file']) ?
+		basename(stripslashes($_REQUEST['file'])) : null;
 		$success = unlink($this->getPath_img_upload_folder() . $file);
 		$success_th = unlink($this->getPath_img_thumb_upload_folder() . $file);
 
@@ -135,7 +142,7 @@ class File extends MX_Controller {
 		}
 	}
 
-	public function get_files() {
+	public function get() {
 
 		$this->get_scan_files();
 	}
