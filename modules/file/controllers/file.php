@@ -13,6 +13,7 @@ class File extends MX_Controller {
 		$this->load->helper(array('form', 'url'));
 
 		//Set relative Path with CI Constant
+<<<<<<< HEAD
 		$this->setPath_img_upload_folder("assets/img/articles/");
 		$this->setPath_img_thumb_upload_folder("assets/img/articles/thumbnails/");
 
@@ -23,6 +24,19 @@ class File extends MX_Controller {
 		//Set url img with Base_url()
 		$this->setPath_url_img_upload_folder(base_url() . "assets/img/articles/");
 		$this->setPath_url_img_thumb_upload_folder(base_url() . "assets/img/articles/thumbnails/");
+=======
+		$this->setPath_img_upload_folder("assets/img/files/");
+		$this->setPath_img_thumb_upload_folder("assets/img/files/thumbnails/");
+
+
+		//Delete img url
+		$this->setDelete_img_url(base_url() . "assets/img/files/");
+
+
+		//Set url img with Base_url()
+		$this->setPath_url_img_upload_folder(base_url() . "assets/img/files/");
+		$this->setPath_url_img_thumb_upload_folder(base_url() . "assets/img/files/thumbnails/");
+>>>>>>> 864a4ad63a75875aea8d9f638239503c8c81c91b
 	}
 
 
@@ -30,9 +44,32 @@ class File extends MX_Controller {
 		$this->load->view('file');
 	}
 
+<<<<<<< HEAD
 
 
 	public function upload_img() {
+=======
+	public function process() {
+		switch ($_SERVER['REQUEST_METHOD']) {
+			case 'OPTIONS':
+				break;
+			case 'HEAD':
+			case 'GET':
+				$this->get();
+				break;
+			case 'POST':
+				$this->upload();
+				break;
+			case 'DELETE':
+				$this->delete();
+				break;
+			default:
+				header('HTTP/1.1 405 Method Not Allowed');
+		}
+	}
+
+	public function upload() {
+>>>>>>> 864a4ad63a75875aea8d9f638239503c8c81c91b
 		$name = $_FILES['userfile']['name'];
 		$name = strtr($name, 'ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿ', 'AAAAAACEEEEIIIIOOOOOUUUUYaaaaaaceeeeiiiioooooouuuuyy');
 
@@ -44,7 +81,11 @@ class File extends MX_Controller {
 		$config['upload_path'] = $this->getPath_img_upload_folder();
 
 		$config['allowed_types'] = 'gif|jpg|png|JPG|GIF|PNG';
+<<<<<<< HEAD
 		$config['max_size'] = '1000';
+=======
+		$config['max_size'] = '3000';
+>>>>>>> 864a4ad63a75875aea8d9f638239503c8c81c91b
 		$config['file_name'] = $name;
 
 		//Load the upload library
@@ -82,9 +123,12 @@ class File extends MX_Controller {
 			//Return JSON data
 			if (IS_AJAX) {   //this is why we put this in the constants to pass only json data
 				echo json_encode(array($info));
+<<<<<<< HEAD
 				//this has to be the only the only data returned or you will get an error.
 				//if you don't give this a json array it will give you a Empty file upload result error
 				//it you set this without the if(IS_AJAX)...else... you get ERROR:TRUE (my experience anyway)
+=======
+>>>>>>> 864a4ad63a75875aea8d9f638239503c8c81c91b
 			} else {   // so that this will still work if javascript is not enabled
 				$file_data['upload_data'] = $this->upload->data();
 				echo json_encode(array($info));
@@ -97,12 +141,16 @@ class File extends MX_Controller {
 
 			echo json_encode(array($error));
 		}
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 864a4ad63a75875aea8d9f638239503c8c81c91b
 	}
 
 	//Function for the upload : return true/false
 	public function do_upload() {
+<<<<<<< HEAD
 
 		if (!$this->upload->do_upload()) {
 
@@ -110,15 +158,27 @@ class File extends MX_Controller {
 		} else {
 			//$data = array('upload_data' => $this->upload->data());
 
+=======
+		if (!$this->upload->do_upload()) {
+			return false;
+		} else {
+			$data = array('upload_data' => $this->upload->data());
+>>>>>>> 864a4ad63a75875aea8d9f638239503c8c81c91b
 			return true;
 		}
 	}
 
+<<<<<<< HEAD
 	public function deleteImage() {
 
 		//Get the name in the url
 		$file = $this->uri->segment(3);
 
+=======
+	public function delete() {
+		$file = isset($_REQUEST['file']) ?
+		basename(stripslashes($_REQUEST['file'])) : null;
+>>>>>>> 864a4ad63a75875aea8d9f638239503c8c81c91b
 		$success = unlink($this->getPath_img_upload_folder() . $file);
 		$success_th = unlink($this->getPath_img_thumb_upload_folder() . $file);
 
@@ -131,6 +191,7 @@ class File extends MX_Controller {
 			echo json_encode(array($info));
 		} else {     //here you will need to decide what you want to show for a successful delete
 			var_dump($file);
+<<<<<<< HEAD
 		}
 	}
 
@@ -167,6 +228,44 @@ class File extends MX_Controller {
 
 			return $file;
 		}
+=======
+		}
+	}
+
+	public function get() {
+
+		$this->get_scan_files();
+	}
+
+	public function get_scan_files() {
+
+		$file_name = isset($_REQUEST['file']) ?
+		basename(stripslashes($_REQUEST['file'])) : null;
+		if ($file_name) {
+			$info = $this->get_file_object($file_name);
+		} else {
+			$info = $this->get_file_objects();
+		}
+		header('Content-type: application/json');
+		echo json_encode($info);
+	}
+
+	protected function get_file_object($file_name) {
+		$file_path = $this->getPath_img_upload_folder() . $file_name;
+		if (is_file($file_path) && $file_name[0] !== '.') {
+
+			$file = new stdClass();
+			$file->name = $file_name;
+			$file->size = filesize($file_path);
+			$file->url = $this->getPath_url_img_upload_folder() . rawurlencode($file->name);
+			$file->thumbnail_url = $this->getPath_url_img_thumb_upload_folder() . rawurlencode($file->name);
+			//File name in the url to delete
+			$file->delete_url = $this->getDelete_img_url() . rawurlencode($file->name);
+			$file->delete_type = 'DELETE';
+
+			return $file;
+		}
+>>>>>>> 864a4ad63a75875aea8d9f638239503c8c81c91b
 		return null;
 	}
 
