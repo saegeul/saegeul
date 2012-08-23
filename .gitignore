@@ -1,0 +1,18 @@
+# OS generated files #
+######################
+.DS_STORE
+.DS_Store
+.DS_STORE?
+._*
+.swp
+.Trashes
+Icon?
+Thumbs.db
+
+# directory #
+############
+user_guide/
+
+# temp #
+*.bak
+*.swp
