@@ -1,148 +1,210 @@
-</body>
-</html>
+<html>
 <head>
 <meta charset="utf-8">
-<title>jQuery File Upload Demo</title>
 
 <link rel="stylesheet"
-	href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
-<link rel="stylesheet"
-	href="http://blueimp.github.com/Bootstrap-Image-Gallery/bootstrap-image-gallery.min.css">
-<!--[if lt IE 7]><link rel="stylesheet" href="http://blueimp.github.com/Bootstrap-Image-Gallery/bootstrap-ie6.min.css"><![endif]-->
-<link rel="stylesheet"
-	href="http://blueimp.github.com/jQuery-File-Upload/jquery.fileupload-ui.css">
+	href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" media="screen"
+	href="./assets/css/fileupload/bootstrap-image-gallery.min.css" />
+<link rel="stylesheet" type="text/css" media="screen"
+	href="./assets/css/fileupload/jquery.fileupload-ui.css" />
 <style type="text/css">
-body {
-	padding-top: 80px;
+h2 {
+	border: 2px double #bbb;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	padding: 25px;
+	text-align: center;
+	font: 20pt bold, "Vollkorn";
+	color: #bbb
 }
 </style>
-<meta name="description"
-	content="File Upload widget with multiple file selection, drag&amp;drop support, progress bar and preview images for jQuery. Supports cross-domain, chunked and resumable file uploads. Works with any server-side platform (Google App Engine, PHP, Python, Ruby on Rails, Java, etc.) that supports standard HTML form file uploads.">
+<script src="http://code.jquery.com/jquery-1.7.min.js"></script>
+<script type="text/javascript" src="./assets/js/fileupload/tmpl.js"></script>
+<script type="text/javascript"
+	src="./assets/js/fileupload/load-image.js"></script>
+<script type="text/javascript"
+	src="./assets/js/fileupload/canvas-to-blob.js"></script>
+<script type="text/javascript"
+	src="./assets/js/fileupload/bootstrap.min.js"></script>
+<script type="text/javascript"
+	src="./assets/js/fileupload/bootstrap-image-gallery.min.js"></script>
+<script type="text/javascript"
+	src="./assets/js/fileupload/jquery.iframe-transport.js"></script>
+<script type="text/javascript"
+	src="./assets/js/fileupload/jquery.fileupload.js"></script>
+<script type="text/javascript"
+	src="./assets/js/fileupload/jquery.fileupload-ip.js"></script>
+<script type="text/javascript"
+	src="./assets/js/fileupload/jquery.fileupload-ui.js"></script>
+<script type="text/javascript" src="./assets/js/fileupload/locale.js"></script>
+<script type="text/javascript" src="./assets/js/fileupload/main.js"></script>
+
 </head>
 <body>
-	<div class="container">
-		<form id="fileupload" action="file/do_upload" method="POST" enctype="multipart/form-data">
-			<div class="row">
-				<div class="span16 fileupload-buttonbar">
-					<div class="progressbar fileupload-progressbar fade">
-						<div style="width: 0%;"></div>
-					</div>
-					<span class="btn success fileinput-button"> <span>Add files...</span>
-						<input type="file" name="userfile[]" multiple>
+
+	<div id="upload-img">
+		<h2>Upload a file</h2>
+
+		<!-- Upload function on action form -->
+		<form id="fileupload"
+			action="<? echo base_url() . 'file/upload_img'; ?>" method="POST"
+			enctype="multipart/form-data">
+
+			<!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+			<div class="row fileupload-buttonbar">
+
+				<div class="span7">
+
+					<!-- The fileinput-button span is used to style the file input field as button -->
+					<span class="btn btn-success fileinput-button"> <span><i
+							class="icon-plus icon-white"></i> Add files...</span> <!-- Replace name of this input by userfile-->
+						<input type="file" name="userfile" multiple>
 					</span>
-					<button type="submit" class="btn primary start">Start upload</button>
-					<button type="reset" class="btn info cancel">Cancel upload</button>
-					<button type="button" class="btn danger delete">Delete selected</button>
+					<button type="submit" class="btn btn-primary start">
+						<i class="icon-upload icon-white"></i> Start upload
+					</button>
+					<button type="reset" class="btn btn-warning cancel">
+						<i class="icon-ban-circle icon-white"></i> Cancel upload
+					</button>
+					<button type="button" class="btn btn-danger delete">
+						<i class="icon-trash icon-white"></i> Delete
+					</button>
 					<input type="checkbox" class="toggle">
 				</div>
-			</div>
-			<br>
-			<div class="row">
-				<div class="span16">
-					<table class="zebra-striped">
-						<tbody class="files"></tbody>
-					</table>
+
+				<div class="span5">
+
+					<!-- The global progress bar -->
+					<div class="progress progress-success progress-striped active fade">
+						<div class="bar" style="width: 0%;"></div>
+					</div>
 				</div>
 			</div>
+
+			<!-- The loading indicator is shown during image processing -->
+			<div class="fileupload-loading"></div>
+			<br>
+			<!-- The table listing the files available for upload/download -->
+			<table class="table table-striped">
+				<tbody class="files" data-toggle="modal-gallery"
+					data-target="#modal-gallery"></tbody>
+			</table>
 		</form>
-
 	</div>
-	<!-- gallery-loader is the loading animation container -->
-	<div id="gallery-loader"></div>
-	<!-- gallery-modal is the modal dialog used for the image gallery -->
-	<div id="gallery-modal" class="modal hide fade">
+	<!-- modal-gallery is the modal dialog used for the image gallery -->
+	<div id="modal-gallery" class="modal modal-gallery hide fade"
+		data-filter=":odd">
 		<div class="modal-header">
-			<a href="#" class="close">&times;</a>
-			<h3 class="title"></h3>
+			<a class="close" data-dismiss="modal">&times;</a>
+			<h3 class="modal-title"></h3>
 		</div>
-		<div class="modal-body"></div>
+		<div class="modal-body">
+			<div class="modal-image"></div>
+		</div>
 		<div class="modal-footer">
-			<a class="btn primary next">Next</a> <a class="btn info prev">Previous</a>
-			<a class="btn success download" target="_blank">Download</a>
+			<a class="btn modal-download" target="_blank"> <i
+				class="icon-download"></i> <span>Download</span>
+			</a> <a class="btn btn-success modal-play modal-slideshow"
+				data-slideshow="5000"> <i class="icon-play icon-white"></i> <span>Slideshow</span>
+			</a> <a class="btn btn-info modal-prev"> <i
+				class="icon-arrow-left icon-white"></i> <span>Previous</span>
+			</a> <a class="btn btn-primary modal-next"> <span>Next</span> <i
+				class="icon-arrow-right icon-white"></i>
+			</a>
 		</div>
 	</div>
-	<script>
-var fileUploadErrors = {
-    maxFileSize: 'File is too big',
-    minFileSize: 'File is too small',
-    acceptFileTypes: 'Filetype not allowed',
-    maxNumberOfFiles: 'Max number of files exceeded',
-    uploadedBytes: 'Uploaded bytes exceed file size',
-    emptyResult: 'Empty file upload result'
-};
-
-</script>
-	<script id="template-upload" type="text/html">
-{% for (var i=0, files=o.files, l=files.length, file=files[0]; i<l; file=files[++i]) { %}
+	<!-- The template to display files available for upload -->
+	<script id="template-upload" type="text/x-tmpl">
+{% for (var i=0, file; file=o.files[i]; i++) { %}
     <tr class="template-upload fade">
         <td class="preview"><span class="fade"></span></td>
-        <td class="name">{%=file.name%}</td>
-        <td class="size">{%=o.formatFileSize(file.size)%}</td>
+        <td class="name"><span>{%=file.name%}</span></td>
+        <td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
         {% if (file.error) { %}
-            <td class="error" colspan="2"><span class="label important">Error</span> {%=fileUploadErrors[file.error] || file.error%}</td>
+            <td class="error" colspan="2"><span class="label label-important">{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}</td>
         {% } else if (o.files.valid && !i) { %}
-            <td class="progress"><div class="progressbar"><div style="width:0%;"></div></div></td>
-            <td class="start">{% if (!o.options.autoUpload) { %}<button class="btn primary">Start</button>{% } %}</td>
+            <td>
+                <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bar" style="width:0%;"></div></div>
+            </td>
+            <td class="start">{% if (!o.options.autoUpload) { %}
+                <button class="btn btn-primary">
+                    <i class="icon-upload icon-white"></i>
+                    <span>{%=locale.fileupload.start%}</span>
+                </button>
+            {% } %}</td>
         {% } else { %}
             <td colspan="2"></td>
         {% } %}
-        <td class="cancel">{% if (!i) { %}<button class="btn info">Cancel</button>{% } %}</td>
+        <td class="cancel">{% if (!i) { %}
+            <button class="btn btn-warning">
+                <i class="icon-ban-circle icon-white"></i>
+                <span>{%=locale.fileupload.cancel%}</span>
+            </button>
+        {% } %}</td>
     </tr>
 {% } %}
 </script>
-	<script id="template-download" type="text/html">
-{% for (var i=0, files=o.files, l=files.length, file=files[0]; i<l; file=files[++i]) { %}
+	<!-- The template to display files available for download -->
+	<script id="template-download" type="text/x-tmpl">
+{% for (var i=0, file; file=o.files[i]; i++) { %}
     <tr class="template-download fade">
         {% if (file.error) { %}
             <td></td>
-            <td class="name">{%=file.name%}</td>
-            <td class="size">{%=o.formatFileSize(file.size)%}</td>
-            <td class="error" colspan="2"><span class="label important">Error</span> {%=fileUploadErrors[file.error] || file.error%}</td>
+            <td class="name"><span>{%=file.name%}</span></td>
+            <td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
+            <td class="error" colspan="2"><span class="label label-important">{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}</td>
         {% } else { %}
             <td class="preview">{% if (file.thumbnail_url) { %}
-                <a href="{%=file.url%}" title="{%=file.name%}" rel="gallery"><img src="{%=file.thumbnail_url%}"></a>
+                <a href="{%=file.url%}" title="{%=file.name%}" rel="gallery" download="{%=file.name%}"><img src="{%=file.thumbnail_url%}"></a>
             {% } %}</td>
             <td class="name">
-                <a href="{%=file.url%}" title="{%=file.name%}" rel="{%=file.thumbnail_url&&'gallery'%}">{%=file.name%}</a>
+                <a href="{%=file.url%}" title="{%=file.name%}" rel="{%=file.thumbnail_url&&'gallery'%}" download="{%=file.name%}">{%=file.name%}</a>
             </td>
-            <td class="size">{%=o.formatFileSize(file.size)%}</td>
+            <td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
             <td colspan="2"></td>
         {% } %}
         <td class="delete">
-            <button class="btn danger" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}">Delete</button>
+            <button class="btn btn-danger" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}">
+                <i class="icon-trash icon-white"></i>
+                <span>{%=locale.fileupload.destroy%}</span>
+            </button>
             <input type="checkbox" name="delete" value="1">
         </td>
     </tr>
 {% } %}
 </script>
 	<script
-		src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
 	<!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
-	<script
-		src="http://blueimp.github.com/jQuery-File-Upload/vendor/jquery.ui.widget.js"></script>
-	<!-- The Templates and Load Image plugins are included for the FileUpload user interface -->
+	<script src="js/vendor/jquery.ui.widget.js"></script>
+	<!-- The Templates plugin is included to render the upload/download listings -->
 	<script
 		src="http://blueimp.github.com/JavaScript-Templates/tmpl.min.js"></script>
+	<!-- The Load Image plugin is included for the preview images and image resizing functionality -->
 	<script
 		src="http://blueimp.github.com/JavaScript-Load-Image/load-image.min.js"></script>
-	<!-- Bootstrap Modal and Image Gallery are not required, but included for the demo -->
+	<!-- The Canvas to Blob plugin is included for image resizing functionality -->
 	<script
-		src="http://twitter.github.com/bootstrap/1.4.0/bootstrap-modal.min.js"></script>
-
+		src="http://blueimp.github.com/JavaScript-Canvas-to-Blob/canvas-to-blob.min.js"></script>
+	<!-- Bootstrap JS and Bootstrap Image Gallery are not required, but included for the demo -->
+	<script src="http://blueimp.github.com/cdn/js/bootstrap.min.js"></script>
 	<script
-		src="http://blueimp.github.com/Bootstrap-Image-Gallery/bootstrap-image-gallery.min.js"></script>
+		src="http://blueimp.github.com/Bootstrap-Image-Gallery/js/bootstrap-image-gallery.min.js"></script>
 	<!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
-	<script
-		src="http://blueimp.github.com/jQuery-File-Upload/jquery.iframe-transport.js"></script>
-	<script
-		src="http://blueimp.github.com/jQuery-File-Upload/jquery.fileupload.js"></script>
-	<script
-		src="http://blueimp.github.com/jQuery-File-Upload/jquery.fileupload-ui.js"></script>
-	<script
-		src="http://blueimp.github.com/jQuery-File-Upload/application.js"></script>
+	<script src="js/jquery.iframe-transport.js"></script>
+	<!-- The basic File Upload plugin -->
+	<script src="js/jquery.fileupload.js"></script>
+	<!-- The File Upload file processing plugin -->
+	<script src="js/jquery.fileupload-fp.js"></script>
+	<!-- The File Upload user interface plugin -->
+	<script src="js/jquery.fileupload-ui.js"></script>
+	<!-- The localization script -->
+	<script src="js/locale.js"></script>
+	<!-- The main application script -->
+	<script src="js/main.js"></script>
 	<!-- The XDomainRequest Transport is included for cross-domain file deletion for IE8+ -->
-	<!--[if gte IE 8]><script src="http://blueimp.github.com/jQuery-File-Upload/cors/jquery.xdr-transport.js"></script><![endif]-->
-
-
+	<!--[if gte IE 8]><script src="js/cors/jquery.xdr-transport.js"></script><![endif]-->
 </body>
 </html>
