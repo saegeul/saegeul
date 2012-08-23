@@ -34,6 +34,9 @@
                     <li <?php if($this->uri->segment(2)=='webzine'):?> class="active" <?php endif;?>> 
                         <a href="<?=base_url()?>index.php/admin/document/writeform">Document</a>
                     </li> 
+                    <li <?php if($this->uri->segment(2)=='webzine'):?> class="active" <?php endif;?>> 
+                        <a href="<?=base_url()?>index.php/admin/document/writeform">Archaive</a>
+                    </li> 
                     <li <?php if($this->uri->segment(2)=='template'):?> class="active" <?php endif;?>> 
                         <a href="<?=base_url()?>index.php/admin/file/uploadform">File</a>
                     </li> 

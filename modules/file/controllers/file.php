@@ -16,7 +16,6 @@ class File extends MX_Controller {
 		$this->setPath_img_upload_folder("assets/img/articles/");
 		$this->setPath_img_thumb_upload_folder("assets/img/articles/thumbnails/");
 
-
 		//Delete img url
 		$this->setDelete_img_url(base_url() . 'admin/deleteImage/');
 
