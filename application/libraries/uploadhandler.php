@@ -5,6 +5,7 @@ class Uploadhandler {
     protected $options;
 
     function __construct($options=null) {
+        $this->load->library('upload') ; 
         $this->options = array(
             'script_url' => $this->getFullUrl().'/',
             'upload_dir' => dirname($_SERVER['SCRIPT_FILENAME']).'/files/',
