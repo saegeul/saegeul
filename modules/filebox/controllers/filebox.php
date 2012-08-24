@@ -1,51 +1,185 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed') ; 
-class Filebox extends MX_Controller { 
+class Filebox extends MX_Controller {
 
-    public function index(){
+	protected $sid;
+	protected $module_srl;
+	
+	public function __construct() {
+		$this->load->database();
+	}
 
-    }
+	public function index(){
 
-    public function uploadForm(){
-        $this->load->view('upload_form') ; 
-    } 
+	}
 
-    public function process(){ 
+	public function uploadForm(){
+		$this->load->view('upload_form') ;
+	}
 
-        $this->load->library('uploadhandler') ; 
-		
-		header('Pragma: no-cache');
-		header('Cache-Control: no-store, no-cache, must-revalidate');
-		header('Content-Disposition: inline; filename="files.json"');
-		header('X-Content-Type-Options: nosniff');
-		header('Access-Control-Allow-Origin: *');
-		header('Access-Control-Allow-Methods: OPTIONS, HEAD, GET, POST, PUT, DELETE');
-		header('Access-Control-Allow-Headers: X-File-Name, X-File-Type, X-File-Size');
-		
-		switch ($_SERVER['REQUEST_METHOD']) {
-		    case 'OPTIONS':
-		        break;
-		    case 'HEAD':
-		    case 'GET':
-		        //$upload_handler->get();
-                $this->uploadhandler->get() ; 
-		        break;
-		    case 'POST':
-		        if (isset($_REQUEST['_method']) && $_REQUEST['_method'] === 'DELETE') {
-		            //$upload_handler->delete();
-                    $this->uploadhandler->delete() ; 
-		        } else {
-		            //$upload_handler->post();
-                    $this->uploadhandler->post() ; 
-		        }
-		        break;
-		    case 'DELETE':
-		        //$upload_handler->delete();
-                $this->uploadhandler->delete() ; 
-		        break;
-		    default:
-		        header('HTTP/1.1 405 Method Not Allowed');
+	public function process(){
+
+		$this->sid = 'root';
+		$this->module_srl = 'filebox';
+
+		$this->load->library('uploadhandler') ;
+
+		$this->output->set_header('Pragma: no-cache');
+		$this->output->set_header('Cache-Control: no-store, no-cache, must-revalidate');
+		$this->output->set_header('Content-Disposition: inline; filename="files.json"');
+		$this->output->set_header('X-Content-Type-Options: nosniff');
+		$this->output->set_header('Access-Control-Allow-Origin: *');
+		$this->output->set_header('Access-Control-Allow-Methods: OPTIONS, HEAD, GET, POST, PUT, DELETE');
+		$this->output->set_header('Access-Control-Allow-Headers: X-File-Name, X-File-Type, X-File-Size');
+
+		switch ($this->input->server('REQUEST_METHOD')) {
+			case 'OPTIONS':
+				break;
+			case 'HEAD':
+			case 'GET':
+				$this->get() ;
+				break;
+			case 'POST':
+				if ( $this->input->get_post('_method') === 'DELETE') {
+					$this->uploadhandler->delete() ;
+				} else {
+					$this->post() ;
+				}
+				break;
+			case 'DELETE':
+				$this->uploadhandler->delete() ;
+				break;
+			default:
+				$this->output->set_header('HTTP/1.1 405 Method Not Allowed');
 		}
-    }
+	}
+
+	public function post() {
+
+		if (isset($_REQUEST['_method']) && $_REQUEST['_method'] === 'DELETE') {
+			return $this->delete();
+		}
+
+		$config['upload_path'] = 'filebox/temp/';
+		$config['allowed_types'] = 'gif|jpg|png|JPG|GIF|PNG';
+		$config['max_size']	= '3000';
+
+		$this->load->library('upload', $config);
+
+		// file upload
+		if($this->upload->do_upload())
+		{
+
+			$data = $this->upload->data();
+
+			// Data security
+			$this->load->helper('security');
+
+			//DB insert
+			$this->load->model('Filebox_model'); // 모델 - 호출
+
+			$insert_data;
+
+			$insert_data->img_type = $data['file_type'];
+			$insert_data->sid = $this->sid;
+			$insert_data->source_img_name = do_hash($data['file_name'] . time(), 'md5') . $data['file_ext'];
+			$insert_data->upload_img_name = $data['file_name'];
+			$insert_data->img_size = $data['file_size'];
+			$insert_data->module_srl = $this->module_srl;
+			$insert_data->reg_date = date("Y-m-d H:i:s",time());
+			$insert_data->ip_address = $this->input->ip_address();
+
+			$this->Filebox_model->insert_entry($insert_data);
+
+			$save_dir = "filebox/files/img/".date("Ymd");
+
+			$save_thumb_dir = "filebox/files/img/".date("Ymd")."/thumbs/";
+
+			$dest = $save_dir . "/" . $insert_data->source_img_name;
+
+			if(is_file($data['full_path'])){
+				//check if the $name folder exists, if not create it
+				if( ! is_dir($save_dir))
+				{
+					mkdir($save_dir,0777);
+					mkdir($save_thumb_dir,0777);
+				}
+				rename($data['full_path'], $dest);
+
+				// Thumbnail create
+				$config['new_image'] = $save_thumb_dir;
+				$config['image_library'] = 'gd2';
+				$config['source_image'] = $dest;
+				$config['create_thumb'] = FALSE;
+				$config['maintain_ratio'] = TRUE;
+				$config['width'] = 193;
+				$config['height'] = 94;
+
+				$this->load->library('image_lib', $config);
+
+				$result = $this->image_lib->resize();
+
+			}
+
+			$info = new stdClass();
+
+			$info->name = $data['file_name'];
+			$info->size = $data['file_size'];
+			$info->type = $data['file_type'];
+			$info->url = $dest;
+			$info->thumbnail_url = $save_thumb_dir . $insert_data->source_img_name;; //I set this to original file since I did not create thumbs.  change to thumbnail directory if you do = $upload_path_url .'/thumbs' .$name
+			$info->delete_url =  base_url() . 'filebox/process/';
+			$info->delete_type = 'DELETE';
+
+		}
+		$this->output->set_header('Vary: Accept');
+		$json = json_encode($info);
+		$redirect = isset($_REQUEST['redirect']) ?
+		stripslashes($_REQUEST['redirect']) : null;
+		if ($redirect) {
+			$this->output->set_header('Location: '.sprintf($redirect, rawurlencode($json)));
+			return;
+		}
+		if (isset($_SERVER['HTTP_ACCEPT']) &&
+				(strpos($_SERVER['HTTP_ACCEPT'], 'application/json') !== false)) {
+			$this->output->set_header('Content-type: application/json');
+		} else {
+			$this->output->set_header('Content-type: text/plain');
+		}
+		echo $json;
+	}
+
+	public function get() {
+		$info = $this->get_file_object();
+		$this->output->set_header('Content-type: application/json');
+		echo json_encode($info);
+	}
+
+	public function get_file_object() {
+		//DB Get
+		$this->load->model('Filebox_model'); // 모델 - 호출
+		$data = $this->Filebox_model->select_entry($this->sid);
+		$files = array();
+		foreach($data as $key => $value){
+			$ss = split(" ",$value->reg_date);
+			$ss2 = split("-",$ss[0]);
+			$ss3 = $ss2[0].$ss2[1].$ss2[2];
+			$fold_url = 'filebox/files/img/' . $ss3 . '/';
+			if(is_file($fold_url . $value->source_img_name)){
+				$file = new stdClass();
+				$file->name = $value->source_img_name;
+				$file->size = filesize($fold_url . $value->source_img_name);
+				$file->url = base_url() . $fold_url . $value->source_img_name;
+				$file->thumbnail_url = $fold_url . 'thumbs' . $value->source_img_name;
+				$file->delete_url = base_url() . 'file/process';
+				$file->delete_type = 'DELETE';
+
+				$files[$value] = $file;
+			}
+		}
+		
+		return $files;
+	}
+
 }
 
 /* End of file filebox.php */
