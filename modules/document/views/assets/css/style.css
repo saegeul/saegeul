@@ -1,0 +1,18 @@
+#textArea {
+	
+	width:600px;
+	height:100px;
+}
+#choiceArea {
+	
+	width:600px;
+	height:100px;
+	background-color : red;
+	
+}
+.textBox {
+	width:600px;
+	height:100px;
+	background-color : blue;
+	
+}
