@@ -20,20 +20,19 @@ class Filebox_model extends CI_Model {
 		$this->db->insert('imagebox', $insert_data);
 	}
 	
-	function view_entry($img_srl)
+	function view_entry($source_img_name)
 	{
 		$this->db->select('*');
 		$this->db->from('imagebox');
-		$this->db->where('img_srl', $img_srl);
+		$this->db->where('source_img_name', $source_img_name);
 		
 		$query = $this->db->get();
-	
 		return $query->result();
 	}
 	
-	function delete_entry($delete_file)
+	function delete_entry($img_srl)
 	{
-		$this->db->delete('imagebox', array('source_img_name' => $delete_file));
+		$this->db->delete('imagebox', array('img_srl' => $img_srl));
 	}
 	
 	function select_entry($sid)
