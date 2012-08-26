@@ -39,44 +39,57 @@ function submitForm() {
 tinyMCE.triggerSave();
 document.forms[0].submit();
 }
-tinyMCE.execCommand('mceAddControl', false, "textArea");
 </script>
 
 
 <script type="text/javascript">
 var cnt = 0;
+var textAreaWepId = "textAreaWep";
+var textAreaId = "textArea";
+var tempText = "";
+tinyMCE.execCommand('mceAddControl', true, "textArea");
 $(document).ready(function(){
-	$("#choiceArea").click(function() {
-		$('<div id="textBox'+cnt+'" class="textBox"></div>').insertBefore("#choiceArea")/*.html(tinyMCE.get("textArea").getContent());*/
-		//tinyMCE.get("textArea").setContent("");
+	$("#choiceArea").click(function() {														//추가
+		var tempText = tinyMCE.activeEditor.getContent();	
+		tinyMCE.activeEditor.remove();
+		$("#"+textAreaWepId).html('<div id="' + textAreaId + '" class="textBox">'+tempText+'</div></div>');
+		$('<div class="textAreaWep'+cnt+'"><div id="textBox'+cnt+'" class="textBox"></div></div>').insertBefore("#choiceArea")/*.html(tempText)*/;
+		tinyMCE.execCommand('mceAddControl', true, "textBox"+cnt);
+                textAreaWepId = "textAreaWep" +cnt;
+                textAreaId = "textBox" +cnt;
+		//tinyMCE.activeEditor.setContent("");
 		cnt++;
 		$(".textBox").on("click",function() {
+                        tempText = tinyMCE.activeEditor.getContent();
 			tinyMCE.activeEditor.remove();
-			//var tempText = $(this).html();
-			//var getId = $(this).attr('id');
-			var getId = this.id;
-			tinyMCE.execCommand('mceAddControl', false, getId);
-			//tinyMCE.get("tinymce").setContent(tempText);
-			//$(this).html("");
-			//$(this).insertAfter("#textArea");
+		        $("#"+textAreaWepId).html('<div id="' + textAreaId + '" class="textBox">'+tempText+'</div></div>');
+                         textAreaWepId = $(this).parent().attr('id');
+                         textAreaId =  $(this).attr('id');
+			tinyMCE.execCommand('mceAddControl', true, textAreaId);
 		});
+		//alert($("#container").html());
 	});
-	$(".textBox").on("click",function() {
-		tinyMCE.activeEditor.remove();
-		//var tempText = $(this).html();
-		//var getId = $(this).attr('id');
-		var getId = this.id;
-		tinyMCE.execCommand('mceAddControl', false, getId);
-		//tinyMCE.get("tinymce").setContent(tempText);
-		//$(this).html("");
-		//$(this).insertAfter("#textArea");
-	});
-//		tinyMCE.execCommand('mceAddControl', false, tempDivAreaId);
+	$("#submitBtn").click(function() {
+                
+                        tempText = tinyMCE.activeEditor.getContent();
+			tinyMCE.activeEditor.remove();
+		        $("#"+textAreaWepId).html('<div id="' + textAreaId + '" class="textBox">'+tempText+'</div></div>');
+		tinyMCE.triggerSave();
+		//$("#hiddenTextValue").attr("value",$("#container").html());
+		//alert($("#hiddenTextValue").attr("value"));
+		alert($("#container").html());
+//		$("#textForm").attr('action','./testpage').submit();
+	})
 });
+	
 </script>
+<form id="textForm" method="POST">
 <div id="container">
-
-<div id="textArea"></div>
-	<div id="choiceArea"></div>
-
+<div id="textAreaWep"class="textAreaWep">
+<div id="textArea" class="textBox"></div>
+</div>	
+<div id="choiceArea"></div>
 </div>
+<input type="hidden" id="hiddenTextValue" value="sd" />
+<input type="button" id="submitBtn" value="save" />
+</form>
