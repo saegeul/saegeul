@@ -48,48 +48,66 @@ var textAreaWepId = "textAreaWep";
 var textAreaId = "textArea";
 var tempText = "";
 tinyMCE.execCommand('mceAddControl', true, "textArea");
+
+
 $(document).ready(function(){
-	$("#choiceArea").click(function() {														//추가
-		var tempText = tinyMCE.activeEditor.getContent();	
+    $('.paragraph').live('click',function(){
+        var content = tinyMCE.activeEditor.getContent() ; 
+
+        if(content.length > 0){
+            $('<div class="paragraph">'+content+'</div>').insertBefore('.well'); 
+        } 
+
+        var $this = $(this) ; 
+        var html = $this.html() ; 
+        $('.well').insertAfter($this) ; 
+        $this.remove('');
 		tinyMCE.activeEditor.remove();
-		$("#"+textAreaWepId).html('<div id="' + textAreaId + '" class="textBox">'+tempText+'</div></div>');
-		$('<div class="textAreaWep'+cnt+'"><div id="textBox'+cnt+'" class="textBox"></div></div>').insertBefore("#choiceArea")/*.html(tempText)*/;
-		tinyMCE.execCommand('mceAddControl', true, "textBox"+cnt);
-                textAreaWepId = "textAreaWep" +cnt;
-                textAreaId = "textBox" +cnt;
-		//tinyMCE.activeEditor.setContent("");
-		cnt++;
-		$(".textBox").on("click",function() {
-                        tempText = tinyMCE.activeEditor.getContent();
-			tinyMCE.activeEditor.remove();
-		        $("#"+textAreaWepId).html('<div id="' + textAreaId + '" class="textBox">'+tempText+'</div></div>');
-                         textAreaWepId = $(this).parent().attr('id');
-                         textAreaId =  $(this).attr('id');
-			tinyMCE.execCommand('mceAddControl', true, textAreaId);
-		});
-		//alert($("#container").html());
-	});
+		tinyMCE.execCommand('mceAddControl', true, 'textArea');
+        tinyMCE.activeEditor.setContent(html) ; 
+    }); 
+
+    
+
+	$("#add_paragraph_btn").click(function() {
+		var tempText = tinyMCE.activeEditor.getContent();	
+        tinyMCE.activeEditor.setContent('');	
+
+        $('<div class="paragraph">'+tempText+'</div>').insertBefore('.well') ; 
+
+    });
+
 	$("#submitBtn").click(function() {
-                
                         tempText = tinyMCE.activeEditor.getContent();
 			tinyMCE.activeEditor.remove();
-		        $("#"+textAreaWepId).html('<div id="' + textAreaId + '" class="textBox">'+tempText+'</div></div>');
+		        /*$("#"+textAreaWepId).html('<div id="' + textAreaId + '" class="textBox">'+tempText+'</div></div>');*/
 		tinyMCE.triggerSave();
-		//$("#hiddenTextValue").attr("value",$("#container").html());
-		//alert($("#hiddenTextValue").attr("value"));
-		alert($("#container").html());
-//		$("#textForm").attr('action','./testpage').submit();
+		alert($("#content_area").html());
 	})
 });
 	
 </script>
-<form id="textForm" method="POST">
-<div id="container">
-<div id="textAreaWep"class="textAreaWep">
-<div id="textArea" class="textBox"></div>
-</div>	
-<div id="choiceArea"></div>
+
+<div>
+    <h1><input type="text" class="input-xxlarge" placeholder="제목을 입력하세요." style="font-size:15px;" /> </h1>
 </div>
-<input type="hidden" id="hiddenTextValue" value="sd" />
-<input type="button" id="submitBtn" value="save" />
+
+<div id="content_area">
+
+	<div class="well"> 
+	    <div id="textArea" class="textBox"></div>
+	    <a class="btn btn-large" id="add_paragraph_btn"><i class="icon icon-pencil"></i> 글작성 </a>
+	    <a class="btn btn-large"><i class="icon icon-picture"></i> 그림 첨부 </a>
+	    <a class="btn btn-large"><i class="icon icon-file"></i> 파일 첨부 </a>
+	    <a class="btn btn-large"><i class="icon icon-search"></i> 지도 추가</a>
+	    <a class="btn btn-large"><i class="icon icon-search"></i> 구글 검색</a>
+	    <a class="btn btn-large"><i class="icon icon-search"></i> 트위터 검색</a>
+	    <a class="btn btn-large"><i class="icon icon-search"></i> 페이스북 검색</a>
+	</div> 
+</div> 
+
+
+<form id="textForm" method="POST">
 </form>
+
+<input type="button" id="submitBtn" value="save" />

@@ -17,7 +17,7 @@ class Admin extends MX_Controller {
         $header = $this->load->view('header','',true) ; 
         $footer = $this->load->view('footer','',true) ; 
 
-        $body =  Modules::run($module_name.'/'.$action) ; 
+        $body =  modules::run($module_name.'/'.$action) ; 
 
         echo $header.$body.$footer; 
     } 
