@@ -5,6 +5,8 @@ class Filebox extends MX_Controller {
 	protected $module_srl;
 
 	public function __construct() {
+		parent::__construct();
+
 		$this->load->database();
 		$this->load->helper('url');
 		$this->load->helper('date');
@@ -131,7 +133,7 @@ class Filebox extends MX_Controller {
 	public function get() {
 		//DB Get
 		$this->load->model('Filebox_model'); // 모델 - 호출
-		$data = $this->Filebox_model->select_entry($this->sid);
+		$data = $this->Filebox_model->get_entry($this->sid);
 		$files = array();
 		foreach($data as $key => $value){
 			$folder = date ('Ymd', strtotime ($value->reg_date));
@@ -158,7 +160,7 @@ class Filebox extends MX_Controller {
 		//DB Get
 		$this->load->model('Filebox_model'); // 모델 - 호출
 		$data = $this->Filebox_model->view_entry($file);
-		
+
 		$success;
 		foreach($data as $key => $value){
 			$folder = date ('Ymd', strtotime ($value->reg_date));
@@ -171,6 +173,49 @@ class Filebox extends MX_Controller {
 			}
 		}
 		echo json_encode(array($success));
+	}
+
+	public function uploadList(){
+
+		$this->load->model('Filebox_model'); // 모델 - 호출
+
+		// 세팅 - 설정
+		$base_segment = 3; // CI페이징 세그먼트 주소위치값
+		$page_view = 5; // 한 페이지에 보여줄 레코드 수
+		$base_url = base_url(); // base_url
+		$act_url = $base_url . "filebox/uploadList";
+		$page_per_block = 5; // 페이징 이동 개수 ( 1 .. 5)
+
+		$data = "";
+			
+		if(!$this->uri->segment($base_segment)) {
+			$data['page'] = $page = 1;
+		} else {
+			$data['page'] = $page = $this->uri->segment(3,0);
+		}
+
+		if($this->input->post('key') && $this->input->post('keyword')){
+			$data['key'] = $this->input->post('key');
+			$data['keyword'] = $this->input->post('keyword');
+		}else {
+			$data['key'] = "";
+			$data['keyword']= "";
+		}
+
+		$start_idx = ($page - 1) * $page_view;
+
+		$data['result']=$this->Filebox_model->select_entry($start_idx, $page_view, $data);
+		$data['total_record'] = count($this->Filebox_model->total_entry_count($data));
+		$data['total_page'] = ceil($data['total_record'] / $page_view);
+
+		// 폼 - 정의
+		$data['base_url'] = $base_url;
+		$data['act_url'] = $act_url;
+
+		// 뷰 - 출력
+		$this->load->view('upload_list', $data);
+
+
 	}
 }
 
