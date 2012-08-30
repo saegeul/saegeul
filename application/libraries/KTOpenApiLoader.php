@@ -279,9 +279,22 @@ class Node {
 
 	function setContent($content) { $this->m_content = $content; }
 
-	function getAttribute($name) { return $this->m_attrs[$name]; }
+	function getAttribute($name) { 
+        
+        if(isset($this->m_attrs[$name])){
+            return $this->m_attrs[$name]; 
+        }else{
+            return null ; 
+        }
+    }
 
-	function getChildNode($name) { return $this->m_childs[$name]; }
+	function getChildNode($name) {
+        if(isset($this->m_childs[$name])){
+            return $this->m_childs[$name]; 
+        }else{ 
+            return null ; 
+        }
+    }
 
 	function getChildNodes() { return $this->m_childs; }
 
@@ -308,7 +321,7 @@ class Node {
 
 class KTOpenApiLoader extends KTOpenApiBase {
 	var $m_bLoaded		; 	// Loaded Flag
-	var $m_sdkVersion	;	// SDK Version 정보
+	var $m_sdkVersion	;	// SDK Version 정??
 	var $m_xmlPath		;	// SDK Spec file path
 
 	var	$m_oeeInfo		;
@@ -368,17 +381,16 @@ class KTOpenApiLoader extends KTOpenApiBase {
 
 	function endHandler(&$p, &$name)
 	{
-		// print_r($this->m_cNode);
 		$this->m_cNode = $this->m_pNode;
 		$this->m_pNode = array_pop($this->m_gStack);
 	}
 
 	/**
-	 * SDK 스팩 파일 로딩
+	 * SDK ???? ???? ?琯?
 	 *
 	 * @params 
-	 *   - String	$sdkVersion		SDK 버전 스트링
-	 *	 - String	$xmlPath		XML 파일 Path
+	 *   - String	$sdkVersion		SDK ???? ??트??
+	 *	 - String	$xmlPath		XML ???? Path
 	 * @return	Boolean
 	 *   - true		Success
 	 *	 - false	Failure
@@ -394,8 +406,8 @@ class KTOpenApiLoader extends KTOpenApiBase {
 		/**
 		 * SDK Spec File Parsing
 		 * 
-		 * 1. Oauth 정보 Parsing
-		 * 2. Oee 정보 Parsing
+		 * 1. Oauth 정?? Parsing
+		 * 2. Oee 정?? Parsing
 		 * 3. apis Parsing
 		 * 4. callbacks Parsing
 		 * 5. types Parsing
@@ -405,7 +417,6 @@ class KTOpenApiLoader extends KTOpenApiBase {
 		$this->m_pNode   = null;
 		$this->m_cNode   = null;
 		$this->m_gStack  = array();
-
 		$contents = file_get_contents($this->m_xmlPath); 
 		$parser = xml_parser_create(''); 
 		xml_set_object($parser, $this);
@@ -460,10 +471,9 @@ class KTOpenApiLoader extends KTOpenApiBase {
 		$this->m_types = array();
 
 		$typeNodes = $types->getChildNode("type");
-	
 		if (is_array($typeNodes) ) {
 			foreach($typeNodes as $t) {
-				$type_id = $t->getAttribute("id");
+				$type_id = $t->getAttribute("id"); 
 				$this->m_types[$type_id] = new KTOpenApiType($t);
 			}
 		} else if ( $typeNodes != null ) {
@@ -483,25 +493,25 @@ class KTOpenApiLoader extends KTOpenApiBase {
 
 	
 	/**
-	 * SDK Version 정보 취득
+	 * SDK Version 정?? ????
 	 *
-	 * @return	String		SDK version 정보
+	 * @return	String		SDK version 정??
 	 * @see
 	 */
 	function getVersion() { return $this->m_sdkVersion; }
 	
 	/**
-	 * Open Platform 실행 환경 정보 취득
+	 * Open Platform ???? 환?? 정?? ????
 	 *
-	 * @return	String		Open Platform 실행 환경 정보
+	 * @return	String		Open Platform ???? 환?? 정??
 	 * @see
 	 */
 	function getOeeInfo() { return $this->m_oeeInfo; }
 	
 	/**
-	 * Open Platform Oauth 정보 취득
+	 * Open Platform Oauth 정?? ????
 	 *
-	 * @return	String		Open Platform Oauth 정보
+	 * @return	String		Open Platform Oauth 정??
 	 * @see
 	 */
 	function getOauthInfo()	 { return $this->m_oauthInfo; }
@@ -517,10 +527,10 @@ class KTOpenApiLoader extends KTOpenApiBase {
 	}
 
 	/**
-	 * API Group 정보 취득
+	 * API Group 정?? ????
 	 *
 	 * @params	group_id			API Group ID
-	 * @return	KTOpenApiGroup		Open API Group 정보
+	 * @return	KTOpenApiGroup		Open API Group 정??
 	 * @see
 	 */
 	function getApiGroup($group_id)	 
@@ -529,9 +539,9 @@ class KTOpenApiLoader extends KTOpenApiBase {
 	}
 	
 	/**
-	 * API 리스트 조회
+	 * API ????트 조회
 	 *
-	 * @return	Array<id, name>	API 리스트 정보
+	 * @return	Array<id, name>	API ????트 정??
 	 * @see
 	 */
 	function getApiList()	 { 
@@ -554,10 +564,10 @@ class KTOpenApiLoader extends KTOpenApiBase {
 
 
 	/**
-	 * API Group의 API 리스트 조회
+	 * API Group?? API ????트 조회
 	 *
 	 * @params	group_id			API Group ID
-	 * @return	Array<id, name>	API 리스트 정보
+	 * @return	Array<id, name>	API ????트 정??
 	 * @see
 	 */
 	function getGroupApiList($group_id)	 { 
@@ -571,11 +581,11 @@ class KTOpenApiLoader extends KTOpenApiBase {
 	}
 	
 	/**
-	 * API 정보 조회
+	 * API 정?? 조회
 	 *
 	 * @params	group_id			API Group ID
 	 * @params	id					API ID
-	 * @return	KTOpenApi			API 정보
+	 * @return	KTOpenApi			API 정??
 	 * @see
 	 */
 	function getApiInfo($id)	 { 
@@ -603,10 +613,10 @@ class KTOpenApiLoader extends KTOpenApiBase {
 	}
 	
 	/**
-	 * Callback 정보 조회
+	 * Callback 정?? 조회
 	 *
 	 * @params	id		Callback ID
-	 * @return	Hash	Callback 정보
+	 * @return	Hash	Callback 정??
 	 * @see
 	 */
 	function getCallbackInfo($id)	 { 
@@ -619,10 +629,10 @@ class KTOpenApiLoader extends KTOpenApiBase {
 	}
 
 	/**
-	 * Type 정보 조회
+	 * Type 정?? 조회
 	 *
-	 * @params	id		입/출력 Type ID
-	 * @return	Hash	Type 정보
+	 * @params	id		??/???? Type ID
+	 * @return	Hash	Type 정??
 	 * @see
 	 */
 	function getTypeInfo($id)	 { 

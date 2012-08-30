@@ -3,8 +3,8 @@ include_once("KTOpenApiConsts.php");
 
 class KTOpenApiBase 
 {
-	var $m_errorCode;		// 에러코드
-	var $m_errorMsg	;		// 에러메시지
+	var $m_errorCode;		// ?????湄?
+	var $m_errorMsg	;		// ?????聘???
 	
 	/**
 	 * Constructor
@@ -27,7 +27,7 @@ class KTOpenApiBase
 	}
 	
 	/**
-	 * 에러 코드 리턴
+	 * ???? ?湄? ????
 	 *
 	 * @return	integer
 	 *   - 0		no error
@@ -40,9 +40,9 @@ class KTOpenApiBase
 	}
 	
 	/**
-	 * 에러 메시지 리턴
+	 * ???? ?聘??? ????
 	 *
-	 * @return	string		에러 메시지
+	 * @return	string		???? ?聘???
 	 * @see
 	 */
 	function getErrorMsg()
@@ -68,7 +68,7 @@ class KTOpenApiBase
 	}
 
 	/**
-	 * API Query String 생성
+	 * API Query String ????
 	 *
 	 * @params 
 	 *   - String	$params		Parameter Hashmap

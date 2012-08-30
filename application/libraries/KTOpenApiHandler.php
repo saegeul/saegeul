@@ -31,13 +31,13 @@ class KTOpenApiHandler extends KTOpenApiBase {
 	var $m_appType				;
 	var $m_domain				;
 
-	function KTOpenApiHandler($authKey, $authSecret)
+	function KTOpenApiHandler($param=array())
 	{
-		$this->m_authKey 	= $authKey   ;
-		$this->m_authSecret	= $authSecret;
-		$this->m_oauthKey 	= $authKey   ;
-		$this->m_oauthSecret	= $authSecret;
-		if ($authKey == null) {
+		$this->m_authKey 	= $param['api_key']   ;
+		$this->m_authSecret	= $param['secret_key'];
+		$this->m_oauthKey 	= $this->m_authKey   ;
+		$this->m_oauthSecret = $this->m_authSecret;
+		if ($this->m_authKey == null) {
 			$this->restoreContext();
 		}
 	}
@@ -55,7 +55,7 @@ class KTOpenApiHandler extends KTOpenApiBase {
 		}
 	}
 
-	function initialize($sdkVersion, $xmlPath, $appType = DEF_WEB_APP)
+	function initialize($sdkVersion, $xmlPath, $appType = "DEF_WEB_APP")
 	{
 		$this->m_appType = $appType;
 
@@ -64,6 +64,7 @@ class KTOpenApiHandler extends KTOpenApiBase {
 
 		// Create Loader
 		$this->m_specLoader = new KTOpenApiLoader();
+
 		if ($this->m_specLoader == null) {
 			return false;
 		}
@@ -73,6 +74,7 @@ class KTOpenApiHandler extends KTOpenApiBase {
 		if (!$ret) {
 			return false;
 		}
+
 
 		$this->m_oee   = $this->m_specLoader->getOeeInfo();
 		$this->m_oauth = $this->m_specLoader->getOauthInfo();
@@ -359,7 +361,6 @@ class KTOpenApiHandler extends KTOpenApiBase {
 
 			$other_params = array();
 			if ($this->m_authType == DEF_ID_PAY_AUTH) {
-				// add idpay ��� �Ķ����
 				$other_params["cpipcode"] = $params["cpipcode"];
 				$other_params["svccode" ] = $params["svccode" ];
 				$other_params["comment" ] = $params["comment" ];

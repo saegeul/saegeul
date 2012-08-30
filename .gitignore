@@ -4,6 +4,7 @@
 .DS_Store
 .DS_STORE?
 ._*
+/application/config/database.php
 .swp
 .Trashes
 Icon?
@@ -12,7 +13,6 @@ Thumbs.db
 # directory #
 ############
 user_guide/
-
 # temp #
 *.bak
 *.swp

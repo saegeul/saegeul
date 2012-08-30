@@ -227,7 +227,33 @@ class Filebox extends MX_Controller {
 
 		$params = array('api_key' => $api_key, 'secret_key' => $secret_key);
 
-		$this->load->library('KTOpenApiHandler', $params);
+		$this->load->library('KTOpenApiHandler', $params,'api_handler');
+
+        if(!$this->api_handler){
+		 	echo "Can't create apiHandler\r\n"; 
+        }
+
+
+		$ret = $this->api_handler->initialize("v1.0.45", "./");
+        if(! $ret){ 
+		    echo "KTOpenApiHandler initialize error\r\n";
+        }else{
+            echo "olleh";
+        }
+
+        $api = '1.0.UCLOUD.BASIC.GETUSERINFO' ; 
+        $bSSL = true;
+        $params = array() ; 
+        $xauth_params = array() ; 
+        $ret = $this->api_handler->call($api,$params,$xauth_params,$bSSL) ; 
+        if(!$ret){ 
+            echo "error".$this->api_handler->getErrorMsg() ; 
+            exit ; 
+        }
+
+        $access_token = $this->api_handler->getAccessToken(); 
+        print_r($ret) ; 
+
 
 		// 		// ucloud open API 이용을 위한 library import
 		// 		require_once("../lib/KTOpenApiHandler.php");
