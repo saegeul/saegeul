@@ -21,12 +21,12 @@ $this->load->helper('asset');
             
             forced_root_block : false,
             force_br_newlines : true,
-            force_p_newlines : false,
+            force_p_newlines : true,
 				 				
             // Theme options
 			 theme_advanced_buttons1 : "preview,undo,redo,bold,italic,underline,strikethrough,forecolor,backcolor,justifyleft,justifycenter,justifyright,justifyfull,formatselect,fontselect,fontsizeselect,bullist,numlist,outdent,indent,blockquote,search,charmap",
 			 theme_advanced_toolbar_location : "top",
-	        theme_advanced_toolbar_align : "center",
+	        theme_advanced_toolbar_align : "left",
             theme_advanced_statusbar_location : "none",
             theme_advanced_resizing : true
     });

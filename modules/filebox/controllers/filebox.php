@@ -217,6 +217,64 @@ class Filebox extends MX_Controller {
 
 
 	}
+
+	public function cloudUpload(){
+
+		// 발급받은 인증키 중 API Key
+		$api_key = "3adc420423aefa2d58b4d56dd3e4f122";
+		// 발급받은 인증키 중 Secret Key
+		$secret_key = "93ae84190fae63adb1732560fe3058ef";
+
+		$params = array('api_key' => $api_key, 'secret_key' => $secret_key);
+
+		$this->load->library('KTOpenApiHandler', $params,'api_handler');
+
+        if(!$this->api_handler){
+		 	echo "Can't create apiHandler\r\n"; 
+        }
+
+
+		$ret = $this->api_handler->initialize("v1.0.45", "./");
+        if(! $ret){ 
+		    echo "KTOpenApiHandler initialize error\r\n";
+        }else{
+            echo "olleh";
+        }
+
+        $api = '1.0.UCLOUD.BASIC.GETUSERINFO' ; 
+        $bSSL = true;
+        $params = array() ; 
+        $xauth_params = array() ; 
+        $ret = $this->api_handler->call($api,$params,$xauth_params,$bSSL) ; 
+        if(!$ret){ 
+            echo "error".$this->api_handler->getErrorMsg() ; 
+            exit ; 
+        }
+
+        $access_token = $this->api_handler->getAccessToken(); 
+        print_r($ret) ; 
+
+
+		// 		// ucloud open API 이용을 위한 library import
+		// 		require_once("../lib/KTOpenApiHandler.php");
+		// 		// 발급받은 인증키 중 API Key
+		// 		$api_key = "3adc420423aefa2d58b4d56dd3e4f122";
+		// 		// 발급받은 인증키 중 Secret Key
+		// 		$secret_key = "93ae84190fae63adb1732560fe3058ef"
+		// 		;
+		// 		$apiHandler = new KTOpenApiHandler($api_key, $secret_key);
+		// 		if (!$apiHandler) {
+		// 			echo "Can't create apiHandler\r\n";
+		// 			exit;
+		// 		}
+		// 		// api폴더의 상대 주소와 함께 버전 정보를 입력
+		// 		$ret = $apiHandler->initialize("v1.0.43", "../api");
+		// 		if ( ! $ret ) {
+		// 			echo "KTOpenApiHandler initialize error\r\n";
+		// 			exit ;
+		// 		}
+
+	}
 }
 
 /* End of file filebox.php */

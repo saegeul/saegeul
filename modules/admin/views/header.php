@@ -17,7 +17,7 @@
     <div class="navbar navbar-inverse ">
         <div class="navbar-inner">
             <div class="container">
-                <a class="brand" style="color:#fff;font-weight:bold;">SAEGEUL </a>
+                <a class="brand" style="color:#fff;font-weight:bold;">새글SAEGEUL </a>
                 <ul class="nav"> 
                     <li <?php if($this->uri->segment(2)=='dashboard'):?> class="active" <?php endif;?>> 
                         <a href="<?=base_url()?>index.php/admin/dashboard">Dashboard</a>
