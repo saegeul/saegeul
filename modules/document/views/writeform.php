@@ -4,15 +4,13 @@ $this->load->helper('asset');
 ?>
 
 
-<meta
-	http-equiv="content-type" content="text/html" charset="utf-8" />
-<script
-	type="text/javascript" src="http://www.google.com/jsapi"></script>
-<script type="text/javascript">
-        google.load("jquery", "1.7.1");
-</script>
+<meta http-equiv="content-type" content="text/html" charset="utf-8" />
 <?php echo css_asset('document','style.css') ?>
 <?php echo js_asset('document','tiny_mce/tiny_mce.js')?>
+<?echo common_css_asset('jquery/css/smoothness/jquery-ui-1.8.22.custom.css')?>
+<?echo common_js_asset('jquery/js/jquery-1.7.2.min.js')?>
+<?echo common_js_asset('jquery/js/jquery-ui-1.8.22.custom.min.js')?>
+ 
 <script type="text/javascript">
     tinyMCE.init({ 
     		  mode : "none",
@@ -41,6 +39,16 @@ document.forms[0].submit();
 }
 </script>
 
+<script>
+    $(function() {
+        $("#content_area").css("cursor","n-resize").sortable({
+            cancel : ".well",
+            axis : "y",
+        });
+    });
+</script>
+
+
 
 <script type="text/javascript">
 var cnt = 0;
@@ -49,41 +57,56 @@ var textAreaId = "textArea";
 var tempText = "";
 tinyMCE.execCommand('mceAddControl', true, "textArea");
 
-
 $(document).ready(function(){
     $('.paragraph').live('click',function(){
-        var content = tinyMCE.activeEditor.getContent() ; 
+            var $this = $(this) ; 
+            var html = $this.html() ; 
+        try {
+            var content = tinyMCE.activeEditor.getContent();
+            if(content.length > 0){
+                $('<div class="paragraphWep"><div class="paragraph">'+content+'</div><input type="button" class="removeParagraphBtn" value="X"/></div>').insertBefore('.well'); 
+            } 
+            $('.well').insertAfter($this.parent()) ; 
+            $this.parent().remove('');
+            tinyMCE.activeEditor.remove();
+        }
+        catch(e) {
+            $('.well').insertAfter($this.parent()) ; 
+            $this.parent().remove('') ;
+        }
+            tinyMCE.execCommand('mceAddControl', true, 'textArea');
+            tinyMCE.activeEditor.setContent(html) ; 
+        }); 
+        $('.removeParagraphBtn').live('click',function(){
+            var $this = $(this);     
+            $this.parent().remove('');
+        })
+        $("#add_paragraph_btn").click(function() {
+            try {
+                var content = tinyMCE.activeEditor.getContent();	
+                tinyMCE.activeEditor.setContent('');	
+                $('<div id="paragraphWep" class="paragraphWep"><div class="paragraph">'+content+'</div><input type="button" class="removeParagraphBtn" value="X"/></div>').insertBefore('.well'); 
+                }
+            catch(e){
+                tinyMCE.execCommand('mceAddControl', true, "textArea");
+            }
+        });
 
-        if(content.length > 0){
-            $('<div class="paragraph">'+content+'</div>').insertBefore('.well'); 
-        } 
 
-        var $this = $(this) ; 
-        var html = $this.html() ; 
-        $('.well').insertAfter($this) ; 
-        $this.remove('');
-		tinyMCE.activeEditor.remove();
-		tinyMCE.execCommand('mceAddControl', true, 'textArea');
-        tinyMCE.activeEditor.setContent(html) ; 
-    }); 
-
-    
-
-	$("#add_paragraph_btn").click(function() {
-		var tempText = tinyMCE.activeEditor.getContent();	
+    $("#add_photo_btn").click(function() {
+	var content = tinyMCE.activeEditor.getContent();	
         tinyMCE.activeEditor.setContent('');	
-
-        $('<div class="paragraph">'+tempText+'</div>').insertBefore('.well') ; 
-
+        tinyMCE.activeEditor.remove();
+        if(content.length > 0){
+            $('<div class="paragraphWep"><div class="paragraph">'+content+'</div><input type="button" class="removeParagraphBtn" value="X"/></div>').insertBefore('.well'); 
+        } 
     });
-
-	$("#submitBtn").click(function() {
-                        tempText = tinyMCE.activeEditor.getContent();
-			tinyMCE.activeEditor.remove();
-		        /*$("#"+textAreaWepId).html('<div id="' + textAreaId + '" class="textBox">'+tempText+'</div></div>');*/
-		tinyMCE.triggerSave();
-		alert($("#content_area").html());
-	})
+    $("#submitBtn").click(function() {
+        tempText = tinyMCE.activeEditor.getContent();
+	tinyMCE.activeEditor.remove();
+	tinyMCE.triggerSave();
+	alert($("#content_area").html());
+    })
 });
 	
 </script>
@@ -94,10 +117,10 @@ $(document).ready(function(){
 
 <div id="content_area">
 
-	<div class="well"> 
+	<div id="well" class="well" > 
 	    <div id="textArea" class="textBox"></div>
 	    <a class="btn btn-large" id="add_paragraph_btn"><i class="icon icon-pencil"></i> 글작성 </a>
-	    <a class="btn btn-large"><i class="icon icon-picture"></i> 그림 첨부 </a>
+	    <a class="btn btn-large" id="add_photo_btn"><i class="icon icon-picture"></i> 그림 첨부 </a>
 	    <a class="btn btn-large"><i class="icon icon-file"></i> 파일 첨부 </a>
 	    <a class="btn btn-large"><i class="icon icon-search"></i> 지도 추가</a>
 	    <a class="btn btn-large"><i class="icon icon-search"></i> 구글 검색</a>
@@ -106,8 +129,9 @@ $(document).ready(function(){
 	</div> 
 </div> 
 
-
 <form id="textForm" method="POST">
 </form>
 
+<!--
 <input type="button" id="submitBtn" value="save" />
+-->
