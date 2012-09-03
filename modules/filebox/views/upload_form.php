@@ -1,154 +1,81 @@
 <?php $this->load->helper('url') ?>
 <?php $this->load->helper('asset') ?>
 <!DOCTYPE HTML>
-<!--
-/*
- * jQuery File Upload Plugin Demo 6.9.1
- * https://github.com/blueimp/jQuery-File-Upload
- *
- * Copyright 2010, Sebastian Tschan
- * https://blueimp.net
- *
- * Licensed under the MIT license:
- * http://www.opensource.org/licenses/MIT
- */
--->
 <html lang="en">
 <head>
-<!-- Force latest IE rendering engine or ChromeFrame if installed -->
-<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
 <meta charset="utf-8">
-<title>jQuery File Upload Demo</title>
-<!-- <meta name="description" content="File Upload widget with multiple file selection, drag&amp;drop support, progress bar and preview images for jQuery. Supports cross-domain, chunked and resumable file uploads. Works with any server-side platform (Google App Engine, PHP, Python, Ruby on Rails, Java, etc.) that supports standard HTML form file uploads."> -->
-<meta name="viewport" content="width=device-width">
-<!-- <link rel="stylesheet" href="http://blueimp.github.com/cdn/css/bootstrap.min.css"> -->
+<title>UploadForm</title>
 <?echo common_css_asset('bootstrap/css/bootstrap.min.css')?>
 <?echo css_asset('filebox','style.css')?>
 <?echo common_css_asset('bootstrap/css/bootstrap-responsive.css')?>
-<!-- <link rel="stylesheet" href="http://blueimp.github.com/cdn/css/bootstrap-responsive.min.css"> -->
-<!-- Bootstrap CSS fixes for IE6 -->
-<!--[if lt IE 7]><link rel="stylesheet" href="http://blueimp.github.com/cdn/css/bootstrap-ie6.min.css"><![endif]-->
-<link rel="stylesheet" href="http://blueimp.github.com/Bootstrap-Image-Gallery/css/bootstrap-image-gallery.min.css">
+<link rel="stylesheet"
+	href="http://blueimp.github.com/Bootstrap-Image-Gallery/css/bootstrap-image-gallery.min.css">
 <?echo css_asset('filebox','jquery.fileupload-ui.css')?>
-<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 </head>
-
 <body>
-<div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">
-            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </a>
-            <a class="brand" href="https://github.com/blueimp/jQuery-File-Upload">jQuery File Upload</a>
-            <div class="nav-collapse">
-                <ul class="nav">
-                    <li class="active"><a href="#">Demo</a></li>
-                    <li><a href="https://github.com/blueimp/jQuery-File-Upload/downloads">Downloads</a></li>
-                    <li><a href="https://github.com/blueimp/jQuery-File-Upload">Source Code</a></li>
-                    <li><a href="https://github.com/blueimp/jQuery-File-Upload/wiki">Documentation</a></li>
-                    <li><a href="https://github.com/blueimp/jQuery-File-Upload/issues">Issues</a></li>
-                    <li><a href="test/">Test</a></li>
-                    <li><a href="https://blueimp.net">&copy; Sebastian Tschan</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="container">
-    <div class="page-header">
-        <h1>jQuery File Upload Demo</h1>
-    </div>
-    <blockquote>
-        <p>File Upload widget with multiple file selection, drag&amp;drop support, progress bars and preview images for jQuery.<br>
-        Supports cross-domain, chunked and resumable file uploads and client-side image resizing.<br>
-        Works with any server-side platform (PHP, Python, Ruby on Rails, Java, Node.js, Go etc.) that supports standard HTML form file uploads.</p>
-    </blockquote>
-    <br>
-    <!-- The file upload form used as target for the file upload widget -->
-    <form id="fileupload" action="process" method="POST" enctype="multipart/form-data">
-        <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
-        <div class="row fileupload-buttonbar">
-            <div class="span7">
-                <!-- The fileinput-button span is used to style the file input field as button -->
-                <span class="btn btn-success fileinput-button">
-                    <i class="icon-plus icon-white"></i>
-                    <span>Add files...</span>
-                    <input type="file" name="userfile" multiple>
-                </span>
-                <button type="submit" class="btn btn-primary start">
-                    <i class="icon-upload icon-white"></i>
-                    <span>Start upload</span>
-                </button>
-                <button type="reset" class="btn btn-warning cancel">
-                    <i class="icon-ban-circle icon-white"></i>
-                    <span>Cancel upload</span>
-                </button>
-                <button type="button" class="btn btn-danger delete">
-                    <i class="icon-trash icon-white"></i>
-                    <span>Delete</span>
-                </button>
-                <input type="checkbox" class="toggle">
-            </div>
-            <!-- The global progress information -->
-            <div class="span5 fileupload-progress fade">
-                <!-- The global progress bar -->
-                <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-                    <div class="bar" style="width:0%;"></div>
-                </div>
-                <!-- The extended global progress information -->
-                <div class="progress-extended">&nbsp;</div>
-            </div>
-        </div>
-        <!-- The loading indicator is shown during file processing -->
-        <div class="fileupload-loading"></div>
-        <br>
-        <!-- The table listing the files available for upload/download -->
-        <table role="presentation" class="table table-striped"><tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody></table>
-    </form>
-    <br>
-    <div class="well">
-        <h3>Demo Notes</h3>
-        <ul>
-            <li>The maximum file size for uploads in this demo is <strong>5 MB</strong> (default file size is unlimited).</li>
-            <li>Only image files (<strong>JPG, GIF, PNG</strong>) are allowed in this demo (by default there is no file type restriction).</li>
-            <li>Uploaded files will be deleted automatically after <strong>5 minutes</strong> (demo setting).</li>
-            <li>You can <strong>drag &amp; drop</strong> files from your desktop on this webpage with Google Chrome, Mozilla Firefox and Apple Safari.</li>
-            <li>Please refer to the <a href="https://github.com/blueimp/jQuery-File-Upload">project website</a> and <a href="https://github.com/blueimp/jQuery-File-Upload/wiki">documentation</a> for more information.</li>
-            <li>Built with Twitter's <a href="http://twitter.github.com/bootstrap/">Bootstrap</a> toolkit and Icons from <a href="http://glyphicons.com/">Glyphicons</a>.</li>
-        </ul>
-    </div>
-</div>
-<!-- modal-gallery is the modal dialog used for the image gallery -->
-<div id="modal-gallery" class="modal modal-gallery hide fade" data-filter=":odd">
-    <div class="modal-header">
-        <a class="close" data-dismiss="modal">&times;</a>
-        <h3 class="modal-title"></h3>
-    </div>
-    <div class="modal-body"><div class="modal-image"></div></div>
-    <div class="modal-footer">
-        <a class="btn modal-download" target="_blank">
-            <i class="icon-download"></i>
-            <span>Download</span>
-        </a>
-        <a class="btn btn-success modal-play modal-slideshow" data-slideshow="5000">
-            <i class="icon-play icon-white"></i>
-            <span>Slideshow</span>
-        </a>
-        <a class="btn btn-info modal-prev">
-            <i class="icon-arrow-left icon-white"></i>
-            <span>Previous</span>
-        </a>
-        <a class="btn btn-primary modal-next">
-            <span>Next</span>
-            <i class="icon-arrow-right icon-white"></i>
-        </a>
-    </div>
-</div>
-<!-- The template to display files available for upload -->
-<script id="template-upload" type="text/x-tmpl">
+	<div class="contents">
+		<div class="group" align="center">
+			<h2>Drag and DropFile Upload</h2>
+		</div>
+		<div class="droparea" >
+			<p class="dropfiletext">Drop files here</p>
+		</div>
+		<br>
+		<form id="fileupload" action="process" method="POST"
+			enctype="multipart/form-data">
+			<div class="row fileupload-buttonbar">
+				<div class="span7">
+					<span class="btn btn-success fileinput-button"> <i
+						class="icon-plus icon-white"></i> <span>Add files...</span> <input
+						type="file" name="userfile" multiple>
+					</span>
+					<button type="submit" class="btn btn-primary start">
+						<i class="icon-upload icon-white"></i> <span>Start upload</span>
+					</button>
+					<button type="reset" class="btn btn-warning cancel">
+						<i class="icon-ban-circle icon-white"></i> <span>Cancel upload</span>
+					</button>
+					<button type="button" class="btn btn-danger delete">
+						<i class="icon-trash icon-white"></i> <span>Delete</span>
+					</button>
+					<input type="checkbox" class="toggle">
+				</div>
+				<div class="span5 fileupload-progress fade">
+					<div class="progress progress-success progress-striped active">
+						<div class="bar" style="width: 0%;"></div>
+					</div>
+					<div class="progress-extended">&nbsp;</div>
+				</div>
+			</div>
+			<div class="fileupload-loading"></div>
+			<table class="table table-hover">
+				<tbody class="files" data-toggle="modal-gallery"
+					data-target="#modal-gallery"></tbody>
+			</table>
+		</form>
+	</div>
+	<div id="modal-gallery" class="modal modal-gallery hide fade"
+		data-filter=":odd">
+		<div class="modal-header">
+			<a class="close" data-dismiss="modal">&times;</a>
+			<h3 class="modal-title"></h3>
+		</div>
+		<div class="modal-body">
+			<div class="modal-image"></div>
+		</div>
+		<div class="modal-footer">
+			<a class="btn modal-download" target="_blank"> <i
+				class="icon-download"></i> <span>Download</span>
+			</a> <a class="btn btn-success modal-play modal-slideshow"
+				data-slideshow="5000"> <i class="icon-play icon-white"></i> <span>Slideshow</span>
+			</a> <a class="btn btn-info modal-prev"> <i
+				class="icon-arrow-left icon-white"></i> <span>Previous</span>
+			</a> <a class="btn btn-primary modal-next"> <span>Next</span> <i
+				class="icon-arrow-right icon-white"></i>
+			</a>
+		</div>
+	</div>
+	<script id="template-upload" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}
     <tr class="template-upload fade">
         <td class="preview"><span class="fade"></span></td>
@@ -178,8 +105,7 @@
     </tr>
 {% } %}
 </script>
-<!-- The template to display files available for download -->
-<script id="template-download" type="text/x-tmpl">
+	<script id="template-download" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}
     <tr class="template-download fade">
         {% if (file.error) { %}
@@ -207,19 +133,24 @@
     </tr>
 {% } %}
 </script>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
-<?echo js_asset('filebox','js/vendor/jquery.ui.widget.js') ?>
-<script src="http://blueimp.github.com/JavaScript-Templates/tmpl.min.js"></script>
-<script src="http://blueimp.github.com/JavaScript-Load-Image/load-image.min.js"></script>
-<script src="http://blueimp.github.com/JavaScript-Canvas-to-Blob/canvas-to-blob.min.js"></script>
-<script src="http://blueimp.github.com/cdn/js/bootstrap.min.js"></script>
-<script src="http://blueimp.github.com/Bootstrap-Image-Gallery/js/bootstrap-image-gallery.min.js"></script>
-<?echo js_asset('filebox','jquery.iframe-transport.js') ?>
-<?echo js_asset('filebox','jquery.fileupload.js') ?>
-<?echo js_asset('filebox','jquery.fileupload-fp.js') ?>
-<?echo js_asset('filebox','jquery.fileupload-ui.js') ?>
-<?echo js_asset('filebox','locale.js') ?>
-<?echo js_asset('filebox','main.js') ?> 
-<!--[if gte IE 8]><?echo js_asset('js','cors/jquery.xdr-transport.js') ?><![endif]-->
-</body> 
+	<script
+		src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+	<?echo js_asset('filebox','js/vendor/jquery.ui.widget.js') ?>
+	<script
+		src="http://blueimp.github.com/JavaScript-Templates/tmpl.min.js"></script>
+	<script
+		src="http://blueimp.github.com/JavaScript-Load-Image/load-image.min.js"></script>
+	<script
+		src="http://blueimp.github.com/JavaScript-Canvas-to-Blob/canvas-to-blob.min.js"></script>
+	<script src="http://blueimp.github.com/cdn/js/bootstrap.min.js"></script>
+	<script
+		src="http://blueimp.github.com/Bootstrap-Image-Gallery/js/bootstrap-image-gallery.min.js"></script>
+	<?echo js_asset('filebox','jquery.iframe-transport.js') ?>
+	<?echo js_asset('filebox','jquery.fileupload.js') ?>
+	<?echo js_asset('filebox','jquery.fileupload-fp.js') ?>
+	<?echo js_asset('filebox','jquery.fileupload-ui.js') ?>
+	<?echo js_asset('filebox','locale.js') ?>
+	<?echo js_asset('filebox','main.js') ?>
+	<!--[if gte IE 8]><?echo js_asset('js','cors/jquery.xdr-transport.js') ?><![endif]-->
+</body>
 </html>

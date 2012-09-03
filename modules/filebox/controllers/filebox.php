@@ -37,9 +37,9 @@ class Filebox extends MX_Controller {
 			case 'OPTIONS':
 				break;
 			case 'HEAD':
-			case 'GET':
-				$this->get();
-				break;
+				// 							case 'GET':
+				// 								$this->get();
+				// 								break;
 			case 'POST':
 				if (isset($_REQUEST['_method']) && $_REQUEST['_method'] === 'DELETE') {
 					$this->delete();
@@ -175,28 +175,44 @@ class Filebox extends MX_Controller {
 		echo json_encode(array($success));
 	}
 
-	public function uploadList(){
+	public function fileModify(){
+		$success;
+
+		$this->load->model('Filebox_model'); // 모델 - 호출
+		$data['mod_no'] = $this->input->get('mod_no');
+		$data['mod_name'] = $this->input->get('mod_name');
+		$data['mod_comment'] = $this->input->get('mod_comment');
+		$data['mod_isvalid'] = $this->input->get('mod_isvalid');
+
+		if($this->Filebox_model->update_entry($data))
+			$success = "success";
+
+		echo json_encode($success);
+	}
+
+	public function fileList($page=1){
 
 		$this->load->model('Filebox_model'); // 모델 - 호출
 
 		// 세팅 - 설정
-		$base_segment = 3; // CI페이징 세그먼트 주소위치값
 		$page_view = 5; // 한 페이지에 보여줄 레코드 수
 		$base_url = base_url(); // base_url
-		$act_url = $base_url . "filebox/uploadList";
+		$act_url = $base_url . "filebox/fileList";
 		$page_per_block = 5; // 페이징 이동 개수 ( 1 .. 5)
 
 		$data = "";
+
 			
-		if(!$this->uri->segment($base_segment)) {
-			$data['page'] = $page = 1;
-		} else {
-			$data['page'] = $page = $this->uri->segment(3,0);
+		if($page < 1){
+			$page = 1;
+			$data['page'] = 1;
+		}else{
+			$data['page'] = $page;
 		}
 
-		if($this->input->post('key') && $this->input->post('keyword')){
-			$data['key'] = $this->input->post('key');
-			$data['keyword'] = $this->input->post('keyword');
+		if($this->input->get('key') && $this->input->get('keyword')){
+			$data['key'] = $this->input->get('key');
+			$data['keyword'] = $this->input->get('keyword');
 		}else {
 			$data['key'] = "";
 			$data['keyword']= "";
@@ -215,7 +231,6 @@ class Filebox extends MX_Controller {
 		// 뷰 - 출력
 		$this->load->view('upload_list', $data);
 
-
 	}
 
 	public function cloudUpload(){
@@ -229,51 +244,30 @@ class Filebox extends MX_Controller {
 
 		$this->load->library('KTOpenApiHandler', $params,'api_handler');
 
-        if(!$this->api_handler){
-		 	echo "Can't create apiHandler\r\n"; 
-        }
+		if(!$this->api_handler){
+			echo "Can't create apiHandler\r\n";
+		}
 
 
 		$ret = $this->api_handler->initialize("v1.0.45", "./");
-        if(! $ret){ 
-		    echo "KTOpenApiHandler initialize error\r\n";
-        }else{
-            echo "olleh";
-        }
+		if(! $ret){
+			echo "KTOpenApiHandler initialize error\r\n";
+		}else{
+			echo "olleh";
+		}
 
-        $api = '1.0.UCLOUD.BASIC.GETUSERINFO' ; 
-        $bSSL = true;
-        $params = array() ; 
-        $xauth_params = array() ; 
-        $ret = $this->api_handler->call($api,$params,$xauth_params,$bSSL) ; 
-        if(!$ret){ 
-            echo "error".$this->api_handler->getErrorMsg() ; 
-            exit ; 
-        }
+		$api = '1.0.UCLOUD.BASIC.GETUSERINFO' ;
+		$bSSL = true;
+		$params = array() ;
+		$xauth_params = array() ;
+		$ret = $this->api_handler->call($api,$params,$xauth_params,$bSSL) ;
+		if(!$ret){
+			echo "error".$this->api_handler->getErrorMsg() ;
+			exit ;
+		}
 
-        $access_token = $this->api_handler->getAccessToken(); 
-        print_r($ret) ; 
-
-
-		// 		// ucloud open API 이용을 위한 library import
-		// 		require_once("../lib/KTOpenApiHandler.php");
-		// 		// 발급받은 인증키 중 API Key
-		// 		$api_key = "3adc420423aefa2d58b4d56dd3e4f122";
-		// 		// 발급받은 인증키 중 Secret Key
-		// 		$secret_key = "93ae84190fae63adb1732560fe3058ef"
-		// 		;
-		// 		$apiHandler = new KTOpenApiHandler($api_key, $secret_key);
-		// 		if (!$apiHandler) {
-		// 			echo "Can't create apiHandler\r\n";
-		// 			exit;
-		// 		}
-		// 		// api폴더의 상대 주소와 함께 버전 정보를 입력
-		// 		$ret = $apiHandler->initialize("v1.0.43", "../api");
-		// 		if ( ! $ret ) {
-		// 			echo "KTOpenApiHandler initialize error\r\n";
-		// 			exit ;
-		// 		}
-
+		$access_token = $this->api_handler->getAccessToken();
+		print_r($ret) ;
 	}
 }
 
