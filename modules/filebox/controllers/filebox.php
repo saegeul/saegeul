@@ -21,10 +21,7 @@ class Filebox extends MX_Controller {
 	}
 
 	public function process(){
-
-		$this->sid = 'root';
-		$this->module_srl = 'filebox';
-
+		
 		$this->output->set_header('Pragma: no-cache');
 		$this->output->set_header('Cache-Control: no-store, no-cache, must-revalidate');
 		$this->output->set_header('Content-Disposition: inline; filename="files.json"');
@@ -33,13 +30,16 @@ class Filebox extends MX_Controller {
 		$this->output->set_header('Access-Control-Allow-Methods: OPTIONS, HEAD, GET, POST, PUT, DELETE');
 		$this->output->set_header('Access-Control-Allow-Headers: X-File-Name, X-File-Type, X-File-Size');
 
+		$this->sid = 'root';
+		$this->module_srl = 'filebox';
+
 		switch ($this->input->server('REQUEST_METHOD')) {
 			case 'OPTIONS':
 				break;
 			case 'HEAD':
-				// 							case 'GET':
-				// 								$this->get();
-				// 								break;
+											case 'GET':
+												$this->get();
+												break;
 			case 'POST':
 				if (isset($_REQUEST['_method']) && $_REQUEST['_method'] === 'DELETE') {
 					$this->delete();
@@ -231,6 +231,21 @@ class Filebox extends MX_Controller {
 		// 뷰 - 출력
 		$this->load->view('upload_list', $data);
 
+	}
+	
+	public function fileDownload(){
+		$success;
+		
+		$this->load->helper('download');
+
+		$this->load->model('Filebox_model'); // 모델 - 호출
+		$data['mod_no'] = $this->input->get('mod_no');
+		$data['mod_down_cnt'] = number_format($this->input->get('mod_down_cnt')) + 1;
+
+		if($this->Filebox_model->down_update_entry($data))
+			$success = "success";
+		
+		echo json_encode($success);
 	}
 
 	public function cloudUpload(){

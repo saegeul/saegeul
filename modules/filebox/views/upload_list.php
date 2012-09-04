@@ -13,7 +13,7 @@
 <?echo common_js_asset('jquery/js/jquery-1.7.2.min.js')?>
 <?echo common_js_asset('jquery/js/jquery-ui-1.8.22.custom.min.js')?>
 <script>
-function ImgModify(imgPath,thumbnailPath,imgName,fileType,author,regDate,address,isvalid,no,comment,file)
+function ImgModify(imgPath,thumbnailPath,imgName,fileType,author,regDate,address,isvalid,no,comment,file,downCnt,fold_url)
 {
 
 	var markup = "<form method='get'>"
@@ -21,7 +21,7 @@ function ImgModify(imgPath,thumbnailPath,imgName,fileType,author,regDate,address
 		 	+ "<dl class='thumbnails'>"
 				+ "<dd class='span2'>"
 					+ "<div class='thumbnail'>"
-						+ "<img src=" + thumbnailPath + " class='img-rounded'>"
+						+ "<img src=" + thumbnailPath + " id=thumb class='img-rounded'>"
 					+ "</div>"
 				+ "</dd>"
 				+ "<dd>"
@@ -61,7 +61,7 @@ function ImgModify(imgPath,thumbnailPath,imgName,fileType,author,regDate,address
 			markup 
 			+= "<dl>"
 				+ "<p>"
-				   + "&nbsp&nbsp&nbspDownCount : <INPUT type='text' id=mod_down_cnt name=mod_down_cnt readonly>"
+				   + "&nbsp&nbsp&nbspDownCount : <INPUT type='text' id=mod_down_cnt  value=" + downCnt + " name=mod_down_cnt readonly>"
 				+ "</p>"
 			+ "</dl>"
 			+ "<dl>"
@@ -81,7 +81,21 @@ function ImgModify(imgPath,thumbnailPath,imgName,fileType,author,regDate,address
 	$("#dialog-confirm").dialog("option","buttons",[
 	{
 		text: "Download",
-       click: function() { }
+       click: function(e) { 
+    		$.ajax({
+		       type: "GET",
+		       url: "/saegeul/filebox/fileDownload",
+		       contentType: "application/json; charset=utf-8",
+		       dataType: "json",
+		       data: "mod_no=" + no + "&mod_down_cnt=" + downCnt,
+		       error: function() { 
+		       	alert("error");
+		        },
+		       success: function(data){
+		    	  
+				}
+			});
+    	}
     },  
     {
 		text: "Modify",
@@ -149,6 +163,7 @@ $(document).ready(function() {
 </script>
 </head>
 <?php 
+//location.href = fold_url + ".php?id=" + file.replace(/^.*\/|\.[^.]*$/g, '') + "&type=" + file.split('.').pop();
 // 페이징 만들기
 $page_per_block = 5;
 $prev_page = $page - 1;
@@ -205,6 +220,7 @@ if($key != "" && $keyword != ""){
 				$address = $row->ip_address;
 				$isvalid = $row->isvalid;
 				$comment = $row->comment;
+				$downCnt = $row->down_cnt;
 				$source_img_name = $row->source_img_name;
 				?>
 				<tr>
@@ -214,7 +230,7 @@ if($key != "" && $keyword != ""){
 							<ul class="thumbnails">
 								<li class="span2">
 									<div class="thumbnail" align="center"
-										onclick="ImgModify('<?=$imgPath?>','<?=$thumbnailPath?>','<?=$imgName?>','<?=$fileType?>','<?=$author?>','<?=$regDate?>','<?=$address?>','<?=$isvalid?>','<?=$no?>','<?=$comment?>','<?=$source_img_name?>')">
+										onclick="ImgModify('<?=$imgPath?>','<?=$thumbnailPath?>','<?=$imgName?>','<?=$fileType?>','<?=$author?>','<?=$regDate?>','<?=$address?>','<?=$isvalid?>','<?=$no?>','<?=$comment?>','<?=$source_img_name?>','<?=$downCnt?>','<?=$fold_url?>')">
 										<img src="<?= $thumbnailPath?>" class="img-polaroid">
 									</div>
 

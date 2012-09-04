@@ -85,6 +85,11 @@ class Filebox_model extends CI_Model {
 
 		return $this->db->update('imagebox', $value, array('img_srl' => $data['mod_no']));
 	}
-
+	
+	function down_update_entry($data)
+	{
+		$value->down_cnt = $data['mod_down_cnt'];
+		return $this->db->update('imagebox', $value, array('img_srl' => $data['mod_no']));
+	}
 }
 ?>
