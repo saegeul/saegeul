@@ -37,6 +37,7 @@ class Provider_Ucloud extends Provider {
 
         //$param['oauth_callback'] = $consumer->get('callback_url') ; 
         $param['oauth_consumer_key'] = $consumer->get('api_key') ; 
+        $param['api_token'] = $request_body['api_token'] ; 
         $param['oauth_nonce'] = random_string('alnum', 32); 
         $param['oauth_signature_method'] = $this->getSignatureMethod() ; 
         $param['oauth_timestamp'] = time(); 
@@ -117,10 +118,11 @@ class Provider_Ucloud extends Provider {
     }
 
     public function getAPIToken($api_key,$secret_key){
-        $base_string = $api_key.';'.time() ; 
+        $ts = time() ; 
+        $base_string = $api_key.';'.$ts ; 
 
 		$signature=base64_encode(hash_hmac('sha1', $base_string, $secret_key, TRUE));
-        return OAuthUtil::urlencode(base64_encode($api_key.';'.time().';'.$signature));
+        return OAuthUtil::urlencode(base64_encode($api_key.';'.$ts.';'.$signature));
     }
 
     public function authorize($param){

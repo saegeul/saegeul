@@ -67,6 +67,8 @@ class Auth extends MX_Controller {
             $request_header['oauth_verifier'] =  $params['oauth_verifier'] ; 
             $request_header['oauth_token_secret'] = $this->oauth->token('oauth_token_secret') ; 
 
+            print_r($request_header) ; 
+
             $provider = $this->oauth->getProvider() ;
             $consumer = $this->oauth->getConsumer() ;
 
@@ -75,8 +77,10 @@ class Auth extends MX_Controller {
 
             
 
-            $request_body = array('api_token'=>$api_token,'ss'=>'ss') ; 
+            $request_body = array('api_token'=>$api_token) ; 
             $response = $this->oauth->api_call('getUserInfo',$request_header,$request_body,'POST') ;
+
+            print_r($response) ; 
 
         }else{ 
             $response = $this->oauth->request_token(array(),'POST') ;
