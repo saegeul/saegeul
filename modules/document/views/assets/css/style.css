@@ -3,3 +3,46 @@
     height:100px;
     background-color:red; 
 }
+.paragraph {
+    width:80%;
+    height:100px;
+    border : 1px solid black;
+}
+.drag1 {
+    width:600px;
+    height:100px;
+    background-color:green;
+}
+.drag2 {
+    width:600px;
+    height:100px;
+    background-color:blue;
+    }
+.input-xxlarge {
+    width:100%;
+}
+.dragBar {
+    width:10%;
+    height:100px;
+    background-color:black;
+    cursor:n-resize;
+}
+#bar1 {
+    width:10%;
+    height:100px;
+    background-color:black;
+}
+
+#bar2 {
+    width:10%;
+    height:100px;
+    background-color:red;
+}
+.handleBar { 
+    width:10%;
+    height:100px;
+    background-color:yellow;
+}
+.paragraphWep {
+    border: 1px solid black;
+}   
