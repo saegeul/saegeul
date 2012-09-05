@@ -21,7 +21,7 @@ class Filebox extends MX_Controller {
 	}
 
 	public function process(){
-		
+
 		$this->output->set_header('Pragma: no-cache');
 		$this->output->set_header('Cache-Control: no-store, no-cache, must-revalidate');
 		$this->output->set_header('Content-Disposition: inline; filename="files.json"');
@@ -37,9 +37,9 @@ class Filebox extends MX_Controller {
 			case 'OPTIONS':
 				break;
 			case 'HEAD':
-											case 'GET':
-												$this->get();
-												break;
+															case 'GET':
+																$this->get();
+																break;
 			case 'POST':
 				if (isset($_REQUEST['_method']) && $_REQUEST['_method'] === 'DELETE') {
 					$this->delete();
@@ -232,20 +232,48 @@ class Filebox extends MX_Controller {
 		$this->load->view('upload_list', $data);
 
 	}
+
+	public function getDownCnt(){
 	
-	public function fileDownload(){
+		$this->load->model('Filebox_model'); // 모델 - 호출
+		$this->load->helper('download');
+	
+		$file = $this->input->get('file', TRUE);
+		$temp = $this->Filebox_model->view_entry($file);
 		$success;
 		
-		$this->load->helper('download');
+		foreach($temp as $key => $value){
+			$folder = date ('Ymd', strtotime ($value->reg_date));
+			$download_file_url = 'filebox/files/img/' . $folder . '/' .$file;
+			if(is_file($download_file_url)){
+				$success->down_cnt = number_format($value->down_cnt) + 1;
+			}
+		}
+		echo json_encode($success);
+	}
+	
+	public function fileDownload(){
 
 		$this->load->model('Filebox_model'); // 모델 - 호출
-		$data['mod_no'] = $this->input->get('mod_no');
-		$data['mod_down_cnt'] = number_format($this->input->get('mod_down_cnt')) + 1;
+		$this->load->helper('download');
 
-		if($this->Filebox_model->down_update_entry($data))
-			$success = "success";
+		$file = $this->input->get('file', TRUE);
+		$temp = $this->Filebox_model->view_entry($file);
+		$download_file_url;
+
+		foreach($temp as $key => $value){
+			$folder = date ('Ymd', strtotime ($value->reg_date));
+			$download_file_url = 'filebox/files/img/' . $folder . '/' .$file;
+			if(is_file($download_file_url)){
+				$data['mod_no'] = $value->img_srl;
+				$data['mod_down_cnt'] = number_format($value->down_cnt) + 1;
+				$this->Filebox_model->down_update_entry($data);
+			}
+		}
+
+		$download_file = file_get_contents($download_file_url); // Read the file's contents
 		
-		echo json_encode($success);
+		force_download($file, $download_file);
 	}
 
 	public function cloudUpload(){

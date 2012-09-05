@@ -81,21 +81,22 @@ function ImgModify(imgPath,thumbnailPath,imgName,fileType,author,regDate,address
 	$("#dialog-confirm").dialog("option","buttons",[
 	{
 		text: "Download",
-       click: function(e) { 
-    		$.ajax({
+       click: function() {
+    	   $.ajax({
 		       type: "GET",
-		       url: "/saegeul/filebox/fileDownload",
+		       url: "/saegeul/filebox/getDownCnt",
 		       contentType: "application/json; charset=utf-8",
 		       dataType: "json",
-		       data: "mod_no=" + no + "&mod_down_cnt=" + downCnt,
+		       data: "file=" + file,
 		       error: function() { 
 		       	alert("error");
 		        },
 		       success: function(data){
-		    	  
+			       $("input[name=mod_down_cnt]").val(data.down_cnt).change();
+		    	   location.href="/saegeul/filebox/fileDownload?file="+file;
 				}
 			});
-    	}
+		}
     },  
     {
 		text: "Modify",
