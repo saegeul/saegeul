@@ -349,8 +349,8 @@ class Users extends CI_Model
 	{
 		$this->db->where('id', $user_id);
 		$this->db->update($this->table_name, array(
-			'banned'		=> 1,
-			'ban_reason'	=> $reason,
+				'banned'		=> 1,
+				'ban_reason'	=> $reason,
 		));
 	}
 
@@ -364,8 +364,8 @@ class Users extends CI_Model
 	{
 		$this->db->where('id', $user_id);
 		$this->db->update($this->table_name, array(
-			'banned'		=> 0,
-			'ban_reason'	=> NULL,
+				'banned'		=> 0,
+				'ban_reason'	=> NULL,
 		));
 	}
 
@@ -392,6 +392,125 @@ class Users extends CI_Model
 		$this->db->where('user_id', $user_id);
 		$this->db->delete($this->profile_table_name);
 	}
+
+	//admin 페이지에서 회원목록을 출력하기 위해 회원정보를 모두 반환
+	function admin_db(){
+
+
+
+
+		$sql = "select * from users";
+		$query = $this->db->query($sql);
+		return $query->result();
+
+
+
+	}
+
+	function select_entry($list_num,$offset,$data)
+	{
+		$this->db->select('*');
+		$this->db->from('users');
+
+		/* if($data['key'] && $data['keyword'])
+		 {
+		$this->db->like($data['key'], $data['keyword']);
+		} */
+		//$this->db->order_by("img_srl", "desc");
+		$this->db->limit($offset, $list_num);
+
+		$query = $this->db->get();
+		return $query->result();
+	}
+
+	function total_entry_count($data)
+	{
+		$this->db->select('*');
+		$this->db->from('users');
+
+		/* 	if($data['key'] && $data['keyword'])
+		 {
+		$this->db->like($data['key'], $data['keyword']);
+		} */
+		//$this->db->order_by("img_srl", "desc");
+
+		$query = $this->db->get();
+		return $query->result();
+	}
+
+	//선택한 유저의 권한이 무엇인지 체크(1은 admin, 0은 user)
+	function check_admin($user_name){
+
+
+
+		$sql = "select admin from users where username='$user_name'";
+		$query = $this->db->query($sql);
+
+		$row = $query->row(1);
+
+		return $row->admin;
+
+
+	}
+
+	function min_admin($id){
+		$sql = "select id from users where admin=1";
+		$query = $this->db->query($sql);
+		$row = $query->row(1);
+
+		if($query->num_rows() == 1){
+			//admin 값이 1인 유저가 하나이고
+			if($row->id ==$id){
+				//현재 수정하려는 유저가 바로 그 하나의 관리자일 경우 변경 불가능
+				
+				echo ("<script>alert('no!')</script>");
+				
+				return false;
+			}
+			else{
+				return true;
+			}
+
+		}
+		else{
+			return true;
+				
+		}
+	}
+
+	//받아온 값으로 권한값을 변경
+	function admin_set($id,$admin){
+
+
+
+
+		$this->db->set('admin',$admin );
+		$this->db->where('id', $id);
+		$this->db->update($this->table_name);
+
+
+
+	}
+
+	//권한변경 버튼을 눌렀을 때 관리자->유저, 유저->관리자 로 변경
+	function admin_value($id){
+		$sql = "select admin from users where id='$id'";
+		$query = $this->db->query($sql);
+
+		$row = $query->row(1);
+
+		if($row->admin){
+			//관리자를 유저로 변경
+			return 0;
+		}
+		else {
+			//유저를 관리자로 변경
+			return 1;
+		}
+
+	}
+
+
 }
 
 /* End of file users.php */
