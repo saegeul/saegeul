@@ -13,7 +13,11 @@
 $config['mailtype'] = 'html';
 $config['charset'] = 'utf-8';
 $config['newline'] = "\r\n";
-
+$config['smtp_host']='smtp.gmail.com';
+$config['smtp_user']='leewangon@gmail.com';
+$config['smtp_pass']='gnfpdlzm125';
+$config['smtp_port']='587';
+$config['protocol']='smtp';
 
 /* End of file email.php */
 /* Location: ./application/config/email.php */

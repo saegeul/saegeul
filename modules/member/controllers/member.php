@@ -646,7 +646,7 @@ class Member extends MX_Controller
 		$id=$_GET['id'];
 		$this->users->delete_user($id);
 		
-		echo ("<script>alert('회원을 탈퇴 시켰습니다.')</script>");
+		//echo ("<script>alert('회원을 탈퇴 시켰습니다.')</script>");
 		
 		redirect('/member/admin/');
 	}
