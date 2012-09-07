@@ -594,7 +594,7 @@ class Member extends MX_Controller
 		$this->load->view('member/main');
 	}
 
-	function admin(){
+	function admin($page=1){
 		$this->load->model('users','',TRUE);
 		$data = "";
 		
@@ -609,20 +609,22 @@ class Member extends MX_Controller
 			
 		$data = "";
 
-		if(!$this->uri->segment($base_segment)) {
-			$data['page'] = $page = 1;
-		} else {
-			$data['page'] = $page = $this->uri->segment(3,0);
+		if($page < 1){
+			$page = 1;
+			$data['page'] = 1;
+		}else{
+			$data['page'] = $page;
 		}
 			
-		// 		if($this->input->post('key') && $this->input->post('keyword')){
-		// 			$data['key'] = $this->input->post('key');
-		// 			$data['keyword'] = $this->input->post('keyword');
-		// 		}else {
-		// 			$data['key'] = "";
-		// 			$data['keyword']= "";
-		// 		}
-			
+		if($this->input->get('key') && $this->input->get('keyword')){
+			$data['key'] = $this->input->get('key');
+			$data['keyword'] = $this->input->get('keyword');
+		}else {
+			$data['key'] = "";
+			$data['keyword']= "";
+		}
+		
+		
 		$start_idx = ($page - 1) * $page_view;
 			
 		$data['result']=$this->users->select_entry($start_idx, $page_view, $data);

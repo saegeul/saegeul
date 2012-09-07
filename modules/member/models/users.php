@@ -412,11 +412,11 @@ class Users extends CI_Model
 		$this->db->select('*');
 		$this->db->from('users');
 
-		/* if($data['key'] && $data['keyword'])
-		 {
-		$this->db->like($data['key'], $data['keyword']);
-		} */
-		//$this->db->order_by("img_srl", "desc");
+		if($data['key'] && $data['keyword'])
+		{
+			$this->db->like($data['key'], $data['keyword']);
+		}
+		$this->db->order_by("id", "desc");
 		$this->db->limit($offset, $list_num);
 
 		$query = $this->db->get();
@@ -428,11 +428,12 @@ class Users extends CI_Model
 		$this->db->select('*');
 		$this->db->from('users');
 
-		/* 	if($data['key'] && $data['keyword'])
-		 {
-		$this->db->like($data['key'], $data['keyword']);
-		} */
-		//$this->db->order_by("img_srl", "desc");
+		
+		if($data['key'] && $data['keyword'])
+		{
+			$this->db->like($data['key'], $data['keyword']);
+		}
+		$this->db->order_by("id", "desc");
 
 		$query = $this->db->get();
 		return $query->result();
