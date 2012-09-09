@@ -1,0 +1,6 @@
+<table name="user_profiles">
+    <column name="id" type="number" size="11"  auto_increment="true" primary_key="true" />
+    <column name="user_id" type="number" size="11"  />
+    <column name="country" type="varchar" size="20"  />
+    <column name="website" type="varchar" size="255"  /> 
+</table>

@@ -1,18 +1,36 @@
-<?require('header.php')?>
-<div class="container" >
-    <div class="modal">
-        <div class="modal-header" > 
-            <h3>새글을 설치합니다.</h3>
-        </div>
-        <div class="modal-body">
-            <div class="well">
-                <h3> 3번의 클릭으로 설치가 끝납니다. </h3>
+<?php
+    $checklist = $checklist ;
+    $success = array() ; 
+    $is_next = true ;
 
-            </div>
-        </div>
-        <div class="modal-footer" > 
-            <a class="btn btn-primary" href="2step"><i class="icon icon-white icon-circle-arrow-right"></i>  Install </a>
-        </div>
-    </div>
-</div>
-<?require('footer.php')?>
+    foreach($checklist as $key => $check){
+        if($check){
+            $success[$key] = 'success' ; 
+        }else{
+            $is_next = false ; 
+            $success[$key] = 'error' ; 
+        } 
+    } 
+?>
+    <h1>SAEGEUL CONFIGURATION </h1> 
+        <p>새글을 설치하려면 아래의 조건들을 확인하세요.  </p>
+        <table class="table"> 
+            <tbody> 
+                <tr class="<?=$success['php_version']?>"> 
+                    <td>PHP Version (ver 5.x.x) </td>
+                </tr>
+                <tr class="<?=$success['permission']?>">
+                    <td>파일 퍼미션 </td> 
+                </tr>
+                <tr class="<?=$success['xml']?>">
+                    <td>xml 라이브러리 </td> 
+                </tr>
+                <tr class="<?=$success['gd']?>">
+                    <td>gd 라이브러리 </td> 
+                </tr>
+            </tbody>
+
+        </table>
+        <p> 
+            <a class="btn btn-primary" href="<?=base_url().'install/index/step2'?>"><i class="icon-circle-arrow-right icon-white"></i> 다음 단계로...</a>
+        </p>

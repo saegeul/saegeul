@@ -13,6 +13,14 @@ class Admin extends MX_Controller {
         $this->load->view('header') ; 
     }
 
+    public function setupDatabaseTable(){
+        $this->load->helper('directory') ; 
+        $map = directory_map('./modules',2); 
+
+        $map ; 
+
+    }
+
     public function module($module_name='',$action=''){ 
         $header = $this->load->view('header','',true) ; 
         $footer = $this->load->view('footer','',true) ; 
