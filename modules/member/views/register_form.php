@@ -1,3 +1,12 @@
+<?php $this->load->helper('url') ?>
+<?php $this->load->helper('asset') ?>
+
+
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<?echo common_css_asset('bootstrap/css/bootstrap-responsive.css')?>
+<?echo common_css_asset('bootstrap/css/bootstrap-responsive.min.css')?>
+<?echo common_css_asset('bootstrap/css/bootstrap.css')?>
+<?echo common_css_asset('bootstrap/css/bootstrap.min.css')?>
 <?php
 if ($use_username) {
 	$username = array(
@@ -35,14 +44,23 @@ $captcha = array(
 	'maxlength'	=> 8,
 );
 ?>
+
+<body style="background:#000;">
+    <div class="container">
+        <div class="hero-unit">
+            <h1>회원가입 <small>새글닷컴의 멤버가 되주세요.</small></h1> 
+            <hr/>
+            
 <?php echo form_open($this->uri->uri_string()); ?>
 <table>
 	<?php if ($use_username) { ?>
+	
 	<tr>
 		<td><?php echo form_label('Username', $username['id']); ?></td>
 		<td><?php echo form_input($username); ?></td>
 		<td style="color: red;"><?php echo form_error($username['name']); ?><?php echo isset($errors[$username['name']])?$errors[$username['name']]:''; ?></td>
 	</tr>
+	
 	<?php } ?>
 	<tr>
 		<td><?php echo form_label('Email Address', $email['id']); ?></td>
@@ -96,5 +114,11 @@ $captcha = array(
 	<?php }
 	} ?>
 </table>
-<?php echo form_submit('register', 'Register'); ?>
-<?php echo form_close(); ?>
+			<input class='btn btn-success' type='submit' value='회원가입'> 
+
+</form>
+</div>
+</div>
+</body>
+<?php // echo form_submit('register', 'Register'); ?>
+<?php //echo form_close(); ?>

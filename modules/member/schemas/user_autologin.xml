@@ -1,0 +1,7 @@
+<table name="user_autologin">
+    <column name="key_id" type="char" size="32" />
+    <column name="user_id" type="number" size="11" />
+    <column name="user_agent" type="varchar" size="150" />
+    <column name="last_ip" type="varchar" size="40" />
+    <column name="last_ip" type="varchar" size="40" />
+</table>

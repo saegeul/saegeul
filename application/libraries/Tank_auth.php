@@ -17,7 +17,7 @@ define('STATUS_NOT_ACTIVATED', '0');
  * @license		MIT License Copyright (c) 2008 Erick Hartanto
  */
 class Tank_auth
-{
+{  
 	private $error = array();
 
 	function __construct()
@@ -116,7 +116,11 @@ class Tank_auth
 		$this->ci->session->set_userdata(array('user_id' => '', 'username' => '', 'status' => ''));
 
 		$this->ci->session->sess_destroy();
+		
+		
 	}
+	
+
 
 	/**
 	 * Check if user logged in. Also test if user is activated or not.
