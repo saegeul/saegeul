@@ -75,7 +75,7 @@ class Auth extends MX_Controller {
 			$api_token = $provider->getAPIToken($consumer->get('api_key'),$consumer->get('secret_key')) ;
 
 			$request_body = array('api_token'=>$api_token) ;
-			$response = $this->oauth->api_call('getUserInfo',$request_header,$request_body,'POST') ;
+			$response = $this->oauth->api_call('getsyncfolder',$request_header,$request_body,'POST') ;
 
 			$data['result'] = $response;
 
@@ -88,8 +88,56 @@ class Auth extends MX_Controller {
 		}
 			
 	}
-
+	
 	public function getFolder(){
+		$api_key = '38629799a8e9388c6ce742ed71fb6233' ;
+		$secret_key = '29b30a42991c73e76032c5f20b4b7858' ;
+		$callback_url = 'http://localhost:8888';
+		$this->load->helper('url') ;
+	
+		$this->load->library('oauth',array(
+				'api_key'=>$api_key,
+				'secret_key'=>$secret_key,
+				'callback_url'=>base_url().'auth/oauth/',
+				'signature_method'=>'HMAC-SHA1',
+				'provider'=>'Ucloud',
+				'oauth_version'=>'1.0'
+		)) ;
+	
+		$folder_id = $this->input->get_post('folder_id') ;
+	
+		$params = array();
+		$params['oauth_token'] = $this->input->get_post('oauth_token') ;
+		$params['oauth_token_secret'] = $this->oauth->token('oauth_token_secret');
+		$params['oauth_verifier'] = $this->input->get_post('oauth_verifier') ;
+	
+		$request_header['oauth_token'] = $this->oauth->token('oauth_token') ;
+		$request_header['oauth_verifier'] =  $params['oauth_verifier'] ;
+		$request_header['oauth_token_secret'] = $this->oauth->token('oauth_token_secret') ;
+	
+		$request_header = array() ;
+	
+		$request_header['oauth_token'] = $this->oauth->token('oauth_token') ;
+		$request_header['oauth_verifier'] =  $params['oauth_verifier'] ;
+		$request_header['oauth_token_secret'] = $this->oauth->token('oauth_token_secret') ;
+	
+		$provider = $this->oauth->getProvider() ;
+		$consumer = $this->oauth->getConsumer() ;
+	
+		$api_token = $provider->getAPIToken($consumer->get('api_key'),$consumer->get('secret_key')) ;
+	
+		if($folder_id){
+			$request_body = array('api_token'=>$api_token,'folder_id'=>$folder_id) ;
+			$response = $this->oauth->api_call('getContents',$request_header,$request_body,'POST') ;
+		}else {
+			$request_body = array('api_token'=>$api_token) ;
+			$response = $this->oauth->api_call('getUserInfo',$request_header,$request_body,'POST') ;
+		}
+		$data['result'] = $response;
+		$this->load->view('auth',$data);
+	}
+
+	public function getFolderData(){
 		$api_key = '38629799a8e9388c6ce742ed71fb6233' ;
 		$secret_key = '29b30a42991c73e76032c5f20b4b7858' ;
 		$callback_url = 'http://localhost:8888';
@@ -133,8 +181,8 @@ class Auth extends MX_Controller {
 			$request_body = array('api_token'=>$api_token) ;
 			$response = $this->oauth->api_call('getUserInfo',$request_header,$request_body,'POST') ;
 		}
-		$data['result'] = $response;
-		$this->load->view('auth',$data);
+		$success = $response;
+		echo json_encode($success);
 	}
 
 	public function getFile(){

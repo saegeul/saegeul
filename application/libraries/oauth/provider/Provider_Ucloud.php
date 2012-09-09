@@ -29,7 +29,10 @@ class Provider_Ucloud extends Provider {
 			$url = $url_prefix.'ucloud/basic/getContents.json' ;
 		}else if($api_name == 'createfiletoken'){
 			$url = $url_prefix.'ucloud/basic/createfiletoken.json' ;
+		}else if($api_name == 'getsyncfolder'){
+			$url = $url_prefix.'ucloud/basic/getsyncfolder.json' ;
 		}
+		
 
 		return $url ;
 	}
