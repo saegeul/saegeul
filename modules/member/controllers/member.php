@@ -13,6 +13,16 @@ class Member extends MX_Controller {
 
     }
 
+    public function test(){ 
+        $this->load->library('email') ; 
+        $this->email->to('ijaehee@gmail.com') ; 
+        $this->email->from('ijaehee@gmail.com') ; 
+        $this->email->subject('ijaehee@gmail.com') ; 
+        $this->email->message('ijaehee@gmail.com') ; 
+        $this->email->send() ; 
+        //print_r($this->email) ; 
+    }
+
     public function activate() {
 		$user_id		= $this->uri->segment(3);
 		$new_email_key	= $this->uri->segment(4);

@@ -1,0 +1,17 @@
+<table name="users" > 
+    <column name="id" type="number" size="11"  auto_increment="true" primary_key="true" />
+    <column name="username" type="varchar" size="59"  />
+    <column name="password" type="varchar" size="255"  />
+    <column name="email" type="varchar" size="100"  /> 
+    <column name="activated" type="number" size="1"  /> 
+    <column name="banned" type="number" size="1" /> 
+    <column name="ban_reason" type="varchar" size="255"  /> 
+    <column name="new_password_key" type="varchar" size="50"  /> 
+    <column name="new_password_requested" type="date"  /> 
+    <column name="new_email" type="varchar" size="100" /> 
+    <column name="new_email_key" type="varchar" size="50" /> 
+    <column name="last_ip" type="varchar" size="255" /> 
+    <column name="last_login" type="date" /> 
+    <column name="created" type="date" /> 
+    <column name="modified" type="timestamp" /> 
+</table>
