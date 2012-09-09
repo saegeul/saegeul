@@ -15,6 +15,7 @@ user_guide/
 application/config/email.php
 application/config/database.php
 application/libraries/KTOpen*
+application/libraries/libraries/
 # temp #
 *.bak
 *.swp
