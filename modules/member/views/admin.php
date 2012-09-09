@@ -43,60 +43,60 @@ if($key != "" && $keyword != ""){
 }
 ?>
 <body>
-	<h1 align="center">Member List</h1>
-	<br>
+	<form class="bs-docs-example form-search" name="search_form">
 
-	<div class="container">
-		<table class="table table-hover">
-		 <thead>
-			<tr>
-			
-				<td><h4>번호</h4></td>
-				<td><h4>ID</h4></td>
-				<td><h4>Name</h4></td>
-				<td><h4>E-Mail</h4></td>
-				<td><h4>권한</h4></td>
-				<td><h4>goodbye</h4></td>
-				<td><h4>grant admin</h4></td>
-				
-			</tr>
-			</thead> 
-			<tbody>
-			<?php 
-			
-			
-			$no=1;
-			foreach($result as $row)
-			{
-				echo "<tr>";
-				echo "<td>".$no."</td>";
-				echo "<td>".$row->id."</td>";
-				echo "<td>".$row->username."</td>";
-				echo "<td>".$row->email."</td>";
-				if($row->admin){
-					echo "<td>관리자</td>";
-				}
-				else {
-					echo "<td>사용자</td>";
-					
-				}
-				
-				echo " <td><a href=' ".site_url("/member/good_bye?id=$row->id")."'>".form_button('btn_goodbye','Goodbye')."</a></td>";
-				echo " <td><a href=' ".site_url("/member/admin_set?id=$row->id")."' onclick=>".form_button('btn_grant','Admin_Set')."</a></td>";
-				
-				
-				echo "</tr>";				
-				
-				$no=$no+1;
-			
-			}
-				
-			
-				?>
-			</tbody>
-			<tfoot>
+		<h1 align="center">Member List</h1>
+		<br>
+
+		<div class="container">
+			<table class="table table-hover">
+				<thead>
 					<tr>
-						<td colspan="5">
+
+						<td><h4>번호</h4></td>
+						<td><h4>ID</h4></td>
+						<td><h4>Name</h4></td>
+						<td><h4>E-Mail</h4></td>
+						<td><h4>권한</h4></td>
+						<td><h4>goodbye</h4></td>
+						<td><h4>grant admin</h4></td>
+
+					</tr>
+				</thead>
+				<tbody>
+					<?php 
+
+
+					$no=1;
+					foreach($result as $row)
+					{
+						echo "<tr>";
+						echo "<td>".$no."</td>";
+						echo "<td>".$row->id."</td>";
+						echo "<td>".$row->username."</td>";
+						echo "<td>".$row->email."</td>";
+						if($row->admin){
+							echo "<td>관리자</td>";
+						}
+						else {
+							echo "<td>사용자</td>";
+
+						}
+
+						echo " <td><a href=' ".site_url("/member/good_bye?id=$row->id")."'>".form_button('btn_goodbye','Goodbye')."</a></td>";
+						echo " <td><a href=' ".site_url("/member/admin_set?id=$row->id")."'>".form_button('btn_grant','Admin_Set')."</a></td>";
+						echo "</tr>";
+
+						$no=$no+1;
+							
+					}
+
+
+					?>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="7">
 							<div style="text-align: center;">
 								<a href="<?=$act_url?>/1">[맨앞]</a>
 								<?php 
@@ -127,22 +127,25 @@ if($key != "" && $keyword != ""){
 						</td>
 					</tr>
 				</tfoot>
-				
-		</table>
-		<div align="right">
-			<select name="key" size="1" class="span2">
-				<option value="username" <? if($key == "username") echo "selected"; ?>>회원이름</option>
-				<option value="id" <? if($key == "id") echo "selected"; ?>>아이디</option>
-				<option value="email"	<? if($key == "email") echo "selected"; ?>>이메일</option>
-			</select>
-			<div class="input-append">
-				<input type="text" name="keyword" class="span2 search-query"
-					value="<?=$keyword?>">
-				<button class="btn" onclick="search_confirm();">Search</button>
+
+			</table>
+			<div align="right">
+				<select name="key" size="1" class="span2">
+					<option value="username"
+					<? if($key == "username") echo "selected"; ?>>회원이름</option>
+					<option value="id" <? if($key == "id") echo "selected"; ?>>아이디</option>
+					<option value="email" <? if($key == "email") echo "selected"; ?>>이메일</option>
+				</select>
+				<div class="input-append">
+					<input type="text" name="keyword" class="span2 search-query"
+						value="<?=$keyword?>">
+					<button class="btn" onclick="search_confirm();">Search</button>
+				</div>
 			</div>
 		</div>
-	</div>
-	
-	<a class="btn btn-primary btn-large" href="member/logout">로그아웃 </a>
+
+		<a class="btn btn-primary btn-large" href="member/logout">로그아웃 </a>
+
+	</form>
 </body>
 </html>
