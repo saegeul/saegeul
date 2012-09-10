@@ -205,7 +205,6 @@ $("#nextBtn").live('click',function() {
 $('#cloud_upload').live('click',function() {
 	var arr = new Array();
 	var upload_folder = window.location.href.slice(window.location.href.indexOf('?') + 11).split('&');
-	var temp =upload_folder;
 	
 	$("input[class=imgcheck]").each(function(){
 		if($(this).is(':checked')){
@@ -227,6 +226,30 @@ $('#cloud_upload').live('click',function() {
 			}
 	});
 });
+
+$('#deletUcloud').live('click',function() {
+	var arr = new Array();
+	var upload_folder = window.location.href.slice(window.location.href.indexOf('?') + 11).split('&');
+	$("input[class=chcktbl]").each(function(){
+		if($(this).is(':checked')){
+			arr[arr.length] = $(this).parent().next('td').attr('id');				
+		}
+	});
+	var str = JSON.stringify(arr);
+	$.ajax({
+	       type: "GET",
+	       url: "/saegeul/auth/deleteFile",
+	       contentType: "application/json; charset=utf-8",
+	       dataType: "json",
+	       data: "data=" + str + "&upload_folder=" + upload_folder, 
+	       error: function() { 
+	       	alert("이파일을 삭제 할수 없습니다.");
+	        },
+	       success: function(data){
+	    	   location.reload();	
+			}
+	});
+});
 </script>
 <body>
 	<?php 
@@ -242,6 +265,8 @@ $('#cloud_upload').live('click',function() {
 					class="divider">/</span></li>
 			</ul>
 		</div>
+		<br>
+		<input type="button" id="deletUcloud" value="delete">
 		<br>
 		<form class="bs-docs-example form-search" action="">
 			<table class="table table-hover">
@@ -265,7 +290,7 @@ $('#cloud_upload').live('click',function() {
 						$device_id = isset($row->device_id)?$row->device_id:"";
 						$device_name = isset($row->device_name)?$row->device_name:"";
 						?>
-					<tr onclick="ViewFolder('<?=$folder_id?>')">
+					<tr>
 						<td><input type="checkbox" class="chcktbl" /></td>
 						<td><?php if($folder_type == "syncFolder" && $folder_name == "휴지통"){?>
 							<img alt="휴지통"
@@ -280,7 +305,7 @@ $('#cloud_upload').live('click',function() {
 							<?php }else if ($folder_type == "folder") {?> <img alt="일반폴더"
 							src="/saegeul/modules/auth/views/assets/img/folder.png"> <?php }?>
 						</td>
-						<td><?=$folder_name?></td>
+						<td onclick="ViewFolder('<?=$folder_id?>')"><?=$folder_name?></td>
 						<td></td>
 						<td></td>
 					</tr>
@@ -297,10 +322,10 @@ $('#cloud_upload').live('click',function() {
 						$presentOnServer = isset($row->presentOnServer)?$row->presentOnServer:"";
 						$file_id = isset($row-> file_id)?$row-> file_id:"";
 						?>
-					<tr onclick="DownloadFile('<?=$file_id?>','<?=$file_name?>')">
+					<tr id='a'>
 						<td><input type="checkbox" class="chcktbl" /></td>
-						<td><?=$content_type?></td>
-						<td><?=$file_name?></td>
+						<td id = '<?=$file_id?>'><?=$content_type?></td>
+						<td onclick="DownloadFile('<?=$file_id?>','<?=$file_name?>')"><?=$file_name?></td>
 						<td><?=$modify_date?></td>
 						<td><?=$file_size?></td>
 					</tr>

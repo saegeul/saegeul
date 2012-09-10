@@ -35,8 +35,8 @@ class Provider_Ucloud extends Provider {
 			$url = $url_prefix.'ucloud/basic/createfile.json' ;
 		}else if($api_name == 'createfiletoken'){
 			$url = $url_prefix.'ucloud/basic/createfiletoken.json' ;
-		}else{
-			$url = $api_name;
+		}else if($api_name == 'deletefile'){
+			$url = $url_prefix.'ucloud/basic/deletefile.json' ;
 		}
 		
 

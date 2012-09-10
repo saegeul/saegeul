@@ -329,6 +329,59 @@ class Auth extends MX_Controller {
 		}
 		echo json_encode($success);
 	}
+	
+	public function deleteFile(){
+		$api_key = '38629799a8e9388c6ce742ed71fb6233' ;
+		$secret_key = '29b30a42991c73e76032c5f20b4b7858' ;
+		$callback_url = 'http://localhost:8888';
+		$this->load->helper('url') ;
+		$this->load->model('filebox/filebox_model', 'filebox'); // 모델 - 호출
+		
+		$this->load->library('oauth',array(
+				'api_key'=>$api_key,
+				'secret_key'=>$secret_key,
+				'callback_url'=>base_url().'auth/oauth/',
+				'signature_method'=>'HMAC-SHA1',
+				'provider'=>'Ucloud',
+				'oauth_version'=>'1.0'
+		)) ;
+		
+		$data = $this->input->get_post('data') ;
+		$upload_folder = $this->input->get_post('upload_folder') ;
+		$decodeData = json_decode($data);
+		
+		$params = array();
+		$params['oauth_token'] = $this->input->get_post('oauth_token') ;
+		$params['oauth_token_secret'] = $this->oauth->token('oauth_token_secret');
+		$params['oauth_verifier'] = $this->input->get_post('oauth_verifier') ;
+		
+		$request_header['oauth_token'] = $this->oauth->token('oauth_token') ;
+		$request_header['oauth_verifier'] =  $params['oauth_verifier'] ;
+		$request_header['oauth_token_secret'] = $this->oauth->token('oauth_token_secret') ;
+		
+		$request_header = array() ;
+		
+		$request_header['oauth_token'] = $this->oauth->token('oauth_token') ;
+		$request_header['oauth_verifier'] =  $params['oauth_verifier'] ;
+		$request_header['oauth_token_secret'] = $this->oauth->token('oauth_token_secret') ;
+		
+		$provider = $this->oauth->getProvider() ;
+		$consumer = $this->oauth->getConsumer() ;
+		
+		$api_token = $provider->getAPIToken($consumer->get('api_key'),$consumer->get('secret_key')) ;
+		
+		for ($i = 0; $i < count($decodeData); $i++) {
+			$request_body = array('api_token'=>$api_token,'file_id'=>$decodeData[$i]) ;
+			$response = $this->oauth->api_call('deletefile',$request_header,$request_body,'POST') ;
+			
+			$temp_delete_file = json_decode($response);
+			
+			if($temp_delete_file->result_code == 204){
+				$success="success";
+			}
+		}
+		echo json_encode($success);
+	}
 }
 
 /* End of file Oauth.php */
