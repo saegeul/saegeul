@@ -9,79 +9,13 @@
 <?echo common_css_asset('bootstrap/css/bootstrap.css')?>
 <?echo common_css_asset('jquery/css/smoothness/jquery-ui-1.8.22.custom.css')?>
 <?echo css_asset('auth','style.css')?>
+<?echo css_asset('auth','jquery.waitingpopup-min.css')?>
 <?echo common_js_asset('jquery/js/jquery-1.7.2.min.js')?>
 <?echo common_js_asset('jquery/js/jquery-ui-1.8.22.custom.min.js')?>
+<?echo js_asset('auth','jquery.waitingpopup-min.js')?>
+<?echo js_asset('auth','jquery.auth-ajax.js')?>
 </head>
 <script type="text/javascript">
-
-$(document).ready(function(){
-    $('#check_all').click(function(){
-		if(this.checked == false) {
-			$('.chcktbl:checked').attr('checked',false);
-		} else {
-			$('.chcktbl:not(:checked)').attr('checked',true);
-		}
-    });
-    $('#all_img_check').live('click',function() {
-    	if(this.checked == false) {
-			$('.imgcheck:checked').attr('checked',false);
-		} else {
-			$('.imgcheck:not(:checked)').attr('checked',true);
-		}
-    });
-    $.ajax({
-	       type: "GET",
-	       url: "/saegeul/filebox/getFileList",
-	       contentType: "application/json; charset=utf-8",
-	       dataType: "json",
-	       data: "page=1",
-	       error: function() { 
-	       	alert("error");
-	        },
-	       success: function(data){
-				json = eval(data);
-				
-				var markup = "all&nbsp;<input type='checkbox' id='all_img_check'/>&nbsp;<input type='button' value='cloud upload' id='cloud_upload' class='btn'><br><br><ul class='thumbnails'>";
-				var page_per_block = 5;
-				var prev_page = parseInt(json.page) - 1;
-				var next_page = parseInt(json.page) + 1;
-			
- 	       $.each(json.result, function(key,state){
- 	       	obj = state;
- 	   			markup += "<li class='span2'>"
-     	   			+ "<div class='thumbnail'><input type='checkbox' class='imgcheck'/>"
-     	   			+ "<img alt='" + obj.name + "' src='" + obj.thumbnail_url + "' class='img-rounded'>"
-     	   			+ "</div>";
- 	     	});
-	    	   markup += "</ul>"
-						+ "<div class='pagination' style='text-align: center;'>"
-						+ "<ul>";
-				if(parseInt(json.page) > 1){
-					markup += "<li id='prevBtn'>"
-						+ "<a id='" + prev_page + "'>&laquo;</a>"
-						+ "</li>";
-				}else {
-					markup += "<li class='disabled'>"
-						+ "<a>&laquo;</a>"
-						+ "</li>";
-				}
-				if(parseInt(json.page) < parseInt(json.total_page)){
-					markup += "<li id='nextBtn'>"
-						+ "<a id='" + next_page + "'>&raquo;</a>"
-						+ "</li>";
-				}else {
-					markup += "<li class='disabled'>"
-						+ "<a>&raquo;</a>"
-						+ "</li>";	
-				}
-				markup += "</ul>"
-						+ "</div>";
-				$("#files").html(markup);
-				$("#files").hide();
-				
-			}
-	});	
-});
 function ViewFolder(folder_id)
 {
 	document.location.href = "/saegeul/auth/getFolder?folder_id=" + folder_id;
@@ -93,163 +27,6 @@ function DownloadFile(file_id,file_name)
 function getFiles(){
 	$("#files").slideToggle();
 }
-
-$("#prevBtn").live('click',function() {
-	var url = $(this).find('a').attr('id');
-	$.ajax({
-	       type: "GET",
-	       url: "/saegeul/filebox/getFileList",
-	       contentType: "application/json; charset=utf-8",
-	       dataType: "json",
-	       data: "page=" + url, 
-	       error: function() { 
-	       	alert("error");
-	        },
-	        success: function(data){
-				json = eval(data);
-				
-				var markup = "all&nbsp;<input type='checkbox' id='all_img_check'/>&nbsp;<input type='button' value='cloud upload' id='cloud_upload' class='btn'><br><br><ul class='thumbnails'>";
-				var page_per_block = 5;
-				var prev_page = parseInt(json.page) - 1;
-				var next_page = parseInt(json.page) + 1;
-			
- 	       $.each(json.result, function(key,state){
- 	       	obj = state;
- 	   			markup += "<li class='span2'>"
-     	   			+ "<div class='thumbnail'><input type='checkbox' class='imgcheck'/>"
-     	   			+ "<img alt='" + obj.name + "' src='" + obj.thumbnail_url + "' class='img-rounded'>"
-     	   			+ "</div>";
- 	     	});
-	    	   markup += "</ul>"
-						+ "<div class='pagination' style='text-align: center;'>"
-						+ "<ul>";
-	    	   if(parseInt(json.page) > 1){
-					markup += "<li id='prevBtn'>"
-						+ "<a id='" + prev_page + "'>&laquo;</a>"
-						+ "</li>";
-				}else {
-					markup += "<li class='disabled'>"
-						+ "<a>&laquo;</a>"
-						+ "</li>";
-				}
-				if(parseInt(json.page) < parseInt(json.total_page)){
-					markup += "<li id='nextBtn'>"
-						+ "<a id='" + next_page + "'>&raquo;</a>"
-						+ "</li>";
-				}else {
-					markup += "<li class='disabled'>"
-						+ "<a>&raquo;</a>"
-						+ "</li>";	
-				}
-				markup += "</ul>"
-						+ "</div>";
-				$("#files").html(markup);		
-			}
-	});
-});
-
-$("#nextBtn").live('click',function() {
-	var url = $(this).find('a').attr('id');
-	$.ajax({
-	       type: "GET",
-	       url: "/saegeul/filebox/getFileList",
-	       contentType: "application/json; charset=utf-8",
-	       dataType: "json",
-	       data: "page=" + url, 
-	       error: function() { 
-	       	alert("error");
-	        },
-	        success: function(data){
-				json = eval(data);
-				
-				var markup = "all&nbsp;<input type='checkbox' id='all_img_check'/>&nbsp;<input type='button' value='cloud upload' id='cloud_upload' class='btn'><br><br><ul class='thumbnails'>";
-				var page_per_block = 3;
-				var prev_page = parseInt(json.page) - 1;
-				var next_page = parseInt(json.page) + 1;
-			
- 	       $.each(json.result, function(key,state){
- 	       	obj = state;
- 	   			markup += "<li class='span2'>"
-     	   			+ "<div class='thumbnail'><input type='checkbox' class='imgcheck'/>"
-     	   			+ "<img alt='" + obj.name + "' src='" + obj.thumbnail_url + "' class='img-rounded'>"
-     	   			+ "</div>";
- 	     	});
-	    	   markup += "</ul>"
-						+ "<div class='pagination' style='text-align: center;'>"
-						+ "<ul>";
-	    	   if(parseInt(json.page) > 1){
-					markup += "<li id='prevBtn'>"
-						+ "<a id='" + prev_page + "'>&laquo;</a>"
-						+ "</li>";
-				}else {
-					markup += "<li class='disabled'>"
-						+ "<a>&laquo;</a>"
-						+ "</li>";
-				}
-				if(parseInt(json.page) < parseInt(json.total_page)){
-					markup += "<li id='nextBtn'>"
-						+ "<a id='" + next_page + "'>&raquo;</a>"
-						+ "</li>";
-				}else {
-					markup += "<li class='disabled'>"
-						+ "<a>&raquo;</a>"
-						+ "</li>";	
-				}
-				markup += "</ul>"
-						+ "</div>";
-				$("#files").html(markup);		
-			}
-	});
-});
-
-$('#cloud_upload').live('click',function() {
-	var arr = new Array();
-	var upload_folder = window.location.href.slice(window.location.href.indexOf('?') + 11).split('&');
-	
-	$("input[class=imgcheck]").each(function(){
-		if($(this).is(':checked')){
-			arr[arr.length] = $(this).next('img').attr('alt');				
-		}
-	});
-	var str = JSON.stringify(arr);
-	$.ajax({
-	       type: "GET",
-	       url: "/saegeul/auth/uploadFile",
-	       contentType: "application/json; charset=utf-8",
-	       dataType: "json",
-	       data: "data=" + str + "&upload_folder=" + upload_folder, 
-	       error: function() { 
-	       	alert("이폴더에서는 업로드 할 수 없습니다.");
-	        },
-	       success: function(data){
-	    	   location.reload();	
-			}
-	});
-});
-
-$('#deletUcloud').live('click',function() {
-	var arr = new Array();
-	var upload_folder = window.location.href.slice(window.location.href.indexOf('?') + 11).split('&');
-	$("input[class=chcktbl]").each(function(){
-		if($(this).is(':checked')){
-			arr[arr.length] = $(this).parent().next('td').attr('id');				
-		}
-	});
-	var str = JSON.stringify(arr);
-	$.ajax({
-	       type: "GET",
-	       url: "/saegeul/auth/deleteFile",
-	       contentType: "application/json; charset=utf-8",
-	       dataType: "json",
-	       data: "data=" + str + "&upload_folder=" + upload_folder, 
-	       error: function() { 
-	       	alert("이파일을 삭제 할수 없습니다.");
-	        },
-	       success: function(data){
-	    	   location.reload();	
-			}
-	});
-});
 </script>
 <body>
 	<?php 
@@ -265,9 +42,7 @@ $('#deletUcloud').live('click',function() {
 					class="divider">/</span></li>
 			</ul>
 		</div>
-		<br>
-		<input type="button" id="deletUcloud" value="delete">
-		<br>
+		<br> <input type="button" id="deletUcloud" value="delete"> <br>
 		<form class="bs-docs-example form-search" action="">
 			<table class="table table-hover">
 				<thead>
@@ -324,8 +99,9 @@ $('#deletUcloud').live('click',function() {
 						?>
 					<tr id='a'>
 						<td><input type="checkbox" class="chcktbl" /></td>
-						<td id = '<?=$file_id?>'><?=$content_type?></td>
-						<td onclick="DownloadFile('<?=$file_id?>','<?=$file_name?>')"><?=$file_name?></td>
+						<td id='<?=$file_id?>'><?=$content_type?></td>
+						<td onclick="DownloadFile('<?=$file_id?>','<?=$file_name?>')"><?=$file_name?>
+						</td>
 						<td><?=$modify_date?></td>
 						<td><?=$file_size?></td>
 					</tr>
