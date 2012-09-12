@@ -18,16 +18,16 @@
 <header class="jumbotron subhead">
     <div class="container">
         <h1>SAEGEUL</h1>
-        <p class="lead"> Platform for Socal Curation </p>
+        <p class="lead"> Platform for Social Curation </p>
     </div>
 </header>
 <div class="container">
 <div class="row">
     <div class="span3 bs-docs-sidebar">
         <ul class="nav nav-list bs-docs-sidenav affix-top"> 
-            <li><a class="active" href="<?= base_url().'install/index/step1'?>"><i class="icon-chevron-right"></i> 1STEP : 설치 조건 확인 </a></li>
-            <li><a href="<?= base_url().'install/index/step2'?>"><i class="icon-chevron-right"></i> 2STEP : 데이터베이스 입력</a></li>
-            <li><a href="<?= base_url().'install/index/step3'?>"><i class="icon-chevron-right"></i> 3STEP : 관리자 설정 </a></li>
+            <li><a class="active" href="<?= base_url().'install/checkEnv'?>"><i class="icon-chevron-right"></i> 1STEP : 설치 조건 확인 </a></li>
+            <li><a href="<?= base_url().'install/checkDatabase'?>"><i class="icon-chevron-right"></i> 2STEP : 데이터베이스 입력</a></li>
+            <li><a href="<?= base_url().'install/checkAdmin'?>"><i class="icon-chevron-right"></i> 3STEP : 관리자 설정 </a></li>
         </ul> 
     </div> 
     <div class="span9">

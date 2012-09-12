@@ -32,5 +32,5 @@
 
         </table>
         <p> 
-            <a class="btn btn-primary" href="<?=base_url().'install/index/step2'?>"><i class="icon-circle-arrow-right icon-white"></i> 다음 단계로...</a>
+            <a class="btn btn-primary" href="<?=base_url().'install/checkDatabase'?>"><i class="icon-circle-arrow-right icon-white"></i> 다음 단계로...</a>
         </p>

@@ -1,21 +1,20 @@
 <h1>DATABASE  </h1>
-<form>
+<form action="setupDatabase" method="post" >
     <label>DB호스트네임</label>
-    <input type="text" placeholder="localhost" />
-
-    <label>DB PORT</label>
-    <input type="text" placeholder="3306" />
+    <input type="text" name="database_host" placeholder="localhost" value="localhost" />
 
     <label>DATABASE 이름</label>
-    <input type="text" placeholder="type to your database"/>
+    <input type="text" name="database_name" placeholder="type to your database"/>
 
     <label>DB 아이디</label>
-    <input type="text" placeholder="아이디를 입력하세요." />
+    <input type="text" name="database_user"placeholder="아이디를 입력하세요." />
 
     <label>DB 패스워드</label>
-    <input type="text" placeholder="패스워드를 입력하세요."/>
+    <input type="password" name="database_password" placeholder="패스워드를 입력하세요."/>
+
+    <p> 
+        <button type="submit" class="btn btn-primary"><i class="icon-circle-arrow-right icon-white"></i> 다음 단계로... </button>
+    </p>
 </form>
 
-<p> 
-            <a class="btn btn-primary" href="<?=base_url().'install/index/step2'?>"><i class="icon-circle-arrow-right icon-white"></i> 다음 단계로...</a>
-        </p>
+

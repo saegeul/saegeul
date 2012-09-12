@@ -1,0 +1,7 @@
+<table name="ci_sessions" >
+    <column name="session_id" type="varchar" size="40" default="0" primary_key="true" />
+    <column name="ip_address" type="varchar" size="50" default="0"  not_null="true"/>
+    <column name="user_agent" type="varchar" size="150"  not_null="true" />
+    <column name="last_activity" type="int" unsigned="true" size="10"  not_null="true" />
+    <column name="user_data" type="text" not_null="true"/>
+</table>
