@@ -108,7 +108,7 @@ $captcha = array(
 			<?php //if ($this->config->item('allow_registration', 'tank_auth')) echo anchor('/member/register/', 'Register'); ?>
 			<a href="member/forgot_password">비밀번호 찾기 </a><br>
 			<input class='btn btn-success' type='submit' value='LOGIN'> 
-			<a class="btn btn-info" href="member/register">회원가입 </a>
+			<a class="btn btn-info" href="register">회원가입 </a>
 		</td>
 	</tr>
 </table>

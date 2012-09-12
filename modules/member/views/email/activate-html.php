@@ -1,4 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 <html>
 <head><title> <?php echo $site_name; ?>에 오신것을 환영합니다!</title></head>
 <body>
@@ -25,7 +26,7 @@ Your email address: <?php echo $email; ?><br />
 <?php
 if($email['ivt']) {
 echo "Your password:".$password;
-echo $email['ivt'];
+
 }
 
 ?>
