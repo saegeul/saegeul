@@ -80,7 +80,9 @@ class Member extends MX_Controller
 			$this->_show_message($this->lang->line('auth_message_registration_disabled'));
 
 		} else {
-			$this->do_register();
+			$data['ivt']=0;
+			
+			$this->do_register($data);
 		}
 	}
 
@@ -130,12 +132,17 @@ class Member extends MX_Controller
 	{
 		$user_id		= $this->uri->segment(3);
 		$new_email_key	= $this->uri->segment(4);
+		$ivt	= $this->uri->segment(5);
 
 		// Activate user
 		if ($this->tank_auth->activate_user($user_id, $new_email_key)) {		// success
+			
+			
+			
 			$this->tank_auth->logout();
 			$this->_show_message($this->lang->line('auth_message_activation_completed').' '.anchor('/member/login/', 'Login'));
-
+			
+		
 		} else {																// fail
 			$this->_show_message($this->lang->line('auth_message_activation_failed'));
 		}
@@ -371,7 +378,7 @@ class Member extends MX_Controller
 		$this->email->reply_to($this->config->item('webmaster_email', 'tank_auth'), $this->config->item('website_name', 'tank_auth'));
 		$this->email->to($email);
 		$this->email->subject(sprintf($this->lang->line('auth_subject_'.$type), $this->config->item('website_name', 'tank_auth')));
-		$this->email->message($this->load->view('email/'.$type.'-html', $data, TRUE));
+		$this->email->message($this->load->view('email/'.$type.'-html', $data,$email, TRUE));
 		$this->email->set_alt_message($this->load->view('email/'.$type.'-txt', $data, TRUE));
 		$this->email->send();
 	}
@@ -477,7 +484,7 @@ class Member extends MX_Controller
 		$this->load->view('member/main');
 	}
 
-	function admin($page=1){
+	function admin_member($page=1){
 		$this->load->model('users','',TRUE);
 		$data = "";
 		
@@ -487,7 +494,7 @@ class Member extends MX_Controller
 		$base_segment = 3; // CI페이징 세그먼트 주소위치값
 		$page_view = 10; // 한 페이지에 보여줄 레코드 수
 		$base_url = base_url(); // base_url
-		$act_url = $base_url . "member/admin";
+		$act_url = $base_url . "member/admin_member";
 		$page_per_block = 5; // 페이징 이동 개수 ( 1 .. 5)
 			
 		$data = "";
@@ -521,7 +528,7 @@ class Member extends MX_Controller
 		$data['base_url'] = $base_url;
 		$data['act_url'] = $act_url;
 
-		$this->load->view('member/admin',$data);
+		$this->load->view('member/admin_member',$data);
 	}
 
 
@@ -533,7 +540,7 @@ class Member extends MX_Controller
 		
 		//echo ("<script>alert('회원을 탈퇴 시켰습니다.')</script>");
 		
-		redirect('/member/admin/');
+		redirect('/member/admin_member/');
 	}
 	
 	function admin_set(){
@@ -545,7 +552,7 @@ class Member extends MX_Controller
 		$this->users->admin_set($id,$admin);
 		}
 		
-		$this->admin();
+		$this->admin_member();
 				
 	}
 
@@ -562,7 +569,7 @@ class Member extends MX_Controller
 	
 	}
 	
-	function check_validation(){
+	function check_validation($data){
 		if ($this->form_validation->run()) {								// validation ok
 			if ($this->tank_auth->login(
 					$this->form_validation->set_value('login'),
@@ -616,7 +623,7 @@ class Member extends MX_Controller
 		}
 		$data['errors'] = array();
 		
-		$this->check_validation();
+		$this->check_validation($data);
 			
 		$data['show_captcha'] = FALSE;
 		if ($this->tank_auth->is_max_login_attempts_exceeded($login)) {
@@ -634,7 +641,9 @@ class Member extends MX_Controller
 	}
 	
 	
-	function do_register(){
+	function do_register($data){
+		
+		
 
 		$use_username = $this->config->item('use_username', 'tank_auth');
 		
@@ -680,7 +689,10 @@ class Member extends MX_Controller
 				} else {
 					if ($this->config->item('email_account_details', 'tank_auth')) {	// send "welcome" email
 		
-						$this->_send_email('welcome', $data['email'], $data);
+					
+							$this->_send_email('welcome', $data['email'], $data);
+						
+						
 					}
 					unset($data['password']); // Clear password (just for any case)
 		
@@ -701,12 +713,34 @@ class Member extends MX_Controller
 		$data['use_username'] = $use_username;
 		$data['captcha_registration'] = $captcha_registration;
 		$data['use_recaptcha'] = $use_recaptcha;
-		$this->load->view('member/register_form', $data);
 		
+	
+		
+		if($data['ivt']){
+			
+			$this->load->view('member/invite_form',$data);
+		}
+		else{
+		$this->load->view('member/register_form', $data);
+		}
+		
+	}
+
+	
+	function admin(){
+		
+		$this->load->view('member/admin');
 		
 	}
 	
-	
+	function admin_invite(){
+		$data['ivt']=1;
+		$this->do_register($data);
+		
+		
+		
+		
+	}
 	
 	
 }
