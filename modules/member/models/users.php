@@ -528,9 +528,9 @@ class Users extends CI_Model
 		
 	}
 	
-	function req_change_password_0($user_id){
+	function req_change_password_0($user_name){
 		$this->db->set('password_change_requested',0 );
-		$this->db->where('id', $user_id);
+		$this->db->where('username', $user_name);
 		$this->db->update($this->table_name);
 	
 	

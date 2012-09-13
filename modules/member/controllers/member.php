@@ -288,8 +288,7 @@ class Member extends MX_Controller
 						$this->form_validation->set_value('new_password'))) {	// success
 					
 					
-					$username=$this->tank_auth->get_username();
-					$this->users->req_change_password_0($user_id);
+					
 					
 					$this->_show_message($this->lang->line('auth_message_password_changed'));
 
@@ -524,6 +523,9 @@ class Member extends MX_Controller
 	
 		if($this->users->check_first_login($username))
 		{
+			
+			$this->users->req_change_password_0($username);
+			
 			$this->change_password();
 		}
 else{
