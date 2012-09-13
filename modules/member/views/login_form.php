@@ -120,3 +120,4 @@ $captcha = array(
 </div>
 
 </body>
+<?php echo form_error($login['name']); ?><?php echo isset($errors[$login['name']])?$errors[$login['name']]:''; ?>

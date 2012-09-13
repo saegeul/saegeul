@@ -204,7 +204,8 @@ class Member extends MX_Controller
 					// Send email with password activation link
 					$this->_send_email('forgot_password', $data['email'], $data);
 
-					$this->_show_message($this->lang->line('auth_message_new_password_sent'));
+					
+					$this->_show_message($this->lang->line('auth_message_new_password_sent').' '.anchor('/member/login/', 'Login'));
 
 				} else {
 					$errors = $this->tank_auth->get_error_message();
