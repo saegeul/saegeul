@@ -16,7 +16,7 @@
 
 <a href="member/admin_member">회원관리</a><br>
 <a href="member/change_password">관리자 비밀번호 변경</a><br>
-<a href="member/admin_invite">초대</a><br>
+<a href="member/do_invite">초대</a><br>
 
 
 <a class="btn btn-primary btn-large" href="member/logout">로그아웃 </a>

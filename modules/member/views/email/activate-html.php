@@ -15,21 +15,15 @@
 <big style="font: 16px/18px Arial, Helvetica, sans-serif;"><b><a href="<?php echo site_url('/member/activate/'.$user_id.'/'.$new_email_key); ?>" style="color: #3366cc;">이메일 인증 및 활성화 하기...</a></b></big><br />
 <br />
 Link 제대로 동작 하지 않는다면, 다음 링크를 웹브라우저의 주소창에 복사하여 이동해 주시기 바랍니다:<br />
-<?php $ivt=$email['ivt']?>
-<nobr><a href="<?php echo site_url('/member/activate/'.$user_id.'/'.$new_email_key.'/'.$ivt); ?>" style="color: #3366cc;"><?php echo site_url('/member/activate/'.$user_id.'/'.$new_email_key); ?></a></nobr><br />
+
+<nobr><a href="<?php echo site_url('/member/activate/'.$user_id.'/'.$new_email_key); ?>" style="color: #3366cc;"><?php echo site_url('/member/activate/'.$user_id.'/'.$new_email_key); ?></a></nobr><br />
 <br />
 <?php echo $activation_period; ?> 시간 내에 이메일 인증을 해주시기 바랍니다.  그렇지 않으면 당신의 이메일인증은 유효하지 않게 되며, 재등록을 하셔야 합니다.<br />
 <br />
 <br />
 <?php if (strlen($username) > 0) { ?>Your username: <?php echo $username; ?><br /><?php } ?>
 Your email address: <?php echo $email; ?><br />
-<?php
-if($email['ivt']) {
-echo "Your password:".$password;
 
-}
-
-?>
 <br />
 <br />
 
