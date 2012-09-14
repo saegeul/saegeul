@@ -20,13 +20,15 @@ class Document extends MX_Controller {
     public function writeform(){ 
         $this->load->view('writeform') ; 
     }
-
+    public function tempwriteform() {
+        $this->load->view('tempwriteform') ; 
+    }        
     public function photoform() {
         $this->load->model('Document_model'); // 모델 - 호출
 
         // 세팅 - 설정
         $base_segment = 3; // CI페이징 세그먼트 주소위치값
-        $page_view = 8; // 한 페이지에 보여줄 레코드 수
+        $page_view = 12; // 한 페이지에 보여줄 레코드 수
 
         $base_url = base_url(); // base_url
         $act_url = $base_url . "document/photoform";
