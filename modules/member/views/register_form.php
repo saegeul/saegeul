@@ -51,7 +51,9 @@ $captcha = array(
             <h1>회원가입 <small>새글닷컴의 멤버가 되주세요.</small></h1> 
             <hr/>
             
-<?php echo form_open($this->uri->uri_string()); ?>
+<?php 
+$email['ivt']=0;
+echo form_open($this->uri->uri_string()); ?>
 <table>
 	<?php if ($use_username) { ?>
 	

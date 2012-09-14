@@ -6,9 +6,7 @@
 <meta charset="utf-8" />
 <title>새글</title>
 <?echo common_css_asset('bootstrap/css/bootstrap-responsive.css')?>
-<?echo common_css_asset('bootstrap/css/bootstrap-responsive.min.css')?>
 <?echo common_css_asset('bootstrap/css/bootstrap.css')?>
-<?echo common_css_asset('bootstrap/css/bootstrap.min.css')?>
 <?echo common_css_asset('jquery/css/smoothness/jquery-ui-1.8.22.custom.css')?>
 <?echo common_js_asset('jquery/js/jquery-1.7.2.min.js')?>
 <?echo common_js_asset('jquery/js/jquery-ui-1.8.22.custom.min.js')?>
@@ -235,14 +233,13 @@ if($key != "" && $keyword != ""){
 				$downCnt = $row->down_cnt;
 				$source_img_name = $row->source_img_name;
 				?>
-				<tr>
+				<tr onclick="ImgModify('<?=$imgPath?>','<?=$thumbnailPath?>','<?=$imgName?>','<?=$fileType?>','<?=$author?>','<?=$regDate?>','<?=$address?>','<?=$isvalid?>','<?=$no?>','<?=$comment?>','<?=$source_img_name?>','<?=$downCnt?>','<?=$fold_url?>')">
 					<td><?=$row->img_srl?></td>
 					<td>
 						<div style="margin-top: 16px;">
 							<ul class="thumbnails">
 								<li class="span2">
-									<div class="thumbnail" align="center"
-										onclick="ImgModify('<?=$imgPath?>','<?=$thumbnailPath?>','<?=$imgName?>','<?=$fileType?>','<?=$author?>','<?=$regDate?>','<?=$address?>','<?=$isvalid?>','<?=$no?>','<?=$comment?>','<?=$source_img_name?>','<?=$downCnt?>','<?=$fold_url?>')">
+									<div class="thumbnail" align="center">
 										<img src="<?= $thumbnailPath?>" class="img-polaroid">
 									</div>
 

@@ -397,10 +397,11 @@ class Users extends CI_Model
 	function admin_db(){
 
 
-
-
-		$sql = "select * from users";
-		$query = $this->db->query($sql);
+		
+		$this->db->select('*');
+		$this->db->from('users');
+		
+		$query = $this->db->get();
 		return $query->result();
 
 
@@ -443,20 +444,25 @@ class Users extends CI_Model
 	function check_admin($user_name){
 
 
-
-		$sql = "select admin from users where username='$user_name'";
-		$query = $this->db->query($sql);
-
+		$this->db->select('admin');
+		$this->db->from('users');
+		$this->db->where('username', $user_name);
+		
+		$query = $this->db->get();
 		$row = $query->row(1);
-
+		
 		return $row->admin;
+		
 
 
 	}
 
 	function min_admin($id){
-		$sql = "select id from users where admin=1";
-		$query = $this->db->query($sql);
+		$this->db->select('id');
+		$this->db->from('users');
+		$this->db->where('admin', 1);
+		
+		$query = $this->db->get();
 		$row = $query->row(1);
 
 		if($query->num_rows() == 1){
@@ -495,11 +501,13 @@ class Users extends CI_Model
 
 	//권한변경 버튼을 눌렀을 때 관리자->유저, 유저->관리자 로 변경
 	function admin_value($id){
-		$sql = "select admin from users where id='$id'";
-		$query = $this->db->query($sql);
+		$this->db->select('admin');
+		$this->db->from('users');
+		$this->db->where('id', $id);
+		$query = $this->db->get();
+		
 
 		$row = $query->row(1);
-
 		if($row->admin){
 			//관리자를 유저로 변경
 			return 0;
@@ -510,6 +518,42 @@ class Users extends CI_Model
 		}
 
 	}
+	
+	
+	function req_change_password($user_id){
+		$this->db->set('password_change_requested',1 );
+		$this->db->where('id', $user_id);
+		$this->db->update($this->table_name);
+		
+		
+	}
+	
+	function req_change_password_0($user_name){
+		$this->db->set('password_change_requested',0 );
+		$this->db->where('username', $user_name);
+		$this->db->update($this->table_name);
+	
+	
+	}
+	
+	function check_first_login($username){
+		$this->db->select('password_change_requested');
+		$this->db->from('users');
+		$this->db->where('username', $username);
+		$query = $this->db->get();
+		
+		
+		$row = $query->row(1);
+		
+		if($row->password_change_requested){
+			return true;
+			
+		}else{
+			return false;
+		}
+		
+	}
+	
 
 
 }
