@@ -41,7 +41,7 @@ $config['phpass_hash_strength'] = 8;
 */
 $config['allow_registration'] = TRUE;
 $config['captcha_registration'] = FALSE;
-$config['email_activation'] = TRUE;
+$config['email_activation'] = FALSE;
 $config['email_activation_expire'] = 60*60*24*2;
 $config['email_account_details'] = FALSE;
 $config['use_username'] = TRUE;
@@ -138,7 +138,7 @@ $config['recaptcha_private_key'] = '';
 | (except 'ci_sessions' table).
 |--------------------------------------------------------------------------
 */
-$config['db_table_prefix'] = '';
+$config['db_table_prefix'] = 'SG_';
 
 
 /* End of file tank_auth.php */

@@ -392,7 +392,7 @@ class Users extends CI_Model
 		$this->db->where('user_id', $user_id);
 		$this->db->delete($this->profile_table_name);
 	}
-
+/*
 	//admin 페이지에서 회원목록을 출력하기 위해 회원정보를 모두 반환
 	function admin_db(){
 
@@ -509,7 +509,7 @@ class Users extends CI_Model
 			return 1;
 		}
 
-	}
+	}*/
 
 
 }

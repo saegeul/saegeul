@@ -52,13 +52,9 @@ class Member extends MX_Controller
 	 */
 	function logout()
 	{
-		$this->tank_auth->logout();
-		
-	
+		$this->tank_auth->logout(); 
 
 		redirect('/member/login/');
-		
-		//$this->_show_message($this->lang->line('auth_message_logged_out'));
 		
 		
 	}
@@ -558,15 +554,14 @@ class Member extends MX_Controller
 
 	//admin과 user를 구분해서 페이지를 이동
 	function admin_or_user(){
-		if($this->users->check_admin($this->tank_auth->get_username())){
+	    redirect('/member/admin/');
+		/*if($this->users->check_admin($this->tank_auth->get_username())){
 			redirect('/member/admin/');
 		}
 		else{
 			
 			redirect('/member/main_page/');
-		}
-	
-	
+		}*/ 
 	}
 	
 	function check_validation($data){

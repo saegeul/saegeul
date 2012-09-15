@@ -71,22 +71,26 @@ class Sg_dbutil {
 
         isset($field['size'])           ? $config['constraint'] = $field['size'] : ''; 
         isset($field['default'])        ? $config['default'] = $field['default'] : ''; 
-        isset($field['auto_increment']) ? $config['auto_increment'] = $field['auto_increment'] : ''; 
+        isset($field['auto_increment']) ? $config['auto_increment'] = true : ''; 
         isset($field['unsigned'])       ? $config['unsigned'] = $field['unsigned'] : ''; 
         isset($field['not_null'])       ? $config['null'] = false : $config['null'] = true; 
-
          
         return $config ; 
     }
 
     public function create_table($table_name,$fields){
         $field_array = array() ; 
+        $this->CI->load->dbforge() ; 
+
         foreach($fields as $key => $field){ 
             $a_field = $this->generate_field($field); 
             $column_name = $a_field['name'] ; 
             unset($a_field['name']) ; 
             $field_array[$column_name] = $a_field ; 
 
+            if(isset($field['primary_key'])){
+                $this->CI->dbforge->add_key($column_name,true) ; 
+            } 
         } 
 
         if(! $this->CI->db->table_exists($table_name)){ 
