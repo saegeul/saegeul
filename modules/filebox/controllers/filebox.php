@@ -12,6 +12,7 @@ class Filebox extends MX_Controller {
 		$this->load->helper('date');
 	}
 
+	
 	public function index(){
 
 	}
