@@ -1,9 +1,11 @@
 <table name="users" > 
     <column name="id" type="int" size="11" auto_increment="true" primary_key="true" />
+    <column name="level" type="varchar" size="20" /> <!-- admin,manager,member,guest -->
     <column name="username" type="varchar" size="50"   not_null="true"/>
     <column name="password" type="varchar" size="255"   not_null="true"/>
     <column name="email" type="varchar" size="100"   not_null="true"/> 
     <column name="activated" type="tinyint" size="1" default="1"  not_null="true"/> 
+    <column name="password_change_requested" type="tinyint" size="1" default="0"  /> 
     <column name="banned" type="tinyint" size="1" default="0"  not_null="true" /> 
     <column name="ban_reason" type="varchar" size="255"  /> 
     <column name="new_password_key" type="varchar" size="50"  /> 

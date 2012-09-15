@@ -11,8 +11,7 @@ class Member extends MX_Controller
 		$this->load->helper('security');
 		$this->load->library('tank_auth');
 		$this->lang->load('tank_auth');
-	}
-
+	} 
 
 	//시작페이지
 	function index()
@@ -34,13 +33,10 @@ class Member extends MX_Controller
 	{
 		$this->load->model('users','',TRUE);
 		if ($this->tank_auth->is_logged_in()) {									// logged in 로그인 되어있다면,
-			$this->admin_or_user();
-
+			$this->admin_or_user(); 
 		} elseif ($this->tank_auth->is_logged_in(FALSE)) {						// logged in, not activated
-			$this->admin_or_user();
-
-		} else {
-				
+			$this->admin_or_user(); 
+		} else { 
 			$this->do_login();
 		}
 	}
@@ -53,8 +49,6 @@ class Member extends MX_Controller
 	function logout()
 	{
 		$this->tank_auth->logout();
-
-
 
 		redirect('/member/login/');
 
@@ -172,11 +166,6 @@ class Member extends MX_Controller
 		}
 	}
 
-
-
-
-
-
 	/**
 	 * Generate reset code (to change password) and send it to user
 	 *
@@ -260,11 +249,6 @@ class Member extends MX_Controller
 		}
 		$this->load->view('member/reset_password_form', $data);
 	}
-
-	
-
-
-
 
 	/**
 	 * Change user password
@@ -522,18 +506,14 @@ class Member extends MX_Controller
 		$this->load->model('users','',TRUE);
 		$username=$this->tank_auth->get_username();
 	
-		if($this->users->check_first_login($username))
-		{
+		if($this->users->check_first_login($username)) {
 			
 			$this->users->req_change_password_0($username);
 			
 			$this->change_password();
-		}
-else{
-
-
-		$this->load->view('member/main');
-}
+		} else{ 
+		    $this->load->view('member/main');
+        }
 	}
 
 	function admin_member($page=1){
@@ -571,10 +551,7 @@ else{
 			
 		$data['result']=$this->users->select_entry($start_idx, $page_view, $data);
 		$data['total_record'] = count($this->users->total_entry_count($data));
-		$data['total_page'] = ceil($data['total_record'] / $page_view);
-			
-
-
+		$data['total_page'] = ceil($data['total_record'] / $page_view); 
 
 		// 폼 - 정의
 		$data['base_url'] = $base_url;
@@ -605,58 +582,41 @@ else{
 		}
 
 		$this->admin_member();
-
 	}
 
 	//admin과 user를 구분해서 페이지를 이동
 	function admin_or_user(){
-		if($this->users->check_admin($this->tank_auth->get_username())){
+		if($this->users->check_level($this->tank_auth->get_username())){
 			redirect('/member/admin/');
-		}
-		else{
-				
+		} else { 
 			redirect('/member/main_page/');
-		}
-
-
+		} 
 	}
 
-	function check_validation($data){
-		if ($this->form_validation->run()) {								// validation ok
-			if ($this->tank_auth->login(
-					$this->form_validation->set_value('login'),
-					$this->form_validation->set_value('password'),
-					$this->form_validation->set_value('remember'),
-					$data['login_by_username'],
-					$data['login_by_email'])) {								// success
-				$this->admin_or_user();
-					
-			} else {
-				$errors = $this->tank_auth->get_error_message();
-				if (isset($errors['banned'])) {								// banned user
-					$this->_show_message($this->lang->line('auth_message_banned').' '.$errors['banned']);
+    function _check_validation($fields){ 
+        $validation_rules = array( 
+            'username'=>array('msg'=>'Username','filter'=> 'trim|required|xss_clean|min_length['.$this->config->item('username_min_length', 'tank_auth').']|max_length['.$this->config->item('username_max_length', 'tank_auth').']|alpha_dash'), 
+            'email'=>array('msg'=>'Emal','filter'=> 'trim|required|xss_clean|valid_email'),
+            'login' => array('msg'=>'Login','filter'=>'trim|required|xss_clean'),
+            'remember' => array('msg'=>'Remember ME','filter'=>'integer'),
+            'password'=> array('msg'=>'Password','filter'=>'trim|required|xss_clean|min_length['.$this->config->item('password_min_length', 'tank_auth').']|max_length['.$this->config->item('password_max_length', 'tank_auth').']|alpha_dash'),
+            'confirm_password'=>array('msg'=>'Confirm_password','filter'=>'trim|required|xss_clean|matches[password]') ,
+            'recaptcha_response_field'=>array('msg'=>'Confirmation Code','filter'=>'trim|xss_clean|required|callback__check_recaptcha') ,
+            'captcha'=>array('msg'=>'Confirmation Code','filter'=>'trim|xss_clean|required|callback__check_captcha') 
+        );
 
-				} elseif (isset($errors['not_activated'])) {				// not activated user
-					redirect('/member/send_again/');
+        foreach($fields as $key){
+            $this->form_validation->set_rules($key,$validation_rules[$key]['msg'] ,$validation_rules[$key]['filter']) ; 
+        }
 
-				} else {													// fail
-					foreach ($errors as $k => $v)	$data['errors'][$k] = $this->lang->line($v);
-				}
-			}
-		}
-
-
-	}
+        return $this->form_validation->run() ; 
+    } 
 
 
 	function do_login(){
 		$data['login_by_username'] = ($this->config->item('login_by_username', 'tank_auth') AND
 				$this->config->item('use_username', 'tank_auth'));
 		$data['login_by_email'] = $this->config->item('login_by_email', 'tank_auth');
-
-		$this->form_validation->set_rules('login', 'Login', 'trim|required|xss_clean');
-		$this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean');
-		$this->form_validation->set_rules('remember', 'Remember me', 'integer');
 
 		// Get login for counting attempts to login
 		if ($this->config->item('login_count_attempts', 'tank_auth') AND
@@ -666,16 +626,40 @@ else{
 			$login = '';
 		}
 
+        $fields = array('login','password','remember') ;  
+
 		$data['use_recaptcha'] = $this->config->item('use_recaptcha', 'tank_auth');
+
 		if ($this->tank_auth->is_max_login_attempts_exceeded($login)) {
-			if ($data['use_recaptcha'])
-				$this->form_validation->set_rules('recaptcha_response_field', 'Confirmation Code', 'trim|xss_clean|required|callback__check_recaptcha');
-			else
-				$this->form_validation->set_rules('captcha', 'Confirmation Code', 'trim|xss_clean|required|callback__check_captcha');
+            $fields[] = $data['user_recaptcha'] ? 'recaptcha_response_field' : 'captcha' ; 
 		}
+
 		$data['errors'] = array();
 
-		$this->check_validation($data);
+		if(!$ret = $this->_check_validation($fields)){
+            echo "validation error"  ; 
+        }
+
+        if ($this->tank_auth->login(
+		    $this->form_validation->set_value('login'),
+			$this->form_validation->set_value('password'),
+			$this->form_validation->set_value('remember'),
+			$data['login_by_username'],
+	        $data['login_by_email'])) {								// success
+
+		    $this->admin_or_user(); 
+		} else {
+	        $errors = $this->tank_auth->get_error_message();
+			if (isset($errors['banned'])) {								// banned user
+			    $this->_show_message($this->lang->line('auth_message_banned').' '.$errors['banned']);
+
+			} elseif (isset($errors['not_activated'])) {				// not activated user
+			    redirect('/member/send_again/');
+
+			} else {													// fail
+			    foreach ($errors as $k => $v)	$data['errors'][$k] = $this->lang->line($v);
+		    }
+	    }
 			
 		$data['show_captcha'] = FALSE;
 		if ($this->tank_auth->is_max_login_attempts_exceeded($login)) {
@@ -694,8 +678,6 @@ else{
 
 
 	function do_register(){
-
-
 
 		$use_username = $this->config->item('use_username', 'tank_auth');
 
@@ -765,20 +747,13 @@ else{
 		$data['use_username'] = $use_username;
 		$data['captcha_registration'] = $captcha_registration;
 		$data['use_recaptcha'] = $use_recaptcha;
-
-
-
-
 			
-
 		$this->load->view('member/register_form', $data);
-
 
 	}
 
 
-	function do_invite(){
-
+	function do_invite(){ 
 
 
 		$use_username = $this->config->item('use_username', 'tank_auth');

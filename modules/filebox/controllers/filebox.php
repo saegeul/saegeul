@@ -37,9 +37,6 @@ class Filebox extends MX_Controller {
 			case 'OPTIONS':
 				break;
 			case 'HEAD':
-// 															case 'GET':
-// 																$this->get();
-// 																break;
 			case 'POST':
 				if (isset($_REQUEST['_method']) && $_REQUEST['_method'] === 'DELETE') {
 					$this->delete();

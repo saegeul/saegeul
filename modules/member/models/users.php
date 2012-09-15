@@ -394,18 +394,13 @@ class Users extends CI_Model
 	}
 
 	//admin 페이지에서 회원목록을 출력하기 위해 회원정보를 모두 반환
-	function admin_db(){
-
-
+	function admin_db(){ 
 		
 		$this->db->select('*');
 		$this->db->from('users');
 		
 		$query = $this->db->get();
-		return $query->result();
-
-
-
+		return $query->result(); 
 	}
 
 	function select_entry($list_num,$offset,$data)
@@ -440,21 +435,16 @@ class Users extends CI_Model
 		return $query->result();
 	}
 
-	//선택한 유저의 권한이 무엇인지 체크(1은 admin, 0은 user)
-	function check_admin($user_name){
-
-
-		$this->db->select('admin');
+	//선택한 유저의 권한이 무엇인지 체크(admin,manager,member,guest)
+	function check_level($user_name){ 
+		$this->db->select('level');
 		$this->db->from('users');
 		$this->db->where('username', $user_name);
 		
 		$query = $this->db->get();
 		$row = $query->row(1);
 		
-		return $row->admin;
-		
-
-
+		return $row->level; 
 	}
 
 	function min_admin($id){
@@ -486,16 +476,11 @@ class Users extends CI_Model
 	}
 
 	//받아온 값으로 권한값을 변경
-	function admin_set($id,$admin){
-
-
-
+	function admin_set($id,$admin){ 
 
 		$this->db->set('admin',$admin );
 		$this->db->where('id', $id);
-		$this->db->update($this->table_name);
-
-
+		$this->db->update($this->table_name); 
 
 	}
 
