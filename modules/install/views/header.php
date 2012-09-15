@@ -25,7 +25,7 @@
 <div class="row">
     <div class="span3 bs-docs-sidebar">
         <ul class="nav nav-list bs-docs-sidenav affix-top"> 
-            <li><a class="active" href="<?= base_url().'install/checkEnv'?>"><i class="icon-chevron-right"></i> 1STEP : 설치 조건 확인 </a></li>
+            <li><a class="active" href="<?= base_url().'install/checkEnvironment'?>"><i class="icon-chevron-right"></i> 1STEP : 설치 조건 확인 </a></li>
             <li><a href="<?= base_url().'install/checkDatabase'?>"><i class="icon-chevron-right"></i> 2STEP : 데이터베이스 입력</a></li>
             <li><a href="<?= base_url().'install/checkAdmin'?>"><i class="icon-chevron-right"></i> 3STEP : 관리자 설정 </a></li>
         </ul> 

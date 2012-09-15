@@ -538,9 +538,12 @@ class Users extends CI_Model
 		}
 		
 	}
-	
 
-
+    function setAdminByEmail($email){
+        $this->db->set('level','admin' );
+		$this->db->where('email', $email);
+		$this->db->update($this->table_name);
+    } 
 }
 
 /* End of file users.php */
