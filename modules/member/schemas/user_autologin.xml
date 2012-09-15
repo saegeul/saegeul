@@ -1,0 +1,7 @@
+<table name="user_autologin">
+    <column name="key_id" type="char" size="32" primary_key="true" not_null="true" />
+    <column name="user_id" type="int" size="11" default="0" primary_key="true" not_null="true" />
+    <column name="user_agent" type="varchar" size="150" not_null="true" />
+    <column name="last_ip" type="varchar" size="40"  not_null="true"/>
+    <column name="last_login" type="timestamp"  not_null="true"/>
+</table>

@@ -1,18 +1,20 @@
-<?require('header.php')?>
-<div class="container" >
-    <div class="modal">
-        <div class="modal-header" > 
-            <h3>새글을 설치합니다.</h3>
-        </div>
-        <div class="modal-body">
-            <div class="well">
-                <h3> 3번의 클릭으로 설치가 끝납니다. </h3>
+<h1>DATABASE  </h1>
+<form action="setupDatabase" method="post" >
+    <label>DB호스트네임</label>
+    <input type="text" name="database_host" placeholder="localhost" value="localhost" />
 
-            </div>
-        </div>
-        <div class="modal-footer" > 
-            <a class="btn btn-primary"><i class="icon icon-white icon-circle-arrow-right"></i>  Install </a>
-        </div>
-    </div>
-</div>
-<?require('footer.php')?>
+    <label>DATABASE 이름</label>
+    <input type="text" name="database_name" placeholder="type to your database"/>
+
+    <label>DB 아이디</label>
+    <input type="text" name="database_user"placeholder="아이디를 입력하세요." />
+
+    <label>DB 패스워드</label>
+    <input type="password" name="database_password" placeholder="패스워드를 입력하세요."/>
+
+    <p> 
+        <button type="submit" class="btn btn-primary"><i class="icon-circle-arrow-right icon-white"></i> 다음 단계로... </button>
+    </p>
+</form>
+
+

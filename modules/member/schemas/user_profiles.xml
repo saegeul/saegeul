@@ -1,0 +1,7 @@
+<?xml version="1.0" standalone="yes" ?>
+<table name="user_profiles">
+    <column name="id" type="int" size="11"  auto_increment="true" primary_key="true" />
+    <column name="user_id" type="int" size="11"   not_null="true"/>
+    <column name="country" type="varchar" size="20"   not_null="true"/>
+    <column name="website" type="varchar" size="255"   not_null="true"/> 
+</table>

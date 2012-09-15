@@ -1,0 +1,19 @@
+<table name="users" > 
+    <column name="id" type="int" size="11" auto_increment="true" primary_key="true" />
+    <column name="level" type="varchar" size="20" /> <!-- admin,manager,member,guest -->
+    <column name="username" type="varchar" size="50"   not_null="true"/>
+    <column name="password" type="varchar" size="255"   not_null="true"/>
+    <column name="email" type="varchar" size="100"   not_null="true"/> 
+    <column name="activated" type="tinyint" size="1" default="1"  not_null="true"/> 
+    <column name="password_change_requested" type="tinyint" size="1" default="0"  /> 
+    <column name="banned" type="tinyint" size="1" default="0"  not_null="true" /> 
+    <column name="ban_reason" type="varchar" size="255"  /> 
+    <column name="new_password_key" type="varchar" size="50"  /> 
+    <column name="new_password_requested" type="datetime"  /> 
+    <column name="new_email" type="varchar" size="100" /> 
+    <column name="new_email_key" type="varchar" size="50" /> 
+    <column name="last_ip" type="varchar" size="40"  not_null="true"/> 
+    <column name="last_login" type="datetime" default="0000-00-00 00:00:00"  not_null="true"/> 
+    <column name="created" type="datetime"  default="0000-00-00 00:00:00"  not_null="true"/> 
+    <column name="modified" type="timestamp"  not_null="true" /> 
+</table>

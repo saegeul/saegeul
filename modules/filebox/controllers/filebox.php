@@ -37,9 +37,6 @@ class Filebox extends MX_Controller {
 			case 'OPTIONS':
 				break;
 			case 'HEAD':
-															case 'GET':
-																$this->get();
-																break;
 			case 'POST':
 				if (isset($_REQUEST['_method']) && $_REQUEST['_method'] === 'DELETE') {
 					$this->delete();
@@ -107,8 +104,8 @@ class Filebox extends MX_Controller {
 				$config['source_image'] = $dest;
 				$config['create_thumb'] = FALSE;
 				$config['maintain_ratio'] = TRUE;
-				$config['width'] = 193;
-				$config['height'] = 94;
+				$config['width'] = 120;
+				$config['height'] = 90;
 				$this->load->library('image_lib', $config);
 				$this->image_lib->resize();
 
@@ -275,43 +272,103 @@ class Filebox extends MX_Controller {
 		
 		force_download($file, $download_file);
 	}
-
-	public function cloudUpload(){
-
-		// 발급받은 인증키 중 API Key
-		$api_key = "3adc420423aefa2d58b4d56dd3e4f122";
-		// 발급받은 인증키 중 Secret Key
-		$secret_key = "93ae84190fae63adb1732560fe3058ef";
-
-		$params = array('api_key' => $api_key, 'secret_key' => $secret_key);
-
-		$this->load->library('KTOpenApiHandler', $params,'api_handler');
-
-		if(!$this->api_handler){
-			echo "Can't create apiHandler\r\n";
-		}
-
-
-		$ret = $this->api_handler->initialize("v1.0.45", "./");
-		if(! $ret){
-			echo "KTOpenApiHandler initialize error\r\n";
+	
+	//filebox get image
+	public function getFileList(){
+	
+		$this->load->model('Filebox_model'); // 모델 - 호출
+	
+		// 세팅 - 설정
+		$page_view = 3; // 한 페이지에 보여줄 레코드 수
+		$base_url = base_url(); // base_url
+		$act_url = $base_url . "filebox/getFileList";
+		$page_per_block = 3; // 페이징 이동 개수 ( 1 .. 5)
+	
+		$data = "";
+	
+		$page = $this->input->get('page')?$this->input->get('page'):"";
+			
+		if($page < 1){
+			$page = 1;
+			$data['page'] = 1;
 		}else{
-			echo "olleh";
+			$data['page'] = $page;
 		}
-
-		$api = '1.0.UCLOUD.BASIC.GETUSERINFO' ;
-		$bSSL = true;
-		$params = array() ;
-		$xauth_params = array() ;
-		$ret = $this->api_handler->call($api,$params,$xauth_params,$bSSL) ;
-		if(!$ret){
-			echo "error".$this->api_handler->getErrorMsg() ;
-			exit ;
+	
+		if($this->input->get('key') && $this->input->get('keyword')){
+			$data['key'] = $this->input->get('key');
+			$data['keyword'] = $this->input->get('keyword');
+		}else {
+			$data['key'] = "";
+			$data['keyword']= "";
 		}
-
-		$access_token = $this->api_handler->getAccessToken();
-		print_r($ret) ;
+	
+		$start_idx = ($page - 1) * $page_view;
+	
+		$data['result']=$this->Filebox_model->select_entry($start_idx, $page_view, $data);
+		$data['total_record'] = count($this->Filebox_model->total_entry_count($data));
+		$data['total_page'] = ceil($data['total_record'] / $page_view);
+	
+		// 폼 - 정의
+		$data['base_url'] = $base_url;
+		$data['act_url'] = $act_url;
+		
+		foreach($data['result'] as $key => $value){
+			$folder = date ('Ymd', strtotime ($value->reg_date));
+			$fold_url = 'filebox/files/img/' . $folder . '/';
+			if(is_file($fold_url . $value->source_img_name)){
+				$file = new stdClass();
+				$file->name = $value->source_img_name;
+				$file->size = filesize($fold_url . $value->source_img_name);
+				$file->url = base_url() . $fold_url . $value->source_img_name;
+				$file->thumbnail_url = base_url() . $fold_url . 'thumbs/' . $value->source_img_name;
+		
+				$files[$key] = $file;
+			}
+		}
+	
+		$data['result'] = $files;
+		$success = $data;
+		echo json_encode($success);
+	
 	}
+	
+// 	public function cloudUpload(){
+
+// 		// 발급받은 인증키 중 API Key
+// 		$api_key = "3adc420423aefa2d58b4d56dd3e4f122";
+// 		// 발급받은 인증키 중 Secret Key
+// 		$secret_key = "93ae84190fae63adb1732560fe3058ef";
+
+// 		$params = array('api_key' => $api_key, 'secret_key' => $secret_key);
+
+// 		$this->load->library('KTOpenApiHandler', $params,'api_handler');
+
+// 		if(!$this->api_handler){
+// 			echo "Can't create apiHandler\r\n";
+// 		}
+
+
+// 		$ret = $this->api_handler->initialize("v1.0.45", "./");
+// 		if(! $ret){
+// 			echo "KTOpenApiHandler initialize error\r\n";
+// 		}else{
+// 			echo "olleh";
+// 		}
+
+// 		$api = '1.0.UCLOUD.BASIC.GETUSERINFO' ;
+// 		$bSSL = true;
+// 		$params = array() ;
+// 		$xauth_params = array() ;
+// 		$ret = $this->api_handler->call($api,$params,$xauth_params,$bSSL) ;
+// 		if(!$ret){
+// 			echo "error".$this->api_handler->getErrorMsg() ;
+// 			exit ;
+// 		}
+
+// 		$access_token = $this->api_handler->getAccessToken();
+// 		print_r($ret) ;
+// 	}
 }
 
 /* End of file filebox.php */

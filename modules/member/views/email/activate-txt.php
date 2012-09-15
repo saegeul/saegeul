@@ -3,7 +3,7 @@ Welcome to <?php echo $site_name; ?>,
 Thanks for joining <?php echo $site_name; ?>. We listed your sign in details below, make sure you keep them safe.
 To verify your email address, please follow this link:
 
-<?php echo site_url('/auth/activate/'.$user_id.'/'.$new_email_key); ?>
+<?php echo site_url('/member/activate/'.$user_id.'/'.$new_email_key); ?>
 
 
 Please verify your email within <?php echo $activation_period; ?> hours, otherwise your registration will become invalid and you will have to register again.
@@ -17,6 +17,8 @@ Your email address: <?php echo $email; ?>
 
 Your password: <?php echo $password; ?>
 <?php */ } ?>
+
+
 
 
 

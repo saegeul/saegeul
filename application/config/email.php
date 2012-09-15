@@ -13,9 +13,9 @@
 $config['mailtype'] = 'html';
 $config['charset'] = 'euc-kr';
 $config['newline'] = "\r\n";
-$config['smtp_host']='smtp.naver.com';
-$config['smtp_user']='minix86@naver.com';
-$config['smtp_pass']='704068';
+$config['smtp_host']='ssl://smtp.googlemail.com';
+$config['smtp_user']='leewangon@gmail.com';
+$config['smtp_pass']='gnfpdlzm125';
 $config['smtp_port']='465';
 $config['protocol']='smtp';
 

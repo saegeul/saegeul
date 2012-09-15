@@ -1,0 +1,6 @@
+<table name="login_attempts" >
+    <column name="id" type="int" size="11" auto_increment="true" primary_key="true" />
+    <column name="ip_address" type="varchar" size="40"  not_null="true" />
+    <column name="login" type="varchar" size="50"  not_null="true" />
+    <column name="time" type="timestamp" not_null="true" />
+</table>

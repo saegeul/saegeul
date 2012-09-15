@@ -1,104 +1,104 @@
 <?php 
-    class OAuthUtil {
+class OAuthUtil {
 
-        public static function parse_header($param = array() ){
-            $header = array()  ; 
+	public static function parse_header($param = array() ){
+		$header = array()  ;
 
-            foreach($param as $key => $value){ 
-                $header[]=OAuthUtil::urlencode($key).'="'.OAuthUtil::urlencode($value).'"';
-            }
+		foreach($param as $key => $value){
+			$header[]=OAuthUtil::urlencode($key).'="'.OAuthUtil::urlencode($value).'"';
+		}
 
-            return 'OAuth '.implode(',',$header) ; 
-        }
+		return 'OAuth '.implode(',',$header) ;
+	}
 
-        public static function parse_param($params){
-			$params = explode('&', trim($params));
-	
-		    $ret = array();
-	
-			foreach ($params as $param) {
-				list($key, $value) = explode('=', $param, 2); 
-                $ret[$key] = $value ; 
-			} 
-			return $ret;
-        }
+	public static function parse_param($params){
+		$params = explode('&', trim($params));
 
-        public static function call($url,$method,$param,$request_body=array()){ 
-            $header = OAuthUtil::parse_header($param);
+		$ret = array();
 
-		    $ch = curl_init($url);
-            
-            $method=='POST' ? $options[CURLOPT_POST]=TRUE : '' ; 
-            $method=='POST' ? $options[CURLOPT_POSTFIELDS]= http_build_query($request_body): '' ;
+		foreach ($params as $param) {
+			list($key, $value) = explode('=', $param, 2);
+			$ret[$key] = $value ;
+		}
+		return $ret;
+	}
 
-			$options[CURLOPT_HTTPHEADER] = array(
-                'Authorization: ' . $header 
-            ); 
+	public static function call($url,$method,$param,$request_body=array()){
+		$header = OAuthUtil::parse_header($param);
 
-            $options[CURLOPT_SSL_VERIFYPEER] = FALSE ;
-            $options[CURLOPT_SSL_VERIFYHOST] = FALSE ;
-            $options[CURLOPT_RETURNTRANSFER] = TRUE ;
+		$ch = curl_init($url);
 
-		    if ( ! curl_setopt_array($ch, $options)) {
-			    throw new Exception('Failed to set CURL options, check CURL documentation: http://php.net/curl_setopt_array');
-		    }
+		$method=='POST' ? $options[CURLOPT_POST]=TRUE : '' ;
+		$method=='POST' ? $options[CURLOPT_POSTFIELDS]= http_build_query($request_body): '' ;
 
-		    $response = curl_exec($ch);
+		$options[CURLOPT_HTTPHEADER] = array(
+				'Authorization: ' . $header
+		);
 
-		    // Get the response information
-		    $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		$options[CURLOPT_SSL_VERIFYPEER] = FALSE ;
+		$options[CURLOPT_SSL_VERIFYHOST] = FALSE ;
+		$options[CURLOPT_RETURNTRANSFER] = TRUE ;
 
-		    if ($code AND ($code < 200 OR $code > 299)) {
-			    $error = $response;
-		    }
-		    elseif ($response === FALSE) {
-			    $error = curl_error($ch);
-		    }
-		    curl_close($ch);
+		if ( ! curl_setopt_array($ch, $options)) {
+			throw new Exception('Failed to set CURL options, check CURL documentation: http://php.net/curl_setopt_array');
+		}
 
-		    if (isset($error)) {
-			    throw new Exception(sprintf('Error fetching remote %s [ status %s ] %s', $url, $code, $error));
-		    }
+		$response = curl_exec($ch);
 
-		    return $response;
-        }
+		// Get the response information
+		$code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-        public static function base_string($method,$url,$params){
-            ksort($params) ; 
-            $arr = array() ; 
+		if ($code AND ($code < 200 OR $code > 299)) {
+			$error = $response;
+		}
+		elseif ($response === FALSE) {
+			$error = curl_error($ch);
+		}
+		curl_close($ch);
 
-            foreach($params as $key => $value){ 
-                $arr[] = OAuthUtil::urlencode($key).'='.OAuthUtil::urlencode($value) ;
-            }
+		if (isset($error)) {
+			throw new Exception(sprintf('Error fetching remote %s [ status %s ] %s', $url, $code, $error));
+		}
 
+		return $response;
+	}
 
-            $parameter = implode('&',$arr) ; 
+	public static function base_string($method,$url,$params){
+		ksort($params) ;
+		$arr = array() ;
+
+		foreach($params as $key => $value){
+			$arr[] = OAuthUtil::urlencode($key).'='.OAuthUtil::urlencode($value) ;
+		}
 
 
-		    // method & url & sorted-parameters
-		    return implode('&', array($method,OAuthUtil::urlencode($url),OAuthUtil::urlencode($parameter)));
+		$parameter = implode('&',$arr) ;
 
-        }
 
-        public static function make_signature($base_string,$key){ 
-		    return base64_encode(hash_hmac('sha1', $base_string, $key, TRUE));
-        }
+		// method & url & sorted-parameters
+		return implode('&', array($method,OAuthUtil::urlencode($url),OAuthUtil::urlencode($parameter)));
 
-        public static function urlencode($input){
-            if (is_array($input)) {
-			    return array_map(array('OAuthUtil', 'urlencode'), $input);
-		    }
+	}
 
-            return str_replace('+',' ',str_replace('%7E','~',rawurlencode($input))); 
-        }
+	public static function make_signature($base_string,$key){
+		return base64_encode(hash_hmac('sha1', $base_string, $key, TRUE));
+	}
 
-        public static function urldecode($input){
-            if (is_array($input)) {
-			    return array_map(array('OAuth', 'urldecode'), $input);
-		    }
+	public static function urlencode($input){
+		if (is_array($input)) {
+			return array_map(array('OAuthUtil', 'urlencode'), $input);
+		}
 
-		    return rawurldecode($input);
-        } 
-    }
+		return str_replace('+',' ',str_replace('%7E','~',rawurlencode($input)));
+	}
 
-    /* end of OAuthUtil.php */
+	public static function urldecode($input){
+		if (is_array($input)) {
+			return array_map(array('OAuth', 'urldecode'), $input);
+		}
+
+		return rawurldecode($input);
+	}
+}
+
+/* end of OAuthUtil.php */

@@ -1,0 +1,154 @@
+@CHARSET "UTF-8";
+
+body {
+	
+}
+
+#fileBox {
+	float: right;
+	width: 180px;
+	background-color: #eee;
+	maigin: 0 auto;
+}
+
+#cloudList {
+	float: left;
+	height: 100%;
+	width: 85%;
+	
+}
+
+/* body { */
+/* 	margin: 0; */
+/* 	width: 70%; */
+/* } */
+
+/* #layout_left,#layout_center,#layout_right { */
+/* 	height: 600px; */
+/* } */
+
+/* #layout_center { */
+/* 	background: #ccc; */
+/* } */
+
+/* #layout_left,#layout_right { */
+/* 	background: #eee; */
+/* } */
+
+/* #container { */
+/* 	margin: 0 auto; */
+/* } */
+
+/* #layout_left { */
+/* 	float: left; */
+/* 	width: 15%; */
+/* 	padding: 0 5%; */
+/* } */
+
+/* #layout_center { */
+/* 	float: left; */
+/* 	width: 40%; */
+/* 	padding: 0 5% */
+/* } */
+
+/* #layout_right { */
+/* 	float: left; */
+/* 	width: 15%; */
+/* 	padding: 0 5% */
+/* } */
+
+/* li { */
+/* 	position: relative; */
+/* 	margin-left: -50px; */
+/* 	margin-top: 50px; */
+/* 	list-style: none; */
+/* } */
+
+/* li input { */
+/* 	position: absolute; */
+/* 	opacity: 0; */
+/* } */
+
+/* li input+ol { */
+/* 	background: */
+/* 		url(/saegeul/modules/auth/views/assets/img/toggle-small-expand.png) */
+/* 		40px 0 no-repeat; */
+/* 	margin: -0.938em 0 0 -44px; 15px */
+/* 	margin-top: -20px; */
+/* 	height: 1em; */
+/* } */
+
+/* li input:checked+ol { */
+/* 	background: url(/saegeul/modules/auth/views/assets/img/toggle-small.png) */
+/* 		40px 5px no-repeat; */
+/* 	margin: -1.25em 0 0 -44px; 20px */
+/* 	margin-top: -25px; */
+/* 	padding: 1.563em 0 0 80px; */
+/* 	height: auto; */
+/* } */
+/* #fileBox { */
+/* 	width:30%; */
+/* 	height:100%; */
+/* 	background-color : red; */
+/* } */
+/* #cloudList { */
+/* 	height:100%; */
+/* 	width:70%; */
+
+/* } */
+/* li input+ol>li { */
+/* 	display: none; */
+/* 	margin-left: -14px !important; */
+/* 	padding-left: 1px; */
+/* } */
+
+/* li label[for="Ucloud"] { */
+/* 	background: url(/saegeul/modules/auth/views/assets/img/cloud.png) 15px 1px no-repeat; */
+/* 	cursor: pointer; */
+/* 	display: block; */
+/* 	padding-left: 37px; */
+/* } */
+
+/* li label[for="휴지통"] { */
+/* 	background: url(/saegeul/modules/auth/views/assets/img/delete_forlder.png) 15px 1px no-repeat; */
+/* 	cursor: pointer; */
+/* 	display: block; */
+/* 	padding-left: 37px; */
+/* } */
+
+/* li label[for="웹 폴더"] { */
+/* 	background: url(/saegeul/modules/auth/views/assets/img/web_forlder.png) 15px 1px no-repeat; */
+/* 	cursor: pointer; */
+/* 	display: block; */
+/* 	padding-left: 37px; */
+/* } */
+
+/* li label[for="클라우드 폴더"] { */
+/* 	background: url(/saegeul/modules/auth/views/assets/img/web_forlder.png) 15px 1px no-repeat; */
+/* 	cursor: pointer; */
+/* 	display: block; */
+/* 	padding-left: 37px; */
+/* } */
+
+/* li label[for="매직 폴더"] { */
+/* 	background: url(/saegeul/modules/auth/views/assets/img/magic_forlder.png) 15px 1px no-repeat; */
+/* 	cursor: pointer; */
+/* 	display: block; */
+/* 	padding-left: 37px; */
+/* } */
+
+/* li label[for="모바일 포토"] { */
+/* 	background: url(/saegeul/modules/auth/views/assets/img/mobile_photo_folder.png) 15px 1px no-repeat; */
+/* 	cursor: pointer; */
+/* 	display: block; */
+/* 	padding-left: 37px; */
+/* } */
+
+/* li input:checked+ol>li { */
+/* 	display: block; */
+/* 	margin: 0 0 0.125em; 2px */
+/* } */
+
+/* li input:checked+ol>li:last-child { */
+/* 	margin: 0 0 0.063em; 1px */
+/* } */

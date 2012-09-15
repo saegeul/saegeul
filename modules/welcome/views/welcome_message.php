@@ -1,9 +1,16 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
+<?php $this->load->helper('url') ?>
+<?php $this->load->helper('asset') ?>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
 	<title>Welcome to CodeIgniter</title>
-
+    <?echo css_asset('admin','bootstrap/css/bootstrap.css')?>
+    <?echo css_asset('admin','bootstrap/css/bootstrap-responsive.css')?>
+    <?echo common_css_asset('jquery/css/smoothness/jquery-ui-1.8.22.custom.css')?>
+    <?echo common_js_asset('jquery/js/jquery-1.7.2.min.js')?>
+    <?echo common_js_asset('jquery/js/jquery-ui-1.8.22.custom.min.js')?>
+    <?echo js_asset('admin','bootstrap/js/bootstrap.min.js') ?>
 	<style type="text/css">
 
 	::selection{ background-color: #E13300; color: white; }
@@ -67,22 +74,25 @@
 <body>
 
 <div id="container">
-	<h1>Welcome to CodeIgniter!</h1>
+    <div class="tree">
 
-	<div id="body">
-		<p>The page you are looking at is being generated dynamically by CodeIgniter.</p>
+    </div>
 
-		<p>If you would like to edit this page you'll find it located at:</p>
-		<code>application/views/welcome_message.php</code>
+ <script>
+ var make_node = function(node){
+    $(node).append('<ul><li>폴더1</li><li>폴더2</li><li>폴더3</li></ul>') ; 
+    $(node).find('li').bind('click',function(){
+        make_node($(this)) ; 
+    }); 
+ } ; 
 
-		<p>The corresponding controller for this page is found at:</p>
-		<code>application/controllers/welcome.php</code>
+jQuery(function(){
+    $('.tree').append('<ul><li>폴더1</li><li>폴더2</li><li>폴더3</li></ul>'); 
 
-		<p>If you are exploring CodeIgniter for the very first time, you should start by reading the <a href="user_guide/">User Guide</a>.</p>
-	</div>
-
-	<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds</p>
-</div>
-
-</body>
+    $('.tree li').bind('click',function(){
+        make_node($(this)) ; 
+    }) ; 
+}); 
+ </script>
+</body> 
 </html>

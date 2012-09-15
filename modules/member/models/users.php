@@ -394,17 +394,13 @@ class Users extends CI_Model
 	}
 
 	//admin 페이지에서 회원목록을 출력하기 위해 회원정보를 모두 반환
-	function admin_db(){
-
-
-
-
-		$sql = "select * from users";
-		$query = $this->db->query($sql);
-		return $query->result();
-
-
-
+	function admin_db(){ 
+		
+		$this->db->select('*');
+		$this->db->from('users');
+		
+		$query = $this->db->get();
+		return $query->result(); 
 	}
 
 	function select_entry($list_num,$offset,$data)
@@ -439,24 +435,24 @@ class Users extends CI_Model
 		return $query->result();
 	}
 
-	//선택한 유저의 권한이 무엇인지 체크(1은 admin, 0은 user)
-	function check_admin($user_name){
-
-
-
-		$sql = "select admin from users where username='$user_name'";
-		$query = $this->db->query($sql);
-
+	//선택한 유저의 권한이 무엇인지 체크(admin,manager,member,guest)
+	function check_level($user_name){ 
+		$this->db->select('level');
+		$this->db->from('users');
+		$this->db->where('username', $user_name);
+		
+		$query = $this->db->get();
 		$row = $query->row(1);
-
-		return $row->admin;
-
-
+		
+		return $row->level; 
 	}
 
 	function min_admin($id){
-		$sql = "select id from users where admin=1";
-		$query = $this->db->query($sql);
+		$this->db->select('id');
+		$this->db->from('users');
+		$this->db->where('admin', 1);
+		
+		$query = $this->db->get();
 		$row = $query->row(1);
 
 		if($query->num_rows() == 1){
@@ -480,26 +476,23 @@ class Users extends CI_Model
 	}
 
 	//받아온 값으로 권한값을 변경
-	function admin_set($id,$admin){
-
-
-
+	function admin_set($id,$admin){ 
 
 		$this->db->set('admin',$admin );
 		$this->db->where('id', $id);
-		$this->db->update($this->table_name);
-
-
+		$this->db->update($this->table_name); 
 
 	}
 
 	//권한변경 버튼을 눌렀을 때 관리자->유저, 유저->관리자 로 변경
 	function admin_value($id){
-		$sql = "select admin from users where id='$id'";
-		$query = $this->db->query($sql);
+		$this->db->select('admin');
+		$this->db->from('users');
+		$this->db->where('id', $id);
+		$query = $this->db->get();
+		
 
 		$row = $query->row(1);
-
 		if($row->admin){
 			//관리자를 유저로 변경
 			return 0;
@@ -510,8 +503,47 @@ class Users extends CI_Model
 		}
 
 	}
+	
+	
+	function req_change_password($user_id){
+		$this->db->set('password_change_requested',1 );
+		$this->db->where('id', $user_id);
+		$this->db->update($this->table_name);
+		
+		
+	}
+	
+	function req_change_password_0($user_name){
+		$this->db->set('password_change_requested',0 );
+		$this->db->where('username', $user_name);
+		$this->db->update($this->table_name);
+	
+	
+	}
+	
+	function check_first_login($username){
+		$this->db->select('password_change_requested');
+		$this->db->from('users');
+		$this->db->where('username', $username);
+		$query = $this->db->get();
+		
+		
+		$row = $query->row(1);
+		
+		if($row->password_change_requested){
+			return true;
+			
+		}else{
+			return false;
+		}
+		
+	}
 
-
+    function setAdminByEmail($email){
+        $this->db->set('level','admin' );
+		$this->db->where('email', $email);
+		$this->db->update($this->table_name);
+    } 
 }
 
 /* End of file users.php */
