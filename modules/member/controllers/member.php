@@ -40,7 +40,7 @@ class Member extends MX_Controller
 			$this->admin_or_user();
 
 		} else {
-			
+				
 			$this->do_login();
 		}
 	}
@@ -52,11 +52,15 @@ class Member extends MX_Controller
 	 */
 	function logout()
 	{
-		$this->tank_auth->logout(); 
+		$this->tank_auth->logout();
+
+
 
 		redirect('/member/login/');
-		
-		
+
+		//$this->_show_message($this->lang->line('auth_message_logged_out'));
+
+
 	}
 
 	/**
@@ -76,9 +80,9 @@ class Member extends MX_Controller
 			$this->_show_message($this->lang->line('auth_message_registration_disabled'));
 
 		} else {
-			$data['ivt']=0;
 			
-			$this->do_register($data);
+				
+			$this->do_register();
 		}
 	}
 
@@ -128,21 +132,50 @@ class Member extends MX_Controller
 	{
 		$user_id		= $this->uri->segment(3);
 		$new_email_key	= $this->uri->segment(4);
-		$ivt	= $this->uri->segment(5);
+
 
 		// Activate user
 		if ($this->tank_auth->activate_user($user_id, $new_email_key)) {		// success
-			
-			
-			
+				
+			$this->reset_invited($user_id,$new_pass_key);
+				
 			$this->tank_auth->logout();
 			$this->_show_message($this->lang->line('auth_message_activation_completed').' '.anchor('/member/login/', 'Login'));
-			
-		
+				
+
 		} else {																// fail
 			$this->_show_message($this->lang->line('auth_message_activation_failed'));
 		}
 	}
+
+
+
+	//activate_invited
+	function activate_invited()
+	{
+		$user_id		= $this->uri->segment(3);
+		$new_email_key	= $this->uri->segment(4);
+
+
+		// Activate user
+		if ($this->tank_auth->activate_user($user_id, $new_email_key)) {		// success
+
+			$this->users->req_change_password($user_id);
+				
+
+			$this->tank_auth->logout();
+			$this->_show_message($this->lang->line('auth_message_activation_completed').' '.anchor('/member/login/', 'Login'));
+
+
+		} else {																// fail
+			$this->_show_message($this->lang->line('auth_message_activation_failed'));
+		}
+	}
+
+
+
+
+
 
 	/**
 	 * Generate reset code (to change password) and send it to user
@@ -171,7 +204,8 @@ class Member extends MX_Controller
 					// Send email with password activation link
 					$this->_send_email('forgot_password', $data['email'], $data);
 
-					$this->_show_message($this->lang->line('auth_message_new_password_sent'));
+					
+					$this->_show_message($this->lang->line('auth_message_new_password_sent').' '.anchor('/member/login/', 'Login'));
 
 				} else {
 					$errors = $this->tank_auth->get_error_message();
@@ -227,11 +261,16 @@ class Member extends MX_Controller
 		$this->load->view('member/reset_password_form', $data);
 	}
 
+	
+
+
+
+
 	/**
 	 * Change user password
-	 *
-	 * @return void
-	 */
+	*
+	* @return void
+	*/
 	function change_password()
 	{
 		if (!$this->tank_auth->is_logged_in()) {								// not logged in or not activated
@@ -248,6 +287,10 @@ class Member extends MX_Controller
 				if ($this->tank_auth->change_password(
 						$this->form_validation->set_value('old_password'),
 						$this->form_validation->set_value('new_password'))) {	// success
+					
+					
+					
+					
 					$this->_show_message($this->lang->line('auth_message_password_changed'));
 
 				} else {														// fail
@@ -476,14 +519,27 @@ class Member extends MX_Controller
 
 
 	function main_page(){
+		$this->load->model('users','',TRUE);
+		$username=$this->tank_auth->get_username();
+	
+		if($this->users->check_first_login($username))
+		{
+			
+			$this->users->req_change_password_0($username);
+			
+			$this->change_password();
+		}
+else{
+
 
 		$this->load->view('member/main');
+}
 	}
 
 	function admin_member($page=1){
 		$this->load->model('users','',TRUE);
 		$data = "";
-		
+
 		$data['result']=$this->users->admin_db();
 			
 		// 세팅 - 설정
@@ -509,17 +565,17 @@ class Member extends MX_Controller
 			$data['key'] = "";
 			$data['keyword']= "";
 		}
-		
-		
+
+
 		$start_idx = ($page - 1) * $page_view;
 			
 		$data['result']=$this->users->select_entry($start_idx, $page_view, $data);
 		$data['total_record'] = count($this->users->total_entry_count($data));
 		$data['total_page'] = ceil($data['total_record'] / $page_view);
 			
-		
-		
-		
+
+
+
 		// 폼 - 정의
 		$data['base_url'] = $base_url;
 		$data['act_url'] = $act_url;
@@ -528,42 +584,43 @@ class Member extends MX_Controller
 	}
 
 
-	
+
 	function good_bye()
 	{
 		$id=$_GET['id'];
 		$this->users->delete_user($id);
-		
+
 		//echo ("<script>alert('회원을 탈퇴 시켰습니다.')</script>");
-		
+
 		redirect('/member/admin_member/');
 	}
-	
+
 	function admin_set(){
 		$id=$_GET['id'];
-		
+
 		if($this->users->min_admin($id)){
-		
-		$admin=$this->users->admin_value($id);
-		$this->users->admin_set($id,$admin);
+
+			$admin=$this->users->admin_value($id);
+			$this->users->admin_set($id,$admin);
 		}
-		
+
 		$this->admin_member();
-				
+
 	}
 
 	//admin과 user를 구분해서 페이지를 이동
 	function admin_or_user(){
-	    redirect('/member/admin/');
-		/*if($this->users->check_admin($this->tank_auth->get_username())){
+		if($this->users->check_admin($this->tank_auth->get_username())){
 			redirect('/member/admin/');
 		}
 		else{
-			
+				
 			redirect('/member/main_page/');
-		}*/ 
+		}
+
+
 	}
-	
+
 	function check_validation($data){
 		if ($this->form_validation->run()) {								// validation ok
 			if ($this->tank_auth->login(
@@ -578,29 +635,29 @@ class Member extends MX_Controller
 				$errors = $this->tank_auth->get_error_message();
 				if (isset($errors['banned'])) {								// banned user
 					$this->_show_message($this->lang->line('auth_message_banned').' '.$errors['banned']);
-		
+
 				} elseif (isset($errors['not_activated'])) {				// not activated user
 					redirect('/member/send_again/');
-		
+
 				} else {													// fail
 					foreach ($errors as $k => $v)	$data['errors'][$k] = $this->lang->line($v);
 				}
 			}
 		}
-		
-		
+
+
 	}
-	
-	
+
+
 	function do_login(){
 		$data['login_by_username'] = ($this->config->item('login_by_username', 'tank_auth') AND
 				$this->config->item('use_username', 'tank_auth'));
 		$data['login_by_email'] = $this->config->item('login_by_email', 'tank_auth');
-		
+
 		$this->form_validation->set_rules('login', 'Login', 'trim|required|xss_clean');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean');
 		$this->form_validation->set_rules('remember', 'Remember me', 'integer');
-		
+
 		// Get login for counting attempts to login
 		if ($this->config->item('login_count_attempts', 'tank_auth') AND
 				($login = $this->input->post('login'))) {
@@ -608,7 +665,7 @@ class Member extends MX_Controller
 		} else {
 			$login = '';
 		}
-		
+
 		$data['use_recaptcha'] = $this->config->item('use_recaptcha', 'tank_auth');
 		if ($this->tank_auth->is_max_login_attempts_exceeded($login)) {
 			if ($data['use_recaptcha'])
@@ -617,7 +674,7 @@ class Member extends MX_Controller
 				$this->form_validation->set_rules('captcha', 'Confirmation Code', 'trim|xss_clean|required|callback__check_captcha');
 		}
 		$data['errors'] = array();
-		
+
 		$this->check_validation($data);
 			
 		$data['show_captcha'] = FALSE;
@@ -630,26 +687,26 @@ class Member extends MX_Controller
 			}
 		}
 		$this->load->view('member/login_form', $data);
-		
-		
-		
+
+
+
 	}
-	
-	
-	function do_register($data){
-		
-		
+
+
+	function do_register(){
+
+
 
 		$use_username = $this->config->item('use_username', 'tank_auth');
-		
+
 		if ($use_username) {
 			$this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean|min_length['.$this->config->item('username_min_length', 'tank_auth').']|max_length['.$this->config->item('username_max_length', 'tank_auth').']|alpha_dash');
 		}
-		
+
 		$this->form_validation->set_rules('email', 'Email', 'trim|required|xss_clean|valid_email');
 		$this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean|min_length['.$this->config->item('password_min_length', 'tank_auth').']|max_length['.$this->config->item('password_max_length', 'tank_auth').']|alpha_dash');
 		$this->form_validation->set_rules('confirm_password', 'Confirm Password', 'trim|required|xss_clean|matches[password]');
-		
+
 		$captcha_registration	= $this->config->item('captcha_registration', 'tank_auth');
 		$use_recaptcha			= $this->config->item('use_recaptcha', 'tank_auth');
 		if ($captcha_registration) {
@@ -660,37 +717,37 @@ class Member extends MX_Controller
 			}
 		}
 		$data['errors'] = array();
-		
+
 		$email_activation = $this->config->item('email_activation', 'tank_auth');
-		
+
 		if ($this->form_validation->run()) {								// 유효성 체크 통과
 			if (!is_null($data = $this->tank_auth->create_user(
 					$use_username ? $this->form_validation->set_value('username') : '',
 					$this->form_validation->set_value('email'),
 					$this->form_validation->set_value('password'),
 					$email_activation))) {									// success
-		
+
 				$data['site_name'] = $this->config->item('website_name', 'tank_auth');
-		
+
 				if ($email_activation) {									// send "activate" email
 					$data['activation_period'] = $this->config->item('email_activation_expire', 'tank_auth') / 3600;
-		
+
 					$this->_send_email('activate', $data['email'], $data);
-		
+
 					unset($data['password']); // Clear password (just for any case)
-		
+
 					$this->_show_message($this->lang->line('auth_message_registration_completed_1'));
-		
+
 				} else {
 					if ($this->config->item('email_account_details', 'tank_auth')) {	// send "welcome" email
-		
-					
-							$this->_send_email('welcome', $data['email'], $data);
-						
-						
+
+							
+						$this->_send_email('welcome', $data['email'], $data);
+
+
 					}
 					unset($data['password']); // Clear password (just for any case)
-		
+
 					$this->_show_message($this->lang->line('auth_message_registration_completed_2').' '.anchor('/member/login/', 'Login'));
 				}
 			} else {
@@ -708,36 +765,112 @@ class Member extends MX_Controller
 		$data['use_username'] = $use_username;
 		$data['captcha_registration'] = $captcha_registration;
 		$data['use_recaptcha'] = $use_recaptcha;
-		
-	
-		
-		if($data['ivt']){
+
+
+
+
 			
-			$this->load->view('member/invite_form',$data);
-		}
-		else{
+
 		$this->load->view('member/register_form', $data);
-		}
-		
+
+
 	}
 
-	
+
+	function do_invite(){
+
+
+
+		$use_username = $this->config->item('use_username', 'tank_auth');
+
+		if ($use_username) {
+			$this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean|min_length['.$this->config->item('username_min_length', 'tank_auth').']|max_length['.$this->config->item('username_max_length', 'tank_auth').']|alpha_dash');
+		}
+
+		$this->form_validation->set_rules('email', 'Email', 'trim|required|xss_clean|valid_email');
+		$this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean|min_length['.$this->config->item('password_min_length', 'tank_auth').']|max_length['.$this->config->item('password_max_length', 'tank_auth').']|alpha_dash');
+		$this->form_validation->set_rules('confirm_password', 'Confirm Password', 'trim|required|xss_clean|matches[password]');
+
+		$captcha_registration	= $this->config->item('captcha_registration', 'tank_auth');
+		$use_recaptcha			= $this->config->item('use_recaptcha', 'tank_auth');
+		if ($captcha_registration) {
+			if ($use_recaptcha) {
+				$this->form_validation->set_rules('recaptcha_response_field', 'Confirmation Code', 'trim|xss_clean|required|callback__check_recaptcha');
+			} else {
+				$this->form_validation->set_rules('captcha', 'Confirmation Code', 'trim|xss_clean|required|callback__check_captcha');
+			}
+		}
+		$data['errors'] = array();
+
+		$email_activation = $this->config->item('email_activation', 'tank_auth');
+
+		if ($this->form_validation->run()) {								// 유효성 체크 통과
+			if (!is_null($data = $this->tank_auth->create_user(
+					$use_username ? $this->form_validation->set_value('username') : '',
+					$this->form_validation->set_value('email'),
+					$this->form_validation->set_value('password'),
+					$email_activation))) {									// success
+
+				$data['site_name'] = $this->config->item('website_name', 'tank_auth');
+
+				if ($email_activation) {									// send "invite" email
+					$data['activation_period'] = $this->config->item('email_activation_expire', 'tank_auth') / 3600;
+
+
+						
+						
+					$this->_send_email('invite', $data['email'], $data);
+
+					unset($data['password']); // Clear password (just for any case)
+
+					$this->_show_message($this->lang->line('auth_message_registration_completed_1'));
+
+				} else {
+					if ($this->config->item('email_account_details', 'tank_auth')) {	// send "welcome" email
+
+							
+						$this->_send_email('welcome', $data['email'], $data);
+
+
+					}
+					unset($data['password']); // Clear password (just for any case)
+
+					$this->_show_message($this->lang->line('auth_message_registration_completed_2').' '.anchor('/member/login/', 'Login'));
+				}
+			} else {
+				$errors = $this->tank_auth->get_error_message();
+				foreach ($errors as $k => $v)	$data['errors'][$k] = $this->lang->line($v);
+			}
+		}
+		if ($captcha_registration) {
+			if ($use_recaptcha) {
+				$data['recaptcha_html'] = $this->_create_recaptcha();
+			} else {
+				$data['captcha_html'] = $this->_create_captcha();
+			}
+		}
+		$data['use_username'] = $use_username;
+		$data['captcha_registration'] = $captcha_registration;
+		$data['use_recaptcha'] = $use_recaptcha;
+
+
+		$this->load->view('member/invite_form',$data);
+
+	}
+
+
+
+
+
 	function admin(){
-		
+
 		$this->load->view('member/admin');
-		
+
 	}
-	
-	function admin_invite(){
-		$data['ivt']=1;
-		$this->do_register($data);
-		
-		
-		
-		
-	}
-	
-	
+
+
+
+
 }
 
 
