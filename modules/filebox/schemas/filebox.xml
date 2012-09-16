@@ -1,20 +1,14 @@
 <table name="filebox">
-	<column name="file_srl" type="number" size="11" auto_increment="true"
+	<column name="file_srl" type="int" size="11" auto_increment="true"
 		primary_key="true" />
 	<column name="file_type" type="varchar" size="30" />
-	<column name="img_srl" type="int" size="11" auto_increment="true"
-		primary_key="true" />
-	<column name="img_type" type="varchar" size="10" />
 	<column name="sid" type="varchar" size="20" />
 	<column name="down_cnt" type="int" size="11" />
-	<column name="dir_down" type="char" size="1" />
+	<column name="dir_down" type="varchar" size="1" />
 	<column name="upload_file_name" type="varchar" size="250" />
 	<column name="source_file_name" type="varchar" size="250" />
-	<column name="file_size" type="number" size="11" />
-	<column name="module_srl" type="number" size="11" />
-	<column name="upload_img_name" type="varchar" size="250" />
-	<column name="source_img_name" type="varchar" size="250" />
-	<column name="img_size" type="int" size="11" />
+	<column name="file_size" type="int" size="11" />
+	<column name="module_srl" type="int" size="11" />
 	<column name="module_srl" type="int" size="11" />
 	<column name="comment" type="varchar" size="250" />
 	<column name="isvalid" type="int" size="11" />
