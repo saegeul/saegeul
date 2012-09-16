@@ -11,7 +11,7 @@
 <?echo common_js_asset('jquery/js/jquery-1.7.2.min.js')?>
 <?echo common_js_asset('jquery/js/jquery-ui-1.8.22.custom.min.js')?>
 <script>
-function ImgModify(imgPath,thumbnailPath,imgName,fileType,author,regDate,address,isvalid,no,comment,file,downCnt,fold_url)
+function FileModify(filePath,thumbnailPath,fileName,fileType,author,regDate,address,isvalid,no,comment,file,downCnt,fold_url)
 {
 
 	var markup = "<form method='get'>"
@@ -24,7 +24,7 @@ function ImgModify(imgPath,thumbnailPath,imgName,fileType,author,regDate,address
 				+ "</dd>"
 				+ "<dd>"
 					+ "<div>"
-						+ "&nbsp&nbsp&nbsp파일 이름 : <INPUT type='text' id=mod_name name=mod_name value = " + imgName + ">"
+						+ "&nbsp&nbsp&nbsp파일 이름 : <INPUT type='text' id=mod_name name=mod_name value = " + fileName + ">"
 					+ "</div>"
 				+ "</dd>"
 				+ "<dd>"
@@ -173,7 +173,6 @@ function search_confirm()
 </script>
 </head>
 <?php 
-//location.href = fold_url + ".php?id=" + file.replace(/^.*\/|\.[^.]*$/g, '') + "&type=" + file.split('.').pop();
 // 페이징 만들기
 $page_per_block = 5;
 $prev_page = $page - 1;
@@ -194,8 +193,8 @@ if($key != "" && $keyword != ""){
 		action="<?=$act_url?>">
 		<div align="right">
 			<select name="key" size="1" class="span2">
-				<option value="upload_img_name"
-				<? if($key == "upload_img_name") echo "selected"; ?>>파일이름</option>
+				<option value="upload_file_name"
+				<? if($key == "upload_file_name") echo "selected"; ?>>파일이름</option>
 				<option value="sid" <? if($key == "sid") echo "selected"; ?>>작성자</option>
 				<option value="reg_date"
 				<? if($key == "reg_date") echo "selected"; ?>>작성날짜</option>
@@ -218,23 +217,32 @@ if($key != "" && $keyword != ""){
 			</thead>
 			<tbody>
 				<?php foreach ($result as $row): 
-				$no = $row->img_srl;
-				$fold_url = $base_url."filebox/files/img/". date('Ymd', strtotime($row->reg_date));
-				$imgPath = $fold_url . "/" . $row->source_img_name;
-				$thumbnailPath = $fold_url . "/thumbs/" . $row->source_img_name;
-				$imgName = $row->upload_img_name;
-				$fileType = $row->img_type;
-				$fileSize = $row->img_size . "(KB)" ;
+				$no = $row->file_srl;
+				$fileName = $row->upload_file_name;
+				$fileType = $row->file_type;
+				$fileSize = $row->file_size . "(KB)" ;
 				$author = $row->sid;
 				$regDate = $row->reg_date;
 				$address = $row->ip_address;
 				$isvalid = $row->isvalid;
 				$comment = $row->comment;
 				$downCnt = $row->down_cnt;
-				$source_img_name = $row->source_img_name;
+				$source_file_name = $row->source_file_name;
+				$img_fold_url = $base_url."filebox/files/img/". date('Ymd', strtotime($row->reg_date));
+				$file_fold_url = $base_url."filebox/files/file/". date('Ymd', strtotime($row->reg_date));
+				$folder_url = "";
+				$filePath = "";
+				if(is_file($file_fold_url . "/" . $row->source_file_name)){
+					$filePath = $file_fold_url . "/" . $row->source_file_name;
+					$folder_url = $file_fold_url;
+				}else if(is_file($img_fold_url . "/" . $row->source_file_name)){
+					$filePath = $img_fold_url . "/" . $row->source_file_name;
+					$folder_url = $img_fold_url;
+				}
+				$thumbnailPath = $img_fold_url . "/thumbs/" . $row->source_file_name;
 				?>
-				<tr onclick="ImgModify('<?=$imgPath?>','<?=$thumbnailPath?>','<?=$imgName?>','<?=$fileType?>','<?=$author?>','<?=$regDate?>','<?=$address?>','<?=$isvalid?>','<?=$no?>','<?=$comment?>','<?=$source_img_name?>','<?=$downCnt?>','<?=$fold_url?>')">
-					<td><?=$row->img_srl?></td>
+				<tr onclick="FileModify('<?=$filePath?>','<?=$thumbnailPath?>','<?=$fileName?>','<?=$fileType?>','<?=$author?>','<?=$regDate?>','<?=$address?>','<?=$isvalid?>','<?=$no?>','<?=$comment?>','<?=$source_file_name?>','<?=$downCnt?>','<?=$folder_url?>')">
+					<td><?=$row->file_srl?></td>
 					<td>
 						<div style="margin-top: 16px;">
 							<ul class="thumbnails">
@@ -251,7 +259,7 @@ if($key != "" && $keyword != ""){
 						<dl style="text-align: left; margin-top: 25px;">
 							<dd>
 								Upload Name :
-								<?=$imgName?>
+								<?=$fileName?>
 							</dd>
 							<dd>
 								Img Type :

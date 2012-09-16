@@ -37,8 +37,8 @@ $(function () {
             process: [
                 {
                     action: 'load',
-                    fileTypes: /^image\/(gif|jpeg|png)$/,
-                    maxFileSize: 20000000 // 20MB
+                    fileTypes: /^image\/(gif|jpe?g|png)$/,
+                    maxFileSize: 5000000 // 5MB
                 },
                 {
                     action: 'resize',
