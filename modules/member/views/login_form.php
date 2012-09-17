@@ -4,9 +4,9 @@
 
 <meta
 	http-equiv="Content-Type" content="text/html;charset=utf-8">
-<?echo common_css_asset('bootstrap/css/bootstrap-responsive.css')?>
+
 <?echo common_css_asset('bootstrap/css/bootstrap-responsive.min.css')?>
-<?echo common_css_asset('bootstrap/css/bootstrap.css')?>
+
 <?echo common_css_asset('bootstrap/css/bootstrap.min.css')?>
 <?php
 
@@ -56,29 +56,36 @@ $captcha = array(
 				action="<?=$this->uri->uri_string()?>">
 
 				<div class="control-group">
-				<div class="control-label">
-					<?php echo form_label($login_label, $login['id']); ?>
-					<?php echo form_error($login['name']); ?>
-							<?php echo isset($errors[$login['name']])?$errors[$login['name']]:''; ?>
-							</div>
+					<div class="control-label">
+						<?php echo form_label($login_label, $login['id']); ?>
+
+					</div>
 					<div class="controls">
 						<?php echo form_input($login); ?>
+					<span class="help-inline" style="color: red;">
+						<?php	echo form_error($login['name']); ?>
+							<?php echo isset($errors[$login['name']])?$errors[$login['name']]:''; ?>
+						</span>
+
+
 					</div>
+
 				</div>
 				<div class="control-group">
 					<div class="control-label">
-					<?php echo form_label('Password', $password['id']); ?>
+						<?php echo form_label('Password', $password['id']); ?>
 					</div>
 					<div class="controls">
 						<?php echo form_password($password); ?>
-						<?php echo form_error($password['name']); ?>
-							<?php echo isset($errors[$password['name']])?$errors[$password['name']]:''; ?>
+							<span class="help-inline" style="color: red;"> <?php echo form_error($password['name']); echo isset($errors[$password['name']])?$errors[$password['name']]:''; ?>
+						</span>
+						
 					</div>
 				</div>
 				<div class="control-group">
 					<div class="controls">
-					<a href="member/forgot_password">비밀번호 찾기 </a><br>
-							<input class='btn btn-success' type='submit' value='LOGIN'> <a
+						<a href="member/forgot_password">비밀번호 찾기 </a><br> <input
+							class='btn btn-success' type='submit' value='LOGIN'> <a
 							class="btn btn-info" href="register">회원가입 </a>
 					</div>
 				</div>
@@ -90,7 +97,7 @@ $captcha = array(
 
 
 
-			
+
 			</form>
 		</div>
 	</div>
