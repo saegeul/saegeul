@@ -342,10 +342,10 @@ class Filebox extends MX_Controller {
 		$this->load->model('Filebox_model'); // 모델 - 호출
 
 		// 세팅 - 설정
-		$page_view = 3; // 한 페이지에 보여줄 레코드 수
+		$page_view = 9; // 한 페이지에 보여줄 레코드 수
 		$base_url = base_url(); // base_url
 		$act_url = $base_url . "filebox/getFileList";
-		$page_per_block = 3; // 페이징 이동 개수 ( 1 .. 5)
+		$page_per_block = 9; // 페이징 이동 개수 ( 1 .. 5)
 
 		$data = "";
 
@@ -385,7 +385,7 @@ class Filebox extends MX_Controller {
 				$file->name = $value->source_file_name;
 				$file->size = filesize($file_fold_url . $value->source_file_name);
 				$file->url = base_url() . $file_fold_url . $value->source_file_name;
-				$file->thumbnail_url = base_url() . $file_fold_url . 'thumbs/' . $value->source_file_name;
+				$file->thumbnail_url = base_url() . "/modules/auth/views/assets/img/no_image.png";
 
 				$files[$key] = $file;
 			}else if(is_file($img_fold_url . $value->source_file_name)){

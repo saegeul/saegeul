@@ -40,7 +40,13 @@ function FileModify(filePath,thumbnailPath,fileName,fileType,author,regDate,addr
 			+ "</dl>"
 			+ "<dl>"
 				+ "<p>"
-				   + "&nbsp&nbsp&nbspComment : <INPUT type='text' id=mod_comment name=mod_comment value = " + comment + ">"
+				   + "&nbsp&nbsp&nbspTag : <select id='mod_comment' name='mod'>"
+				   + "<option>가수</option>"
+				   + "<option>연기자</option>"
+				   + "<option>건물</option>"
+				   + "<option>자동차</option>"
+				   + "<option>가족</option>"
+				   + "</select>"
 				+ "</p>"
 			+ "</dl>";
 		if(isvalid == "Y"){
@@ -192,7 +198,7 @@ if($key != "" && $keyword != ""){
 	<form class="bs-docs-example form-search" name="search_form"
 		action="<?=$act_url?>">
 		<div align="right">
-			<select name="key" size="1" class="span2">
+			<select name="key" size="1">
 				<option value="upload_file_name"
 				<? if($key == "upload_file_name") echo "selected"; ?>>파일이름</option>
 				<option value="sid" <? if($key == "sid") echo "selected"; ?>>작성자</option>
@@ -201,8 +207,8 @@ if($key != "" && $keyword != ""){
 			</select>
 			<div class="input-append">
 				<input type="text" name="keyword" class="span2 search-query"
-					value="<?=$keyword?>">
-				<button class="btn" onclick="search_confirm();">Search</button>
+					value="<?=$keyword?>"> <a class="btn"
+					href="javascript:search_confirm();"><i class="icon-search"></i> </a>
 			</div>
 		</div>
 		<br>
@@ -240,8 +246,11 @@ if($key != "" && $keyword != ""){
 					$folder_url = $img_fold_url;
 				}
 				$thumbnailPath = $img_fold_url . "/thumbs/" . $row->source_file_name;
+				if(($fileType != "image/jpg") && ($fileType != "image/jpeg") && ($fileType != "image/gif") && ($fileType != "image/png"))
+					$thumbnailPath = "/saegeul/modules/auth/views/assets/img/no_image.png";
 				?>
-				<tr onclick="FileModify('<?=$filePath?>','<?=$thumbnailPath?>','<?=$fileName?>','<?=$fileType?>','<?=$author?>','<?=$regDate?>','<?=$address?>','<?=$isvalid?>','<?=$no?>','<?=$comment?>','<?=$source_file_name?>','<?=$downCnt?>','<?=$folder_url?>')">
+				<tr
+					onclick="FileModify('<?=$filePath?>','<?=$thumbnailPath?>','<?=$fileName?>','<?=$fileType?>','<?=$author?>','<?=$regDate?>','<?=$address?>','<?=$isvalid?>','<?=$no?>','<?=$comment?>','<?=$source_file_name?>','<?=$downCnt?>','<?=$folder_url?>')">
 					<td><?=$row->file_srl?></td>
 					<td>
 						<div style="margin-top: 16px;">
@@ -287,10 +296,19 @@ if($key != "" && $keyword != ""){
 							<ul>
 								<li><a href="<?=$act_url?>/1<?=$etc?>">&laquo;</a></li>
 								<?php 
+								if($page>1) {
+									?>
+								<li><a href="<?=$act_url?>/<?=$prev_page?><?=$etc?>">prev</a></li>
+								<?php 
+								}else {
+									?>
+								<li class="active"><a>prev</a></li>
+								<?php 
+								}
 								for ($i=$first_page;$i<=$last_page;$i++):
 								if($page == $i) {
 									?>
-								<li class="active"><a href="<?=$act_url?>/<?=$i?><?=$etc?>"><?=$i?>
+								<li class="active"><a><?=$i?>
 								</a></li>
 								<?php
 								} else {
@@ -300,6 +318,16 @@ if($key != "" && $keyword != ""){
 								<?php 
 								}
 								endfor;
+
+								if($page < $total_page) {
+									?>
+								<li><a href="<?=$act_url?>/<?=$next_page?><?=$etc?>">next</a></li>
+								<?php 
+								}else {
+									?>
+								<li class="active"><a>next</a></li>
+								<?php 
+								}
 								?>
 								<li><a href="<?=$act_url?>/<?=$total_page?><?=$etc?>">&raquo;</a>
 								</li>
