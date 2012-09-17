@@ -131,7 +131,7 @@ class Member extends MX_Controller
 		// Activate user
 		if ($this->tank_auth->activate_user($user_id, $new_email_key)) {		// success
 				
-			$this->reset_invited($user_id,$new_pass_key);
+		
 				
 			$this->tank_auth->logout();
 			$this->_show_message($this->lang->line('auth_message_activation_completed').' '.anchor('/member/login/', 'Login'));
@@ -714,7 +714,11 @@ class Member extends MX_Controller
 				if ($email_activation) {									// send "activate" email
 					$data['activation_period'] = $this->config->item('email_activation_expire', 'tank_auth') / 3600;
 
+					$this->load->view("member/sending_mail");
+					
 					$this->_send_email('activate', $data['email'], $data);
+					
+					
 
 					unset($data['password']); // Clear password (just for any case)
 
