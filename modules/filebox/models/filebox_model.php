@@ -91,5 +91,38 @@ class Filebox_model extends CI_Model {
 		$value->down_cnt = $data['mod_down_cnt'];
 		return $this->db->update('filebox', $value, array('file_srl' => $data['mod_no']));
 	}
+	
+	function get_tag()
+	{
+		$this->db->select('*');
+		$this->db->from('filetag');	
+
+		$query = $this->db->get();
+		return $query->result();
+	}
+	
+	function select_tag($tag_id)
+	{
+		$this->db->select('*');
+		$this->db->from('filetag');
+	
+		$this->db->where('tag_id', $tag_id);
+		$query = $this->db->get();
+		return $query->result();
+	}
+	function get_tag_id($tag_name)
+	{
+		$this->db->select('*');
+		$this->db->from('filetag');
+	
+		$this->db->where('tag_name', $tag_name);
+		$query = $this->db->get();
+		return $query->result();
+	}
+	
+	function insert_tag($insert_data)
+	{
+		$this->db->insert('filetag', $insert_data);
+	}
 }
 ?>

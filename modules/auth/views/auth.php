@@ -15,10 +15,6 @@
 <?echo js_asset('auth','jquery.waitingpopup-min.js')?>
 <?echo js_asset('auth','jquery.auth-ajax.js')?>
 </head>
-<script type="text/javascript">
-
-
-</script>
 <body>
 	<div id="container">
 		<div id="layout_center">
