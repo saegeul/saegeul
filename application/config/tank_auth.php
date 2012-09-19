@@ -8,7 +8,7 @@
 |--------------------------------------------------------------------------
 */
 $config['website_name'] = 'Saegeul';
-$config['webmaster_email'] = 'minix86@naver.com';
+$config['webmaster_email'] = '';
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +19,7 @@ $config['webmaster_email'] = 'minix86@naver.com';
 | 'phpass_hash_strength' = Password hash strength.
 |--------------------------------------------------------------------------
 */
-$config['phpass_hash_portable'] = FALSE;
+$config['phpass_hash_portable'] = TRUE;
 $config['phpass_hash_strength'] = 8;
 
 /*

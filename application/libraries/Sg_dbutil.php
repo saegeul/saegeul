@@ -96,7 +96,11 @@ class Sg_dbutil {
         if(! $this->CI->db->table_exists($table_name)){ 
             $this->CI->dbforge->add_field($field_array) ; 
             $this->CI->dbforge->create_table($table_name) ; 
+
+            return true ;
         }
+
+        return false ; 
     }
 }
 

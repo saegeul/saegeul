@@ -31,6 +31,12 @@
             </tbody>
 
         </table>
+        <?php if($is_next) :?>
         <p> 
             <a class="btn btn-primary" href="<?=base_url().'install/checkDatabase'?>"><i class="icon-circle-arrow-right icon-white"></i> 다음 단계로...</a>
         </p>
+        <?php else  :?>
+        <p> 
+            <a class="btn btn-danger" href="<?=base_url().'install/checkEnvirionment'?>"><i class="icon-circle-arrow-right icon-white"></i> 새로고침...</a>
+        </p>
+        <?php endif ;?>
