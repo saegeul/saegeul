@@ -160,6 +160,8 @@ class Install extends MX_Controller {
 				foreach ($errors as $k => $v)	$data['errors'][$k] = $this->lang->line($v);
 			}
 		} 
+
+        redirect('./admin'); 
     } 
 }
 
