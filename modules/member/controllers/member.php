@@ -850,10 +850,7 @@ class Member extends MX_Controller
 
 
 
-}
-
-
-
+} 
 
 /* End of file auth.php */
 /* Location: ./application/controllers/member.php */
