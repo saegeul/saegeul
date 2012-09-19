@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `filebox` (
   `source_file_name` varchar(250) COLLATE utf8_bin NOT NULL,
   `file_size` int(11) NOT NULL DEFAULT '0',
   `module_srl` int(11) DEFAULT NULL, 
-  `tag` int(3) NOT NULL DEFAULT '1',
+  `tag` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `isvalid` char(1) COLLATE utf8_bin DEFAULT 'Y',
   `member_srl`int(11) DEFAULT NULL,
   `reg_date` datetime DEFAULT NULL, 
@@ -32,7 +32,9 @@ PRIMARY KEY (`file_srl`)
 --
 CREATE TABLE IF NOT EXISTS `filetag` (
   `tag_id` int(3) NOT NULL AUTO_INCREMENT,
-  `tag_name` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `tag` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `sid` varchar(20) COLLATE utf8_bin DEFAULT NULL,
+  `reg_date` datetime DEFAULT NULL, 
 PRIMARY KEY (`tag_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 

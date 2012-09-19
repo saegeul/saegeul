@@ -24,55 +24,52 @@ function FileModify(filePath,thumbnailPath,fileName,fileType,author,regDate,addr
 				+ "</dd>"
 				+ "<dd>"
 					+ "<div>"
-						+ "&nbsp&nbsp&nbsp파일 이름 : <INPUT type='text' id=mod_name name=mod_name value = " + fileName + ">"
+						+ "&nbsp&nbsp&nbsp파일 이름 : <INPUT type='text' id='mod_name' name='mod_name' value = " + fileName + ">"
 					+ "</div>"
 				+ "</dd>"
 				+ "<dd>"
 					+ "<div>"
-						+ "&nbsp&nbsp&nbsp파일 유형 : <INPUT type='text' id=mod_type name=mod_type value = " + fileType + " readonly >"
+						+ "&nbsp&nbsp&nbsp파일 유형 : <INPUT type='text' id='mod_type' name='mod_type' value = " + fileType + " readonly >"
 					+ "</div>"
 				+ "</dd>"
 				+ "<dd>"
 					+ "<div>"
-						+ "&nbsp&nbsp&nbsp올린 사람 : <INPUT type='text' id=mod_author name=mod_author value = " + author + " readonly >"
+						+ "&nbsp&nbsp&nbsp올린 사람 : <INPUT type='text' id='mod_author' name='mod_author' value = " + author + " readonly >"
 					+ "</div>"
 				+ "</dd>"
 			+ "</dl>"
 			+ "<dl>"
 				+ "<p>"
-				   + "&nbsp&nbsp&nbspTag : <select id='mod_tag' name='mod_tag'>"
-				   + "<option>" + tag + "</option>"
-				   + "</select>"
-				   + "&nbsp;&nbsp;&nbsp;<input type='text' id='mod_add_tag' style='width:150px;display:none;'>"
+				   + "&nbsp&nbsp&nbspTag : <input type='text' id='mod_tag'  name = 'mod_tag' value = " + author + " >"
 				+ "</p>"
 			+ "</dl>";
 		if(isvalid == "Y"){
 			markup += "<dl>"
 				+ "<p>"
-				+ "&nbsp&nbsp&nbsp접근권한 : <INPUT type='radio' value= 'Y' class=mod_isvalid name=mod_isvalid checked> 허용 <INPUT type='radio' value= 'N' class=mod_isvalid name=mod_isvalid> 거부"
+				+ "&nbsp&nbsp&nbsp접근권한 : <INPUT type='radio' value= 'Y' class='mod_isvalid' name='mod_isvalid' checked> 허용 <INPUT type='radio' value= 'N' class='mod_isvalid' name='mod_isvalid'> 거부"
 				+ "</p>"
 				+ "</dl>";
 		}else {
 			markup += "<dl>"
 				+ "<p>"
-				+ "&nbsp&nbsp&nbsp접근권한 : <INPUT type='radio' value= 'Y' class=mod_isvalid name=mod_isvalid > 허용 <INPUT type='radio' value= 'N' class=mod_isvalid name=mod_isvalid checked> 거부"
+				+ "&nbsp&nbsp&nbsp접근권한 : <INPUT type='radio' value= 'Y' class='mod_isvalid' name='mod_isvalid' > 허용 <INPUT type='radio' value= 'N' class='mod_isvalid' name='mod_isvalid' checked> 거부"
 				+ "</p>"
 				+ "</dl>";
 		}
 			markup 
 			+= "<dl>"
 				+ "<p>"
-				   + "&nbsp&nbsp&nbspDownCount : <INPUT type='text' id=mod_down_cnt  value=" + downCnt + " name=mod_down_cnt readonly>"
+				   + "&nbsp&nbsp&nbspDownCount : <INPUT type='text' id='mod_down_cnt' value=" + downCnt + " name='mod_down_cnt' readonly>"
 				+ "</p>"
 			+ "</dl>"
 			+ "<dl>"
 				+ "<p>"
-			   		+ "&nbsp&nbsp&nbspRegDate : <INPUT type='text' id=mod_redate value=" + regDate + " name=mod_reddate readonly>"
+			   		+ "&nbsp&nbsp&nbspRegDate : <INPUT type='text' id='mod_redate' value=" + regDate + " name='mod_reddate' readonly>"
 				+ "</p>"
 			+ "</dl>"
 			+ "<dl>"
 				+ "<p>"
-		   			+ "&nbsp&nbsp&nbspIP : <INPUT type='text' id=mod_address value=" + address + " name=mod_address readonly>"
+		   			+ "&nbsp&nbsp&nbspIP : <INPUT type='text' id='mod_address' value=" + address + " name='mod_address' readonly>"
 				+ "</p>"
 			+ "</dl>"
 		+"</form>";	
@@ -103,11 +100,7 @@ function FileModify(filePath,thumbnailPath,fileName,fileType,author,regDate,addr
 		text: "Modify",
        click: function() {
     	   var mod_name = $('#mod_name').attr('value');
-    	   var mod_tag = $('#mod_tag').attr('value');
     	   var mod_radio_object = $('.mod_isvalid');
-    	   var mod_sel_id = $("#mod_tag option:selected").val();
-          var mod_sel_name = $("#mod_tag option:selected").text();
-          var mod_sel_temp = $('#mod_add_tag').val();
     	   var mod_isvalid;
     	   for(i=0;i<mod_radio_object.length;i++)
     		   if (mod_radio_object[i].checked)
@@ -118,7 +111,7 @@ function FileModify(filePath,thumbnailPath,fileName,fileType,author,regDate,addr
 		       url: "/saegeul/filebox/fileModify",
 		       contentType: "application/json; charset=utf-8",
 		       dataType: "json",
-		       data: "mod_name=" + mod_name+ "&mod_tag=" + mod_tag + "&mod_isvalid=" + mod_isvalid + "&mod_no=" + no + "&mod_sel_id=" + mod_sel_id + "&mod_sel_name=" + mod_sel_name + "&mod_sel_temp=" + mod_sel_temp,
+		       data: "mod_name=" + mod_name + "&mod_isvalid=" + mod_isvalid + "&mod_no=" + no,
 		       error: function() { 
 		       	alert("error");
 		        },
@@ -177,56 +170,7 @@ function search_confirm()
 }
 
 jQuery(function($){
-    $('#mod_tag').live('change', function(){
-        var sel_id = $("#mod_tag option:selected").val();
-        var sel_name = $("#mod_tag option:selected").text();
-        $('#mod_tag').html('');
-        $('#mod_tag')
-        .append($("<option></option>")
-        .attr("value",sel_id)
-        .attr("selected","selected")
-        .text(sel_name));
-        
-		if($("#mod_tag option:selected").text() == '직접입력')
-    		$('#mod_add_tag').show();
-		else
-			$('#mod_add_tag').hide();
-    });
-    $('#mod_tag').live('click', function(){
-       var sel_tag = $('#mod_tag').attr('value');
-    	$('#mod_tag').html('');
-    	$.ajax({
-	       type: "GET",
-	       url: "/saegeul/filebox/getTagList",
-	       contentType: "application/json; charset=utf-8",
-	       dataType: "json",
-	       data: "",
-	       error: function() { 
-	       	alert("error");
-	        },
-	       success: function(data){
-	    	   var obj = eval(data);
-	    	   for(var i=0;i<obj.length;i++){
-	    		   if(sel_tag == obj[i].tag_name){
-		    		   $('#mod_tag')
-		    	         .append($("<option></option>")
-		    	         .attr("value",obj[i].tag_id)
-		    	         .attr("selected","selected")
-		    	         .text(obj[i].tag_name));
-	    		   }else{
-	    			   $('#mod_tag')
-		    	         .append($("<option></option>")
-		    	         .attr("value",obj[i].tag_id)
-		    	         .text(obj[i].tag_name));
-	    		   }
-				}
-	    	   $('#mod_tag')
-  	         .append($("<option></option>")
-  	         .attr("value",999)
-  	         .text('직접입력'));
-			}
-		});
-    });
+    
 });
 </script>
 </head>
@@ -254,7 +198,6 @@ if($key != "" && $keyword != ""){
 				<option value="upload_file_name"
 				<? if($key == "upload_file_name") echo "selected"; ?>>파일이름</option>
 				<option value="sid" <? if($key == "sid") echo "selected"; ?>>작성자</option>
-				<option value="tag" <? if($key == "tag") echo "selected"; ?>>태그</option>
 				<option value="reg_date"
 				<? if($key == "reg_date") echo "selected"; ?>>작성날짜</option>
 			</select>
