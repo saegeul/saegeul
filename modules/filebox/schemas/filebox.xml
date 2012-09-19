@@ -9,7 +9,6 @@
 	<column name="source_file_name" type="varchar" size="250" />
 	<column name="file_size" type="int" size="11" />
 	<column name="module_srl" type="int" size="11" />
-	<column name="module_srl" type="int" size="11" />
 	<column name="tag" type="int" size="3" />
 	<column name="isvalid" type="int" size="11" />
 	<column name="member_srl" type="int" size="11" />

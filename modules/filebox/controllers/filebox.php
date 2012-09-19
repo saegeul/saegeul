@@ -10,6 +10,8 @@ class Filebox extends MX_Controller {
 		$this->load->database();
 		$this->load->helper('url');
 		$this->load->helper('date');
+		
+		$this->sid = 'root';
 	}
 
 	public function index(){
@@ -32,7 +34,6 @@ class Filebox extends MX_Controller {
 		$this->output->set_header('Access-Control-Allow-Methods: OPTIONS, HEAD, GET, POST, PUT, DELETE');
 		$this->output->set_header('Access-Control-Allow-Headers: X-File-Name, X-File-Type, X-File-Size');
 
-		$this->sid = 'root';
 		$this->module_srl = 'filebox';
 
 		switch ($this->input->server('REQUEST_METHOD')) {
@@ -40,9 +41,9 @@ class Filebox extends MX_Controller {
 				break;
 			case 'HEAD':
 
-// 			case 'GET': // get files
-// 				$this->get();
-// 				break;
+			case 'GET': // get files
+				$this->get();
+				break;
 			case 'POST': // upload files
 				if (isset($_REQUEST['_method']) && $_REQUEST['_method'] === 'DELETE') {
 					$this->delete();
@@ -241,6 +242,8 @@ class Filebox extends MX_Controller {
 			// insert data into db
 			$insert_data;
 			$insert_data->tag_name = $temp_tag_name;
+			$insert_data->sid = $this->sid;
+			$insert_data->reg_date = standard_date('DATE_ATOM',time());
 			$this->Filebox_model->insert_tag($insert_data);
 			$temp_arr = $this->Filebox_model->get_tag_id($temp_tag_name);
 			$tag_id = $temp_arr[0]->tag_id;
