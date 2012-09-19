@@ -23,6 +23,9 @@ class Document extends MX_Controller {
     public function tempwriteform() {
         $this->load->view('tempwriteform') ; 
     }        
+    public function styleform() {
+        $this->load->view('styleform') ; 
+    }        
     public function photoform() {
         $this->load->model('Document_model'); // ¸ðµ¨ - È£Ãâ
 

@@ -50,6 +50,8 @@ tinyMCE.init({
 
 
 tinyMCE.execCommand('mceAddControl', false, 'textArea');
+$("#styleContentDiv").hide('');
+$("#styleControl").hide('');
 
         $('#add_title_btn').click(function() {
             try {
@@ -186,17 +188,100 @@ tinyMCE.execCommand('mceAddControl', false, 'textArea');
     $("#add_contentMenu_btn").click(function() {
         $( "#contentMenuDiv" ).toggle('slide'); 
     });
-
     
-    $(window).scroll( function() {
-            $('#contentMenuDiv').css('position','fixed').css('left',contentMenuDivleft);
+    $("#content_next_btn").click(function() {
+        $("#photoContentDiv").toggle('blind');
+        $("#styleContentDiv").toggle('blind');
+        $("#contentControl").toggle('blind');
+        $("#styleControl").toggle('blind');
+    });
+    $("#content_preview_btn").click(function() {
+        $("#photoContentDiv").toggle('blind');
+        $("#styleContentDiv").toggle('blind');
+        $("#contentControl").toggle('blind');
+       $("#styleControl").toggle('blind');
     });
 
-});
-$(window).load(function() {
-           contentMenuDivleft =  $('#contentMenuDiv').offset().left;
-            $('#contentMenuDiv').hide();
+    $("#selectContentDropZon").droppable({
+            scope:"tasks", 
+            accept:".selectImg",
+            drop: function( event, ui ) {
+            $("<img src='"+ui.draggable.attr("src")+"'/ >").appendTo(this).css("width","100px").css("height","100px");
+            } 
+    });
+    $("#styleBox button").click(function() {
+    
+        alert('click');
+
+    });
+    $("#content_finish_btn").click(function() {
+             
+        var index; //몇번 스타일을 골랐는지 알려주는 index
+        var items = $("#selectContentDropZon > img").length; //고른 사진이 몇개인지 알려주는 index
+        $( ".ui-selected").each(function() {
+            index = $( "#selectable li" ).index( this ); //index 에 고른스타일을 넣느다
         });
+//:first - 첫째 요소
+//:last - 마지막 요소
+//:even - 짝수 요소
+//:odd - 홀수 요소
+//:eq(n) - n번째 인덱스에 해당하는 요소
+//:lt(n) - n번째부터 밑에 있는 모든 요소
+//:gt(n) - n번째 보다 위에 있는 모든 요소
+        if( index == 0 ) {
+            if(items < 1 ) {
+                 alert("하나이상의 그림을 고르시오");
+            } else {
+                var $photo = $("#selectContentDropZon img:first").css("width","100%").css("height","100%");
+                $('<div class="photoDropZon" style="padding:10px;background-color:gray;border:1px solid black;height:400px;"></div>').insertBefore('#toolBar').append($photo);
+            }
+        } else if( index == 1 ) {
+            if(items < 2 ) {
+                 alert("두개이상의 그림을 고르시오");
+            } else {
+                var $photo1 = $("#selectContentDropZon img:eq(0)").css("width","50%").css("height","100%");
+                var $photo2 = $("#selectContentDropZon img:eq(1)").css("width","50%").css("height","100%");
+                $('<div style="background-color:red;"></div>').insertBefore('#toolBar').append($photo1).append($photo2);
+            }
+        } else if( index == 2 ) {
+            if(items < 2 ) {
+                 alert("두개이상의 그림을 고르시오");
+            } else {
+                var $photo1 = $("#selectContentDropZon img:eq(0)").css("width","100%").css("height","100%");
+                var $photo2 = $("#selectContentDropZon img:eq(1)").css("width","100%").css("height","100%");
+                $('<div style="background-color:red;"></div>').insertBefore('#toolBar').append($photo1).append($photo2);
+            }
+        } else if( index == 3 ) {
+            if(items < 3 ) {
+                 alert("세개이상의 그림을 고르시오");
+            } else {
+                var $photo1 = $("#selectContentDropZon img:eq(0)").css("width","100%").css("height","100%");
+                var $photo2 = $("#selectContentDropZon img:eq(1)").css("width","100%").css("height","50%");
+                var $photo3 = $("#selectContentDropZon img:eq(2)").css("width","100%").css("height","50%");
+                $('<div class="" style="float:left;"><div class="leftcol" style="float:left;width:50%;"></div><div class="rightcol" style="width:50%;float:left;"></div></div>').insertBefore('#toolBar');
+                $('.leftcol').append($photo1);
+                $('.rightcol').append($photo2).append($photo3);
+            }
+        } else {
+            alert("스타일을 선택하세요");
+        }
+
+
+    });
+    $( "#selectable" ).selectable({
+         
+/*         stop: function() {
+                var result = $( "#select-result" ).empty();
+                $( ".ui-selected", this ).each(function() {
+                    var index = $( "#selectable li" ).index( this );
+                    //result.append( " #" + ( index + 1 ) );
+                    alert( " #" + ( index + 1 ) );
+                });
+            }
+*/
+        });
+
+});
 
 </script>
 <body>
@@ -217,11 +302,58 @@ $(window).load(function() {
 
         <div class="well">
             <span><center><h1><b>New Write</h1></b></center><br /></span> 
-            <input type="text" class="text span" placeholder="제목을 입력하세요." />
+            <input type="text" class="text span12" placeholder="제목을 입력하세요." />
         </div>
-
         <div id="content_area" class="">
             <div id="toolBar" class="well" > 
+
+<!-- 포토 컨텐츠 시작 -->
+                <div id="photoContentDiv" class="" style="background-color:green;">
+                     <div class="well">
+                          <span><center><h2>Content Box</h2><small>Photo Content</small></center></span>
+                     </div>
+                          <div id="contentBox" style="height:400px;" >
+                     </div> 
+                </div>
+<!-- 포토컨텐츠 끝 -->
+
+
+
+                <div id="styleContentDiv" style="background-color:;height:;">
+                     <div class="well">
+                          <span><center><h2>Style Box</h2></center></span>
+                     </div>
+
+                    <div id="styleBox" style="height:200px;background-color:;">
+                        <ol id="selectable"  >
+                            <li class="ui-widget-content"><a>1</a></li>
+                            <li class="ui-widget-content"><a>2</a></li>
+                            <li class="ui-widget-content"><a>3</a></li>
+                            <li class="ui-widget-content"><a>4</a></li>
+                        </ol>
+                    </div>
+                </div>
+                <div id="selectContentDiv" style="background-color:;height:;">
+                     <div class="well">
+                          <span><center><h2>Select Box</h2></center></span>
+                     </div>
+
+    <div id="selectContentDropZon" style="height:200px;background-color:red;"class="" >
+            
+                    </div>
+                </div>
+
+                    <div id="contentControl" style="height:100px;background-color:yellow;">
+                        <span>사진을 드래그 해!!!!</span>                
+                        <button id="content_next_btn" class="btn btn-inverse" type="button">NEXT</button>
+                    </div>
+
+                    <div id="styleControl" style="height:100px;background-color:yellow;">
+                        <button id="content_preview_btn" class="btn btn-inverse" type="button">PREVIEW</button>
+                        <button id="content_finish_btn" class="btn btn-inverse" type="button">FINISH</button>
+                    </div>
+
+
                 <div id="textArea" class="textBox"></div>
                 <br />
                     <button id="add_title_btn" class="btn btn-inverse" type="button">제목추가</button>
@@ -241,23 +373,6 @@ $(window).load(function() {
         </form>
     </div>
 
-    <div id="contentMenuDiv" class="span4" style="background-color:;">
-        <div class="well">
-            <span><center><h2>Content Box</h2><small>Photo Content</small></center></span>
-        </div>
-<!--
-            <ul class="nav nav-tabs" id="menuTab">
-              <li class="active"><a href="#" id="photoBtn" value="photoform"><b>Photo</b></a></li>
-              <li><a href="#" id="fileBtn" value="fileform"><b>File</b></a></li>
-              <li><a href="#" id="mapBtn" value="mapform"><b>Map</b></a></li>
-              <li><a href="#" id="googleBtn" value="googleform"><b>Google</b></a></li>
-              <li><a href="#" id="twitterBtn" value="twitterform"><b>Twitter</b></a></li>
-              <li><a href="#" id="facebookBtn" value="facebookform"><b>Facebook</b></a></li>
-            </ul>
--->
-        <div id="contentBox" >
-        </div> 
-    </div>
-</div>
+  </div>
 </div>
 </body>

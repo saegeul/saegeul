@@ -1,0 +1,5 @@
+<table name="filetag">
+	<column name="tag_id" type="int" size="11" auto_increment="true"
+		primary_key="true" />
+	<column name="tag_name" type="varchar" size="255" />
+</table>

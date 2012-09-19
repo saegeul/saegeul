@@ -11,7 +11,7 @@
 <?echo common_js_asset('jquery/js/jquery-1.7.2.min.js')?>
 <?echo common_js_asset('jquery/js/jquery-ui-1.8.22.custom.min.js')?>
 <script>
-function FileModify(filePath,thumbnailPath,fileName,fileType,author,regDate,address,isvalid,no,comment,file,downCnt,fold_url)
+function FileModify(filePath,thumbnailPath,fileName,fileType,author,regDate,address,isvalid,no,tag,file,downCnt,fold_url)
 {
 
 	var markup = "<form method='get'>"
@@ -40,13 +40,10 @@ function FileModify(filePath,thumbnailPath,fileName,fileType,author,regDate,addr
 			+ "</dl>"
 			+ "<dl>"
 				+ "<p>"
-				   + "&nbsp&nbsp&nbspTag : <select id='mod_comment' name='mod'>"
-				   + "<option>가수</option>"
-				   + "<option>연기자</option>"
-				   + "<option>건물</option>"
-				   + "<option>자동차</option>"
-				   + "<option>가족</option>"
+				   + "&nbsp&nbsp&nbspTag : <select id='mod_tag' name='mod_tag'>"
+				   + "<option>" + tag + "</option>"
 				   + "</select>"
+				   + "&nbsp;&nbsp;&nbsp;<input type='text' id='mod_add_tag' style='width:150px;display:none;'>"
 				+ "</p>"
 			+ "</dl>";
 		if(isvalid == "Y"){
@@ -78,7 +75,7 @@ function FileModify(filePath,thumbnailPath,fileName,fileType,author,regDate,addr
 		   			+ "&nbsp&nbsp&nbspIP : <INPUT type='text' id=mod_address value=" + address + " name=mod_address readonly>"
 				+ "</p>"
 			+ "</dl>"
-		+"</form>";
+		+"</form>";	
 
 	$("#dialog-confirm").html(markup).dialog('open');
 
@@ -106,8 +103,11 @@ function FileModify(filePath,thumbnailPath,fileName,fileType,author,regDate,addr
 		text: "Modify",
        click: function() {
     	   var mod_name = $('#mod_name').attr('value');
-    	   var mod_comment = $('#mod_comment').attr('value');
+    	   var mod_tag = $('#mod_tag').attr('value');
     	   var mod_radio_object = $('.mod_isvalid');
+    	   var mod_sel_id = $("#mod_tag option:selected").val();
+          var mod_sel_name = $("#mod_tag option:selected").text();
+          var mod_sel_temp = $('#mod_add_tag').val();
     	   var mod_isvalid;
     	   for(i=0;i<mod_radio_object.length;i++)
     		   if (mod_radio_object[i].checked)
@@ -118,7 +118,7 @@ function FileModify(filePath,thumbnailPath,fileName,fileType,author,regDate,addr
 		       url: "/saegeul/filebox/fileModify",
 		       contentType: "application/json; charset=utf-8",
 		       dataType: "json",
-		       data: "mod_name=" + mod_name+ "&mod_comment=" + mod_comment + "&mod_isvalid=" + mod_isvalid + "&mod_no=" + no,
+		       data: "mod_name=" + mod_name+ "&mod_tag=" + mod_tag + "&mod_isvalid=" + mod_isvalid + "&mod_no=" + no + "&mod_sel_id=" + mod_sel_id + "&mod_sel_name=" + mod_sel_name + "&mod_sel_temp=" + mod_sel_temp,
 		       error: function() { 
 		       	alert("error");
 		        },
@@ -173,9 +173,61 @@ function search_confirm()
 		document.search_form.keyword.focus();
 		return;
 	}
-
 	document.search_form.submit();
 }
+
+jQuery(function($){
+    $('#mod_tag').live('change', function(){
+        var sel_id = $("#mod_tag option:selected").val();
+        var sel_name = $("#mod_tag option:selected").text();
+        $('#mod_tag').html('');
+        $('#mod_tag')
+        .append($("<option></option>")
+        .attr("value",sel_id)
+        .attr("selected","selected")
+        .text(sel_name));
+        
+		if($("#mod_tag option:selected").text() == '직접입력')
+    		$('#mod_add_tag').show();
+		else
+			$('#mod_add_tag').hide();
+    });
+    $('#mod_tag').live('click', function(){
+       var sel_tag = $('#mod_tag').attr('value');
+    	$('#mod_tag').html('');
+    	$.ajax({
+	       type: "GET",
+	       url: "/saegeul/filebox/getTagList",
+	       contentType: "application/json; charset=utf-8",
+	       dataType: "json",
+	       data: "",
+	       error: function() { 
+	       	alert("error");
+	        },
+	       success: function(data){
+	    	   var obj = eval(data);
+	    	   for(var i=0;i<obj.length;i++){
+	    		   if(sel_tag == obj[i].tag_name){
+		    		   $('#mod_tag')
+		    	         .append($("<option></option>")
+		    	         .attr("value",obj[i].tag_id)
+		    	         .attr("selected","selected")
+		    	         .text(obj[i].tag_name));
+	    		   }else{
+	    			   $('#mod_tag')
+		    	         .append($("<option></option>")
+		    	         .attr("value",obj[i].tag_id)
+		    	         .text(obj[i].tag_name));
+	    		   }
+				}
+	    	   $('#mod_tag')
+  	         .append($("<option></option>")
+  	         .attr("value",999)
+  	         .text('직접입력'));
+			}
+		});
+    });
+});
 </script>
 </head>
 <?php 
@@ -202,6 +254,7 @@ if($key != "" && $keyword != ""){
 				<option value="upload_file_name"
 				<? if($key == "upload_file_name") echo "selected"; ?>>파일이름</option>
 				<option value="sid" <? if($key == "sid") echo "selected"; ?>>작성자</option>
+				<option value="tag" <? if($key == "tag") echo "selected"; ?>>태그</option>
 				<option value="reg_date"
 				<? if($key == "reg_date") echo "selected"; ?>>작성날짜</option>
 			</select>
@@ -231,7 +284,7 @@ if($key != "" && $keyword != ""){
 				$regDate = $row->reg_date;
 				$address = $row->ip_address;
 				$isvalid = $row->isvalid;
-				$comment = $row->comment;
+				$tag = $row->tag;
 				$downCnt = $row->down_cnt;
 				$source_file_name = $row->source_file_name;
 				$img_fold_url = $base_url."filebox/files/img/". date('Ymd', strtotime($row->reg_date));
@@ -250,7 +303,7 @@ if($key != "" && $keyword != ""){
 					$thumbnailPath = "/saegeul/modules/auth/views/assets/img/no_image.png";
 				?>
 				<tr
-					onclick="FileModify('<?=$filePath?>','<?=$thumbnailPath?>','<?=$fileName?>','<?=$fileType?>','<?=$author?>','<?=$regDate?>','<?=$address?>','<?=$isvalid?>','<?=$no?>','<?=$comment?>','<?=$source_file_name?>','<?=$downCnt?>','<?=$folder_url?>')">
+					onclick="FileModify('<?=$filePath?>','<?=$thumbnailPath?>','<?=$fileName?>','<?=$fileType?>','<?=$author?>','<?=$regDate?>','<?=$address?>','<?=$isvalid?>','<?=$no?>','<?=$tag?>','<?=$source_file_name?>','<?=$downCnt?>','<?=$folder_url?>')">
 					<td><?=$row->file_srl?></td>
 					<td>
 						<div style="margin-top: 16px;">

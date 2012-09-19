@@ -1,3 +1,7 @@
+#selectable .ui-selecting { background: #FECA40; }
+#selectable .ui-selected { background: #F39814; color: white; }
+#selectable { list-style-type: none;}
+#selectable li { float:left;height:100%; width:23%;}
 /*
 #content_body {
 float: left;

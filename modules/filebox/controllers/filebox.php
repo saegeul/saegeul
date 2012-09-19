@@ -40,9 +40,9 @@ class Filebox extends MX_Controller {
 				break;
 			case 'HEAD':
 
-			case 'GET': // get files
-				$this->get();
-				break;
+// 			case 'GET': // get files
+// 				$this->get();
+// 				break;
 			case 'POST': // upload files
 				if (isset($_REQUEST['_method']) && $_REQUEST['_method'] === 'DELETE') {
 					$this->delete();
@@ -233,9 +233,21 @@ class Filebox extends MX_Controller {
 		$this->load->model('Filebox_model'); // 모델 - 호출
 		$data['mod_no'] = $this->input->get('mod_no');
 		$data['mod_name'] = $this->input->get('mod_name');
-		$data['mod_comment'] = $this->input->get('mod_comment');
 		$data['mod_isvalid'] = $this->input->get('mod_isvalid');
-
+		$tag_id = $this->input->get('mod_sel_id');
+		$tag_name = $this->input->get('mod_sel_name');
+		$temp_tag_name = $this->input->get('mod_sel_temp');
+		if($tag_name=="직접입력" && $temp_tag_name != ""){
+			// insert data into db
+			$insert_data;
+			$insert_data->tag_name = $temp_tag_name;
+			$this->Filebox_model->insert_tag($insert_data);
+			$temp_arr = $this->Filebox_model->get_tag_id($temp_tag_name);
+			$tag_id = $temp_arr[0]->tag_id;
+		}
+			
+		$data['mod_tag'] = $tag_id;
+		
 		if($this->Filebox_model->update_entry($data))
 			$success = "success";
 
@@ -253,7 +265,7 @@ class Filebox extends MX_Controller {
 		$page_per_block = 5; // 페이징 이동 개수 ( 1 .. 5)
 
 		$data = "";
-
+		$tag_name = "";
 
 		if($page < 1){
 			$page = 1;
@@ -265,6 +277,12 @@ class Filebox extends MX_Controller {
 		if($this->input->get('key') && $this->input->get('keyword')){
 			$data['key'] = $this->input->get('key');
 			$data['keyword'] = $this->input->get('keyword');
+			if($data['key'] == 'tag'){
+				$tag_name = $data['keyword'];
+				$temp_arr = $this->Filebox_model->get_tag_id($tag_name);
+				$data['keyword'] = $temp_arr[0]->tag_id;
+				
+			}
 		}else {
 			$data['key'] = "";
 			$data['keyword']= "";
@@ -273,18 +291,24 @@ class Filebox extends MX_Controller {
 		$start_idx = ($page - 1) * $page_view;
 
 		$data['result']=$this->Filebox_model->select_entry($start_idx, $page_view, $data);
+		foreach($data['result'] as $key => $value){
+			$temp = $this->Filebox_model->select_tag($value->tag);
+			$value->tag = $temp[0]->tag_name;
+		}
+		
 		$data['total_record'] = count($this->Filebox_model->total_entry_count($data));
 		$data['total_page'] = ceil($data['total_record'] / $page_view);
-
+		
 		// 폼 - 정의
 		$data['base_url'] = $base_url;
 		$data['act_url'] = $act_url;
+		$data['keyword'] = $tag_name;
 
 		// 뷰 - 출력
 		$this->load->view('upload_list', $data);
 
 	}
-
+	
 	public function getDownCnt(){
 
 		$this->load->model('Filebox_model'); // 모델 - 호출
@@ -334,6 +358,12 @@ class Filebox extends MX_Controller {
 		}
 
 		force_download($file, $download_file);
+	}
+	
+	public function getTagList(){
+		$this->load->model('Filebox_model'); // 모델 - 호출
+		$success = $this->Filebox_model->get_tag();
+		echo json_encode($success);
 	}
 
 	//filebox get image
