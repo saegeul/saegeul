@@ -10,7 +10,7 @@
 	<column name="file_size" type="int" size="11" />
 	<column name="module_srl" type="int" size="11" />
 	<column name="module_srl" type="int" size="11" />
-	<column name="comment" type="varchar" size="250" />
+	<column name="tag" type="int" size="3" />
 	<column name="isvalid" type="int" size="11" />
 	<column name="member_srl" type="int" size="11" />
 	<column name="reg_date" type="date" />

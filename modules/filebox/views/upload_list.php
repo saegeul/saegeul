@@ -11,7 +11,7 @@
 <?echo common_js_asset('jquery/js/jquery-1.7.2.min.js')?>
 <?echo common_js_asset('jquery/js/jquery-ui-1.8.22.custom.min.js')?>
 <script>
-function FileModify(filePath,thumbnailPath,fileName,fileType,author,regDate,address,isvalid,no,comment,file,downCnt,fold_url)
+function FileModify(filePath,thumbnailPath,fileName,fileType,author,regDate,address,isvalid,no,tag,file,downCnt,fold_url)
 {
 
 	var markup = "<form method='get'>"
@@ -41,7 +41,7 @@ function FileModify(filePath,thumbnailPath,fileName,fileType,author,regDate,addr
 			+ "<dl>"
 				+ "<p>"
 				   + "&nbsp&nbsp&nbspTag : <select id='mod_tag' name='mod_tag'>"
-				   + "<option>" + comment + "</option>"
+				   + "<option>" + tag + "</option>"
 				   + "</select>"
 				   + "&nbsp;&nbsp;&nbsp;<input type='text' id='mod_add_tag' style='width:150px;display:none;'>"
 				+ "</p>"
@@ -103,7 +103,7 @@ function FileModify(filePath,thumbnailPath,fileName,fileType,author,regDate,addr
 		text: "Modify",
        click: function() {
     	   var mod_name = $('#mod_name').attr('value');
-    	   var mod_comment = $('#mod_comment').attr('value');
+    	   var mod_tag = $('#mod_tag').attr('value');
     	   var mod_radio_object = $('.mod_isvalid');
     	   var mod_sel_id = $("#mod_tag option:selected").val();
           var mod_sel_name = $("#mod_tag option:selected").text();
@@ -118,7 +118,7 @@ function FileModify(filePath,thumbnailPath,fileName,fileType,author,regDate,addr
 		       url: "/saegeul/filebox/fileModify",
 		       contentType: "application/json; charset=utf-8",
 		       dataType: "json",
-		       data: "mod_name=" + mod_name+ "&mod_comment=" + mod_comment + "&mod_isvalid=" + mod_isvalid + "&mod_no=" + no + "&mod_sel_id=" + mod_sel_id + "&mod_sel_name=" + mod_sel_name + "&mod_sel_temp=" + mod_sel_temp,
+		       data: "mod_name=" + mod_name+ "&mod_tag=" + mod_tag + "&mod_isvalid=" + mod_isvalid + "&mod_no=" + no + "&mod_sel_id=" + mod_sel_id + "&mod_sel_name=" + mod_sel_name + "&mod_sel_temp=" + mod_sel_temp,
 		       error: function() { 
 		       	alert("error");
 		        },
@@ -283,7 +283,7 @@ if($key != "" && $keyword != ""){
 				$regDate = $row->reg_date;
 				$address = $row->ip_address;
 				$isvalid = $row->isvalid;
-				$comment = $row->comment;
+				$tag = $row->tag;
 				$downCnt = $row->down_cnt;
 				$source_file_name = $row->source_file_name;
 				$img_fold_url = $base_url."filebox/files/img/". date('Ymd', strtotime($row->reg_date));
@@ -302,7 +302,7 @@ if($key != "" && $keyword != ""){
 					$thumbnailPath = "/saegeul/modules/auth/views/assets/img/no_image.png";
 				?>
 				<tr
-					onclick="FileModify('<?=$filePath?>','<?=$thumbnailPath?>','<?=$fileName?>','<?=$fileType?>','<?=$author?>','<?=$regDate?>','<?=$address?>','<?=$isvalid?>','<?=$no?>','<?=$comment?>','<?=$source_file_name?>','<?=$downCnt?>','<?=$folder_url?>')">
+					onclick="FileModify('<?=$filePath?>','<?=$thumbnailPath?>','<?=$fileName?>','<?=$fileType?>','<?=$author?>','<?=$regDate?>','<?=$address?>','<?=$isvalid?>','<?=$no?>','<?=$tag?>','<?=$source_file_name?>','<?=$downCnt?>','<?=$folder_url?>')">
 					<td><?=$row->file_srl?></td>
 					<td>
 						<div style="margin-top: 16px;">

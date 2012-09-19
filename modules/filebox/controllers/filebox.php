@@ -40,9 +40,9 @@ class Filebox extends MX_Controller {
 				break;
 			case 'HEAD':
 
-			case 'GET': // get files
-				$this->get();
-				break;
+// 			case 'GET': // get files
+// 				$this->get();
+// 				break;
 			case 'POST': // upload files
 				if (isset($_REQUEST['_method']) && $_REQUEST['_method'] === 'DELETE') {
 					$this->delete();
@@ -247,7 +247,7 @@ class Filebox extends MX_Controller {
 		}
 			
 		
-		$data['mod_comment'] = $tag_id;
+		$data['mod_tag'] = $tag_id;
 		
 		if($this->Filebox_model->update_entry($data))
 			$success = "success";
@@ -287,8 +287,8 @@ class Filebox extends MX_Controller {
 
 		$data['result']=$this->Filebox_model->select_entry($start_idx, $page_view, $data);
 		foreach($data['result'] as $key => $value){
-			$temp = $this->Filebox_model->select_tag($value->comment);
-			$value->comment = $temp[0]->tag_name;
+			$temp = $this->Filebox_model->select_tag($value->tag);
+			$value->tag = $temp[0]->tag_name;
 		}
 		$data['total_record'] = count($this->Filebox_model->total_entry_count($data));
 		$data['total_page'] = ceil($data['total_record'] / $page_view);

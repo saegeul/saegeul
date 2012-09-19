@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `filebox` (
   `source_file_name` varchar(250) COLLATE utf8_bin NOT NULL,
   `file_size` int(11) NOT NULL DEFAULT '0',
   `module_srl` int(11) DEFAULT NULL, 
-  `comment` int(3) NOT NULL DEFAULT '1',
+  `tag` int(3) NOT NULL DEFAULT '1',
   `isvalid` char(1) COLLATE utf8_bin DEFAULT 'Y',
   `member_srl`int(11) DEFAULT NULL,
   `reg_date` datetime DEFAULT NULL, 

@@ -80,7 +80,7 @@ class Filebox_model extends CI_Model {
 	function update_entry($data)
 	{
 		$value->upload_file_name = $data['mod_name'];
-		$value->comment = $data['mod_comment'];
+		$value->tag = $data['mod_tag'];
 		$value->isvalid = $data['mod_isvalid'];
 
 		return $this->db->update('filebox', $value, array('file_srl' => $data['mod_no']));
