@@ -254,6 +254,7 @@ if($key != "" && $keyword != ""){
 				<option value="upload_file_name"
 				<? if($key == "upload_file_name") echo "selected"; ?>>파일이름</option>
 				<option value="sid" <? if($key == "sid") echo "selected"; ?>>작성자</option>
+				<option value="tag" <? if($key == "tag") echo "selected"; ?>>태그</option>
 				<option value="reg_date"
 				<? if($key == "reg_date") echo "selected"; ?>>작성날짜</option>
 			</select>
