@@ -11,8 +11,9 @@ class Install extends MX_Controller {
         $this->footer = $this->load->view('footer','',true) ; 
     } 
 
-    public function index($step='step1'){ 
-        $this->{'_'.$step}(); 
+    public function index(){ 
+        $this->load->helper('url') ; 
+        redirect('install/checkEnvironment'); 
     }
 
     function _defaultSetting(){
