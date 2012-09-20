@@ -18,7 +18,7 @@ function FileModify(filePath,thumbnailPath,fileName,fileType,author,regDate,addr
 			+ "<legend>Image Modify</legend>"
 		 	+ "<dl class='thumbnails'>"
 				+ "<dd style='margin-left:25px;height:110px;width:150px;float:left;'>"
-					+ "<div class='thumbnail'>"
+					+ "<div align='middle' style='margin: 0px auto; height: 100px; width: 120px; -moz-transition: all 0.2s ease-in-out 0s ; border: 1px solid rgb(221, 221, 221); border-radius: 4px 4px 4px 4px; box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.055); display: block; padding: 4px; line-height: 100px;'>"
 						+ "<img src=" + thumbnailPath + " id=thumb class='img-rounded'>"
 					+ "</div>"
 				+ "</dd>"
