@@ -16,7 +16,7 @@
 <?echo js_asset('ucloud','jquery.auth-ajax.js')?>
 </head>
 <body>
-	<div id="container">
+	<div id="container" style="margin-top:-30px;">
 		<div id="layout_center">
 			<br> <br>
 			<h1 align="center">Cloud List</h1>
