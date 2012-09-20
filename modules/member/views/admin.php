@@ -9,24 +9,38 @@
 <?echo common_css_asset('bootstrap/css/bootstrap.min.css')?>
 
 </head>
-<h1>welcome</h1>
 
-<ul class="nav nav-pills">
 
-	<li><a href="member/admin_member">회원관리 </a></li>
+<body style="background: #000;">
+
+	<div class="container">
+
+<div class="hero-unit">
+	<h1>welcome</h1><br>
+    <ul class="nav nav-tabs nav-stacked">
+
+	<li><a href="<?=site_url("/member/admin_member")?>">회원관리 </a></li>
 	<?php echo "<br>"?>
-	<li><a href="member/change_password"> 관리자 비밀번호 변경 </a></li>
+	<li><a href="<?=site_url("/member/change_password")?>"> 관리자 비밀번호 변경 </a></li>
 	<?php echo "<br>"?>
-	<li><a href="member/do_invite">초대 </a></li>
+	<li><a href="<?=site_url("/member/do_invite")?>">초대 </a></li>
 	<?php echo "<br>"?>
+    </ul>
+    
+    <a class="btn btn-primary btn-large" href="member/logout">로그아웃 </a>
+</div>
 
-</ul>
+</div>
+</body>
 
 
 
 
 
-<a class="btn btn-primary btn-large" href="member/logout">로그아웃 </a>
+
+
+
+
 <body>
 
 </body>

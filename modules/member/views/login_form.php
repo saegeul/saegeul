@@ -84,7 +84,7 @@ $captcha = array(
 				</div>
 				<div class="control-group">
 					<div class="controls">
-						<a href="member/forgot_password">비밀번호 찾기 </a><br> <input
+						<a href="<?=site_url("/member/forgot_password")?>">비밀번호 찾기 </a><br> <input
 							class='btn btn-success' type='submit' value='LOGIN'> <a
 							class="btn btn-info" href="register">회원가입 </a>
 					</div>

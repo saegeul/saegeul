@@ -1,3 +1,10 @@
+<?php $this->load->helper('url') ?>
+<?php $this->load->helper('asset') ?>
+
+
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<?echo common_css_asset('bootstrap/css/bootstrap-responsive.min.css')?>
+<?echo common_css_asset('bootstrap/css/bootstrap.min.css')?>
 <?php
 $old_password = array(
 	'name'	=> 'old_password',
@@ -18,6 +25,11 @@ $confirm_new_password = array(
 	'size' 	=> 30,
 );
 ?>
+
+<body style="background:#000;">
+    <div class="container">
+        <div class="hero-unit">
+
 <?php echo form_open($this->uri->uri_string()); ?>
 <table>
 	<tr>
@@ -36,5 +48,13 @@ $confirm_new_password = array(
 		<td style="color: red;"><?php echo form_error($confirm_new_password['name']); ?><?php echo isset($errors[$confirm_new_password['name']])?$errors[$confirm_new_password['name']]:''; ?></td>
 	</tr>
 </table>
-<?php echo form_submit('change', 'Change Password'); ?>
+
+
+
+<?php echo form_submit('change', '비밀번호 변경하기'); ?>
 <?php echo form_close(); ?>
+
+</div>
+</div>
+</body>
+

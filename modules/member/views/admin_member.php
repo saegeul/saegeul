@@ -40,11 +40,16 @@ if($key != "" && $keyword != ""){
 	$etc = "?key=" . $key . "&keyword=" . $keyword;
 }
 ?>
-<body>
+<body style="background: #000;">
+
+
+
+<div class="hero-unit">
+<h1>Member List <small>회원 관리 모드입니다.</small></h1> 
+            <hr/>
 	<form class="bs-docs-example form-search" name="search_form">
 
-		<h1 align="center">Member List</h1>
-		<br>
+	
 
 		<div class="container">
 			<table class="table table-hover">
@@ -142,8 +147,11 @@ if($key != "" && $keyword != ""){
 			</div>
 		</div>
 
-		<a class="btn btn-primary btn-large" href="member/logout">로그아웃 </a>
+		<a class="btn btn-primary btn-large" href="<?=site_url("/member/logout")?>">로그아웃 </a>
 
 	</form>
-</body>
+	
+
+</div>
+	</body>
 </html>
