@@ -442,6 +442,7 @@ class Users extends CI_Model
 		$this->db->where('username', $user_name);
 		
 		$query = $this->db->get();
+		
 		$row = $query->row(1);
 		
 		return $row->level; 
@@ -450,7 +451,7 @@ class Users extends CI_Model
 	function min_admin($id){
 		$this->db->select('id');
 		$this->db->from('users');
-		$this->db->where('admin', 1);
+		$this->db->where('level', 'admin');
 		
 		$query = $this->db->get();
 		$row = $query->row(1);
@@ -478,7 +479,7 @@ class Users extends CI_Model
 	//받아온 값으로 권한값을 변경
 	function admin_set($id,$admin){ 
 
-		$this->db->set('admin',$admin );
+		$this->db->set('level',$admin );
 		$this->db->where('id', $id);
 		$this->db->update($this->table_name); 
 
@@ -486,20 +487,20 @@ class Users extends CI_Model
 
 	//권한변경 버튼을 눌렀을 때 관리자->유저, 유저->관리자 로 변경
 	function admin_value($id){
-		$this->db->select('admin');
+		$this->db->select('level');
 		$this->db->from('users');
 		$this->db->where('id', $id);
 		$query = $this->db->get();
 		
 
 		$row = $query->row(1);
-		if($row->admin){
+		if($row->level == 'admin'){
 			//관리자를 유저로 변경
-			return 0;
+			return 'user';
 		}
 		else {
 			//유저를 관리자로 변경
-			return 1;
+			return 'admin';
 		}
 
 	}

@@ -13,13 +13,13 @@
 </head>
 <h1>welcome</h1>
 
-<a href="member/change_password">비밀번호 변경</a><br>
-<a href="member/change_email">E-Mail 변경</a><br>
+<a href="<?=site_url("/member/change_password")?>">비밀번호 변경</a><br>
+<!-- <a href="member/change_email">E-Mail 변경</a><br> -->
 
 
-<a href="member/unregister">회원탈퇴</a><br>
+<a href="<?=site_url("/member/unregister")?>">회원탈퇴</a><br>
 
-<a class="btn btn-primary btn-large" href="member/logout">로그아웃 </a>
+<a class="btn btn-primary btn-large" href="<?=site_url("/member/logout")?>">로그아웃 </a>
 <body>
 	
 </body>
