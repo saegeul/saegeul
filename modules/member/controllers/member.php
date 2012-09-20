@@ -577,8 +577,8 @@ class Member extends MX_Controller
 
 		if($this->users->min_admin($id)){
 
-			$admin=$this->users->admin_value($id);
-			$this->users->admin_set($id,$admin);
+			$level=$this->users->admin_value($id);
+			$this->users->admin_set($id,$level);
 		}
 
 		$this->admin_member();
@@ -850,7 +850,10 @@ class Member extends MX_Controller
 
 
 
-} 
+}
+
+
+
 
 /* End of file auth.php */
 /* Location: ./application/controllers/member.php */
