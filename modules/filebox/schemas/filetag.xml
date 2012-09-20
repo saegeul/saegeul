@@ -1,10 +1,9 @@
 <table name="filetag">
 	<column name="tag_id" type="int" size="11" auto_increment="true" primary_key="true" />
 	<column name="tag" type="varchar" size="255" />
-	<column name="sid" type="varchar" size="20" /><!--삭제-->
+	<column name="file_srl" type="int" size="11" />
 	<column name="reg_date" type="date" />
     <column name="username" type="varchar" size="50"   not_null="true"/>
-    <column name="password" type="varchar" size="255"   not_null="true"/> 
     <column name="email" type="varchar" size="100"   not_null="true"/> 
     <column name="uid" type="int" size="11" not_null="true"/><!--user primary key-->
 </table>

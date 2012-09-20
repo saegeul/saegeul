@@ -35,11 +35,11 @@ class Filebox_model extends CI_Model {
 		$this->db->delete('filebox', array('file_srl' => $file_srl));
 	}
 
-	function get_entry($sid)
+	function get_entry($uid)
 	{
 		$this->db->select('*');
 		$this->db->from('filebox');
-		$this->db->where('sid', $sid);
+		$this->db->where('uid', $uid);
 		$this->db->order_by("file_srl", "desc");
 
 		$query = $this->db->get();
