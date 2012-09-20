@@ -33,7 +33,7 @@
 		<br>
 		<br>
 		<div id="layout_right">
-			<h1 align="center" class="getList"><a href="javascript:void(0)">FileBox List</a></h1>
+			<h1 align="center" class="getList"><a style="color: #333333;" href="javascript:void(0)">FileBox List</a></h1>
 			<div id="files" style="display: none"></div>
 		</div>
 	</div>
