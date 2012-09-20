@@ -431,7 +431,7 @@ class Filebox extends MX_Controller {
 				$file->name = $value->source_file_name;
 				$file->size = filesize($file_fold_url . $value->source_file_name);
 				$file->url = base_url() . $file_fold_url . $value->source_file_name;
-				$file->thumbnail_url = base_url() . "/modules/auth/views/assets/img/no_image.png";
+				$file->thumbnail_url = base_url() . "/modules/ucloud/views/assets/img/no_image.png";
 
 				$files[$key] = $file;
 			}else if(is_file($img_fold_url . $value->source_file_name)){
