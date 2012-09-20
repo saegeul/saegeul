@@ -322,6 +322,7 @@ class Filebox extends MX_Controller {
 			$success = "success";
 			
 		}
+		// return json
 		echo json_encode($success);
 	}
 	
@@ -354,7 +355,7 @@ class Filebox extends MX_Controller {
 
 	// upload_list : download file
 	public function fileDownload(){
-
+		// get DB library
 		$this->load->model('Filebox_model','filebox');
 		$this->load->helper('download');
 
@@ -384,15 +385,16 @@ class Filebox extends MX_Controller {
 
 	//filebox get image
 	public function getFileList(){
-
+		// get DB library
 		$this->load->model('Filebox_model','filebox');
 
-		// 세팅 - 설정
-		$page_view = 9; // 한 페이지에 보여줄 레코드 수
+		// page setting
+		$page_view = 9; // page setting
 		$base_url = base_url(); // base_url
-		$act_url = $base_url . "filebox/getFileList";
-		$page_per_block = 9; // 페이징 이동 개수 ( 1 .. 5)
+		$act_url = $base_url . "filebox/getFileList"; // page setting
+		$page_per_block = 9; // page setting
 
+		// return data setting
 		$data = "";
 
 		$page = $this->input->get('page')?$this->input->get('page'):"";
@@ -403,7 +405,10 @@ class Filebox extends MX_Controller {
 		}else{
 			$data['page'] = $page;
 		}
+		
+		$start_idx = ($page - 1) * $page_view;
 
+		// search keyworld
 		if($this->input->get('key') && $this->input->get('keyword')){
 			$data['key'] = $this->input->get('key');
 			$data['keyword'] = $this->input->get('keyword');
@@ -411,21 +416,25 @@ class Filebox extends MX_Controller {
 			$data['key'] = "";
 			$data['keyword']= "";
 		}
-
-		$start_idx = ($page - 1) * $page_view;
-
+		
+		// get files in DB
 		$data['result']=$this->filebox->select_entry($start_idx, $page_view, $data);
+		// get page tocal count
 		$data['total_record'] = count($this->filebox->total_entry_count($data));
 		$data['total_page'] = ceil($data['total_record'] / $page_view);
 
-		// 폼 - 정의
+		// url
 		$data['base_url'] = $base_url;
 		$data['act_url'] = $act_url;
 
 		foreach($data['result'] as $key => $value){
+			// date folder
 			$folder = date ('Ymd', strtotime ($value->reg_date));
+			// image folder
 			$file_fold_url = 'filebox/files/file/' . $folder . '/';
+			// file folder
 			$img_fold_url = 'filebox/files/img/' . $folder . '/';
+			// db get data check image or file
 			if(is_file($file_fold_url . $value->source_file_name)){
 				$file = new stdClass();
 				$file->name = $value->source_file_name;
@@ -447,6 +456,7 @@ class Filebox extends MX_Controller {
 
 		$data['result'] = $files;
 		$success = $data;
+		// return json
 		echo json_encode($success);
 
 	}
