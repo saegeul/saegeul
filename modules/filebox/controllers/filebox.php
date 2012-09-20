@@ -173,7 +173,7 @@ class Filebox extends MX_Controller {
 				if(is_file($save_thumb_dir . $insert_data->source_file_name)){
 					$info->thumbnail_url = base_url() . $save_thumb_dir . $insert_data->source_file_name; //I set this to original file since I did not create thumbs.  change to thumbnail directory if you do = $upload_path_url .'/thumbs' .$name
 				}else{
-					$info->thumbnail_url = base_url() . "/modules/auth/views/assets/img/no_image.png";
+					$info->thumbnail_url = base_url() . "/modules/ucloud/views/assets/img/no_image.png";
 				}
 				$info->delete_url =  base_url() . 'filebox/process/?file='.$insert_data->source_file_name;
 				$info->delete_type = 'DELETE';
@@ -216,7 +216,7 @@ class Filebox extends MX_Controller {
 				$file->name = $value->source_file_name;
 				$file->size = filesize($file_fold_url . $value->source_file_name);
 				$file->url = base_url() . $file_fold_url . $value->source_file_name;
-				$file->thumbnail_url = base_url() . "/modules/auth/views/assets/img/no_image.png";
+				$file->thumbnail_url = base_url() . "/modules/ucloud/views/assets/img/no_image.png";
 				$file->delete_url = base_url() . 'filebox/process/?file='.$value->source_file_name;
 				$file->delete_type = 'DELETE';
 
