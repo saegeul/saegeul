@@ -22,6 +22,15 @@ function search_confirm()
 	document.search_form.submit();
 }
 
+function really_ban(ban_id){
+conf = confirm("정말 탈퇴 시키겠습니까??");
+	if(conf){
+		alert("회원을 탈퇴 시켰습니다.");
+		location.href=" <?=site_url("/member/good_bye?")?>id="+ban_id;
+	}
+		
+}
+
 
 </script>
 
@@ -85,8 +94,10 @@ if($key != "" && $keyword != ""){
 							echo "<td>사용자</td>";
 
 						}
+?>
 
-						echo " <td><a href=' ".site_url("/member/good_bye?id=$row->id")."'>".form_button('btn_goodbye','Goodbye')."</a></td>";
+<td><input type="button"  value="Good_Bye" onclick="really_ban(<?=$row->id?>);"></td>
+<?php 						
 						echo " <td><a href=' ".site_url("/member/admin_set?id=$row->id")."'>".form_button('btn_grant','Admin_Set')."</a></td>";
 						echo "</tr>";
 

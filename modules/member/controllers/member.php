@@ -714,7 +714,7 @@ class Member extends MX_Controller
 				if ($email_activation) {									// send "activate" email
 					$data['activation_period'] = $this->config->item('email_activation_expire', 'tank_auth') / 3600;
 
-					$this->load->view("member/sending_mail");
+					
 					
 					$this->_send_email('activate', $data['email'], $data);
 					
