@@ -53,3 +53,6 @@ clear : both;
 margin: 0 auto;
 }
 */
+.element {position:relative;padding-left:20px;}
+.highlight { background:yellow;}
+.element .handler { width: 20px; height:60px; ;position:absolute;left:0;right:0;top:0;bottom:0; }

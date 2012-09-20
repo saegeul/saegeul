@@ -1,0 +1,15 @@
+<module>
+    <name>member</name>
+</module>
+<menus> 
+    <menu>
+        <name>회원목록</name>
+        <action> </action>
+        <permission> </permission>
+    </menu> 
+    <menu>
+        <name>회원추가</name>
+        <action> </action>
+        <permission> </permission>
+    </menu> 
+</menus>

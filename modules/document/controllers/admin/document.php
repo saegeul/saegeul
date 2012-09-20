@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed') ; 
 
-class Document2 extends MX_Controller { 
+class Document extends MX_Controller { 
 
     protected $sid;
     protected $module_srl;
@@ -14,12 +14,47 @@ class Document2 extends MX_Controller {
     }
 
     public function index(){
+        $layout = array() ; 
+        $this->load->library('admin_tmpl') ; 
 
+        $section = array(
+            'header'=>'admin/header',
+            'sidebar'=>'admin/sidebar',
+            'body'=>'admin/body',
+            'footer'=>'admin/footer'
+        ) ; 
+
+        $str= $this->admin_tmpl->parse($section); 
+
+        echo $str ; 
+
+    }
+
+    public function document_list(){
+        $layout = array() ; 
+        $this->load->library('admin_tmpl') ; 
+
+        $section = array(
+            'header'=>'admin/header',
+            'sidebar'=>'admin/sidebar',
+            'body'=>'admin/document_list',
+            'footer'=>'admin/footer'
+        ) ; 
+
+        $str= $this->admin_tmpl->parse($section); 
+
+        echo $str ;
     }
 
     public function writeform(){ 
-        $this->load->view('jaehee_writeform') ; 
+        $layout = array() ; 
+        $layout['header'] = $this->load->view('./../../admin/views/header','',true);
+        $layout['body'] = $this->load->view('admin/writeform','',true);
+        $layout['footer'] = $this->load->view('./../../admin/views/footer','',true);
+
+        echo $layout['header'].$layout['body'].$layout['footer'] ; 
     }
+
     public function tempwriteform() {
         $this->load->view('tempwriteform') ; 
     }        

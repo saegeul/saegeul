@@ -6,12 +6,13 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <title>새글</title>
-    <?echo css_asset('admin','bootstrap/css/bootstrap.css')?>
-    <?echo css_asset('admin','bootstrap/css/bootstrap-responsive.css')?>
+    <?echo common_css_asset('bootstrap/css/bootstrap.css')?>
+    <?echo common_css_asset('bootstrap/css/bootstrap-responsive.css')?>
+    <?echo common_css_asset('bootstrap/css/docs.css')?>
     <?echo common_css_asset('jquery/css/smoothness/jquery-ui-1.8.22.custom.css')?>
     <?echo common_js_asset('jquery/js/jquery-1.7.2.min.js')?>
     <?echo common_js_asset('jquery/js/jquery-ui-1.8.22.custom.min.js')?>
-    <?echo js_asset('admin','bootstrap/js/bootstrap.min.js') ?>
+    <?echo common_js_asset('bootstrap/js/bootstrap.min.js') ?>
 </head>
 <body>
     <div class="navbar navbar-inverse ">
@@ -32,24 +33,24 @@
                         <a href="<?=base_url()?>index.php/admin/document/writeform">Layout </a>
                     </li>
                     <li <?php if($this->uri->segment(2)=='webzine'):?> class="active" <?php endif;?>> 
-                        <a href="<?=base_url()?>index.php/admin/document/writeform">Document</a>
+                        <a href="<?=base_url()?>document/admin/document/document_list">Document</a>
                     </li> 
                     <li <?php if($this->uri->segment(2)=='webzine'):?> class="active" <?php endif;?>> 
-                        <a href="<?=base_url()?>index.php/admin/document/writeform">Cloud Drive</a>
+                        <a href="<?=base_url()?>cloud_drive/admin/cloud_drive">Cloud Drive</a>
                     </li> 
                     <li <?php if($this->uri->segment(2)=='webzine'):?> class="active" <?php endif;?>> 
                         <a href="<?=base_url()?>index.php/admin/document/writeform">Archaive</a>
                     </li> 
                     <li <?php if($this->uri->segment(2)=='template'):?> class="active" <?php endif;?>> 
-                        <a href="<?=base_url()?>index.php/admin/file/uploadform">File</a>
+                        <a href="<?=base_url()?>filebox/admin/filebox/uploadForm">File</a>
                     </li>
                     <li> 
                         <div class="btn-group">
                             <button class="btn btn-primary" ><i class="icon-plus icon-white"></i>&nbsp;NEW</button>
                             <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" ><span class="caret"></span></button>
                             <ul class="dropdown-menu"> 
-                                <li><a><i class="icon-plus"></i> DOCUMENT</a></li>
-                                <li><a><i class="icon-plus"></i> FILE</a></li>
+                                <li><a href="<?=base_url()?>document/admin/document/writeform"><i class="icon-plus"></i> DOCUMENT</a></li>
+                                <li><a href="<?=base_url()?>filebox/admin/filebox/uploadForm"><i class="icon-plus"></i> FILE</a></li>
                                 <li><a><i class="icon-plus"></i> PAGE</a></li>
                             </ul> 
                         </div>

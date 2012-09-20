@@ -18,8 +18,22 @@ class Admin extends MX_Controller {
         $map = directory_map('./modules',2); 
 
         $map ; 
-
     }
+
+    public function getLayout(){
+        $layout = array() ; 
+
+        $header = $this->load->view('header','',true) ; 
+        $footer = $this->load->view('footer','',true) ; 
+
+        $layout['header'] = $header ;
+        $layout['body'] = 'adf' ;
+        $layout['footer'] = $footer ;
+        
+        return $layout ; 
+    }
+
+    
 
     public function module($module_name='',$action=''){ 
         $header = $this->load->view('header','',true) ; 

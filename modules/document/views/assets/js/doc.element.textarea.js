@@ -36,8 +36,7 @@ DOC.Element.Textarea = function(oConfig){
     that.is_empty = function(){ //data is null ?
         if(!data.hasOwnProperty('value')){
             return true ; 
-        }
-
+        } 
         return false ; 
     }; 
 
@@ -47,7 +46,7 @@ DOC.Element.Textarea = function(oConfig){
 
     that.editor = function($el){ 
         that.turnOnEditor() ; 
-        var $textarea = $('<div class="well"><div id="textArea"></div><hr/><a class="btn btn-large btn-primary btn-block" >SAVE </a></div>');
+        var $textarea = $('<div class="well"><div id="textArea"></div><hr/><a class="btn btn-large btn-primary save_btn" >SAVE </a></div>');
 
         if(that.is_empty()){
             $textarea.appendTo($('#document_body')) ; 
@@ -63,9 +62,9 @@ DOC.Element.Textarea = function(oConfig){
             tinyMCE.activeEditor.setContent(that.getRawValue()) ; 
         }; 
 
-        $textarea.find('.btn-block').click(function(){
+        $textarea.find('.save_btn').click(function(){
             that.offEditor() ; 
-            $textarea.find('.btn-block').unbind('click'); 
+            $textarea.find('.save_btn').unbind('click'); 
             $textarea.remove() ; 
         });  
     }; 
@@ -105,7 +104,7 @@ DOC.Element.Textarea = function(oConfig){
             var content = tinyMCE.activeEditor.getContent();	
 
 	        if(content != ''){
-		        var $el = $('<div class="textarea">'+content +'</div>').insertAfter($('#document_body .well')); 
+		        var $el = $('<div class="element"><div class="handler"><a clsss="btn"><i class="icon icon-move"></i>&nbsp;</a></div><div class="textarea">'+content +'</div></div>').insertAfter($('#document_body .well')); 
 		        
 		        var _data = {
 		            value : content 
@@ -113,16 +112,34 @@ DOC.Element.Textarea = function(oConfig){
 	
 		        that.setData(_data) ; 
 	            that.editable($el) ; 
+                that.mouseover($el) ; 
 	        } 
         }
     }; 
 
+    that.mouseover = function($el){
+        $el.bind('mouseover',function(){ 
+            $(this).addClass('highlight').draggable({handle:".handler",revert:true,revertDuration:300,axis:'y'});
+	    });
+
+        $el.bind('mouseout',function(){ 
+            $(this).removeClass('highlight') ; 
+	    });
+    };
+
     that.editable = function($el){
-        $el.bind('click',function(){ 
+        $el.find('.textarea').bind('click',function(){ 
             DOC.paper.offEditor() ; 
 	        that.editor($el); 
 	    });
     }; 
+
+    that.removable = function($el){
+        $el.bind('mouseover',function(){ 
+            //DOC.paper.offEditor() ; 
+	        //that.editor($el); 
+	    });
+    };
 
     that.getRawValue = function(){
         return data['value'] ; 

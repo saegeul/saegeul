@@ -23,5 +23,9 @@ DOC.remocon.textarea = (function(){
         textarea.editor() ; 
     }; 
 
+    that.trigger = function(){
+        that.click() ; 
+    };
+
     return that ; 
 })() ;
