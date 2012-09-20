@@ -438,6 +438,7 @@ class Filebox extends MX_Controller {
 			if(is_file($file_fold_url . $value->source_file_name)){
 				$file = new stdClass();
 				$file->name = $value->source_file_name;
+				$file->upload_name =  mb_substr($value->upload_file_name, 0, 12, 'UTF-8');
 				$file->size = filesize($file_fold_url . $value->source_file_name);
 				$file->url = base_url() . $file_fold_url . $value->source_file_name;
 				$file->thumbnail_url = base_url() . "/modules/ucloud/views/assets/img/no_image.png";
@@ -446,6 +447,7 @@ class Filebox extends MX_Controller {
 			}else if(is_file($img_fold_url . $value->source_file_name)){
 				$file = new stdClass();
 				$file->name = $value->source_file_name;
+				$file->upload_name =  mb_substr($value->upload_file_name, 0, 12, 'UTF-8');
 				$file->size = filesize($img_fold_url . $value->source_file_name);
 				$file->url = base_url() . $img_fold_url . $value->source_file_name;
 				$file->thumbnail_url = base_url() . $img_fold_url . 'thumbs/' . $value->source_file_name;

@@ -84,9 +84,10 @@ $(document).ready(function () {
 
 		    	$.each(json.result, function(key,state){
 		       	obj = state;
-		   			markup += "<li class='span2'>"
-	  	   			+ "<div><input type='checkbox' class='imgcheck'/>"
-	  	   			+ "<img alt='" + obj.name + "' src='" + obj.thumbnail_url + "' class='img-rounded'>"
+		   			markup += "<li>"
+		   			+ "<div align='center' style='height:120px;width:120px;-moz-transition: all 0.2s ease-in-out 0s;border: 1px solid #DDDDDD;border-radius: 4px 4px 4px 4px;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);display: block;line-height: 20px;padding: 4px;'><input type='checkbox' class='imgcheck'/>"
+	  	   			+ "<img alt='" + obj.name + "' src='" + obj.thumbnail_url + "'>"
+	  	   			+ "<div class='caption'><p>" + obj.upload_name +"</p></div>"
 	  	   			+ "</div>";
 	     		});
 	    	   markup += "</ul>"
@@ -222,9 +223,10 @@ $(".pageBtn").live('click',function() {
 
 		    	$.each(json.result, function(key,state){
 		       	obj = state;
-		   			markup += "<li class='span2'>"
-	  	   			+ "<div><input type='checkbox' class='imgcheck'/>"
-	  	   			+ "<img alt='" + obj.name + "' src='" + obj.thumbnail_url + "' class='img-rounded'>"
+		   			markup += "<li>"
+	  	   			+ "<div align='center' style='height:120px;width:120px;-moz-transition: all 0.2s ease-in-out 0s;border: 1px solid #DDDDDD;border-radius: 4px 4px 4px 4px;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);display: block;line-height: 20px;padding: 4px;'><input type='checkbox' class='imgcheck'/>"
+	  	   			+ "<img alt='" + obj.name + "' src='" + obj.thumbnail_url + "'>"
+	  	   			+ "<div class='caption'><p>" + obj.upload_name +"</p></div>"
 	  	   			+ "</div>";
 	     		});
 	    	   markup += "</ul>"
