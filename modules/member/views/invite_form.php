@@ -42,7 +42,12 @@ $captcha = array(
 	'maxlength'	=> 8,
 );
 ?>
+<style>
 
+input {
+	height:30px;
+}
+</style>
 <body style="background:#000;">
     <div class="container">
         <div class="hero-unit">
@@ -52,31 +57,31 @@ $captcha = array(
 <?php 
 echo form_open($this->uri->uri_string()); ?>
 <div>
-<div>
+	<div class="row">
 	<?php if ($use_username) { ?>
 	
 	
-		<div><?php echo form_label('Username', $username['id']); ?></div>
-		<div><?php echo form_input($username); ?></div>
-		<div style="color: red;"><?php echo form_error($username['name']); ?><?php echo isset($errors[$username['name']])?$errors[$username['name']]:''; ?></div>
+		<div class="span2" style="float:left;"><?php echo form_label('Username', $username['id']); ?></div>
+		<div class="span3"><?php echo form_input($username); ?></div>
+		<div class="span5" style="color:red;font-size:10px;"><?php echo form_error($username['name']); ?><?php echo isset($errors[$username['name']])?$errors[$username['name']]:''; ?></div>
 	
 	
 	<?php } ?>
 	</div>
-	<div>
-		<div><?php echo form_label('Email Address', $email['id']); ?></div>
-		<div><?php echo form_input($email); ?></div>
-		<div style="color: red;"><?php echo form_error($email['name']); ?><?php echo isset($errors[$email['name']])?$errors[$email['name']]:''; ?></div>
+	<div class="row">
+		<div class="span2" style="float:left;"><?php echo form_label('Email Address', $email['id']); ?></div>
+		<div class="span3"><?php echo form_input($email); ?></div>
+		<div class="span5" style="color: red;"><?php echo form_error($email['name']); ?><?php echo isset($errors[$email['name']])?$errors[$email['name']]:''; ?></div>
 	</div>
-	<div>
-		<div><?php echo form_label('Password', $password['id']); ?></div>
-		<div><?php echo form_password($password); ?></div>
-		<div style="color: red;"><?php echo form_error($password['name']); ?></div>
+	<div class="row">
+		<div class="span2" style="float:left;"><?php echo form_label('Password', $password['id']); ?></div>
+		<div class="span3"><?php echo form_password($password); ?></div>
+		<div class="span5"style="color: red;"><?php echo form_error($password['name']); ?></div>
 	</div>
-	<div>
-		<div><?php echo form_label('Confirm Password', $confirm_password['id']); ?></div>
-		<div><?php echo form_password($confirm_password); ?></div>
-		<div style="color: red;"><?php echo form_error($confirm_password['name']); ?></div>
+	<div class="row">
+		<div class="span2" style="float:left;"><?php echo form_label('Confirm Password', $confirm_password['id']); ?></div>
+		<div class="span3"><?php echo form_password($confirm_password); ?></div>
+		<div class="span5"style="color: red;"><?php echo form_error($confirm_password['name']); ?></div>
 	</div>
 
 			<input class='btn btn-success' type='submit' value='초대하기'> 

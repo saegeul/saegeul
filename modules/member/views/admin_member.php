@@ -61,17 +61,33 @@ if($key != "" && $keyword != ""){
 	
 
 		<div class="container">
+		<div align="right">
+				<select name="key" size="1" class="span2">
+					<option value="username"
+					<? if($key == "username") echo "selected"; ?>>회원이름</option>
+					<option value="id" <? if($key == "id") echo "selected"; ?>>아이디</option>
+					<option value="email" <? if($key == "email") echo "selected"; ?>>이메일</option>
+				</select>
+				<div class="input-append">
+					<input type="text" name="keyword" class="span2 search-query"
+						value="<?=$keyword?>">
+					<button class="btn" onclick="search_confirm();">Search</button>
+				</div>
+			</div>
+			
+			<br><br>
+		
 			<table class="table table-hover">
-				<thead>
+				<thead  class="row">
 					<tr>
 
-						<td><h4>번호</h4></td>
-						<td><h4>ID</h4></td>
-						<td><h4>Name</h4></td>
-						<td><h4>E-Mail</h4></td>
-						<td><h4>권한</h4></td>
-						<td><h4>goodbye</h4></td>
-						<td><h4>grant admin</h4></td>
+						<td class="span1"><h4>번호</h4></td>
+						<td class="span1"><h4>ID</h4></td>
+						<td class="span1"><h4>Name</h4></td>
+						<td class="span1"><h4>E-Mail</h4></td>
+						<td class="span1"><h4>권한</h4></td>
+						<td class="span1"><h4>goodbye</h4></td>
+						<td class="span1"><h4>grant admin</h4></td>
 
 					</tr>
 				</thead>
@@ -96,9 +112,10 @@ if($key != "" && $keyword != ""){
 						}
 ?>
 
-<td><input type="button"  value="Good_Bye" onclick="really_ban(<?=$row->id?>);"></td>
+<td><input type="button" class="btn btn-danger" value="Good_Bye" onclick="really_ban(<?=$row->id?>);"></td>
+<td><a href="<?=site_url("/member/admin_set?id=$row->id")?>"><input type="button" class="btn btn-success" value="Admin_set"></a></td>
 <?php 						
-						echo " <td><a href=' ".site_url("/member/admin_set?id=$row->id")."'>".form_button('btn_grant','Admin_Set')."</a></td>";
+
 						echo "</tr>";
 
 						$no=$no+1;
@@ -111,12 +128,13 @@ if($key != "" && $keyword != ""){
 				<tfoot>
 					<tr>
 						<td colspan="7">
-							<div style="text-align: center;">
-								<a href="<?=$act_url?>/1">[맨앞]</a>
+							<div class="pagination" style="text-align: center;">
+							<ul>
+								<li><a href="<?=$act_url?>/1">First</a></li>
 								<?php 
 								if($page>1) {
 									?>
-								<a href='<?=$act_url?>/<?=$prev_page?>'>◀</a>
+								<li><a href='<?=$act_url?>/<?=$prev_page?>'>&lt</a></li>
 								<?php 
 								}
 								for ($i=$first_page;$i<=$last_page;$i++):
@@ -126,39 +144,29 @@ if($key != "" && $keyword != ""){
 									$bold_s = ""; $bold_e = "";
 								}
 								?>
-								<a href="<?=$act_url?>/<?=$i?>"><?=$bold_s?> <?=$i?> <?=$bold_e?>
-								</a>
+								<li><a href="<?=$act_url?>/<?=$i?>"><?=$bold_s?> <?=$i?> <?=$bold_e?>
+								</a></li>
 								<?php 
 								endfor;
 								if($page < $total_page){
 									?>
-								<a href="<?=$act_url?>/<?=$next_page?>">▶</a>
+								<li><a href="<?=$act_url?>/<?=$next_page?>">&gt</a></li>
 								<?php 
 								}
 								?>
-								<a href="<?=$act_url?>/<?=$total_page?>">[맨뒤]</a>
+								<li><a href="<?=$act_url?>/<?=$total_page?>">Last</a></li>
+								</ul>
 							</div>
 						</td>
 					</tr>
 				</tfoot>
 
 			</table>
-			<div align="right">
-				<select name="key" size="1" class="span2">
-					<option value="username"
-					<? if($key == "username") echo "selected"; ?>>회원이름</option>
-					<option value="id" <? if($key == "id") echo "selected"; ?>>아이디</option>
-					<option value="email" <? if($key == "email") echo "selected"; ?>>이메일</option>
-				</select>
-				<div class="input-append">
-					<input type="text" name="keyword" class="span2 search-query"
-						value="<?=$keyword?>">
-					<button class="btn" onclick="search_confirm();">Search</button>
-				</div>
-			</div>
+			
 		</div>
-
+<div align="right">
 		<a class="btn btn-primary btn-large" href="<?=site_url("/member/logout")?>">로그아웃 </a>
+		</div>
 
 	</form>
 	
