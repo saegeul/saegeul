@@ -15,6 +15,7 @@ class Auth extends MX_Controller {
 
 	}
 
+	// kt ucloud oauth
 	public function oauth(){
 		$api_key = '38629799a8e9388c6ce742ed71fb6233' ;
 		$secret_key = '29b30a42991c73e76032c5f20b4b7858' ;
@@ -30,6 +31,7 @@ class Auth extends MX_Controller {
 				'oauth_version'=>'1.0'
 		)) ;
 
+		// check oauth token
 		if($this->input->get_post('oauth_token')){
 			$params = array();
 			$params['oauth_token'] = $this->input->get_post('oauth_token') ;
@@ -59,6 +61,7 @@ class Auth extends MX_Controller {
 			$this->load->view('ucloud/ucloud',$data);
 
 		}else{
+			// login kt ucloud
 			$response = $this->oauth->request_token(array(),'POST') ;
 			$this->oauth->token('oauth_token_secret',$response['oauth_token_secret']) ;
 			$this->oauth->authorize($response) ;
