@@ -40,7 +40,7 @@ $(document).ready(function () {
 						else if(folders[i].folder_type == "syncFolder" && folders[i].folder_name == "모바일 포토")
 							center_markup += "<td><img alt='모바일 포토' src='/saegeul/modules/ucloud/views/assets/img/mobile_photo_folder.png'></td>";
 
-						center_markup += "<td class='clickFolder' id='" + folders[i].folder_id +"'><a href='javascript:void(0)'>" + folders[i].folder_name + "</a></td>"
+						center_markup += "<td class='clickFolder' id='" + folders[i].folder_id +"'><a href='javascript:void(0)' style='color: #333333;'>" + folders[i].folder_name + "</a></td>"
 									+ "<td></td>"
 									+ "<td></td>"
 								+ "</tr>"
@@ -50,7 +50,7 @@ $(document).ready(function () {
 				center_markup += "</tbody>"
 					+ "</table>";
 
-				var breadcrumb = "<li class='crumb'><a href='javascript:void(0)'>Ucloud</a> <span class='divider'>/</span></li>";
+				var breadcrumb = "<li class='crumb'><a href='javascript:void(0)' style='color: #333333;'>Ucloud</a> <span class='divider'>/</span></li>";
 				
 				$("#center_table").html(center_markup);
 				$(".breadcrumb").html(breadcrumb);
@@ -93,10 +93,10 @@ $(document).ready(function () {
 	    	   markup += "</ul>"
 						+ "<div class='pagination' style='text-align: center;'>"
 						+ "<ul>"
-						+ "<li><a id='1'>&laquo;</a></li>";
+						+ "<li><a id='1' style='color: #333333;'>&laquo;</a></li>";
 				if(curt_page > 1){
 					markup += "<li class='pageBtn'>"
-						+ "<a id='" + prev_page + "'>prev</a>"
+						+ "<a id='" + prev_page + "' style='color: #333333;'>prev</a>"
 						+ "</li>";
 				}else {
 					markup += "<li class='disabled'>"
@@ -110,13 +110,13 @@ $(document).ready(function () {
 							+ "</li>";
 					}else{
 						markup += "<li class='pageBtn'>"
-							+ "<a id='" + i + "'>" + i + "</a>"
+							+ "<a id='" + i + "' style='color: #333333;'>" + i + "</a>"
 							+ "</li>";
 					}
 				}
 				if(curt_page < parseInt(json.total_page)){
 					markup += "<li class='pageBtn'>"
-						+ "<a id='" + next_page + "'>next</a>"
+						+ "<a id='" + next_page + "' style='color: #333333;'>next</a>"
 						+ "</li>";
 				}else {
 					markup += "<li class='disabled'>"
@@ -124,7 +124,7 @@ $(document).ready(function () {
 						+ "</li>";	
 				}
 				markup += "<li class='pageBtn'>"
-					+ "<a id='" + total_page + "'>&raquo;</a>"
+					+ "<a id='" + total_page + "' style='color: #333333;'>&raquo;</a>"
 					+ "</li>"
 				+ "</ul>"
 				+ "</div>";
@@ -138,7 +138,7 @@ $(document).ready(function () {
 $(".clickFolder").live('click',function(e) {
 	var select_folder = $(e.target).closest("td").attr("id");
 	var select_folder_name =  $(e.target).closest("td").text();
-	var breadcrumb = "<li class='crumb'><a id='"+ select_folder + "' href='javascript:void(0)'>" + select_folder_name + "</a> <span class='divider'>/</span></li>";
+	var breadcrumb = "<li class='crumb'><a id='"+ select_folder + "' href='javascript:void(0)' style='color: #333333;'>" + select_folder_name + "</a> <span class='divider'>/</span></li>";
 	$(breadcrumb).appendTo(".breadcrumb");
 	$("input[id=curt_folder]").val(select_folder).change();
 	$.ajax({
@@ -168,7 +168,7 @@ $(".clickFolder").live('click',function(e) {
 						center_markup += "<tr>"
 							+ "<td><input type='checkbox' class='chcktbl' /></td>"
 							+ "<td><img alt='폴더' src='/saegeul/modules/ucloud/views/assets/img/folder.png'></td>"
-							+ "<td class='clickFolder' id='" + folders[i].folder_id +"'><a href='javascript:void(0)'>" + folders[i].folder_name + "</a></td>"
+							+ "<td class='clickFolder' id='" + folders[i].folder_id +"'><a href='javascript:void(0)' style='color: #333333;'>" + folders[i].folder_name + "</a></td>"
 							+ "<td></td>"
 							+ "<td></td>"
 						+ "</tr>";
@@ -182,7 +182,7 @@ $(".clickFolder").live('click',function(e) {
 						center_markup += "<tr>"
 							+ "<td><input type='checkbox' class='chcktbl' /></td>"
 							+ "<td><img alt='파일' src='/saegeul/modules/ucloud/views/assets/img/file.png'></td>"
-							+ "<td class='downloadFile' id='" + files[i].file_id +"'><a href='javascript:void(0)'>" + temp_name + "</a></td>"
+							+ "<td class='downloadFile' id='" + files[i].file_id +"'><a href='javascript:void(0)' style='color: #333333;'>" + temp_name + "</a></td>"
 							+ "<td>" + temp_modify_date + "</td>"
 							+ "<td>" + files[i].file_size + "</td>"
 						+ "</tr>";
@@ -232,10 +232,10 @@ $(".pageBtn").live('click',function() {
 	    	   markup += "</ul>"
 						+ "<div class='pagination' style='text-align: center;'>"
 						+ "<ul>"
-						+ "<li class='pageBtn'><a id='1'>&laquo;</a></li>";
+						+ "<li class='pageBtn'><a id='1' style='color: #333333;'>&laquo;</a></li>";
 				if(curt_page > 1){
 					markup += "<li class='pageBtn'>"
-						+ "<a id='" + prev_page + "'>prev</a>"
+						+ "<a id='" + prev_page + "' style='color: #333333;'>prev</a>"
 						+ "</li>";
 				}else {
 					markup += "<li class='disabled'>"
@@ -249,13 +249,13 @@ $(".pageBtn").live('click',function() {
 							+ "</li>";
 					}else{
 						markup += "<li class='pageBtn'>"
-							+ "<a id='" + i + "'>" + i + "</a>"
+							+ "<a id='" + i + "' style='color: #333333;'>" + i + "</a>"
 							+ "</li>";
 					}
 				}
 				if(curt_page < parseInt(json.total_page)){
 					markup += "<li class='pageBtn'>"
-						+ "<a id='" + next_page + "'>next</a>"
+						+ "<a id='" + next_page + "' style='color: #333333;'>next</a>"
 						+ "</li>";
 				}else {
 					markup += "<li class='disabled'>"
@@ -263,7 +263,7 @@ $(".pageBtn").live('click',function() {
 						+ "</li>";	
 				}
 				markup += "<li class='pageBtn'>"
-					+ "<a id='" + total_page + "'>&raquo;</a>"
+					+ "<a id='" + total_page + "' style='color: #333333;'>&raquo;</a>"
 					+ "</li>"
 				+ "</ul>"
 				+ "</div>";
@@ -329,7 +329,7 @@ $('.crumb').live('click',function(e) {
 							else
 								center_markup += "<td><img alt='폴더' src='/saegeul/modules/ucloud/views/assets/img/folder.png'></td>";
 
-							center_markup += "<td class='clickFolder' id='" + folders[i].folder_id +"'><a href='javascript:void(0)'>" + folders[i].folder_name + "</a></td>"
+							center_markup += "<td class='clickFolder' id='" + folders[i].folder_id +"'><a href='javascript:void(0)' style='color: #333333;'>" + folders[i].folder_name + "</a></td>"
 							+ "<td></td>"
 							+ "<td></td>"
 						+ "</tr>";

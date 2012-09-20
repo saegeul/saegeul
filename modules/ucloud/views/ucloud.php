@@ -16,7 +16,7 @@
 <?echo js_asset('ucloud','jquery.auth-ajax.js')?>
 </head>
 <body>
-	<div id="container">
+	<div id="container" style="margin-top:-30px;">
 		<div id="layout_center">
 			<br> <br>
 			<h1 align="center">Cloud List</h1>
@@ -24,7 +24,7 @@
 			<ul class="breadcrumb"></ul>
 			<div id="bntLine" align="right">
 				<input type="hidden" id="curt_folder">
-				<a href="javascript:void(0)" id="deletFile"><i class="icon-trash"></i>
+				<a href="javascript:void(0)" id="deletFile" style="color: #333333;"><i class="icon-trash"></i>
 					Delete</a>
 			</div>
 			<br>
