@@ -46,11 +46,10 @@ $captcha = array(
 <body style="background:#000;">
     <div class="container">
         <div class="hero-unit">
-            <h1>회원가입 <small>새글닷컴의 멤버가 되주세요.</small></h1> 
+            <h1>회원초대 <small>새글닷컴의 멤버를 초대해 주세요.</small></h1> 
             <hr/>
             
 <?php 
-$email['ivt']=0;
 echo form_open($this->uri->uri_string()); ?>
 <div>
 <div>
@@ -80,7 +79,7 @@ echo form_open($this->uri->uri_string()); ?>
 		<div style="color: red;"><?php echo form_error($confirm_password['name']); ?></div>
 	</div>
 
-			<input class='btn btn-success' type='submit' value='회원가입'> 
+			<input class='btn btn-success' type='submit' value='초대하기'> 
 
 </div>
 </div>

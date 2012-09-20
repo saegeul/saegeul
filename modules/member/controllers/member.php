@@ -802,7 +802,7 @@ class Member extends MX_Controller
 
 					unset($data['password']); // Clear password (just for any case)
 
-					$this->_show_message($this->lang->line('auth_message_registration_completed_1'));
+					$this->_show_message($this->lang->line('auth_message_invited_completed'));
 
 				} else {
 					if ($this->config->item('email_account_details', 'tank_auth')) {	// send "welcome" email
