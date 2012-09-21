@@ -29,7 +29,7 @@
 				<a href="javascript:void(0)" id="deletFile" style="color: #333333;"><i class="icon-trash"></i>
 					Delete</a>
 				<a href="javascript:void(0)" id="moveFilebox" style="color: #333333;"><i class="icon-upload"></i>
-					moveFilebox</a>
+					MoveFilebox</a>
 			</div>
 			<br>
 			<div id="center_table"></div>
