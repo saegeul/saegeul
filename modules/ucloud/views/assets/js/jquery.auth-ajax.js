@@ -391,6 +391,33 @@ $('#deletFile').live('click',function() {
 	});
 });
 
+$('#moveFilebox').live('click',function() {
+	var arr_id = new Array();
+	var arr_name = new Array();
+	var upload_folder = $("input[id=curt_folder]").attr("value");
+	$("input[class=chcktbl]").each(function(){
+		if($(this).is(':checked')){
+			arr_id[arr_id.length] = $(this).closest("td").next('td').next('td').attr("id");	
+			arr_name[arr_name.length] = $(this).closest("td").next('td').next('td').text();
+		}
+	});
+	var data_id = JSON.stringify(arr_id);
+	var data_name = JSON.stringify(arr_name);
+	$.ajax({
+		type: "GET",
+	    url: "/saegeul/ucloud/moveFilebox",
+	    contentType: "application/json; charset=utf-8",
+	    dataType: "json",
+	    data: "data_id=" + data_id + "&data_name=" + data_name +"&upload_folder=" + upload_folder, 
+	    error: function() { 
+	    	alert("파일을 이동시키지 못했습니다.");
+	     },
+	    success: function(data){	    	   
+	    	location.reload();
+	    }
+	});
+});
+
 $('#cloud_upload').live('click',function() {
 	// Initialization if the waitingpopup plugin
     $().waitingpopup();

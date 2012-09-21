@@ -128,8 +128,11 @@ class Filebox extends MX_Controller {
 					$config['maintain_ratio'] = TRUE;
 					$config['width'] = 110;
 					$config['height'] = 90;
-					$this->load->library('image_lib', $config);
-					$this->image_lib->resize();
+					$this->load->library('image_lib');
+					$image_lib = $this->image_lib;
+					$image_lib->initialize($config);
+					$image_lib->resize();
+					$image_lib->clear();
 				}
 			}else{ // file move
 				$save_dir = "filebox/files/file/".date("Ymd");
