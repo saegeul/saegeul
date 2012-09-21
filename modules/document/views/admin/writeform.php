@@ -45,7 +45,6 @@ $(function(){
     ]); 
 
     DOC.remocon_panel.render() ; 
-    //DOC.remocon.textarea.trigger(); 
-
+    DOC.remocon.textarea.trigger(); 
 }); 
 </script>

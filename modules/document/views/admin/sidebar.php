@@ -3,6 +3,9 @@
 	    <li> 
 	        <a><i class="icon-chevron-right"></i>문서목록</a> 
 	    </li>
+        <li> 
+	        <a><i class="icon-chevron-right"></i>카테고리 관리</a> 
+	    </li>
 	    <li> 
 	        <a><i class="icon-chevron-right"></i>문서스타일</a> 
 	    </li> 

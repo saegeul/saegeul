@@ -3,6 +3,16 @@
 class Sg_dbutil {
     var $CI ;
 
+    public function __construct(){
+        $this->CI=&get_instance() ; 
+        $this->CI->load->database(); 
+        $this->CI->load->dbforge() ; 
+    }
+
+    public function is_exists($table){
+        return $this->CI->db->table_exists($table) ; 
+    }
+
     public function getSchemaPathList(){ 
         $this->load->helper('directory') ; 
         $this->load->helper('file') ; 
@@ -56,11 +66,7 @@ class Sg_dbutil {
         return $result ; 
     }
 
-    public function __construct(){
-        $this->CI=&get_instance() ; 
-        $this->CI->load->database(); 
-        $this->CI->load->dbforge() ; 
-    }
+    
 
     public function generate_field($field){
        

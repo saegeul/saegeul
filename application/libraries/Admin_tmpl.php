@@ -10,13 +10,13 @@ class Admin_tmpl {
     public function parse($section,$data=null){
         $CI = &get_instance() ; 
 
-        $header = $CI->load->view($this->header,'',true);
-        $footer = $CI->load->view($this->footer,'',true);
+        $header = $CI->load->view($this->header,$data,true);
+        $footer = $CI->load->view($this->footer,$data,true);
 
         $body = '' ;
 
         foreach($section as $key => $row){
-            $body .= $CI->load->view($row,'',true);
+            $body .= $CI->load->view($row,$data,true);
         }
 
         return $header.$body.$footer ;

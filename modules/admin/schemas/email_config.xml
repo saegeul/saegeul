@@ -1,0 +1,13 @@
+<table name="email_config">
+    <column name="id" type="int" auto_increment="true" size="11" primary_key="true" />  
+    <column name="site_id" type="int" size="11" not_null="true" />
+    <column name="email" type="varchar" size="80" />
+    <column name="email_protocol" type="varchar" size="80" />
+    <column name="email_path" type="varchar" size="80" />
+    <column name="mailtype" type="varchar" size="10" />
+    <column name="charset" type="varchar" size="30" />
+    <column name="smtp_port" type="int" size="5" />
+    <column name="smtp_host" type="int" size="5" />
+    <column name="smtp_user" type="int" size="5" />
+    <column name="smtp_pass" type="varchar" size="25" />
+</table>

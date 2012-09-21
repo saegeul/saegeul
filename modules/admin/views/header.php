@@ -24,13 +24,10 @@
                         <a href="<?=base_url()?>index.php/admin/dashboard">Dashboard</a>
                     </li>
                     <li <?php if($this->uri->segment(2)=='dashboard'):?> class="active" <?php endif;?>> 
-                        <a href="<?=base_url()?>index.php/admin/dashboard">WEB Builder</a>
+                        <a href="<?=base_url()?>index.php/admin/dashboard">WEB Wizard</a>
                     </li> 
                     <li <?php if($this->uri->segment(2)=='webzine'):?> class="active" <?php endif;?>> 
                         <a href="<?=base_url()?>index.php/admin/document/writeform">Member </a>
-                    </li>
-                    <li <?php if($this->uri->segment(2)=='webzine'):?> class="active" <?php endif;?>> 
-                        <a href="<?=base_url()?>index.php/admin/document/writeform">Layout </a>
                     </li>
                     <li <?php if($this->uri->segment(2)=='webzine'):?> class="active" <?php endif;?>> 
                         <a href="<?=base_url()?>document/admin/document/document_list">Document</a>
@@ -44,6 +41,9 @@
                     <li <?php if($this->uri->segment(2)=='template'):?> class="active" <?php endif;?>> 
                         <a href="<?=base_url()?>filebox/admin/filebox/uploadForm">File</a>
                     </li>
+                    <li <?php if($this->uri->segment(2)=='template'):?> class="active" <?php endif;?>> 
+                        <a href="<?=base_url()?>admin/setting">Setting</a>
+                    </li>
                     <li> 
                         <div class="btn-group">
                             <button class="btn btn-primary" ><i class="icon-plus icon-white"></i>&nbsp;NEW</button>
@@ -51,7 +51,7 @@
                             <ul class="dropdown-menu"> 
                                 <li><a href="<?=base_url()?>document/admin/document/writeform"><i class="icon-plus"></i> DOCUMENT</a></li>
                                 <li><a href="<?=base_url()?>filebox/admin/filebox/uploadForm"><i class="icon-plus"></i> FILE</a></li>
-                                <li><a><i class="icon-plus"></i> PAGE</a></li>
+                                <li><a href="<?=base_url()?>page/admin/page/createPage"><i class="icon-plus"></i> PAGE</a></li>
                             </ul> 
                         </div>
                     </li>
