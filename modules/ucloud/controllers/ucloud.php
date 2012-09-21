@@ -1,12 +1,20 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed') ; 
 class Ucloud extends MX_Controller {
 
+	// DB isert user information
+	protected $username;
+	protected $email;
+	protected $uid;
+
 	public function __construct() {
 		parent::__construct();
 
 		$this->load->database();
+		$this->username = "root";
+		$this->email = "root@saegeul.com";
+		$this->uid = '1';
 	}
-	
+
 	public function callback(){
 
 	}
@@ -84,7 +92,7 @@ class Ucloud extends MX_Controller {
 		$request_header['oauth_token'] = $this->oauth->token('oauth_token') ;
 		$request_header['oauth_verifier'] =  $params['oauth_verifier'] ;
 		$request_header['oauth_token_secret'] = $this->oauth->token('oauth_token_secret') ;
-		
+
 		$request_header = array() ;
 
 		$request_header['oauth_token'] = $this->oauth->token('oauth_token') ;
@@ -166,7 +174,7 @@ class Ucloud extends MX_Controller {
 		$secret_key = '29b30a42991c73e76032c5f20b4b7858' ;
 		$callback_url = 'http://localhost:8888';
 		$this->load->helper('url') ;
-		$this->load->model('filebox/filebox_model', 'filebox'); // 모델 - 호출
+		$this->load->model('filebox/filebox_model', 'filebox');
 
 		$this->load->library('oauth',array(
 				'api_key'=>$api_key,
@@ -232,10 +240,10 @@ class Ucloud extends MX_Controller {
 							// 							$data = file_get_contents($upload_file_url);
 
 							$params = array(
-								'http' => array(
-									'method' => 'PUT',
-									'content' => file_get_contents($upload_file_url)
-								)
+									'http' => array(
+											'method' => 'PUT',
+											'content' => file_get_contents($upload_file_url)
+									)
 							);
 							$upload_url = $temp_upload_file_re->redirect_url . "?api_token=" . $api_token . "&file_token=" . $temp_upload_file_re->file_token;
 
@@ -251,14 +259,14 @@ class Ucloud extends MX_Controller {
 		}
 		echo json_encode($success);
 	}
-	
+
 	public function deleteFile(){
 		$api_key = '38629799a8e9388c6ce742ed71fb6233' ;
 		$secret_key = '29b30a42991c73e76032c5f20b4b7858' ;
 		$callback_url = 'http://localhost:8888';
 		$this->load->helper('url') ;
-		$this->load->model('filebox/filebox_model', 'filebox'); // 모델 - 호출
-		
+		$this->load->model('filebox/filebox_model', 'filebox');
+
 		$this->load->library('oauth',array(
 				'api_key'=>$api_key,
 				'secret_key'=>$secret_key,
@@ -267,39 +275,184 @@ class Ucloud extends MX_Controller {
 				'provider'=>'Ucloud',
 				'oauth_version'=>'1.0'
 		)) ;
-		
+
 		$data = $this->input->get_post('data') ;
-		$upload_folder = $this->input->get_post('upload_folder') ;
 		$decodeData = json_decode($data);
-		
+
 		$params = array();
 		$params['oauth_token'] = $this->input->get_post('oauth_token') ;
 		$params['oauth_token_secret'] = $this->oauth->token('oauth_token_secret');
 		$params['oauth_verifier'] = $this->input->get_post('oauth_verifier') ;
-		
+
 		$request_header['oauth_token'] = $this->oauth->token('oauth_token') ;
 		$request_header['oauth_verifier'] =  $params['oauth_verifier'] ;
 		$request_header['oauth_token_secret'] = $this->oauth->token('oauth_token_secret') ;
-		
+
 		$request_header = array() ;
-		
+
 		$request_header['oauth_token'] = $this->oauth->token('oauth_token') ;
 		$request_header['oauth_verifier'] =  $params['oauth_verifier'] ;
 		$request_header['oauth_token_secret'] = $this->oauth->token('oauth_token_secret') ;
-		
+
 		$provider = $this->oauth->getProvider() ;
 		$consumer = $this->oauth->getConsumer() ;
-		
+
 		$api_token = $provider->getAPIToken($consumer->get('api_key'),$consumer->get('secret_key')) ;
-		
+
 		for ($i = 0; $i < count($decodeData); $i++) {
 			$request_body = array('api_token'=>$api_token,'file_id'=>$decodeData[$i]) ;
 			$response = $this->oauth->api_call('deletefile',$request_header,$request_body,'POST') ;
-			
+
 			$temp_delete_file = json_decode($response);
-			
+
 			if($temp_delete_file->result_code == 204){
 				$success="success";
+			}
+		}
+		echo json_encode($success);
+	}
+
+	public function moveFilebox(){
+		$api_key = '38629799a8e9388c6ce742ed71fb6233' ;
+		$secret_key = '29b30a42991c73e76032c5f20b4b7858' ;
+		$callback_url = 'http://localhost:8888';
+		$this->load->helper('url') ;
+		$this->load->helper('download') ;
+		$this->load->helper('date') ;
+		$this->load->helper('security');
+
+		$this->load->library('oauth',array(
+				'api_key'=>$api_key,
+				'secret_key'=>$secret_key,
+				'callback_url'=>base_url().'auth/oauth/',
+				'signature_method'=>'HMAC-SHA1',
+				'provider'=>'Ucloud',
+				'oauth_version'=>'1.0'
+		)) ;
+
+		$success = "";
+		$upload_folder = $this->input->get_post('upload_folder') ;
+		$data_id = $this->input->get_post('data_id') ;
+		$data_name = $this->input->get_post('data_name') ;
+		$decodeData_id = json_decode($data_id);
+		$decodeData_name = json_decode($data_name);
+		$transfer_mode = "DN";
+
+		$params = array();
+		$params['oauth_token'] = $this->input->get_post('oauth_token') ;
+		$params['oauth_token_secret'] = $this->oauth->token('oauth_token_secret');
+		$params['oauth_verifier'] = $this->input->get_post('oauth_verifier') ;
+
+		$request_header['oauth_token'] = $this->oauth->token('oauth_token') ;
+		$request_header['oauth_verifier'] =  $params['oauth_verifier'] ;
+		$request_header['oauth_token_secret'] = $this->oauth->token('oauth_token_secret') ;
+
+		$request_header = array() ;
+
+		$request_header['oauth_token'] = $this->oauth->token('oauth_token') ;
+		$request_header['oauth_verifier'] =  $params['oauth_verifier'] ;
+		$request_header['oauth_token_secret'] = $this->oauth->token('oauth_token_secret') ;
+
+		$provider = $this->oauth->getProvider() ;
+		$consumer = $this->oauth->getConsumer() ;
+
+		// create directory
+		if( ! is_dir('filebox'))
+			mkdir('filebox',0777);
+		if( ! is_dir('filebox/files'))
+			mkdir('filebox/files',0777);
+		if( ! is_dir('filebox/temp'))
+			mkdir('filebox/temp',0777);
+		if( ! is_dir('filebox/files/file'))
+			mkdir('filebox/files/file',0777);
+		if( ! is_dir('filebox/files/img'))
+			mkdir('filebox/files/img',0777);
+
+		for ($i = 0; $i < count($decodeData_id); $i++) {
+			$dest = "";
+			$api_token = $provider->getAPIToken($consumer->get('api_key'),$consumer->get('secret_key')) ;
+
+			$request_body = array('api_token'=>$api_token,'file_id'=>$decodeData_id[$i],'transfer_mode'=>$transfer_mode) ;
+			$response = $this->oauth->api_call('createfiletoken',$request_header,$request_body,'POST') ;
+
+			$temp = json_decode($response);
+			$upload_file_url = $temp->redirect_url . "?api_token=" . $api_token . "&file_token=" . $temp->file_token;
+			$download_file = file_get_contents($upload_file_url); // Read the file's contents
+			if($download_file){
+				$file_name = $decodeData_name[$i];
+				file_put_contents("filebox/temp/".$file_name, $download_file);
+				$file_url = "filebox/temp/".$file_name;
+				$exts = explode(".",$file_name) ;
+				$file_type = $exts[1];
+				$source_file_name = do_hash($file_name . time(), 'md5') . "." . $file_type;
+				if($file_type == "png" || $file_type == "jpg" || $file_type == "jpeg" || $file_type == "gif"){
+					// img directory
+					$save_dir = "filebox/files/img/".date("Ymd");
+					// img thumb directory
+					$save_thumb_dir = "filebox/files/img/".date("Ymd")."/thumbs/";
+					// file type modify
+					$file_type_detail = "image/" . $file_type;
+					// file move
+					if(is_file($file_url)){ // img move
+						//check if the $name folder exists, if not create it
+						if( ! is_dir($save_dir))
+						{
+							mkdir($save_dir,0777);
+							mkdir($save_thumb_dir,0777);
+						}
+						// moving data
+						$dest = $save_dir . "/" . $source_file_name;
+						// move
+						rename($file_url, $dest);
+							
+						// thumbnail create
+						$config['new_image'] = $save_thumb_dir . $source_file_name;
+						$config['image_library'] = 'gd2';
+						$config['source_image'] = $dest;
+						$config['create_thumb'] = FALSE;
+						$config['maintain_ratio'] = TRUE;
+						$config['width'] = 110;
+						$config['height'] = 90;
+						$this->load->library('image_lib', $config);
+						$this->image_lib->resize();
+					}
+				}else{ // file move
+					$save_dir = "filebox/files/file/".date("Ymd");
+					// file type modify
+					$file_type_detail = "application/" . $file_type;
+					// file move
+					if(is_file($file_url)){
+						//check if the $name folder exists, if not create it
+						if( ! is_dir($save_dir))
+						{
+							mkdir($save_dir,0777);
+						}
+						// moving data
+						$dest = $save_dir . "/" . $source_file_name;
+						// move
+						rename($file_url, $dest);
+					}
+				}
+				if(is_file($dest)){
+
+					// get DB library
+					$this->load->model('filebox/filebox_model', 'filebox');
+					// DB insert Data
+					$insert_data;
+					$insert_data->file_type = $file_type_detail;
+					$insert_data->upload_file_name = $file_name;
+					$insert_data->source_file_name = $source_file_name;
+					$insert_data->file_size = filesize($dest);;
+					$insert_data->reg_date = standard_date('DATE_ATOM',time());//date("Y-m-d H:i:s",time());
+					$insert_data->ip_address = $this->input->ip_address();
+					$insert_data->username = $this->username;
+					$insert_data->email = $this->email;
+					$insert_data->uid = $this->uid;
+					// insert data into db
+					$this->filebox->insert_entry($insert_data);
+					// return;
+					$success="success";
+				}
 			}
 		}
 		echo json_encode($success);

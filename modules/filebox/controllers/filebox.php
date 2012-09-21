@@ -121,7 +121,7 @@ class Filebox extends MX_Controller {
 					rename($data['full_path'], $dest);
 						
 					// thumbnail create
-					$config['new_image'] = $save_thumb_dir;
+					$config['new_image'] = $save_thumb_dir . $source_file_name;
 					$config['image_library'] = 'gd2';
 					$config['source_image'] = $dest;
 					$config['create_thumb'] = FALSE;
