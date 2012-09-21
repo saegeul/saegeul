@@ -1,0 +1,23 @@
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+
+/*
+| -------------------------------------------------------------------------
+| Email
+| -------------------------------------------------------------------------
+| This file lets you define parameters for sending emails.
+| Please see the user guide for info:
+|
+|	http://codeigniter.com/user_guide/libraries/email.html
+|
+*/
+$config['mailtype'] = 'html';
+$config['charset'] = 'euc-kr';
+$config['newline'] = "\r\n";
+$config['smtp_host']="{email_smtp_host}";
+$config['smtp_user']="{email_addr}";
+$config['smtp_pass']="{email_pw}";
+$config['smtp_port']="{email_smtp_port}";
+$config['protocol']="{email_protocol}";
+
+/* End of file email.php */
+/* Location: ./application/config/email.php */

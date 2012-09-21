@@ -461,7 +461,7 @@ class Users extends CI_Model
 			if($row->id ==$id){
 				//현재 수정하려는 유저가 바로 그 하나의 관리자일 경우 변경 불가능
 				
-				echo ("<script>alert('no!')</script>");
+				echo ("<script>alert('관리자는 최소 1명 이상이어야 합니다!')</script>");
 				
 				return false;
 			}

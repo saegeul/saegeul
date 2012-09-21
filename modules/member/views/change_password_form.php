@@ -51,7 +51,8 @@ $confirm_new_password = array(
 
 
 
-<?php echo form_submit('change', '비밀번호 변경하기'); ?>
+<?php //echo form_submit('change', '비밀번호 변경하기'); ?>
+<input type="submit" class="btn btn-success" value="비밀번호 변경하기">
 <?php echo form_close(); ?>
 
 </div>

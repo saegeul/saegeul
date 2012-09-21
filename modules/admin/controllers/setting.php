@@ -34,6 +34,48 @@ class setting extends MX_Controller {
 
         echo $str ; 
     }
+    
+    public function setupEmail(){
+    	
+    	$params = array(
+    			'email_smtp_host'=>'',
+    			'email_addr'=>'',
+    			'email_pw'=>'',
+    			'email_smtp_port'=>'',
+    			'email_protocol'=>'',
+    			'email_lib_path'=>''
+    	);
+    
+    	
+    	$email_smtp_host = $this->input->post('email_smtp_host') ;
+    	$email_addr = $this->input->post('email_addr') ;
+    	$email_pw = $this->input->post('email_pw') ;
+    	$email_smtp_port = $this->input->post('email_smtp_port') ;
+    	$email_protocol = $this->input->post('email_protocol') ;
+    	$email_lib_path = $this->input->post('email_lib_path') ;
+    
+    	$params['email_smtp_host'] = $email_smtp_host ;
+    	$params['email_addr'] = $email_addr ;
+    	$params['email_pw'] = $email_pw ;
+    	$params['email_smtp_port'] = $email_smtp_port ;
+    	$params['email_protocol'] = $email_protocol ;
+    	$params['email_lib_path'] = $email_lib_path ;
+    	 
+    
+    	$this->load->helper('file') ;
+    	$f = read_file('./modules/admin/files/email.txt') ;
+    
+    	foreach($params as $key => $value){
+    		$f = str_replace('{'.$key.'}', $value ,$f);
+    	}
+    
+    	write_file(APPPATH.'config/email.php',$f) ;
+    }
+    
+    
+    
+    
+    
 
     public function site(){
 

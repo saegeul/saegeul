@@ -53,124 +53,129 @@ if($key != "" && $keyword != ""){
 
 
 
-<div class="hero-unit">
-<h1>Member List <small>회원 관리 모드입니다.</small></h1> 
-            <hr/>
-	<form class="bs-docs-example form-search" name="search_form">
+	<div class="hero-unit">
+		<h1>
+			Member List <small>회원 관리 모드입니다.</small>
+		</h1>
+		<hr />
+		<form class="bs-docs-example form-search" name="search_form">
 
-	
 
-		<div class="container">
-		<div align="right">
-				<select name="key" size="1" class="span2">
-					<option value="username"
-					<? if($key == "username") echo "selected"; ?>>회원이름</option>
-					<option value="id" <? if($key == "id") echo "selected"; ?>>아이디</option>
-					<option value="email" <? if($key == "email") echo "selected"; ?>>이메일</option>
-				</select>
-				<div class="input-append">
-					<input type="text" name="keyword" class="span2 search-query"
-						value="<?=$keyword?>">
-					<button class="btn" onclick="search_confirm();">Search</button>
+
+			<div class="container">
+				<div align="right">
+					<select name="key" size="1" class="span2">
+						<option value="username"
+						<? if($key == "username") echo "selected"; ?>>회원이름</option>
+						<option value="id" <? if($key == "id") echo "selected"; ?>>아이디</option>
+						<option value="email" <? if($key == "email") echo "selected"; ?>>이메일</option>
+					</select>
+					<div class="input-append">
+						<input type="text" name="keyword" class="span2 search-query"
+							value="<?=$keyword?>">
+						<button class="btn" onclick="search_confirm();">Search</button>
+					</div>
 				</div>
-			</div>
-			
-			<br><br>
-		
-			<table class="table table-hover">
-				<thead  class="row">
-					<tr>
 
-						<td class="span1"><h4>번호</h4></td>
-						<td class="span1"><h4>ID</h4></td>
-						<td class="span1"><h4>Name</h4></td>
-						<td class="span1"><h4>E-Mail</h4></td>
-						<td class="span1"><h4>권한</h4></td>
-						<td class="span1"><h4>goodbye</h4></td>
-						<td class="span1"><h4>grant admin</h4></td>
+				<br> <br>
 
-					</tr>
-				</thead>
-				<tbody>
-					<?php 
+				<table class="table table-hover">
+					<thead class="row">
+						<tr>
+
+							<td class="span1"><h4>번호</h4></td>
+							<td class="span1"><h4>ID</h4></td>
+							<td class="span1"><h4>Name</h4></td>
+							<td class="span1"><h4>E-Mail</h4></td>
+							<td class="span1"><h4>권한</h4></td>
+							<td class="span1"><h4>goodbye</h4></td>
+							<td class="span1"><h4>grant admin</h4></td>
+
+						</tr>
+					</thead>
+					<tbody>
+						<?php 
 
 
-					$no=1;
-					foreach($result as $row)
-					{
-						echo "<tr>";
-						echo "<td>".$no."</td>";
-						echo "<td>".$row->id."</td>";
-						echo "<td>".$row->username."</td>";
-						echo "<td>".$row->email."</td>";
-						if($row->level == 'admin'){
-							echo "<td>관리자</td>";
-						}
-						else {
-							echo "<td>사용자</td>";
+						$no=1;
+						foreach($result as $row)
+						{
+							echo "<tr>";
+							echo "<td>".$no."</td>";
+							echo "<td>".$row->id."</td>";
+							echo "<td>".$row->username."</td>";
+							echo "<td>".$row->email."</td>";
+							if($row->level == 'admin'){
+								echo "<td>관리자</td>";
+							}
+							else {
+								echo "<td>사용자</td>";
 
-						}
-?>
+							}
+							?>
 
-<td><input type="button" class="btn btn-danger" value="Good_Bye" onclick="really_ban(<?=$row->id?>);"></td>
-<td><a href="<?=site_url("/member/admin_set?id=$row->id")?>"><input type="button" class="btn btn-success" value="Admin_set"></a></td>
-<?php 						
+						<td><input type="button" class="btn btn-danger" value="Good_Bye"
+							onclick="really_ban(<?=$row->id?>);"></td>
+						<td><a href="<?=site_url("/member/admin_set?id=$row->id")?>"><input
+								type="button" class="btn btn-success" value="Admin_set"> </a></td>
+						<?php 						
 
 						echo "</tr>";
 
 						$no=$no+1;
 
-					}
+						}
 
 
-					?>
-				</tbody>
-				<tfoot>
-					<tr>
-						<td colspan="7">
-							<div class="pagination" style="text-align: center;">
-							<ul>
-								<li><a href="<?=$act_url?>/1">First</a></li>
-								<?php 
-								if($page>1) {
-									?>
-								<li><a href='<?=$act_url?>/<?=$prev_page?>'>&lt</a></li>
-								<?php 
-								}
-								for ($i=$first_page;$i<=$last_page;$i++):
-								if($page == $i) {
-									$bold_s = "<b>"; $bold_e = "</b>";
-								} else {
-									$bold_s = ""; $bold_e = "";
-								}
-								?>
-								<li><a href="<?=$act_url?>/<?=$i?>"><?=$bold_s?> <?=$i?> <?=$bold_e?>
-								</a></li>
-								<?php 
-								endfor;
-								if($page < $total_page){
-									?>
-								<li><a href="<?=$act_url?>/<?=$next_page?>">&gt</a></li>
-								<?php 
-								}
-								?>
-								<li><a href="<?=$act_url?>/<?=$total_page?>">Last</a></li>
-								</ul>
-							</div>
-						</td>
-					</tr>
-				</tfoot>
+						?>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="7">
+								<div class="pagination" style="text-align: center;">
+									<ul>
+										<li><a href="<?=$act_url?>/1">First</a></li>
+										<?php 
+										if($page>1) {
+											?>
+										<li><a href='<?=$act_url?>/<?=$prev_page?>'>&lt</a></li>
+										<?php 
+										}
+										for ($i=$first_page;$i<=$last_page;$i++):
+										if($page == $i) {
+											$bold_s = "<b>"; $bold_e = "</b>";
+										} else {
+											$bold_s = ""; $bold_e = "";
+										}
+										?>
+										<li><a href="<?=$act_url?>/<?=$i?>"><?=$bold_s?> <?=$i?> <?=$bold_e?>
+										</a></li>
+										<?php 
+										endfor;
+										if($page < $total_page){
+											?>
+										<li><a href="<?=$act_url?>/<?=$next_page?>">&gt</a></li>
+										<?php 
+										}
+										?>
+										<li><a href="<?=$act_url?>/<?=$total_page?>">Last</a></li>
+									</ul>
+								</div>
+							</td>
+						</tr>
+					</tfoot>
 
-			</table>
-			
-		</div>
-<div align="right">
-		<a class="btn btn-primary btn-large" href="<?=site_url("/member/logout")?>">로그아웃 </a>
-		</div>
+				</table>
 
-	</form>
-	
+			</div>
+			<div align="right">
+				<a class="btn btn-primary btn-large"
+					href="<?=site_url("/member/logout")?>">로그아웃 </a>
+			</div>
 
-</div>
-	</body>
+		</form>
+
+
+	</div>
+</body>
 </html>
