@@ -19,7 +19,7 @@ function search_confirm()
 function really_ban(ban_id){
 conf = confirm("정말 탈퇴 시키겠습니까??");
 	if(conf){
-		alert("회원을 탈퇴 시켰습니다.");
+		
 		location.href=" <?=site_url("/member/admin/member/good_bye?")?>id="+ban_id;
 	}
 		

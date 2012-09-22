@@ -577,11 +577,18 @@ class Member extends MX_Controller
 	function good_bye()
 	{
 		$id=$_GET['id'];
+		if($this->users->check_level($id) == 'admin'){
+			echo ("<script>alert('관리자는 최소 1명 이상입니다.')</script>");			
+		}
+		else
+		{
+		
 		$this->users->delete_user($id);
+		echo ("<script>alert('탈퇴 처리 되었습니다.')</script>");
+		}
 
-		//echo ("<script>alert('회원을 탈퇴 시켰습니다.')</script>");
-
-		redirect('/member/admin/member/admin_member/');
+		//redirect('/member/admin/member/admin_member/');
+		$this->admin_member();
 	}
 
 	function admin_set(){
@@ -598,7 +605,7 @@ class Member extends MX_Controller
 
 	//admin과 user를 구분해서 페이지를 이동
 	function admin_or_user(){
-		if($this->users->check_level($this->tank_auth->get_username())){
+		if($this->users->check_level($this->tank_auth->get_user_id())){
 			redirect('/member/admin/');
 		} else { 
 			redirect('/member/main_page/');

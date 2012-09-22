@@ -436,10 +436,10 @@ class Users extends CI_Model
 	}
 
 	//선택한 유저의 권한이 무엇인지 체크(admin,manager,member,guest)
-	function check_level($user_name){ 
+	function check_level($user_id){ 
 		$this->db->select('level');
 		$this->db->from('users');
-		$this->db->where('username', $user_name);
+		$this->db->where('id', $user_id);
 		
 		$query = $this->db->get();
 		
