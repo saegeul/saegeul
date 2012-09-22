@@ -7,7 +7,13 @@ $("#oauth").live('click',function(e) {
 
 $("#clouddrive").live('click',function(e) {
 	var oauth_token = $(this).parent().prev().prev().text();
-	location.href="/saegeul/clouddrive/admin/clouddrive/ucloudView?oauth_token=K8hhHsYGB5ka8yI7aZoF";
+	location.href="/saegeul/clouddrive/admin/clouddrive/ucloudView?oauth_token=" + oauth_token;
+});
+
+$(document).ready(function () {
+	var oauth_token = $("button[id=clouddrive]").parent().prev().prev().text();
+	if(oauth_token != "")
+		location.href="/saegeul/clouddrive/admin/clouddrive/ucloudView?oauth_token=" + oauth_token;
 });
 </script>
 <div class="span9" align="center">
