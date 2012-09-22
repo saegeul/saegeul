@@ -36,10 +36,10 @@
                         <a href="<?=base_url()?>cloud_drive/admin/cloud_drive">Cloud Drive</a>
                     </li> 
                     <li <?php if($this->uri->segment(2)=='webzine'):?> class="active" <?php endif;?>> 
-                        <a href="<?=base_url()?>index.php/admin/document/writeform">Archaive</a>
+                        <a href="<?=base_url()?>index.php/admin/document/writeform">Page</a>
                     </li> 
                     <li <?php if($this->uri->segment(2)=='template'):?> class="active" <?php endif;?>> 
-                        <a href="<?=base_url()?>filebox/admin/filebox/uploadForm">File</a>
+                        <a href="<?=base_url()?>filebox/admin/filebox/fileList">File</a>
                     </li>
                     <li <?php if($this->uri->segment(2)=='template'):?> class="active" <?php endif;?>> 
                         <a href="<?=base_url()?>admin/setting">Setting</a>
