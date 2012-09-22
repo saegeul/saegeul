@@ -169,7 +169,7 @@ class Ucloud extends MX_Controller {
 
 	}
 
-	public function uploadFile(){
+	public function moveUcloud(){
 		$api_key = '38629799a8e9388c6ce742ed71fb6233' ;
 		$secret_key = '29b30a42991c73e76032c5f20b4b7858' ;
 		$callback_url = 'http://localhost:8888';
@@ -185,6 +185,7 @@ class Ucloud extends MX_Controller {
 				'oauth_version'=>'1.0'
 		)) ;
 
+		$success = "";
 		$data = $this->input->get_post('data') ;
 		$upload_folder = $this->input->get_post('upload_folder') ;
 		$decodeData = json_decode($data);
@@ -223,7 +224,7 @@ class Ucloud extends MX_Controller {
 					$upload_file_url = $img_fold_url  . $decodeData[$i];
 				}
 				if(is_file($upload_file_url)){
-					$request_body = array('api_token'=>$api_token,'folder_id'=>$upload_folder,'file_name'=>$decodeData[$i],'mediaType'=>$value->file_type) ;
+					$request_body = array('api_token'=>$api_token,'folder_id'=>$upload_folder,'file_name'=>$value->upload_file_name,'mediaType'=>$value->file_type) ;
 					$response = $this->oauth->api_call('createfile',$request_header,$request_body,'POST') ;
 
 					$temp_upload_file = json_decode($response);
@@ -302,11 +303,16 @@ class Ucloud extends MX_Controller {
 		for ($i = 0; $i < count($decodeData); $i++) {
 			$request_body = array('api_token'=>$api_token,'file_id'=>$decodeData[$i]) ;
 			$response = $this->oauth->api_call('deletefile',$request_header,$request_body,'POST') ;
-
 			$temp_delete_file = json_decode($response);
-
 			if($temp_delete_file->result_code == 204){
 				$success="success";
+			}else{
+				$request_body = array('api_token'=>$api_token,'folder_id'=>$decodeData[$i]) ;
+				$response = $this->oauth->api_call('deletefolder',$request_header,$request_body,'POST') ;
+				$temp_delete_folder = json_decode($response);
+				if($temp_delete_folder->result_code == 204){
+					$success="success";
+				}
 			}
 		}
 		echo json_encode($success);
@@ -459,6 +465,53 @@ class Ucloud extends MX_Controller {
 			}
 		}
 		echo json_encode($success);
+	}
+	
+	public function createFolder(){
+		$api_key = '38629799a8e9388c6ce742ed71fb6233' ;
+		$secret_key = '29b30a42991c73e76032c5f20b4b7858' ;
+		$callback_url = 'http://localhost:8888';
+		$this->load->helper('url') ;
+		$this->load->model('filebox/filebox_model', 'filebox');
+	
+		$this->load->library('oauth',array(
+				'api_key'=>$api_key,
+				'secret_key'=>$secret_key,
+				'callback_url'=>base_url().'auth/oauth/',
+				'signature_method'=>'HMAC-SHA1',
+				'provider'=>'Ucloud',
+				'oauth_version'=>'1.0'
+		)) ;
+	
+		$folder_id = $this->input->get_post('upload_folder') ;
+		$folder_name = $this->input->get_post('addFolderName') ;
+		
+		$params = array();
+		$params['oauth_token'] = $this->input->get_post('oauth_token') ;
+		$params['oauth_token_secret'] = $this->oauth->token('oauth_token_secret');
+		$params['oauth_verifier'] = $this->input->get_post('oauth_verifier') ;
+	
+		$request_header['oauth_token'] = $this->oauth->token('oauth_token') ;
+		$request_header['oauth_verifier'] =  $params['oauth_verifier'] ;
+		$request_header['oauth_token_secret'] = $this->oauth->token('oauth_token_secret') ;
+	
+		$request_header = array() ;
+	
+		$request_header['oauth_token'] = $this->oauth->token('oauth_token') ;
+		$request_header['oauth_verifier'] =  $params['oauth_verifier'] ;
+		$request_header['oauth_token_secret'] = $this->oauth->token('oauth_token_secret') ;
+	
+		$provider = $this->oauth->getProvider() ;
+		$consumer = $this->oauth->getConsumer() ;
+	
+		$api_token = $provider->getAPIToken($consumer->get('api_key'),$consumer->get('secret_key')) ;
+	
+		$request_body = array('api_token'=>$api_token,'folder_id'=>$folder_id,'folder_name'=>$folder_name) ;
+		$response = $this->oauth->api_call('createfolder',$request_header,$request_body,'POST') ;
+
+		$success = $response;
+		echo json_encode($success);
+		
 	}
 }
 

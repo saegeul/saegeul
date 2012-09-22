@@ -153,6 +153,7 @@ $(document).ready(function() {
 	$( "#dialog:ui-dialog" ).dialog( "destroy" );
 	
 	$( "#dialog-confirm" ).dialog({
+		dialogClass: "alert",
 		resizable: false,
 		height:600,
 		width:500,
@@ -241,7 +242,7 @@ if($key != "" && $keyword != ""){
 				}
 				$thumbnailPath = $img_fold_url . "/thumbs/" . $row->source_file_name;
 				if(($fileType != "image/jpg") && ($fileType != "image/jpeg") && ($fileType != "image/gif") && ($fileType != "image/png"))
-					$thumbnailPath = "/saegeul/modules/ucloud/views/assets/img/no_image.png";
+					$thumbnailPath = "/saegeul/modules/clouddrive/views/assets/img/no_image.png";
 				?>
 				<tr
 					onclick="FileModify('<?=$filePath?>','<?=$thumbnailPath?>','<?=$fileName?>','<?=$fileType?>','<?=$author?>','<?=$regDate?>','<?=$address?>','<?=$isvalid?>','<?=$no?>','<?=$tag?>','<?=$source_file_name?>','<?=$downCnt?>','<?=$folder_url?>')">

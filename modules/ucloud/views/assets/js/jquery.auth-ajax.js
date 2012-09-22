@@ -70,7 +70,7 @@ $(document).ready(function () {
 	       success: function(data){
 				json = eval(data);
 				
-				var markup = "&nbsp;all&nbsp;<input type='checkbox' id='all_img_check'/>&nbsp;<input type='button' value='cloud upload' id='cloud_upload' class='btn'><br><br><ul class='thumbnails'>";
+				var markup = "&nbsp;all&nbsp;<input type='checkbox' id='all_img_check' style='margin-top:-4px'/>&nbsp;<a href='javascript:void(0)' id='moveUcloud' style='color: #333333;'><i class='icon-upload'></i>MoveUcloud</a><br><br><ul class='thumbnails'>";
 				var page_per_block = 5;
 				var prev_page = parseInt(json.page) - 1;
 				var next_page = parseInt(json.page) + 1;
@@ -93,7 +93,7 @@ $(document).ready(function () {
 	    	   markup += "</ul>"
 						+ "<div class='pagination' style='text-align: center;'>"
 						+ "<ul>"
-						+ "<li><a id='1' style='color: #333333;'>&laquo;</a></li>";
+						+ "<li class='pageBtn'><a id='1' style='color: #333333;'>&laquo;</a></li>";
 				if(curt_page > 1){
 					markup += "<li class='pageBtn'>"
 						+ "<a id='" + prev_page + "' style='color: #333333;'>prev</a>"
@@ -160,7 +160,7 @@ $(".clickFolder").live('click',function(e) {
 							+ "<th>크기</th>"
 						+ "</tr>"
 					+ "</thead>"
-					+ "<tbody>";
+					+ "<tbody id='addbody'>";
 					
 				if(contact.Folders.length > 0){
 					var folders = contact.Folders;
@@ -209,7 +209,7 @@ $(".pageBtn").live('click',function() {
 	       success: function(data){
 				json = eval(data);
 				
-				var markup = "&nbsp;all&nbsp;<input type='checkbox' id='all_img_check'/>&nbsp;<input type='button' value='cloud upload' id='cloud_upload' class='btn'><br><br><ul class='thumbnails'>";
+				var markup = "&nbsp;all&nbsp;<input type='checkbox' id='all_img_check'/>&nbsp;<a href='javascript:void(0)' id='moveUcloud' style='color: #333333;'><i class='icon-upload'></i>MoveUcloud</a><br><br><ul class='thumbnails'>";
 				var page_per_block = 5;
 				var prev_page = parseInt(json.page) - 1;
 				var next_page = parseInt(json.page) + 1;
@@ -311,7 +311,7 @@ $('.crumb').live('click',function(e) {
 							+ "<th>크기</th>"
 						+ "</tr>"
 					+ "</thead>"
-					+ "<tbody>";
+					+ "<tbody id='addbody'>";
 					
 				if(contact.Folders.length > 0){
 					var folders = contact.Folders;
@@ -344,7 +344,7 @@ $('.crumb').live('click',function(e) {
 							center_markup += "<tr>"
 								+ "<td><input type='checkbox' class='chcktbl' /></td>"
 								+ "<td><img alt='파일' src='/saegeul/modules/ucloud/views/assets/img/file.png'></td>"
-								+ "<td class='downloadFile' id='" + files[i].file_id +"'><a href='javascript:void(0)'>" + temp_name + "</a></td>"
+								+ "<td class='downloadFile' id='" + files[i].file_id +"'><a href='javascript:void(0)'  style='color: #333333;'>" + temp_name + "</a></td>"
 								+ "<td>" + temp_modify_date + "</td>"
 								+ "<td>" + files[i].file_size + "</td>"
 							+ "</tr>";
@@ -418,7 +418,7 @@ $('#moveFilebox').live('click',function() {
 	});
 });
 
-$('#cloud_upload').live('click',function() {
+$('#moveUcloud').live('click',function() {
 	// Initialization if the waitingpopup plugin
     $().waitingpopup();
 
@@ -427,27 +427,33 @@ $('#cloud_upload').live('click',function() {
     
 	var arr = new Array();
 	var upload_folder = $("input[id=curt_folder]").attr("value");
-	$("input[class=imgcheck]").each(function(){
-		if($(this).is(':checked')){
-			arr[arr.length] = $(this).next('img').attr('alt');				
-		}
-	});
-	var str = JSON.stringify(arr);
-	$.ajax({
-	       type: "GET",
-	       url: "/saegeul/ucloud/uploadFile",
-	       contentType: "application/json; charset=utf-8",
-	       dataType: "json",
-	       data: "data=" + str + "&upload_folder=" + upload_folder, 
-	       error: function() { 
-	       	alert("이폴더에서는 업로드 할 수 없습니다.");
-	        },
-	       success: function(data){
-	    	   // call to close the waitingpopup after 3 seconds
-	           setTimeout("$().waitingpopup('close')", data);
-	           location.reload();
+	
+	if(upload_folder != ""){
+		$("input[class=imgcheck]").each(function(){
+			if($(this).is(':checked')){
+				arr[arr.length] = $(this).next('img').attr('alt');				
 			}
-	});
+		});
+		var str = JSON.stringify(arr);
+		$.ajax({
+		       type: "GET",
+		       url: "/saegeul/ucloud/moveUcloud",
+		       contentType: "application/json; charset=utf-8",
+		       dataType: "json",
+		       data: "data=" + str + "&upload_folder=" + upload_folder, 
+		       error: function() { 
+		       	alert("이파일은 업로드 할 수 없습니다.");
+		        },
+		       success: function(data){
+		    	   // call to close the waitingpopup after 3 seconds
+		           setTimeout("$().waitingpopup('close')", data);
+		           location.reload();
+				}
+		});
+	}else{
+		alert("이폴더에서는 업로드 할 수 없습니다.");
+		setTimeout("$().waitingpopup('close')");
+	}
 });
 
 $('.downloadFile').live('click',function() {
@@ -465,4 +471,48 @@ $('.downloadFile').live('click',function() {
 
 $('.getList').live('click',function() {
 	$("#files").slideToggle();
+});
+
+$('#createFolder').live('click',function() {
+	var addFolder = "<tr>"
+		+ "<td><input type='checkbox' class='chcktbl' /></td>"
+		+ "<td><img alt='폴더' src='/saegeul/modules/ucloud/views/assets/img/folder.png'></td>"
+		+ "<td colspan='3'>"
+			+ "<div>"
+				+ "<form class='form-inline'>"
+					+ "<input type='text' class='addFolderName'>&nbsp;&nbsp;<button class='btn btn-primary createAddFolderBtn' type='button'>폴더생성</button>&nbsp;<button class='btn btn-danger cancleAddFolderBtn' type='button'>취소</button>"
+				+ "</form>"
+			+ "</div>"
+		+ "</td>"	
+	+ "</tr>";
+	$(addFolder).appendTo("#addbody");
+	//
+});
+
+$('.createAddFolderBtn').live('click',function(e) {
+	var folderName =  $(this).prev().attr('value');
+	var upload_folder = $("input[id=curt_folder]").attr("value");
+	if(folderName == ""){
+		$(this).prev().attr('placeholder','Input Folder Name');
+	}else{
+		$.ajax({
+		       type: "GET",
+		       url: "/saegeul/ucloud/createFolder",
+		       contentType: "application/json; charset=utf-8",
+		       dataType: "json",
+		       data: "addFolderName=" + folderName + "&upload_folder=" + upload_folder, 
+		       error: function() { 
+		       	alert("이폴더에서는 폴더를 생성할 수 없습니다.");
+		        },
+		       success: function(data){
+		    	   // call to close the waitingpopup after 3 seconds
+		           setTimeout("$().waitingpopup('close')", data);
+		           location.reload();
+				}
+		});
+	}
+});
+
+$('.cancleAddFolderBtn').live('click',function(e) {
+	$(e.target).closest('tr').remove();
 });

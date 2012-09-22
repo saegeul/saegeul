@@ -8,8 +8,5 @@
         <li> 
 	        <a><i class="icon-chevron-right"></i>태그클라우드</a> 
 	    </li>
-	    <li> 
-	        <a><i class="icon-chevron-right"></i>휴지통</a> 
-	    </li> 
 	</ul>
 </div>
