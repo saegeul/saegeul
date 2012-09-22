@@ -153,6 +153,7 @@ $(document).ready(function() {
 	$( "#dialog:ui-dialog" ).dialog( "destroy" );
 	
 	$( "#dialog-confirm" ).dialog({
+		dialogClass: "alert",
 		resizable: false,
 		height:600,
 		width:500,
