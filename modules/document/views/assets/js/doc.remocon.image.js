@@ -10,10 +10,16 @@ DOC.remocon.image = (function(){
     }; 
     that.render = function(){
         button_obj = $(button_tmpl).appendTo($(remocon_panel_body)) ; 
+        button_obj.bind('click',function() {
+            that.click() ;
+        });
     }; 
 
-    that.bind = function(){
-
+    that.click = function(){
+        DOC.paper.offEditor() ; 
+        var image = DOC.Element.Image();
+        image.editor() ;
+        DOC.paper.add(image) ;
     }; 
 
     return that ; 

@@ -24,7 +24,7 @@
 			<ul class="breadcrumb"></ul>
 			<div id="bntLine" align="right">
 				<input type="hidden" id="curt_folder">
-				<a href="javascript:void(0)" id="createFile" style="color: #333333;"><i class="icon-folder-open"></i>
+				<a href="javascript:void(0)" id="createFolder" style="color: #333333;"><i class="icon-folder-open"></i>
 				CreateFolder</a>
 				<a href="javascript:void(0)" id="deletFile" style="color: #333333;"><i class="icon-trash"></i>
 					Delete</a>

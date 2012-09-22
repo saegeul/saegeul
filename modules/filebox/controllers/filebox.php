@@ -47,9 +47,9 @@ class Filebox extends MX_Controller {
 				break;
 			case 'HEAD':
 
-			case 'GET': // get files
-				$this->get();
-				break;
+// 			case 'GET': // get files
+// 				$this->get();
+// 				break;
 			case 'POST': // upload files
 				if (isset($_REQUEST['_method']) && $_REQUEST['_method'] === 'DELETE') {
 					$this->delete();
@@ -159,6 +159,7 @@ class Filebox extends MX_Controller {
 				$insert_data->upload_file_name = $data['file_name'];
 				$insert_data->source_file_name = $source_file_name;
 				$insert_data->file_size = $data['file_size'];
+				$insert_data->file_url = $dest;
 				$insert_data->reg_date = standard_date('DATE_ATOM',time());//date("Y-m-d H:i:s",time());
 				$insert_data->ip_address = $this->input->ip_address();
 				$insert_data->username = $this->username;
@@ -176,7 +177,7 @@ class Filebox extends MX_Controller {
 				if(is_file($save_thumb_dir . $insert_data->source_file_name)){
 					$info->thumbnail_url = base_url() . $save_thumb_dir . $insert_data->source_file_name; //I set this to original file since I did not create thumbs.  change to thumbnail directory if you do = $upload_path_url .'/thumbs' .$name
 				}else{
-					$info->thumbnail_url = base_url() . "/modules/ucloud/views/assets/img/no_image.png";
+					$info->thumbnail_url = base_url() . "/modules/clouddrive/views/assets/img/no_image.png";
 				}
 				$info->delete_url =  base_url() . 'filebox/process/?file='.$insert_data->source_file_name;
 				$info->delete_type = 'DELETE';
@@ -219,7 +220,7 @@ class Filebox extends MX_Controller {
 				$file->name = $value->source_file_name;
 				$file->size = filesize($file_fold_url . $value->source_file_name);
 				$file->url = base_url() . $file_fold_url . $value->source_file_name;
-				$file->thumbnail_url = base_url() . "/modules/ucloud/views/assets/img/no_image.png";
+				$file->thumbnail_url = base_url() . "/modules/clouddrive/views/assets/img/no_image.png";
 				$file->delete_url = base_url() . 'filebox/process/?file='.$value->source_file_name;
 				$file->delete_type = 'DELETE';
 
@@ -444,7 +445,7 @@ class Filebox extends MX_Controller {
 				$file->upload_name =  mb_substr($value->upload_file_name, 0, 12, 'UTF-8');
 				$file->size = filesize($file_fold_url . $value->source_file_name);
 				$file->url = base_url() . $file_fold_url . $value->source_file_name;
-				$file->thumbnail_url = base_url() . "/modules/ucloud/views/assets/img/no_image.png";
+				$file->thumbnail_url = base_url() . "/modules/clouddrive/views/assets/img/no_image.png";
 
 				$files[$key] = $file;
 			}else if(is_file($img_fold_url . $value->source_file_name)){
