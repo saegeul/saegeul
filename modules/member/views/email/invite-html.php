@@ -21,9 +21,9 @@ Link 제대로 동작 하지 않는다면, 다음 링크를 웹브라우저의 �
 <?php echo $activation_period; ?> 시간 내에 이메일 인증을 해주시기 바랍니다.  그렇지 않으면 당신의 이메일인증은 유효하지 않게 되며, 재등록을 하셔야 합니다.<br />
 <br />
 <br />
-<h1>아래의 정보를 이용하여 로그인 하신 후에</h1>
+<h1>아래의 정보를 이용하여 로그인 하신 후에</h1><br>
 <h1>'반드시' 비밀번호를 변경해주시기 바랍니다.</h1>
-
+<br><br>
 <?php if (strlen($username) > 0) { ?>Your username: <?php echo $username; ?><br /><?php } ?>
 Your email address: <?php echo $email; ?><br />
 Your password: <?php echo $password; ?><br />
