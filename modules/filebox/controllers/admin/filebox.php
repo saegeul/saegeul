@@ -59,9 +59,9 @@ class Filebox extends MX_Controller {
 				break;
 			case 'HEAD':
 
-			case 'GET': // get files
-				$this->get();
-				break;
+// 			case 'GET': // get files
+// 				$this->get();
+// 				break;
 			case 'POST': // upload files
 				if (isset($_REQUEST['_method']) && $_REQUEST['_method'] === 'DELETE') {
 					$this->delete();
@@ -274,7 +274,7 @@ class Filebox extends MX_Controller {
 		// page setting
 		$page_view = 5; // a page recode number
 		$base_url = base_url(); // base url
-		$act_url = $base_url . "filebox/fileList"; // act url
+		$act_url = $base_url . "filebox/admin/filebox/fileList"; // act url
 		$page_per_block = 5; // a page recode moveing number
 
 		// return data setting
@@ -416,7 +416,7 @@ class Filebox extends MX_Controller {
 		// page setting
 		$page_view = 9; // page setting
 		$base_url = base_url(); // base_url
-		$act_url = $base_url . "filebox/getFileList"; // page setting
+		$act_url = $base_url . "filebox/admin/filebox/fileList"; // page setting
 		$page_per_block = 9; // page setting
 
 		// return data setting
