@@ -92,10 +92,12 @@ DOC.Element.Textarea = function(oConfig){
     }; 
 
     that.turnOnEditor = function(){ 
+        //DOC.paper.sortable('off') ; 
         is_editing = true ; 
     }; 
 
     that.turnOffEditor = function(){
+        //DOC.paper.sortable('on') ; 
         is_editing = false ; 
     }; 
 
@@ -112,7 +114,7 @@ DOC.Element.Textarea = function(oConfig){
 	
 		        that.setData(_data) ; 
 	            that.editable($el) ; 
-                that.mouseover($el) ; 
+                //that.mouseover($el) ; 
 	        } 
         }
     }; 

@@ -8,6 +8,7 @@ $this->load->helper('asset');
 <?echo js_asset('document','doc.remocon.js')?>
 <?echo js_asset('document','doc.paper.js')?>
 <?echo js_asset('document','doc.remocon.textarea.js')?>
+<?echo js_asset('document','doc.remocon.youtube.js')?>
 <?echo js_asset('document','doc.remocon.image.js')?>
 <?echo js_asset('document','doc.remocon.filebox.js')?> 
 <?echo js_asset('document','doc.element.textarea.js')?>
@@ -39,12 +40,16 @@ $(function(){
     }); 
 
     DOC.remocon_panel.add([
-        DOC.remocon.textarea ,
-        DOC.remocon.image ,
-        DOC.remocon.filebox
+        DOC.remocon.textarea , 
+        DOC.remocon.youtube
+        //DOC.remocon.image ,
+        //DOC.remocon.filebox
     ]); 
 
     DOC.remocon_panel.render() ; 
-    DOC.remocon.textarea.trigger(); 
+    //DOC.remocon.textarea.trigger(); 
+
+    /*DOC.paper.init('document_body') ; 
+    DOC.paper.sortable('on');*/
 }); 
 </script>

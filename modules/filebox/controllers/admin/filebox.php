@@ -28,15 +28,17 @@ class Filebox extends MX_Controller {
 	public function uploadForm(){
         $this->load->library('admin_tmpl') ; 
 
-        $section = array( 
+        $section = array(
             'header'=>'admin/header',
+            'sidebar'=>'admin/sidebar',
             'body'=>'admin/upload_form',
-            'footer'=>'admin/footer',
+            'footer'=>'admin/footer'
         ) ; 
 
         $str= $this->admin_tmpl->parse($section); 
 
-        echo $str ;
+        echo $str ; 
+
 	}
 
 	// upload_form : click event process
@@ -306,7 +308,20 @@ class Filebox extends MX_Controller {
 		$data['act_url'] = $act_url;
 
 		// view
-		$this->load->view('upload_list', $data);
+
+        $layout = array() ; 
+        $this->load->library('admin_tmpl') ; 
+
+        $section = array(
+            'header'=>'admin/header',
+            'sidebar'=>'admin/sidebar',
+            'body'=>'admin/upload_list',
+            'footer'=>'admin/footer'
+        ) ; 
+
+        $str= $this->admin_tmpl->parse($section,$data); 
+
+        echo $str ;
 	}
 	
 	// upload_list : modify DB

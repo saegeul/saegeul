@@ -1,8 +1,11 @@
 DOC.paper = (function(){
-
-    var elements = [] ;
-
+    var document_id ; 
+    var elements = [] ; 
     var that = {} ; 
+
+    that.init = function(config){ 
+        document_id = config.id||'document_body' ; 
+    }; 
         
     that.getElement = function(obj){
         for(i = 0 ; i < elements.length; i++){
@@ -13,6 +16,16 @@ DOC.paper = (function(){
 
         return null; 
     };
+
+    that.sortable = function(turnon){
+        if(turnon == 'on'){
+            console.log('on') ; 
+            $('#'+document_id).sortable() ; 
+        }else{
+            console.log('off') ; 
+            $('#'+document_id).sortable('disable') ; 
+        }
+    }
 
     that.offEditor = function(){ //현재 켜져있는 에디터를 꺼라.
         for(i = 0 ; i < elements.length; i++){

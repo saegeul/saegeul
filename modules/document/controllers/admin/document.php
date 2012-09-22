@@ -31,7 +31,6 @@ class Document extends MX_Controller {
     }
 
     public function document_list(){
-        $layout = array() ; 
         $this->load->library('admin_tmpl') ; 
 
         $section = array(
@@ -47,12 +46,18 @@ class Document extends MX_Controller {
     }
 
     public function writeform(){ 
-        $layout = array() ; 
-        $layout['header'] = $this->load->view('./../../admin/views/header','',true);
-        $layout['body'] = $this->load->view('admin/writeform','',true);
-        $layout['footer'] = $this->load->view('./../../admin/views/footer','',true);
+        $this->load->library('admin_tmpl') ; 
 
-        echo $layout['header'].$layout['body'].$layout['footer'] ; 
+        $section = array(
+            'header'=>'admin/header',
+            //'sidebar'=>'admin/sidebar',
+            'body'=>'admin/writeform',
+            'footer'=>'admin/footer'
+        ) ; 
+
+        $str= $this->admin_tmpl->parse($section); 
+
+        echo $str ;
     }
 
     public function tempwriteform() {
