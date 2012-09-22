@@ -84,14 +84,14 @@ if($key != "" && $keyword != ""){
 			<thead class="row">
 				<tr>
 
-					<td class="span1"><h4>번호</h4></td>
-					<td class="span1"><h4>ID</h4></td>
-					<td class="span1"><h4>Name</h4></td>
-					<td class="span1"><h4>E-Mail</h4></td>
-					<td class="span1"><h4>Activated</h4></td>
-					<td class="span1"><h4>권한</h4></td>
-					<td class="span1"><h4>Goodbye</h4></td>
-					<td class="span1"><h4>Grant Admin</h4></td>
+					<td class="span1" style="text-align: center;"><h4>번호</h4></td>
+					<td class="span1" style="text-align: center;"><h4>ID</h4></td>
+					<td class="span1" style="text-align: center;"><h4>Name</h4></td>
+					<td class="span1" style="text-align: center;"><h4>E-Mail</h4></td>
+					<td class="span1" style="text-align: center;"><h4>Activated</h4></td>
+					<td class="span1" style="text-align: center;"><h4>권한</h4></td>
+					<td class="span1" style="text-align: center;"><h4>Goodbye</h4></td>
+					<td class="span1" style="text-align: center;"><h4>Grant Admin</h4></td>
 
 				</tr>
 			</thead>
@@ -104,22 +104,22 @@ if($key != "" && $keyword != ""){
 				{
 					?>
 				<tr>
-					<td><?=$no?></td>
-					<td><?=$row->id?></td>
-					<td><?=$row->username?></td>
-					<td><?=$row->email?></td>
+					<td style="text-align: center;"><?=$no?></td>
+					<td style="text-align: center;"><?=$row->id?></td>
+					<td style="text-align: center;"> <?=$row->username?></td>
+					<td style="text-align: center;"><?=$row->email?></td>
 
 					<?php
 					if($row->activated == 1){
 						?>
 
-					<td><i class="icon-ok"></i></td>
+					<td style="text-align: center;"><i class="icon-ok"></i></td>
 
 					<?php 
 					}
 					else{
 						?>
-					<td><i class="icon-remove"></i></td>
+					<td style="text-align: center;"><i class="icon-remove"></i></td>
 					<?
 
 					}
@@ -134,10 +134,10 @@ if($key != "" && $keyword != ""){
 					}
 					?>
 
-					<td><input type="button" class="btn btn-small btn-danger"
+					<td style="text-align: center;"><input type="button" class="btn btn-small btn-danger"
 						value="Good_Bye" onclick="really_ban(<?=$row->id?>);"></td>
 
-					<td><a
+					<td style="text-align: center;"><a
 						href="<?=site_url("/member/admin/member/admin_set?id=$row->id")?>"><input
 							type="button" class="btn btn-small btn-success" value="Admin_set">
 					</a>

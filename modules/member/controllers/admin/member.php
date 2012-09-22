@@ -578,13 +578,13 @@ class Member extends MX_Controller
 	{
 		$id=$_GET['id'];
 		if($this->users->check_level($id) == 'admin'){
-			echo ("<script>alert('관리자는 최소 1명 이상입니다.')</script>");			
+			echo ("<script>alert('Do not unregister last admin.')</script>");			
 		}
 		else
 		{
 		
 		$this->users->delete_user($id);
-		echo ("<script>alert('탈퇴 처리 되었습니다.')</script>");
+		echo ("<script>alert('Selected user is unregistered')</script>");
 		}
 
 		//redirect('/member/admin/member/admin_member/');
