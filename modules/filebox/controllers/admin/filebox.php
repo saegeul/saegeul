@@ -13,7 +13,7 @@ class Filebox extends MX_Controller {
 		$this->load->database();
 		$this->load->helper('url');
 		$this->load->helper('date');
-		
+
 		$this->username = "root";
 		$this->email = "root@saegeul.com";
 		$this->uid = '1';
@@ -26,18 +26,18 @@ class Filebox extends MX_Controller {
 
 	// upload_form : view
 	public function uploadForm(){
-        $this->load->library('admin_tmpl') ; 
+		$this->load->library('admin_tmpl') ;
 
-        $section = array(
-            'header'=>'admin/header',
-            'sidebar'=>'admin/sidebar',
-            'body'=>'admin/upload_form',
-            'footer'=>'admin/footer'
-        ) ; 
+		$section = array(
+				'header'=>'admin/header',
+				'sidebar'=>'admin/sidebar',
+				'body'=>'admin/upload_form',
+				'footer'=>'admin/footer'
+		) ;
 
-        $str= $this->admin_tmpl->parse($section); 
+		$str= $this->admin_tmpl->parse($section);
 
-        echo $str ; 
+		echo $str ;
 
 	}
 
@@ -59,9 +59,9 @@ class Filebox extends MX_Controller {
 				break;
 			case 'HEAD':
 
-// 			case 'GET': // get files
-// 				$this->get();
-// 				break;
+			case 'GET': // get files
+				$this->get();
+				break;
 			case 'POST': // upload files
 				if (isset($_REQUEST['_method']) && $_REQUEST['_method'] === 'DELETE') {
 					$this->delete();
@@ -111,8 +111,9 @@ class Filebox extends MX_Controller {
 			$this->load->helper('security');
 			$source_file_name = do_hash($data['file_name'] . time(), 'md5') . $data['file_ext'];
 
+			$save_dir = "";
 			$save_thumb_dir = "";
-			
+				
 			if($data['file_type'] == "image/png" || $data['file_type'] == "image/jpg" || $data['file_type'] == "image/jpeg" || $data['file_type'] == "image/gif"){
 				// img directory
 				$save_dir = "filebox/files/img/".date("Ymd");
@@ -131,17 +132,25 @@ class Filebox extends MX_Controller {
 					$dest = $save_dir . "/" . $source_file_name;
 					// move
 					rename($data['full_path'], $dest);
-						
+
+					$exts = explode(".",$source_file_name) ;
+					$file_thumb_name = $exts[0];
+					$file_thumb_type = $exts[1];
+
 					// thumbnail create
-					$config['new_image'] = $save_thumb_dir;
+					$config['new_image'] = $save_thumb_dir . $file_thumb_name . "_110*90" . "." .$file_thumb_type;
+						
 					$config['image_library'] = 'gd2';
 					$config['source_image'] = $dest;
 					$config['create_thumb'] = FALSE;
 					$config['maintain_ratio'] = TRUE;
 					$config['width'] = 110;
 					$config['height'] = 90;
-					$this->load->library('image_lib', $config);
-					$this->image_lib->resize();
+					$this->load->library('image_lib');
+					$image_lib = $this->image_lib;
+					$image_lib->initialize($config);
+					$image_lib->resize();
+					$image_lib->clear();
 				}
 			}else{ // file move
 				$save_dir = "filebox/files/file/".date("Ymd");
@@ -176,21 +185,29 @@ class Filebox extends MX_Controller {
 				$insert_data->uid = $this->uid;
 				// insert data into db
 				$this->filebox->insert_entry($insert_data);
-				
+
 				// jason encode
 				$info = new stdClass();
 				$info->name = $data['file_name'];
 				$info->size = filesize($dest);
 				$info->type = $data['file_type'];
 				$info->url = base_url() . $dest;
-				if(is_file($save_thumb_dir . $insert_data->source_file_name)){
-					$info->thumbnail_url = base_url() . $save_thumb_dir . $insert_data->source_file_name; //I set this to original file since I did not create thumbs.  change to thumbnail directory if you do = $upload_path_url .'/thumbs' .$name
+
+				$exts = explode(".",$insert_data->source_file_name) ;
+				$file_thumb_name = $exts[0];
+				$file_thumb_type = $exts[1];
+
+				// thumbnail url
+				$file_thumb_url = $save_thumb_dir . $file_thumb_name . "_110*90" . "." .$file_thumb_type;
+
+				if(is_file($file_thumb_url)){
+					$info->thumbnail_url = base_url() . $file_thumb_url;
 				}else{
 					$info->thumbnail_url = base_url() . "/modules/clouddrive/views/assets/img/no_image.png";
 				}
 				$info->delete_url =  base_url() . 'filebox/process/?file='.$insert_data->source_file_name;
 				$info->delete_type = 'DELETE';
-			}	
+			}
 			// return ajax
 			echo json_encode(array($info));
 		} else {
@@ -219,7 +236,16 @@ class Filebox extends MX_Controller {
 				$file->name = $value->source_file_name;
 				$file->size = filesize($img_fold_url . $value->source_file_name);
 				$file->url = base_url() . $img_fold_url . $value->source_file_name;
-				$file->thumbnail_url = base_url() . $img_fold_url . 'thumbs/' . $value->source_file_name;
+
+				// thumbnail
+				$exts = explode(".",$value->source_file_name) ;
+				$file_thumb_name = $exts[0];
+				$file_thumb_type = $exts[1];
+
+				// thumbnail url
+				$file_thumb_url = $img_fold_url . 'thumbs/' . $file_thumb_name . "_110*90" . "." .$file_thumb_type;
+
+				$file->thumbnail_url = base_url() . $file_thumb_url;
 				$file->delete_url = base_url() . 'filebox/process/?file='.$value->source_file_name;
 				$file->delete_type = 'DELETE';
 
@@ -287,10 +313,10 @@ class Filebox extends MX_Controller {
 		}else{
 			$data['page'] = $page;
 		}
-		
+
 		$start_idx = ($page - 1) * $page_view;
 
-		// search keyworld 
+		// search keyworld
 		if($this->input->get('key') && $this->input->get('keyword')){
 			$data['key'] = $this->input->get('key');
 			$data['keyword'] = $this->input->get('keyword');
@@ -310,21 +336,21 @@ class Filebox extends MX_Controller {
 
 		// view
 
-        $layout = array() ; 
-        $this->load->library('admin_tmpl') ; 
+		$layout = array() ;
+		$this->load->library('admin_tmpl') ;
 
-        $section = array(
-            'header'=>'admin/header',
-            'sidebar'=>'admin/sidebar',
-            'body'=>'admin/upload_list',
-            'footer'=>'admin/footer'
-        ) ; 
+		$section = array(
+				'header'=>'admin/header',
+				'sidebar'=>'admin/sidebar',
+				'body'=>'admin/upload_list',
+				'footer'=>'admin/footer'
+		) ;
 
-        $str= $this->admin_tmpl->parse($section,$data); 
+		$str= $this->admin_tmpl->parse($section,$data);
 
-        echo $str ;
+		echo $str ;
 	}
-	
+
 	// upload_list : modify DB
 	public function fileModify(){
 		$success;
@@ -335,7 +361,7 @@ class Filebox extends MX_Controller {
 		$data['mod_name'] = $this->input->get('mod_name');
 		$data['mod_isvalid'] = $this->input->get('mod_isvalid');
 		$data['mod_tag'] = $this->input->get('mod_tag');
-		
+
 		if($this->filebox->update_entry($data)){
 			$insert_data;
 			$insert_data->tag = $data['mod_tag'];
@@ -346,12 +372,12 @@ class Filebox extends MX_Controller {
 			$insert_data->uid = $this->uid;
 			$this->filebox->insert_tag($insert_data);
 			$success = "success";
-			
+				
 		}
 		// return json
 		echo json_encode($success);
 	}
-	
+
 	// upload_list : get current download count
 	public function getDownCnt(){
 		// get DB library
@@ -368,14 +394,14 @@ class Filebox extends MX_Controller {
 			$download_file_url = 'filebox/files/file/' . $folder . '/' .$file;
 			// download_img_url
 			$download_img_url = 'filebox/files/img/' . $folder . '/' .$file;
-			
+				
 			if(is_file($download_file_url)){
 				$success->down_cnt = number_format($value->down_cnt) + 1;
 			}else if(is_file($download_img_url)){
 				$success->down_cnt = number_format($value->down_cnt) + 1;
 			}
 		}
-		
+
 		echo json_encode($success);
 	}
 
@@ -431,7 +457,7 @@ class Filebox extends MX_Controller {
 		}else{
 			$data['page'] = $page;
 		}
-		
+
 		$start_idx = ($page - 1) * $page_view;
 
 		// search keyworld
@@ -442,7 +468,7 @@ class Filebox extends MX_Controller {
 			$data['key'] = "";
 			$data['keyword']= "";
 		}
-		
+
 		// get files in DB
 		$data['result']=$this->filebox->select_entry($start_idx, $page_view, $data);
 		// get page tocal count
@@ -476,7 +502,16 @@ class Filebox extends MX_Controller {
 				$file->upload_name =  mb_substr($value->upload_file_name, 0, 12, 'UTF-8');
 				$file->size = filesize($img_fold_url . $value->source_file_name);
 				$file->url = base_url() . $img_fold_url . $value->source_file_name;
-				$file->thumbnail_url = base_url() . $img_fold_url . 'thumbs/' . $value->source_file_name;
+				
+				// thumbnail
+				$exts = explode(".",$value->source_file_name) ;
+				$file_thumb_name = $exts[0];
+				$file_thumb_type = $exts[1];
+				
+				// thumbnail url
+				$file_thumb_url = $img_fold_url . 'thumbs/' . $file_thumb_name . "_110*90" . "." .$file_thumb_type;
+
+				$file->thumbnail_url = base_url() . $file_thumb_url;
 
 				$files[$key] = $file;
 			}

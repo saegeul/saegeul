@@ -25,48 +25,18 @@ class Auth extends MX_Controller {
 		$this->load->library('oauth',array(
 				'api_key'=>$api_key,
 				'secret_key'=>$secret_key,
-				'callback_url'=>base_url().'auth/oauth/',
+				'callback_url'=>base_url().'clouddrive/admin/clouddrive/ucloudView',
 				'signature_method'=>'HMAC-SHA1',
 				'provider'=>'Ucloud',
 				'oauth_version'=>'1.0'
 		)) ;
 
-		// check oauth token
-		if($this->input->get_post('oauth_token')){
-			$params = array();
-			$params['oauth_token'] = $this->input->get_post('oauth_token') ;
-			$params['oauth_token_secret'] = $this->oauth->token('oauth_token_secret');
-			$params['oauth_verifier'] = $this->input->get_post('oauth_verifier') ;
-
-			$response = $this->oauth->access_token($params,'POST') ;
-			$this->oauth->token('oauth_token_secret',isset($response['oauth_token_secret'])?$response['oauth_token_secret']:"") ;
-			$this->oauth->token('oauth_token',isset($response['oauth_token'])?$response['oauth_token']:"") ;
-
-			$request_header = array() ;
-
-			$request_header['oauth_token'] = $this->oauth->token('oauth_token') ;
-			$request_header['oauth_verifier'] =  $params['oauth_verifier'] ;
-			$request_header['oauth_token_secret'] = $this->oauth->token('oauth_token_secret') ;
-
-			$provider = $this->oauth->getProvider() ;
-			$consumer = $this->oauth->getConsumer() ;
-
-			$api_token = $provider->getAPIToken($consumer->get('api_key'),$consumer->get('secret_key')) ;
-
-			$request_body = array('api_token'=>$api_token) ;
-			$response = $this->oauth->api_call('getsyncfolder',$request_header,$request_body,'POST') ;
-
-			$data['result'] = $response;
-
-			$this->load->view('ucloud/ucloud',$data);
-
-		}else{
-			// login kt ucloud
+		if(!$this->input->get_post('oauth_token')){
+			//login kt ucloud
 			$response = $this->oauth->request_token(array(),'POST') ;
 			$this->oauth->token('oauth_token_secret',$response['oauth_token_secret']) ;
 			$this->oauth->authorize($response) ;
-		}
-			
+		}	
 	}
 }
 
