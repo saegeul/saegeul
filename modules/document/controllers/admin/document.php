@@ -59,47 +59,53 @@ class Document extends MX_Controller {
 
         echo $str ;
     }
+    
 
     public function tempwriteform() {
         $this->load->view('tempwriteform') ; 
     }        
-    public function photoform() {
-        $this->load->model('Document_model'); // ???? - È£??
 
-        // ???? - ??Á¤
-        $base_segment = 3; // CI????Â¡ ???×¸?Æ® ?Ö¼?À§Ä¡??
-        $page_view = 12; // ?? ???????? ?????? ???Úµ? ??
+    public function photoform($page=1) {
+        $this->load->model('filebox/Filebox_model','filebox');
+        // page setting
+        $page_view = 5; // a page recode number
+        $base_url = base_url(); // base url
+        $act_url = $base_url . "document/admin/photoform"; // act url
+        $page_per_block = 5; // a page recode moveing number
 
-        $base_url = base_url(); // base_url
-        $act_url = $base_url . "document/photoform";
-
-        $page_per_block = 5; // ????Â¡ ?Ìµ? ???? ( 1 .. 5)
-
+        // return data setting
         $data = "";
 
-        if(!$this->uri->segment($base_segment)) {
-            $data['page'] = $page = 1;
-        } else {
-            $data['page'] = $page = $this->uri->segment(3,0);
+        if($page < 1){
+                $page = 1;
+                $data['page'] = 1;
+        }else{
+                $data['page'] = $page;
         }
+        
+        $start_idx = ($page - 1) * $page_view;
 
-        if($this->input->post('key') && $this->input->post('keyword')){
-            $data['key'] = $this->input->post('key');
-            $data['keyword'] = $this->input->post('keyword');
+        // search keyworld 
+        if($this->input->get('key') && $this->input->get('keyword')){
+                $data['key'] = $this->input->get('key');
+                $data['keyword'] = $this->input->get('keyword');
         }else {
-            $data['key'] = "";
-            $data['keyword']= "";
+                $data['key'] = "";
+                $data['keyword']= "";
         }
-            $start_idx = ($page - 1) * $page_view;
-        $data['result']=$this->Document_model->select_entry($start_idx, $page_view, $data);
-        $data['total_record'] = count($this->Document_model->total_entry_count($data));
-        $data['total_page'] = ceil($data['total_record'] / $page_view);
 
-        // ?? - Á¤??
+        // get files in DB
+        $data['result']=$this->filebox->select_entry($start_idx, $page_view, $data);
+        // get page tocal count
+        $data['total_record'] = count($this->filebox->total_entry_count($data));
+        $data['total_page'] = ceil($data['total_record'] / $page_view);
+        // url
         $data['base_url'] = $base_url;
         $data['act_url'] = $act_url;
-        // ?? - ????
-        $this->load->view('photoform',$data) ;
+
+        // view
+        //$this->load->view('admin/photoform', $data) ;
+        echo json_encode($data);
     }
 
     public function fileform() {
