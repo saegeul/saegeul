@@ -524,9 +524,9 @@ class Member extends MX_Controller
 			
 		// 세팅 - 설정
 		$base_segment = 3; // CI페이징 세그먼트 주소위치값
-		$page_view = 10; // 한 페이지에 보여줄 레코드 수
+		$page_view = 6; // 한 페이지에 보여줄 레코드 수
 		$base_url = base_url(); // base_url
-		$act_url = $base_url . "member/admin_member";
+		$act_url = $base_url . "member/admin/member/admin_member";
 		$page_per_block = 5; // 페이징 이동 개수 ( 1 .. 5)
 			
 		$data = "";
@@ -557,7 +557,19 @@ class Member extends MX_Controller
 		$data['base_url'] = $base_url;
 		$data['act_url'] = $act_url;
 
-		$this->load->view('member/admin_member',$data);
+			$this->load->library('admin_tmpl') ;
+		
+		$section = array(
+				'header'=>'admin/header',
+				'sidebar'=>'admin/sidebar',
+				'body'=>'admin/admin_member',
+				'footer'=>'admin/footer'
+		) ;
+		
+		$str= $this->admin_tmpl->parse($section,$data);
+		
+		echo $str ;
+			
 	}
 
 
@@ -565,11 +577,18 @@ class Member extends MX_Controller
 	function good_bye()
 	{
 		$id=$_GET['id'];
+		if($this->users->check_level($id) == 'admin'){
+			echo ("<script>alert('Do not unregister last admin.')</script>");			
+		}
+		else
+		{
+		
 		$this->users->delete_user($id);
+		echo ("<script>alert('Selected user is unregistered')</script>");
+		}
 
-		//echo ("<script>alert('회원을 탈퇴 시켰습니다.')</script>");
-
-		redirect('/member/admin_member/');
+		//redirect('/member/admin/member/admin_member/');
+		$this->admin_member();
 	}
 
 	function admin_set(){
@@ -586,7 +605,7 @@ class Member extends MX_Controller
 
 	//admin과 user를 구분해서 페이지를 이동
 	function admin_or_user(){
-		if($this->users->check_level($this->tank_auth->get_username())){
+		if($this->users->check_level($this->tank_auth->get_user_id())){
 			redirect('/member/admin/');
 		} else { 
 			redirect('/member/main_page/');
@@ -802,8 +821,12 @@ class Member extends MX_Controller
 
 					unset($data['password']); // Clear password (just for any case)
 
-					$this->_show_message($this->lang->line('auth_message_invited_completed'));
-
+					
+				
+					//$this->_show_message($this->lang->line('auth_message_invited_completed'));
+					
+					
+					
 				} else {
 					if ($this->config->item('email_account_details', 'tank_auth')) {	// send "welcome" email
 
@@ -833,7 +856,18 @@ class Member extends MX_Controller
 		$data['use_recaptcha'] = $use_recaptcha;
 
 
-		$this->load->view('member/invite_form',$data);
+		$this->load->library('admin_tmpl') ;
+		
+		$section = array(
+				'header'=>'admin/header',
+				'sidebar'=>'admin/sidebar',
+				'body'=>'admin/invite_form',
+				'footer'=>'admin/footer'
+		) ;
+		
+		$str= $this->admin_tmpl->parse($section,$data);
+		
+		echo $str ;
 
 	}
 
@@ -842,9 +876,7 @@ class Member extends MX_Controller
 
 
 	function admin(){
-
-		$this->load->view('member/admin');
-
+	$this->load->view('member/admin');
 	}
 
 
