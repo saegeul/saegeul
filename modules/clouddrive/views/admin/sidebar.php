@@ -7,7 +7,7 @@ $oauth_verifier =  $this->session->userdata('session_kt_ucloud_oauth_verifier');
 <div class="span3 bs-docs-sidebar">
 	<ul class="nav nav-list bs-docs-sidenav affix-top">
 		<li><a href="<?=base_url()?>clouddrive/admin/clouddrive/checkOauth"><i
-				class="icon-chevron-right"></i>인증 내영 확인</a> 
+				class="icon-chevron-right"></i>인증 내역 확인</a> 
 <?php 
 	if($oauth_token != null && $oauth_token != ""){
 ?>
