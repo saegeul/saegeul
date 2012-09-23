@@ -87,8 +87,6 @@ class Clouddrive extends MX_Controller {
 	public function checkOauth(){
 		$this->load->library('session');
 
-		$session_temp = $this->session->all_userdata();
-
 		$data = array();
 		// check access token
 		$data['oauth_token'] =  $this->session->userdata('session_oauth_token');

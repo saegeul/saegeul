@@ -267,7 +267,14 @@ class Filebox extends MX_Controller {
 			$folder = date ('Ymd', strtotime ($value->reg_date));
 			$delete_img_url = 'filebox/files/img/' . $folder . '/' .$file;
 			$delete_file_url = 'filebox/files/file/' . $folder . '/' .$file;
-			$delete_img_thumb_url = 'filebox/files/img/' . $folder . '/thumbs/' .$file;
+			// thumbnail
+			$exts = explode(".",$file) ;
+			$file_thumb_name = $exts[0];
+			$file_thumb_type = $exts[1];
+			
+			// thumbnail url
+			$delete_img_thumb_url = 'filebox/files/img/' . $folder . '/' . 'thumbs/' . $file_thumb_name . "_110*90" . "." .$file_thumb_type;
+			
 			if(is_file($delete_img_url) && is_file($delete_img_thumb_url)){
 				if(unlink($delete_img_url) && unlink($delete_img_thumb_url)){
 					$success = $this->filebox->delete_entry($value->file_srl);
