@@ -59,9 +59,9 @@ class Filebox extends MX_Controller {
 				break;
 			case 'HEAD':
 
-			case 'GET': // get files
-				$this->get();
-				break;
+// 			case 'GET': // get files
+// 				$this->get();
+// 				break;
 			case 'POST': // upload files
 				if (isset($_REQUEST['_method']) && $_REQUEST['_method'] === 'DELETE') {
 					$this->delete();
