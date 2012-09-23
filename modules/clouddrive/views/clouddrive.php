@@ -8,12 +8,12 @@
 <?echo common_css_asset('bootstrap/css/bootstrap-responsive.css')?>
 <?echo common_css_asset('bootstrap/css/bootstrap.css')?>
 <?echo common_css_asset('jquery/css/smoothness/jquery-ui-1.8.22.custom.css')?>
-<?echo css_asset('ucloud','jquery.waitingpopup-min.css')?>
-<?echo css_asset('ucloud','style.css')?>
+<?echo css_asset('clouddrive','jquery.waitingpopup-min.css')?>
+<?echo css_asset('clouddrive','style.css')?>
 <?echo common_js_asset('jquery/js/jquery-1.7.2.min.js')?>
 <?echo common_js_asset('jquery/js/jquery-ui-1.8.22.custom.min.js')?>
-<?echo js_asset('ucloud','jquery.waitingpopup-min.js')?>
-<?echo js_asset('ucloud','jquery.auth-ajax.js')?>
+<?echo js_asset('clouddrive','jquery.waitingpopup-min.js')?>
+<?echo js_asset('clouddrive','jquery.auth-ajax.js')?>
 </head>
 <body>
 	<div id="container" style="margin-top:-30px;">

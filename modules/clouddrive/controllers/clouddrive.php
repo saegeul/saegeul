@@ -1,5 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed') ; 
-class Ucloud extends MX_Controller {
+class Clouddrive extends MX_Controller {
 
 	// DB isert user information
 	protected $username;
@@ -382,9 +382,10 @@ class Ucloud extends MX_Controller {
 			$response = $this->oauth->api_call('createfiletoken',$request_header,$request_body,'POST') ;
 
 			$temp = json_decode($response);
-			$upload_file_url = $temp->redirect_url . "?api_token=" . $api_token . "&file_token=" . $temp->file_token;
-			$download_file = file_get_contents($upload_file_url); // Read the file's contents
-			if($download_file){
+			
+			if(isset($temp->redirect_url)){
+				$upload_file_url = $temp->redirect_url . "?api_token=" . $api_token . "&file_token=" . $temp->file_token;
+				$download_file = file_get_contents($upload_file_url); // Read the file's contents
 				$file_name = $decodeData_name[$i];
 				file_put_contents("filebox/temp/".$file_name, $download_file);
 				$file_url = "filebox/temp/".$file_name;
@@ -411,8 +412,13 @@ class Ucloud extends MX_Controller {
 						// move
 						rename($file_url, $dest);
 							
+						$exts = explode(".",$source_file_name) ;
+						$file_thumb_name = $exts[0];
+						$file_thumb_type = $exts[1];
+
 						// thumbnail create
-						$config['new_image'] = $save_thumb_dir . $source_file_name;
+						$config['new_image'] = $save_thumb_dir . $file_thumb_name . "_110*90" . "." .$file_thumb_type;
+
 						$config['image_library'] = 'gd2';
 						$config['source_image'] = $dest;
 						$config['create_thumb'] = FALSE;
@@ -466,14 +472,14 @@ class Ucloud extends MX_Controller {
 		}
 		echo json_encode($success);
 	}
-	
+
 	public function createFolder(){
 		$api_key = '38629799a8e9388c6ce742ed71fb6233' ;
 		$secret_key = '29b30a42991c73e76032c5f20b4b7858' ;
 		$callback_url = 'http://localhost:8888';
 		$this->load->helper('url') ;
 		$this->load->model('filebox/filebox_model', 'filebox');
-	
+
 		$this->load->library('oauth',array(
 				'api_key'=>$api_key,
 				'secret_key'=>$secret_key,
@@ -482,36 +488,36 @@ class Ucloud extends MX_Controller {
 				'provider'=>'Ucloud',
 				'oauth_version'=>'1.0'
 		)) ;
-	
+
 		$folder_id = $this->input->get_post('upload_folder') ;
 		$folder_name = $this->input->get_post('addFolderName') ;
-		
+
 		$params = array();
 		$params['oauth_token'] = $this->input->get_post('oauth_token') ;
 		$params['oauth_token_secret'] = $this->oauth->token('oauth_token_secret');
 		$params['oauth_verifier'] = $this->input->get_post('oauth_verifier') ;
-	
+
 		$request_header['oauth_token'] = $this->oauth->token('oauth_token') ;
 		$request_header['oauth_verifier'] =  $params['oauth_verifier'] ;
 		$request_header['oauth_token_secret'] = $this->oauth->token('oauth_token_secret') ;
-	
+
 		$request_header = array() ;
-	
+
 		$request_header['oauth_token'] = $this->oauth->token('oauth_token') ;
 		$request_header['oauth_verifier'] =  $params['oauth_verifier'] ;
 		$request_header['oauth_token_secret'] = $this->oauth->token('oauth_token_secret') ;
-	
+
 		$provider = $this->oauth->getProvider() ;
 		$consumer = $this->oauth->getConsumer() ;
-	
+
 		$api_token = $provider->getAPIToken($consumer->get('api_key'),$consumer->get('secret_key')) ;
-	
+
 		$request_body = array('api_token'=>$api_token,'folder_id'=>$folder_id,'folder_name'=>$folder_name) ;
 		$response = $this->oauth->api_call('createfolder',$request_header,$request_body,'POST') ;
 
 		$success = $response;
 		echo json_encode($success);
-		
+
 	}
 }
 

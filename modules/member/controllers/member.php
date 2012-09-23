@@ -529,6 +529,7 @@ class Member extends MX_Controller
 		$act_url = $base_url . "member/admin_member";
 		$page_per_block = 5; // 페이징 이동 개수 ( 1 .. 5)
 			
+		
 		$data = "";
 
 		if($page < 1){
@@ -552,7 +553,8 @@ class Member extends MX_Controller
 		$data['result']=$this->users->select_entry($start_idx, $page_view, $data);
 		$data['total_record'] = count($this->users->total_entry_count($data));
 		$data['total_page'] = ceil($data['total_record'] / $page_view); 
-
+		$data['cur_admin'] = $this->tank_auth->get_user_id();
+		
 		// 폼 - 정의
 		$data['base_url'] = $base_url;
 		$data['act_url'] = $act_url;
@@ -565,11 +567,23 @@ class Member extends MX_Controller
 	function good_bye()
 	{
 		$id=$_GET['id'];
-		$this->users->delete_user($id);
+		if($this->users->check_level($id) != 'admin'){
+			
+			//$this->users->delete_user($id);
+			//echo ("<script>alert('Selected user is unregistered')</script>");
+			
+		}
+		else
+		{
+			if($this->users->min_admin($id)){
+				
+			}
+					
+		
+		}
 
-		//echo ("<script>alert('회원을 탈퇴 시켰습니다.')</script>");
-
-		redirect('/member/admin_member/');
+		//redirect('/member/admin/member/admin_member/');
+		$this->admin_member();
 	}
 
 	function admin_set(){

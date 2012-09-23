@@ -227,7 +227,13 @@ if($key != "" && $keyword != ""){
 					$filePath = $img_fold_url . "/" . $row->source_file_name;
 					$folder_url = $img_fold_url;
 				}
-				$thumbnailPath = $img_fold_url . "/thumbs/" . $row->source_file_name;
+				
+				
+				$exts = explode(".",$source_file_name) ;
+				$file_thumb_name = $exts[0];
+				$file_thumb_type = $exts[1];				
+
+				$thumbnailPath = $img_fold_url . "/thumbs/" . $file_thumb_name . "_110*90" . "." .$file_thumb_type;
 				if(($fileType != "image/jpg") && ($fileType != "image/jpeg") && ($fileType != "image/gif") && ($fileType != "image/png"))
 					$thumbnailPath = "/saegeul/modules/clouddrive/views/assets/img/no_image.png";
 				?>

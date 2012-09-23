@@ -17,7 +17,7 @@
 		<div class="group" align="center">
 			<h2>Drag and DropFile Upload</h2>
 		</div>
-		<div class="droparea" >
+		<div class="droparea">
 			<p class="dropfiletext">Drop files here</p>
 		</div>
 		<br>
@@ -62,6 +62,15 @@
 		</div>
 		<div class="modal-body">
 			<div class="modal-image"></div>
+		</div>
+		<div class="modal-footer">
+			<a class="btn btn-success modal-play modal-slideshow"
+				data-slideshow="5000"> <i class="icon-play icon-white"></i> <span>Slideshow</span>
+			</a> <a class="btn btn-info modal-prev"> <i
+				class="icon-arrow-left icon-white"></i> <span>Previous</span>
+			</a> <a class="btn btn-primary modal-next"> <span>Next</span> <i
+				class="icon-arrow-right icon-white"></i>
+			</a>
 		</div>
 	</div>
 	<script id="template-upload" type="text/x-tmpl">

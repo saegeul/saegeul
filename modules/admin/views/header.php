@@ -27,13 +27,13 @@
                         <a href="<?=base_url()?>index.php/admin/dashboard">WEB Wizard</a>
                     </li> 
                     <li <?php if($this->uri->segment(2)=='webzine'):?> class="active" <?php endif;?>> 
-                        <a href="<?=base_url()?>index.php/admin/document/writeform">Member </a>
+                        <a href="<?=base_url()?>member/admin/member/admin_member">Member </a>
                     </li>
                     <li <?php if($this->uri->segment(2)=='webzine'):?> class="active" <?php endif;?>> 
                         <a href="<?=base_url()?>document/admin/document/document_list">Document</a>
                     </li> 
                     <li <?php if($this->uri->segment(2)=='webzine'):?> class="active" <?php endif;?>> 
-                        <a href="<?=base_url()?>cloud_drive/admin/cloud_drive">Cloud Drive</a>
+                        <a href="<?=base_url()?>clouddrive/admin/clouddrive/checkOauth">Cloud Drive</a>
                     </li> 
                     <li <?php if($this->uri->segment(2)=='webzine'):?> class="active" <?php endif;?>> 
                         <a href="<?=base_url()?>index.php/admin/document/writeform">Page</a>
