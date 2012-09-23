@@ -118,6 +118,8 @@ class Clouddrive extends MX_Controller {
 	}
 
 	public function getFile(){
+		$this->load->helper('url') ;
+		
 		$this->load->library('oauth',array(
 				'api_key'=>$this->api_key,
 				'secret_key'=>$this->secret_key,
