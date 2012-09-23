@@ -149,6 +149,6 @@
 	<?echo js_asset('filebox','jquery.fileupload-ui.js') ?>
 	<?echo js_asset('filebox','locale.js') ?>
 	<?echo js_asset('filebox','main.js') ?>
-	<!--[if gte IE 8]><?echo js_asset('js','cors/jquery.xdr-transport.js') ?><![endif]-->
+	<!--[if gte IE 8]><?echo js_asset('filebox','cors/jquery.xdr-transport.js') ?><![endif]-->
 </body>
 </html>
