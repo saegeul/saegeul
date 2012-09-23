@@ -11,8 +11,11 @@ $this->load->helper('asset');
 <?echo js_asset('document','doc.remocon.youtube.js')?>
 <?echo js_asset('document','doc.remocon.image.js')?>
 <?echo js_asset('document','doc.remocon.filebox.js')?> 
+<?echo js_asset('document','doc.remocon.save.js')?> 
+<?echo js_asset('document','doc.remocon.preview.js')?> 
 <?echo js_asset('document','doc.element.textarea.js')?>
 <?echo js_asset('document','doc.element.image.js')?>
+<?echo js_asset('document','doc.element.preview.js')?>
 
 <div class="container-fluid">
     <div class="row-fluid"> 
@@ -44,7 +47,9 @@ $(function(){
         DOC.remocon.textarea , 
         DOC.remocon.youtube,
         DOC.remocon.image ,
-        DOC.remocon.filebox
+        DOC.remocon.filebox ,
+        DOC.remocon.preview ,
+        DOC.remocon.save
     ]); 
 
     DOC.remocon_panel.render() ; 
