@@ -6,7 +6,7 @@ $(document).ready(function () {
 	
 	$.ajax({
 	       type: "GET",
-	       url: "/saegeul/ucloud/getFolderData",
+	       url: "/saegeul/clouddrive/getFolderData",
 	       contentType: "application/json; charset=utf-8",
 	       dataType: "json",
 	       data: "",
@@ -32,13 +32,13 @@ $(document).ready(function () {
 						center_markup += "<tr>"
 							+ "<td><input type='checkbox' class='chcktbl' /></td>";
 						if(folders[i].folder_type == "syncFolder" && folders[i].folder_name == "휴지통")
-							center_markup += "<td><img alt='휴지통' src='/saegeul/modules/ucloud/views/assets/img/delete_forlder.png'></td>";
+							center_markup += "<td><img alt='휴지통' src='/saegeul/modules/clouddrive/views/assets/img/delete_forlder.png'></td>";
 						else if(folders[i].folder_type == "syncFolder" && folders[i].folder_name == "웹 폴더")
-							center_markup += "<td><img alt='웹 폴더' src='/saegeul/modules/ucloud/views/assets/img/web_forlder.png'></td>";
+							center_markup += "<td><img alt='웹 폴더' src='/saegeul/modules/clouddrive/views/assets/img/web_forlder.png'></td>";
 						else if(folders[i].folder_type == "syncFolder" && folders[i].folder_name == "매직 폴더")
-							center_markup += "<td><img alt='매직 폴더' src='/saegeul/modules/ucloud/views/assets/img/magic_forlder.png'></td>";
+							center_markup += "<td><img alt='매직 폴더' src='/saegeul/modules/clouddrive/views/assets/img/magic_forlder.png'></td>";
 						else if(folders[i].folder_type == "syncFolder" && folders[i].folder_name == "모바일 포토")
-							center_markup += "<td><img alt='모바일 포토' src='/saegeul/modules/ucloud/views/assets/img/mobile_photo_folder.png'></td>";
+							center_markup += "<td><img alt='모바일 포토' src='/saegeul/modules/clouddrive/views/assets/img/mobile_photo_folder.png'></td>";
 
 						center_markup += "<td class='clickFolder' id='" + folders[i].folder_id +"'><a href='javascript:void(0)' style='color: #333333;'>" + folders[i].folder_name + "</a></td>"
 									+ "<td></td>"
@@ -70,8 +70,8 @@ $(document).ready(function () {
 	       success: function(data){
 				json = eval(data);
 				
-				var markup = "&nbsp;all&nbsp;<input type='checkbox' id='all_img_check' style='margin-top:-4px'/>&nbsp;<a href='javascript:void(0)' id='moveUcloud' style='color: #333333;'><i class='icon-upload'></i>MoveUcloud</a><br><br><ul class='thumbnails'>";
-				var page_per_block = 5;
+				var markup = "<div style='margin-left:28px;'>&nbsp;all&nbsp;<input type='checkbox' id='all_img_check' style='margin-top:-4px'/>&nbsp;<a href='javascript:void(0)' id='moveUcloud' style='color: #333333;'><i class='icon-upload'></i>MoveUcloud</a></div><br><ul class='thumbnails' style='margin-left: 0px;'>";
+				var page_per_block = 3;
 				var prev_page = parseInt(json.page) - 1;
 				var next_page = parseInt(json.page) + 1;
 				var curt_page = parseInt(json.page);
@@ -91,7 +91,7 @@ $(document).ready(function () {
 	  	   			+ "</div>";
 	     		});
 	    	   markup += "</ul>"
-						+ "<div class='pagination' style='text-align: center;'>"
+						+ "<div class='pagination' align='center' style='margin-left:-10px;'>"
 						+ "<ul>"
 						+ "<li class='pageBtn'><a id='1' style='color: #333333;'>&laquo;</a></li>";
 				if(curt_page > 1){
@@ -129,7 +129,7 @@ $(document).ready(function () {
 				+ "</ul>"
 				+ "</div>";
 				$("#files").html(markup);
-				$("#files").hide();
+//				$("#files").hide();
 				
 			}
 	});
@@ -143,7 +143,7 @@ $(".clickFolder").live('click',function(e) {
 	$("input[id=curt_folder]").val(select_folder).change();
 	$.ajax({
 	       type: "GET",
-	       url: "/saegeul/ucloud/getFolderData",
+	       url: "/saegeul/clouddrive/getFolderData",
 	       contentType: "application/json; charset=utf-8",
 	       dataType: "json",
 	       data: "folder_id=" + select_folder,
@@ -167,7 +167,7 @@ $(".clickFolder").live('click',function(e) {
 					for(var i=0; i< folders.length; i++){
 						center_markup += "<tr>"
 							+ "<td><input type='checkbox' class='chcktbl' /></td>"
-							+ "<td><img alt='폴더' src='/saegeul/modules/ucloud/views/assets/img/folder.png'></td>"
+							+ "<td><img alt='폴더' src='/saegeul/modules/clouddrive/views/assets/img/folder.png'></td>"
 							+ "<td class='clickFolder' id='" + folders[i].folder_id +"'><a href='javascript:void(0)' style='color: #333333;'>" + folders[i].folder_name + "</a></td>"
 							+ "<td></td>"
 							+ "<td></td>"
@@ -181,7 +181,7 @@ $(".clickFolder").live('click',function(e) {
 						var temp_modify_date = files[i].modify_date.substring(0, 10);
 						center_markup += "<tr>"
 							+ "<td><input type='checkbox' class='chcktbl' /></td>"
-							+ "<td><img alt='파일' src='/saegeul/modules/ucloud/views/assets/img/file.png'></td>"
+							+ "<td><img alt='파일' src='/saegeul/modules/clouddrive/views/assets/img/file.png'></td>"
 							+ "<td class='downloadFile' id='" + files[i].file_id +"'><a href='javascript:void(0)' style='color: #333333;'>" + temp_name + "</a></td>"
 							+ "<td>" + temp_modify_date + "</td>"
 							+ "<td>" + files[i].file_size + "</td>"
@@ -209,8 +209,8 @@ $(".pageBtn").live('click',function() {
 	       success: function(data){
 				json = eval(data);
 				
-				var markup = "&nbsp;all&nbsp;<input type='checkbox' id='all_img_check'/>&nbsp;<a href='javascript:void(0)' id='moveUcloud' style='color: #333333;'><i class='icon-upload'></i>MoveUcloud</a><br><br><ul class='thumbnails'>";
-				var page_per_block = 5;
+				var markup = "<div style='margin-left:28px;'>&nbsp;all&nbsp;<input type='checkbox' id='all_img_check' style='margin-top:-4px'/>&nbsp;<a href='javascript:void(0)' id='moveUcloud' style='color: #333333;'><i class='icon-upload'></i>MoveUcloud</a></div><br><ul class='thumbnails' style='margin-left: 0px;'>";
+				var page_per_block = 3;
 				var prev_page = parseInt(json.page) - 1;
 				var next_page = parseInt(json.page) + 1;
 				var curt_page = parseInt(json.page);
@@ -230,7 +230,7 @@ $(".pageBtn").live('click',function() {
 	  	   			+ "</div>";
 	     		});
 	    	   markup += "</ul>"
-						+ "<div class='pagination' style='text-align: center;'>"
+						+ "<div class='pagination' align='center' style='margin-left:-10px;'>"
 						+ "<ul>"
 						+ "<li class='pageBtn'><a id='1' style='color: #333333;'>&laquo;</a></li>";
 				if(curt_page > 1){
@@ -294,7 +294,7 @@ $('.crumb').live('click',function(e) {
 		select_folder = "";
 	$.ajax({
 	       type: "GET",
-	       url: "/saegeul/ucloud/getFolderData",
+	       url: "/saegeul/clouddrive/getFolderData",
 	       contentType: "application/json; charset=utf-8",
 	       dataType: "json",
 	       data: "folder_id=" + select_folder,
@@ -319,15 +319,15 @@ $('.crumb').live('click',function(e) {
 						center_markup += "<tr>"
 							+ "<td><input type='checkbox' class='chcktbl' /></td>";
 							if(folders[i].folder_type == "syncFolder" && folders[i].folder_name == "휴지통")
-								center_markup += "<td><img alt='휴지통' src='/saegeul/modules/ucloud/views/assets/img/delete_forlder.png'></td>";
+								center_markup += "<td><img alt='휴지통' src='/saegeul/modules/clouddrive/views/assets/img/delete_forlder.png'></td>";
 							else if(folders[i].folder_type == "syncFolder" && folders[i].folder_name == "웹 폴더")
-								center_markup += "<td><img alt='웹 폴더' src='/saegeul/modules/ucloud/views/assets/img/web_forlder.png'></td>";
+								center_markup += "<td><img alt='웹 폴더' src='/saegeul/modules/clouddrive/views/assets/img/web_forlder.png'></td>";
 							else if(folders[i].folder_type == "syncFolder" && folders[i].folder_name == "매직 폴더")
-								center_markup += "<td><img alt='매직 폴더' src='/saegeul/modules/ucloud/views/assets/img/magic_forlder.png'></td>";
+								center_markup += "<td><img alt='매직 폴더' src='/saegeul/modules/clouddrive/views/assets/img/magic_forlder.png'></td>";
 							else if(folders[i].folder_type == "syncFolder" && folders[i].folder_name == "모바일 포토")
-								center_markup += "<td><img alt='모바일 포토' src='/saegeul/modules/ucloud/views/assets/img/mobile_photo_folder.png'></td>";
+								center_markup += "<td><img alt='모바일 포토' src='/saegeul/modules/clouddrive/views/assets/img/mobile_photo_folder.png'></td>";
 							else
-								center_markup += "<td><img alt='폴더' src='/saegeul/modules/ucloud/views/assets/img/folder.png'></td>";
+								center_markup += "<td><img alt='폴더' src='/saegeul/modules/clouddrive/views/assets/img/folder.png'></td>";
 
 							center_markup += "<td class='clickFolder' id='" + folders[i].folder_id +"'><a href='javascript:void(0)' style='color: #333333;'>" + folders[i].folder_name + "</a></td>"
 							+ "<td></td>"
@@ -343,7 +343,7 @@ $('.crumb').live('click',function(e) {
 							var temp_modify_date = files[i].modify_date.substring(0, 10);
 							center_markup += "<tr>"
 								+ "<td><input type='checkbox' class='chcktbl' /></td>"
-								+ "<td><img alt='파일' src='/saegeul/modules/ucloud/views/assets/img/file.png'></td>"
+								+ "<td><img alt='파일' src='/saegeul/modules/clouddrive/views/assets/img/file.png'></td>"
 								+ "<td class='downloadFile' id='" + files[i].file_id +"'><a href='javascript:void(0)'  style='color: #333333;'>" + temp_name + "</a></td>"
 								+ "<td>" + temp_modify_date + "</td>"
 								+ "<td>" + files[i].file_size + "</td>"
@@ -377,7 +377,7 @@ $('#deletFile').live('click',function() {
 	var str = JSON.stringify(arr);
 	$.ajax({
 	       type: "GET",
-	       url: "/saegeul/ucloud/deleteFile",
+	       url: "/saegeul/clouddrive/deleteFile",
 	       contentType: "application/json; charset=utf-8",
 	       dataType: "json",
 	       data: "data=" + str, 
@@ -405,7 +405,7 @@ $('#moveFilebox').live('click',function() {
 	var data_name = JSON.stringify(arr_name);
 	$.ajax({
 		type: "GET",
-	    url: "/saegeul/ucloud/moveFilebox",
+	    url: "/saegeul/clouddrive/moveFilebox",
 	    contentType: "application/json; charset=utf-8",
 	    dataType: "json",
 	    data: "data_id=" + data_id + "&data_name=" + data_name +"&upload_folder=" + upload_folder, 
@@ -437,7 +437,7 @@ $('#moveUcloud').live('click',function() {
 		var str = JSON.stringify(arr);
 		$.ajax({
 		       type: "GET",
-		       url: "/saegeul/ucloud/moveUcloud",
+		       url: "/saegeul/clouddrive/moveUcloud",
 		       contentType: "application/json; charset=utf-8",
 		       dataType: "json",
 		       data: "data=" + str + "&upload_folder=" + upload_folder, 
@@ -465,18 +465,18 @@ $('.downloadFile').live('click',function() {
 	var file_id = $(this).closest("td").attr("id");
 	var file_name = $(this).closest("td").text();
 	
-	document.location.href = "/saegeul/ucloud/getFile?file_id=" + file_id + "&file_name=" + file_name;
+	document.location.href = "/saegeul/clouddrive/getFile?file_id=" + file_id + "&file_name=" + file_name;
 	setTimeout("$().waitingpopup('close')", 3000); 
 });
 
-$('.getList').live('click',function() {
-	$("#files").slideToggle();
-});
+//$('.getList').live('click',function() {
+//	$("#files").slideToggle();
+//});
 
 $('#createFolder').live('click',function() {
 	var addFolder = "<tr>"
 		+ "<td><input type='checkbox' class='chcktbl' /></td>"
-		+ "<td><img alt='폴더' src='/saegeul/modules/ucloud/views/assets/img/folder.png'></td>"
+		+ "<td><img alt='폴더' src='/saegeul/modules/clouddrive/views/assets/img/folder.png'></td>"
 		+ "<td colspan='3'>"
 			+ "<div>"
 				+ "<form class='form-inline'>"
@@ -497,7 +497,7 @@ $('.createAddFolderBtn').live('click',function(e) {
 	}else{
 		$.ajax({
 		       type: "GET",
-		       url: "/saegeul/ucloud/createFolder",
+		       url: "/saegeul/clouddrive/createFolder",
 		       contentType: "application/json; charset=utf-8",
 		       dataType: "json",
 		       data: "addFolderName=" + folderName + "&upload_folder=" + upload_folder, 
