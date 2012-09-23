@@ -102,6 +102,7 @@ DOC.Element.Image = function(oConfig){
             }
            // alert( $photoElement.length );
            // $photoElement.appendTo( $('#document_body') ) ;
+            $('#contentArea').parents('.well').remove() ; 
         });
     }; 
 
