@@ -9,9 +9,10 @@ $this->load->helper('asset');
 <?echo js_asset('document','doc.remocon.js')?>
 <?echo js_asset('document','doc.paper.js')?>
 <?echo js_asset('document','doc.listpanel.js')?>
-<?echo js_asset('document','doc.element.textarea.js')?>
 <?echo js_asset('document','doc.element.html.js')?>
 <?echo js_asset('document','doc.element.twitter.js')?>
+<?echo js_asset('document','doc.element.textarea.js')?>
+<?echo js_asset('document','doc.element.image.js')?>
 
 <div class="container-fluid">
     <div class="row-fluid"> 
@@ -44,6 +45,9 @@ $(function(){
             },{
                 btn_tmpl : '<button class="btn"><i class="icon icon-book"></i> HTML</button>', 
                 Element : DOC.Element.HTML 
+            },{
+                btn_tmpl : '<button class="btn"><i class="icon icon-book"></i> Image</button>', 
+                Element : DOC.Element.Image 
             },{
                 btn_tmpl : '<button class="btn"><i class="icon icon-book"></i> Twitter</button>', 
                 Element : DOC.Element.Twitter 
