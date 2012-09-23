@@ -30,8 +30,8 @@ function really_ban(ban_id){
 
 
 <?php
-/* 
 // 페이징 만들기
+/*
 $page_per_block = 5;
 $prev_page = $page - 1;
 $next_page = $page + 1;
@@ -60,7 +60,7 @@ if($key != "" && $keyword != ""){
                                 <option value="username"
                                 <?// if($key == "username") echo "selected"; ?>>회원이름</option>
                                 <option value="id" <?// if($key == "id") echo "selected"; ?>>아이디</option>
-                                <option value="email" <?// if($key == "email") echo "selected"; ?>>이메일</option>
+                                <option value="email" <? //if($key == "email") echo "selected"; ?>>이메일</option>
                         </select>
                         <div class="input-append">
                                 <input type="text" name="keyword" class="span2 search-query"
@@ -90,21 +90,22 @@ if($key != "" && $keyword != ""){
                             <td class="span4" style="text-align: center;"><h4>제목</h4></td>
                             <td class="span1" style="text-align: center;"><h4>글쓴이</h4></td>
                             <td class="span1" style="text-align: center;"><h4>등록일</h4></td>
-                            <td class="span1" style="text-align: center;"><h4>추천</h4></td>
-                            <td class="span1" style="text-align: center;"><h4>조회</h4></td>
+                            <td class="span1" style="text-align: center;"><h4>조회수</h4></td>
 
                                 </tr>
                         </thead>
                         <tbody>
+<? foreach($result as $row)
+ {  ?>
                                 <tr>
-                                        <td style="text-align: center;"></td>
-                                        <td style="text-align: center;"></td>
-                                        <td style="text-align: center;"></td>
-                                        <td style="text-align: center;"></td>
-                                        <td style="text-align: center;"></td>
-                                        <td style="text-align: center;"></td>
+                                        <td style="text-align: center;"><?=$row->doc_id ?></td>
+                                        <td style="text-align: center;"><?=$row->title ?></td>
+                                        <td style="text-align: center;"><?=$row->username ?></td>
+                                        <td style="text-align: center;"><?=$row->reg_date ?></td>
+                                        <td style="text-align: center;">0</td>
                                 </tr>
-<?php 
+<? } ?>
+<? 
 /*
 
 $no=1;
@@ -179,6 +180,17 @@ foreach($result as $row)
                         <tfoot>
                                 <tr>
                                         <td colspan="7">
+
+
+
+                                        <div class="pagination" style="text-align:center;">
+                                          <ul>
+                                            <li><a href="#">Prev</a></li>
+                                            <li><a href="#">1</a></li>
+                                            <li><a href="#">Next</a></li>
+                                          </ul>
+                                        </div>
+<!--
                                                 <div class="pagination" style="text-align: center;">
                                                         <ul>
                                                                 <li><a href="<?//=$act_url?>/1">First</a></li>
@@ -216,6 +228,7 @@ if($page < $total_page){
                                                                 <li><a href="<?//=$act_url?>/<?//=$total_page?>">Last</a></li>
                                                         </ul>
                                                 </div>
+-->
                                         </td>
                                 </tr>
                         </tfoot>

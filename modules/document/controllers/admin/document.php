@@ -78,6 +78,7 @@ class Document extends MX_Controller {
 
     public function document_list(){
         $this->load->library('admin_tmpl') ; 
+        $this->load->model('Document_model','document');
 
         $section = array(
             'header'=>'admin/header',
@@ -86,7 +87,9 @@ class Document extends MX_Controller {
             'footer'=>'admin/footer'
         ) ; 
 
-        $str= $this->admin_tmpl->parse($section); 
+        $data['result'] = $this->document->getDocumentList();
+        $str= $this->admin_tmpl->parse($section,$data); 
+
 
         echo $str ;
     }

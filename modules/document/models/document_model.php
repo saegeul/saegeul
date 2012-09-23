@@ -20,16 +20,17 @@ class Document_model extends CI_Model {
 		return $query->result();
 	}
 
-    public function getDocumentList($list_num,$offset,$data){ 
+    //public function getDocumentList($list_num,$offset,$data){ 
+    public function getDocumentList(){ 
         $this->db->select('*');
-		$this->db->from('filebox');
+		$this->db->from('SG_documents');
 
-		if($data['key'] && $data['keyword'])
-		{
-			$this->db->like($data['key'], $data['keyword']);
-		}
-		$this->db->order_by("file_srl", "desc");
-		$this->db->limit($offset, $list_num);
+//		if($data['key'] && $data['keyword'])
+//		{
+//			$this->db->like($data['key'], $data['keyword']);
+//		}
+		$this->db->order_by("doc_id", "desc");
+//		$this->db->limit($offset, $list_num);
 
 		$query = $this->db->get();
 		return $query->result();
