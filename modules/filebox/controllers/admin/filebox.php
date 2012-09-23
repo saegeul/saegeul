@@ -72,8 +72,8 @@ class Filebox extends MX_Controller {
 			case 'DELETE': // delete files
 				$this->delete();
 				break;
-			default: // error
-				$this->output->set_header('HTTP/1.1 405 Method Not Allowed');
+// 			default: // error
+// 				$this->output->set_header('HTTP/1.1 405 Method Not Allowed');
 		}
 	}
 
