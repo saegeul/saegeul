@@ -5,14 +5,22 @@ class Clouddrive extends MX_Controller {
 	protected $username;
 	protected $email;
 	protected $uid;
+	protected $api_key;
+	protected $secret_key;
 
 	public function __construct() {
 		parent::__construct();
 
 		$this->load->database();
+		$this->load->library('session');
+		
 		$this->username = "root";
 		$this->email = "root@saegeul.com";
 		$this->uid = '1';
+		
+		// get session
+		$this->api_key = $this->session->userdata('session_kt_api_key');
+		$this->secret_key = $this->session->userdata('session_kt_secret_key');
 	}
 
 	public function callback(){
@@ -20,14 +28,11 @@ class Clouddrive extends MX_Controller {
 	}
 
 	public function getFolder(){
-		$api_key = '38629799a8e9388c6ce742ed71fb6233' ;
-		$secret_key = '29b30a42991c73e76032c5f20b4b7858' ;
-		$callback_url = 'http://localhost:8888';
 		$this->load->helper('url') ;
 
 		$this->load->library('oauth',array(
-				'api_key'=>$api_key,
-				'secret_key'=>$secret_key,
+				'api_key'=>$this->api_key,
+				'secret_key'=>$this->secret_key,
 				'callback_url'=>base_url().'auth/oauth/',
 				'signature_method'=>'HMAC-SHA1',
 				'provider'=>'Ucloud',
@@ -68,14 +73,11 @@ class Clouddrive extends MX_Controller {
 	}
 
 	public function getFolderData(){
-		$api_key = '38629799a8e9388c6ce742ed71fb6233' ;
-		$secret_key = '29b30a42991c73e76032c5f20b4b7858' ;
-		$callback_url = 'http://localhost:8888';
 		$this->load->helper('url') ;
 
 		$this->load->library('oauth',array(
-				'api_key'=>$api_key,
-				'secret_key'=>$secret_key,
+				'api_key'=>$this->api_key,
+				'secret_key'=>$this->secret_key,
 				'callback_url'=>base_url().'auth/oauth/',
 				'signature_method'=>'HMAC-SHA1',
 				'provider'=>'Ucloud',
@@ -116,14 +118,9 @@ class Clouddrive extends MX_Controller {
 	}
 
 	public function getFile(){
-		$api_key = '38629799a8e9388c6ce742ed71fb6233' ;
-		$secret_key = '29b30a42991c73e76032c5f20b4b7858' ;
-		$callback_url = 'http://localhost:8888';
-		$this->load->helper('url') ;
-
 		$this->load->library('oauth',array(
-				'api_key'=>$api_key,
-				'secret_key'=>$secret_key,
+				'api_key'=>$this->api_key,
+				'secret_key'=>$this->secret_key,
 				'callback_url'=>base_url().'auth/oauth/',
 				'signature_method'=>'HMAC-SHA1',
 				'provider'=>'Ucloud',
@@ -170,15 +167,12 @@ class Clouddrive extends MX_Controller {
 	}
 
 	public function moveUcloud(){
-		$api_key = '38629799a8e9388c6ce742ed71fb6233' ;
-		$secret_key = '29b30a42991c73e76032c5f20b4b7858' ;
-		$callback_url = 'http://localhost:8888';
 		$this->load->helper('url') ;
 		$this->load->model('filebox/filebox_model', 'filebox');
 
 		$this->load->library('oauth',array(
-				'api_key'=>$api_key,
-				'secret_key'=>$secret_key,
+				'api_key'=>$this->api_key,
+				'secret_key'=>$this->secret_key,
 				'callback_url'=>base_url().'auth/oauth/',
 				'signature_method'=>'HMAC-SHA1',
 				'provider'=>'Ucloud',
@@ -262,15 +256,12 @@ class Clouddrive extends MX_Controller {
 	}
 
 	public function deleteFile(){
-		$api_key = '38629799a8e9388c6ce742ed71fb6233' ;
-		$secret_key = '29b30a42991c73e76032c5f20b4b7858' ;
-		$callback_url = 'http://localhost:8888';
 		$this->load->helper('url') ;
 		$this->load->model('filebox/filebox_model', 'filebox');
 
 		$this->load->library('oauth',array(
-				'api_key'=>$api_key,
-				'secret_key'=>$secret_key,
+				'api_key'=>$this->api_key,
+				'secret_key'=>$this->secret_key,
 				'callback_url'=>base_url().'auth/oauth/',
 				'signature_method'=>'HMAC-SHA1',
 				'provider'=>'Ucloud',
@@ -319,17 +310,14 @@ class Clouddrive extends MX_Controller {
 	}
 
 	public function moveFilebox(){
-		$api_key = '38629799a8e9388c6ce742ed71fb6233' ;
-		$secret_key = '29b30a42991c73e76032c5f20b4b7858' ;
-		$callback_url = 'http://localhost:8888';
 		$this->load->helper('url') ;
 		$this->load->helper('download') ;
 		$this->load->helper('date') ;
 		$this->load->helper('security');
 
 		$this->load->library('oauth',array(
-				'api_key'=>$api_key,
-				'secret_key'=>$secret_key,
+				'api_key'=>$this->api_key,
+				'secret_key'=>$this->secret_key,
 				'callback_url'=>base_url().'auth/oauth/',
 				'signature_method'=>'HMAC-SHA1',
 				'provider'=>'Ucloud',
@@ -474,15 +462,12 @@ class Clouddrive extends MX_Controller {
 	}
 
 	public function createFolder(){
-		$api_key = '38629799a8e9388c6ce742ed71fb6233' ;
-		$secret_key = '29b30a42991c73e76032c5f20b4b7858' ;
-		$callback_url = 'http://localhost:8888';
 		$this->load->helper('url') ;
 		$this->load->model('filebox/filebox_model', 'filebox');
 
 		$this->load->library('oauth',array(
-				'api_key'=>$api_key,
-				'secret_key'=>$secret_key,
+				'api_key'=>$this->api_key,
+				'secret_key'=>$this->secret_key,
 				'callback_url'=>base_url().'auth/oauth/',
 				'signature_method'=>'HMAC-SHA1',
 				'provider'=>'Ucloud',

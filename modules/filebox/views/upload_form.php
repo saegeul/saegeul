@@ -140,7 +140,6 @@
 		src="http://blueimp.github.com/JavaScript-Load-Image/load-image.min.js"></script>
 	<script
 		src="http://blueimp.github.com/JavaScript-Canvas-to-Blob/canvas-to-blob.min.js"></script>
-	<script src="http://blueimp.github.com/cdn/js/bootstrap.min.js"></script>
 	<script
 		src="http://blueimp.github.com/Bootstrap-Image-Gallery/js/bootstrap-image-gallery.min.js"></script>
 	<?echo js_asset('filebox','jquery.iframe-transport.js') ?>
@@ -149,6 +148,6 @@
 	<?echo js_asset('filebox','jquery.fileupload-ui.js') ?>
 	<?echo js_asset('filebox','locale.js') ?>
 	<?echo js_asset('filebox','main.js') ?>
-	<!--[if gte IE 8]><?echo js_asset('js','cors/jquery.xdr-transport.js') ?><![endif]-->
+	<!--[if gte IE 8]><?echo js_asset('filebox','js/cors/jquery.xdr-transport.js') ?><![endif]-->
 </body>
 </html>

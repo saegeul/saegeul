@@ -5,66 +5,83 @@
 	rel="stylesheet"
 	href="http://blueimp.github.com/Bootstrap-Image-Gallery/css/bootstrap-image-gallery.min.css">
 <?echo css_asset('filebox','jquery.fileupload-ui.css')?>
-<div class="span9">
-	<div class="group" align="center">
-		<h2>Drag and DropFile Upload</h2>
-	</div>
-	<div class="droparea">
-		<p class="dropfiletext">Drop files here</p>
-	</div>
-	<br>
-	<form id="fileupload" action="process" method="POST"
-		enctype="multipart/form-data">
-		<div class="row fileupload-buttonbar">
-			<div class="span7">
-				<span class="btn btn-success fileinput-button"> <i
-					class="icon-plus icon-white"></i> <span>Add files...</span> <input
-					type="file" name="userfile" multiple>
-				</span>
-				<button type="submit" class="btn btn-primary start">
-					<i class="icon-upload icon-white"></i> <span>Start upload</span>
-				</button>
-				<button type="reset" class="btn btn-warning cancel">
-					<i class="icon-ban-circle icon-white"></i> <span>Cancel upload</span>
-				</button>
-				<button type="button" class="btn btn-danger delete">
-					<i class="icon-trash icon-white"></i> <span>Delete</span>
-				</button>
-				<input type="checkbox" class="toggle">
-			</div>
-			<div class="span5 fileupload-progress fade">
-				<div class="progress progress-success progress-striped active">
-					<div class="bar" style="width: 0%;"></div>
-				</div>
-				<div class="progress-extended">&nbsp;</div>
-			</div>
+<div class="container">
+	<div class="span8">
+		<div class="group" align="center">
+			<h2>Drag and DropFile Upload</h2>
 		</div>
-		<div class="fileupload-loading"></div>
-		<table class="table table-hover">
-			<tbody class="files" data-toggle="modal-gallery"
-				data-target="#modal-gallery"></tbody>
-		</table>
-	</form>
+		<div class="droparea">
+			<p class="dropfiletext">Drop files here</p>
+		</div>
+		<br>
+		<form id="fileupload" action="process" method="POST"
+			enctype="multipart/form-data">
+			<div class="row fileupload-buttonbar">
+				<div class="span7">
+					<!-- The fileinput-button span is used to style the file input field as button -->
+					<span class="btn btn-success fileinput-button"> <i
+						class="icon-plus icon-white"></i> <span>Add files...</span> <input
+						type="file" name="userfile" multiple>
+					</span>
+					<button type="submit" class="btn btn-primary start">
+						<i class="icon-upload icon-white"></i> <span>Start upload</span>
+					</button>
+					<button type="reset" class="btn btn-warning cancel">
+						<i class="icon-ban-circle icon-white"></i> <span>Cancel upload</span>
+					</button>
+					<button type="button" class="btn btn-danger delete">
+						<i class="icon-trash icon-white"></i> <span>Delete</span>
+					</button>
+					<input type="checkbox" class="toggle">
+				</div>
+				<!-- The global progress information -->
+				<div class="span5 fileupload-progress fade">
+					<!-- The global progress bar -->
+					<div class="progress progress-success progress-striped active"
+						role="progressbar" aria-valuemin="0" aria-valuemax="100">
+						<div class="bar" style="width: 0%;"></div>
+					</div>
+					<!-- The extended global progress information -->
+					<div class="progress-extended">&nbsp;</div>
+				</div>
+			</div>
+			<!-- The loading indicator is shown during file processing -->
+			<div class="fileupload-loading"></div>
+			<br>
+			<!-- The table listing the files available for upload/download -->
+			<table role="presentation" class="table table-striped">
+				<tbody class="files" data-toggle="modal-gallery"
+					data-target="#modal-gallery"></tbody>
+			</table>
+		</form>
+	</div>
 </div>
-<div id="modal-gallery" class="modal modal-gallery hide fade"
-	data-filter=":odd">
-	<div class="modal-header">
-		<a class="close" data-dismiss="modal">&times;</a>
-		<h3 class="modal-title"></h3>
-	</div>
-	<div class="modal-body">
-		<div class="modal-image"></div>
-	</div>
-	<div class="modal-footer">
-		<a class="btn btn-success modal-play modal-slideshow"
-			data-slideshow="5000"> <i class="icon-play icon-white"></i> <span>Slideshow</span>
-		</a> <a class="btn btn-info modal-prev"> <i
-			class="icon-arrow-left icon-white"></i> <span>Previous</span>
-		</a> <a class="btn btn-primary modal-next"> <span>Next</span> <i
-			class="icon-arrow-right icon-white"></i>
-		</a>
-	</div>
+<div id="modal-gallery" class="modal modal-gallery hide fade" data-filter=":odd">
+    <div class="modal-header">
+        <a class="close" data-dismiss="modal">&times;</a>
+        <h3 class="modal-title"></h3>
+    </div>
+    <div class="modal-body"><div class="modal-image"></div></div>
+    <div class="modal-footer">
+        <a class="btn modal-download" target="_blank">
+            <i class="icon-download"></i>
+            <span>Download</span>
+        </a>
+        <a class="btn btn-success modal-play modal-slideshow" data-slideshow="5000">
+            <i class="icon-play icon-white"></i>
+            <span>Slideshow</span>
+        </a>
+        <a class="btn btn-info modal-prev">
+            <i class="icon-arrow-left icon-white"></i>
+            <span>Previous</span>
+        </a>
+        <a class="btn btn-primary modal-next">
+            <span>Next</span>
+            <i class="icon-arrow-right icon-white"></i>
+        </a>
+    </div>
 </div>
+<!-- The template to display files available for upload -->
 <script id="template-upload" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}
     <tr class="template-upload fade">
@@ -95,6 +112,7 @@
     </tr>
 {% } %}
 </script>
+<!-- The template to display files available for download -->
 <script id="template-download" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}
     <tr class="template-download fade">
@@ -123,8 +141,6 @@
     </tr>
 {% } %}
 </script>
-<script
-	src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
 <?echo js_asset('filebox','js/vendor/jquery.ui.widget.js') ?>
 <script
 	src="http://blueimp.github.com/JavaScript-Templates/tmpl.min.js"></script>
@@ -133,8 +149,6 @@
 <script
 	src="http://blueimp.github.com/JavaScript-Canvas-to-Blob/canvas-to-blob.min.js"></script>
 <script
-	src="http://blueimp.github.com/cdn/js/bootstrap.min.js"></script>
-<script
 	src="http://blueimp.github.com/Bootstrap-Image-Gallery/js/bootstrap-image-gallery.min.js"></script>
 <?echo js_asset('filebox','jquery.iframe-transport.js') ?>
 <?echo js_asset('filebox','jquery.fileupload.js') ?>
@@ -142,4 +156,4 @@
 <?echo js_asset('filebox','jquery.fileupload-ui.js') ?>
 <?echo js_asset('filebox','locale.js') ?>
 <?echo js_asset('filebox','main.js') ?>
-<!--[if gte IE 8]><?echo js_asset('js','cors/jquery.xdr-transport.js') ?><![endif]-->
+<!--[if gte IE 8]><?echo js_asset('filebox','js/cors/jquery.xdr-transport.js') ?><![endif]-->

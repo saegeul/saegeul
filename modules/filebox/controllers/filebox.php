@@ -47,9 +47,9 @@ class Filebox extends MX_Controller {
 				break;
 			case 'HEAD':
 
-			case 'GET': // get files
-				$this->get();
-				break;
+// 			case 'GET': // get files
+// 				$this->get();
+// 				break;
 			case 'POST': // upload files
 				if (isset($_REQUEST['_method']) && $_REQUEST['_method'] === 'DELETE') {
 					$this->delete();
@@ -60,8 +60,8 @@ class Filebox extends MX_Controller {
 			case 'DELETE': // delete files
 				$this->delete();
 				break;
-			default: // error
-				$this->output->set_header('HTTP/1.1 405 Method Not Allowed');
+// 			default: // error
+// 				$this->output->set_header('HTTP/1.1 405 Method Not Allowed');
 		}
 	}
 
@@ -102,7 +102,7 @@ class Filebox extends MX_Controller {
 			$save_dir = "";
 			$save_thumb_dir = "";
 				
-			if($data['file_type'] == "image/png" || $data['file_type'] == "image/jpg" || $data['file_type'] == "image/jpeg" || $data['file_type'] == "image/gif"){
+			if($data['file_type'] == "image/png" || $data['file_type'] == "image/PNG" || $data['file_type'] == "image/jpg" || $data['file_type'] == "image/JPG" || $data['file_type'] == "image/jpeg" || $data['file_type'] == "image/JPEG" || $data['file_type'] == "image/gif" || $data['file_type'] == "image/GIF"){
 				// img directory
 				$save_dir = "filebox/files/img/".date("Ymd");
 				// img thumb directory
