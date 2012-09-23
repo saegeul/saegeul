@@ -31,7 +31,7 @@ DOC.Element.Textarea = function(oConfig){
     }; 
 
     that.html = function(){
-        return  that.getRawValue(); 
+        return  '<div>'+that.getRawValue()+'</div>'; 
     }; 
 
     that.is_null = function(){

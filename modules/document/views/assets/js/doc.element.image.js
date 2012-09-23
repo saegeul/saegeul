@@ -3,6 +3,7 @@ DOC.Element = DOC.Element||{} ;
 
 DOC.Element.Image = function(oConfig){
     var data = {}, 
+        uid = DOC.Util.uid()
         publisher = null, 
         is_editing = false , 
         $dom = null;
@@ -10,10 +11,13 @@ DOC.Element.Image = function(oConfig){
     var that = {} ; 
 
 
+    that.uid = function() {
+        return uid;
+    };
     /* Element 객체에 필수적으로 필요한 함수들 */ 
 
     that.html = function(){
-        return  that.getRawValue(); 
+        return  "<div>"+that.save()+"</div>"; 
     }; 
 
     that.is_empty = function(){ //data is null ?
@@ -91,12 +95,13 @@ DOC.Element.Image = function(oConfig){
         $photoArea.find('.append_btn').click(function(){
             var $photo_record = $("#selectArea img"); 
           //  var $photo_div = $('<div style="background-color:red"></div>');
+            var $photo_wrap = $('<div id="'+uid+'"class="photo_wrap" style="text-align:center;margin-top:10px;"></div>').appendTo( $('#document_body') );
             var $photo = "";
             for( var i = 0 ; i < $photo_record.length ; i++ )
             {
          //       $photo_record.appendTo( $('#document_body') );
                 $photo = $("#selectArea img:eq(0)").css("width","auto").css("height","auto");
-                $('<div style="text-align:center;margin-top:10px;"></div>').appendTo( $('#document_body') ).append($photo);
+                $photo_wrap.append($photo);
 
 
             }
@@ -113,11 +118,11 @@ DOC.Element.Image = function(oConfig){
         }else{ 
             is_editing = val ; 
         }
-    };
+ };
 
     that.offEditor = function(){ 
         if(that.is_editing()){
-           // that.save() ; 
+            that.save() ; 
             $('#contentArea').parents('.well').remove() ; 
         } 
 
@@ -129,27 +134,15 @@ DOC.Element.Image = function(oConfig){
         is_editing = true ; 
     }; 
 
-    that.turnOffEditor = function(){
+    that.turnOffEditor = function() { 
         //DOC.paper.sortable('on') ; 
         is_editing = false ; 
     }; 
 
-    that.save = function(){ 
-        if(that.is_editing()){ 
-            var content = tinyMCE.activeEditor.getContent();	
+    that.save = function(){
+        var value = $('#'+uid).html();
+        return value;
 
-	        if(content != ''){
-		        var $el = $('<div class="element"><div class="handler"><a clsss="btn"><i class="icon icon-move"></i>&nbsp;</a></div><div class="textarea">'+content +'</div></div>').insertAfter($('#document_body .well')); 
-		        
-		        var _data = {
-		            value : content 
-		        }; 
-	
-		        that.setData(_data) ; 
-	            that.editable($el) ; 
-                //that.mouseover($el) ; 
-	        } 
-        }
     }; 
 
     that.mouseover = function($el){

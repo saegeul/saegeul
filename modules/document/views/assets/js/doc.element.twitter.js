@@ -21,7 +21,7 @@ DOC.Element.Twitter = function(oConfig){
     }; 
 
     that.html = function(){
-        return  that.getRawValue(); 
+        return  '<div class="twitarea">'+$('#'+uid).find('.twitarea').html()+'</div>';
     }; 
 
     that.is_null = function(){
