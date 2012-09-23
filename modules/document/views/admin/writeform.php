@@ -15,14 +15,17 @@ $this->load->helper('asset');
 <?echo js_asset('document','doc.element.image.js')?>
 
 <div class="container-fluid">
+    <form action ="save"  method="post" id="document_form" >
     <div class="row-fluid"> 
         <div class="span7">
-            <input type="text"  style="width:100%;"/> 
+            <input type="text" name="title"  style="width:100%;"/> 
+            <input type="hidden" name="content"  style="width:100%;"/> 
         </div>
         <div class="span2">
-            <a class="btn btn-primary">저장..</a>
+            <button type="text" class="btn btn-primary" id="save_btn">저장..</button>
         </div>
-    </div>
+    </div> 
+    </form>
     <div id="document_body" >
 
     </div>
@@ -35,6 +38,12 @@ $this->load->helper('asset');
 
 <script> 
 $(function(){
+    $('#document_form').submit(function(){
+        var html = DOC.paper.html() ;  
+        $('#document_form').find('[name=content]').val(encodeURI(html)) ; 
+
+    }); 
+     
     DOC.remocon_panel.init({
         id : 'remocon' ,
         cls : 'well' ,

@@ -81,6 +81,15 @@ DOC.paper = (function(){
         } 
     }; 
 
+    that.html = function(){ 
+        var html = '' ; 
+        for(i = 0 ; i < elements.length; i++){
+            html = html+elements[i].html() ; 
+        } 
+
+        return html ; 
+    }; 
+
     that.add = function(obj,position){ 
         if(position == null){
             elements.push(obj) ; 

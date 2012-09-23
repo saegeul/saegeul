@@ -13,6 +13,37 @@ class Document extends MX_Controller {
         $this->load->helper('date');
     }
 
+    public function view(){ 
+        $this->load->model('Document_model','document_model'); 
+        $d = $this->document_model->getDocument(13); 
+
+        if(count($d) > 0){
+            echo urldecode($d[0]->content); 
+        } 
+    }
+
+    public function save(){
+        $this->username = "root";
+		$this->email = "root@saegeul.com";
+		$this->uid = '1';
+
+        $this->load->model('Document_model','document_model') ; 
+        
+        $insert_data;
+		$insert_data->reg_date = standard_date('DATE_ATOM',time());//date("Y-m-d H:i:s",time());
+		$insert_data->ip_address = $this->input->ip_address();
+		$insert_data->content = $this->input->post('content');
+		$insert_data->title = $this->input->post('title');
+		$insert_data->username = 'jaehee' ; 
+		$insert_data->email = 'jaehee@saegeul.com' ; 
+		$insert_data->uid = 1 ; 
+
+		$this->document_model->insert($insert_data); 
+        $this->load->helper('url') ; 
+
+        redirect('/document/admin/document/document_list') ; 
+    }
+
     public function sample_list(){
         $arr = array() ; 
         $obj['description'] = 'afasdfasf'; 
@@ -151,9 +182,6 @@ class Document extends MX_Controller {
 
     public function facebookform() {
         $this->load->view('facebookform') ;
-    }
-
-    public function save(){ 
     } 
 
     public function remove(){ 

@@ -4,12 +4,37 @@ class Document_model extends CI_Model {
 	function __construct()
 	{
 		// Call the Model constructor
-		parent::__construct();
+		parent::__construct(); 
 	}
-        function index()
-        {
 
-        }
+    public function insert($args){ 
+		$this->db->insert('documents', $args);
+    }
+
+    public function getDocument($docu_id) {
+		$this->db->select('*');
+		$this->db->from('documents');
+		$this->db->where('doc_id', $docu_id);
+
+		$query = $this->db->get();
+		return $query->result();
+	}
+
+    public function getDocumentList($list_num,$offset,$data){ 
+        $this->db->select('*');
+		$this->db->from('filebox');
+
+		if($data['key'] && $data['keyword'])
+		{
+			$this->db->like($data['key'], $data['keyword']);
+		}
+		$this->db->order_by("file_srl", "desc");
+		$this->db->limit($offset, $list_num);
+
+		$query = $this->db->get();
+		return $query->result();
+    } 
+
 /*
 	function select_entry($list_num,$offset,$data)
 	{
