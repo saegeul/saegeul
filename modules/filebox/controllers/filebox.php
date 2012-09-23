@@ -102,7 +102,7 @@ class Filebox extends MX_Controller {
 			$save_dir = "";
 			$save_thumb_dir = "";
 				
-			if($data['file_type'] == "image/png" || $data['file_type'] == "image/jpg" || $data['file_type'] == "image/jpeg" || $data['file_type'] == "image/gif"){
+			if($data['file_type'] == "image/png" || $data['file_type'] == "image/PNG" || $data['file_type'] == "image/jpg" || $data['file_type'] == "image/JPG" || $data['file_type'] == "image/jpeg" || $data['file_type'] == "image/JPEG" || $data['file_type'] == "image/gif" || $data['file_type'] == "image/GIF"){
 				// img directory
 				$save_dir = "filebox/files/img/".date("Ymd");
 				// img thumb directory
