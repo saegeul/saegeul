@@ -234,7 +234,8 @@ if($key != "" && $keyword != ""){
 				$file_thumb_type = $exts[1];				
 
 				$thumbnailPath = $img_fold_url . "/thumbs/" . $file_thumb_name . "_110*90" . "." .$file_thumb_type;
-				if(($fileType != "image/jpg") && ($fileType != "image/jpeg") && ($fileType != "image/gif") && ($fileType != "image/png"))
+				
+				if(($fileType != "image/jpg") && ($fileType != "image/JPG") && ($fileType != "image/jpeg") && ($fileType != "image/JPEG") && ($fileType != "image/gif") && ($fileType != "image/GIF") && ($fileType != "image/png") && ($fileType != "image/PNG"))
 					$thumbnailPath = "/saegeul/modules/clouddrive/views/assets/img/no_image.png";
 				?>
 				<tr
