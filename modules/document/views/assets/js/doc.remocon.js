@@ -21,6 +21,18 @@ DOC.remocon_panel = (function($,global){
         that.attr('id',config.id) ; 
         that.attr('cls',config.cls) ; 
         that.attr('css',config.css) ; 
+
+        if(config.items){ 
+            for(var i = 0 ; i < config.items.length ; i++){
+                var o = { 
+                    btn_tmpl : config.items[i].btn_tmpl,
+                    Element : config.items[i].Element
+                } ; 
+
+                that.add(DOC.Remocon(o)) ; 
+            }
+        }
+
         
         return that ; 
     }; 
@@ -85,3 +97,37 @@ tinyMCE.init({
     theme_advanced_statusbar_location : "none",
     theme_advanced_resizing : true
 });
+
+DOC.Remocon = function(oConfig){
+    var status ,
+        button_tmpl = oConfig.btn_tmpl, 
+        button_obj = '' , 
+        remocon_panel_body ,
+        Element = oConfig.Element ; 
+
+    var that = {} ; 
+
+    that.setRemoconBody = function(_remocon_panel_body){
+        remocon_panel_body = _remocon_panel_body ;  
+    }; 
+
+    that.render = function(){
+        button_obj = $(button_tmpl).appendTo($(remocon_panel_body)) ; 
+        button_obj.bind('click',function(){
+            that.click() ; 
+        }); 
+    }; 
+
+    that.click = function(){ 
+        DOC.paper.offEditor() ; 
+        var el = Element() ; 
+        DOC.paper.add(el) ; 
+        el.editor() ; 
+    }; 
+
+    that.trigger = function(){
+        that.click() ; 
+    }; 
+
+    return that ; 
+}; 

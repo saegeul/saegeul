@@ -13,6 +13,21 @@ class Document extends MX_Controller {
         $this->load->helper('date');
     }
 
+    public function sample_list(){
+        $arr = array() ; 
+        $obj['description'] = 'afasdfasf'; 
+        $obj['name'] = 'hello'; 
+        $arr[] = $obj; 
+        $obj2['description'] = 'afasdfasf'; 
+        $obj2['name'] = 'hello'; 
+        $arr[] = $obj2;
+
+        $result['page'] = 1; 
+        $result['items'] = $arr; 
+
+        echo json_encode($result) ; 
+    }
+
     public function index(){
         $layout = array() ; 
         $this->load->library('admin_tmpl') ; 
