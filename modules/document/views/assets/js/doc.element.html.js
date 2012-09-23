@@ -1,7 +1,7 @@
 var DOC = DOC || {} ; 
 DOC.Element = DOC.Element||{} ; 
 
-DOC.Element.Textarea = function(oConfig){
+DOC.Element.HTML = function(oConfig){
     var data = {}, 
         uid = DOC.Util.uid() ,
         publisher = null, 
@@ -51,7 +51,7 @@ DOC.Element.Textarea = function(oConfig){
 
     that.editor = function($el){ 
         that.turnOnEditor() ; 
-        var $textarea = $('<div class="well"><div id="textArea"></div><hr/><a class="btn btn-large btn-primary save_btn" >SAVE </a></div>');
+        var $textarea = $('<div class="well"><div id="textArea"><textarea style="width:100%;height:400px;"> </textarea></div><hr/><a class="btn btn-large btn-primary save_btn" >SAVE </a></div>');
 
         if(that.is_empty()){
             $textarea.appendTo($('#document_body')) ; 
@@ -61,10 +61,10 @@ DOC.Element.Textarea = function(oConfig){
             $el = null ; 
         } 
 
-        tinyMCE.execCommand('mceAddControl', false, 'textArea');
 
-        if(!that.is_empty()){
-            tinyMCE.activeEditor.setContent(that.getRawValue()) ; 
+        if(!that.is_empty()){ 
+            $('#textArea textarea').val(that.getRawValue()); 
+            //tinyMCE.activeEditor.setContent(that.getRawValue()) ; 
         }; 
 
         $textarea.find('.save_btn').click(function(){
@@ -93,7 +93,6 @@ DOC.Element.Textarea = function(oConfig){
     that.offEditor = function(){ 
         if(that.is_editing()){
             that.save() ; 
-            tinyMCE.execCommand('mceRemoveControl', false, 'textArea');
             $('#textArea').parents('.well').remove() ; 
         } 
 
@@ -110,9 +109,13 @@ DOC.Element.Textarea = function(oConfig){
         is_editing = false ; 
     }; 
 
+    that.getContentFromEditor = function(){ 
+        return $('#textArea textarea').val(); 
+    }; 
+
     that.save = function(){ 
         if(that.is_editing()){ 
-            var content = tinyMCE.activeEditor.getContent();	
+            var content = that.getContentFromEditor() ;
 
 	        if(content != ''){
 		        var $el = $('<div class="element"' +' id="'+uid+'"><div class="handler"><a clsss="btn"><i class="icon icon-move"></i>&nbsp;</a></div><div class="textarea">'+content +'</div></div>').insertAfter($('#document_body .well')); 

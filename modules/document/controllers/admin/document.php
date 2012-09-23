@@ -13,6 +13,21 @@ class Document extends MX_Controller {
         $this->load->helper('date');
     }
 
+    public function sample_list(){
+        $arr = array() ; 
+        $obj['description'] = 'afasdfasf'; 
+        $obj['name'] = 'hello'; 
+        $arr[] = $obj; 
+        $obj2['description'] = 'afasdfasf'; 
+        $obj2['name'] = 'hello'; 
+        $arr[] = $obj2;
+
+        $result['page'] = 1; 
+        $result['items'] = $arr; 
+
+        echo json_encode($result) ; 
+    }
+
     public function index(){
         $layout = array() ; 
         $this->load->library('admin_tmpl') ; 
@@ -66,45 +81,55 @@ class Document extends MX_Controller {
     }        
 
     public function photoform($page=1) {
-        $this->load->model('filebox/Filebox_model','filebox');
+        $this->load->model('Document_model','document');
         // page setting
-        $page_view = 5; // a page recode number
+        $data = "";
+        $data['page_view'] = $page_view = 18; // a page recode number
         $base_url = base_url(); // base url
         $act_url = $base_url . "document/admin/photoform"; // act url
         $page_per_block = 5; // a page recode moveing number
-
-        // return data setting
-        $data = "";
-
-        if($page < 1){
-                $page = 1;
-                $data['page'] = 1;
-        }else{
-                $data['page'] = $page;
-        }
-        
         $start_idx = ($page - 1) * $page_view;
+/*
+        $prev_page = $page - 1;
+        $next_page = $page + 1;
+        $first_page = ((integer)(($page-1)/$page_per_block) * $page_per_block) + 1;
+        $last_page = $first_page + $page_per_block - 1;
+        $etc ="";
+        if($last_page > $total_page){
+            $last_page = $total_page;
+        }
+        if($key != "" && $keyword != ""){
+        $etc = "?key=" . $key . "&keyword=" . $keyword;
+        }
+        if($page < 1){
+            $page = 1;
+            $data['page'] = 1;
+        }else{
+            $data['page'] = $page;
+        }
 
+        $start_idx = ($page - 1) * $page_view;
         // search keyworld 
         if($this->input->get('key') && $this->input->get('keyword')){
-                $data['key'] = $this->input->get('key');
-                $data['keyword'] = $this->input->get('keyword');
+            $data['key'] = $this->input->get('key');
+            $data['keyword'] = $this->input->get('keyword');
         }else {
-                $data['key'] = "";
-                $data['keyword']= "";
+            $data['key'] = "";
+            $data['keyword']= "";
         }
-
+*/
         // get files in DB
-        $data['result']=$this->filebox->select_entry($start_idx, $page_view, $data);
+        $data['result']=$this->document->select_image();
         // get page tocal count
-        $data['total_record'] = count($this->filebox->total_entry_count($data));
-        $data['total_page'] = ceil($data['total_record'] / $page_view);
+        $data['total_record'] = count($data['result']);
+        $data['total_page'] =ceil($data['total_record'] / $page_view);
         // url
         $data['base_url'] = $base_url;
         $data['act_url'] = $act_url;
 
-        // view
-        //$this->load->view('admin/photoform', $data) ;
+
+        // get files in DB
+        //$data['result']=$this->document->select_url();
         echo json_encode($data);
     }
 

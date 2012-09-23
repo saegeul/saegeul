@@ -12,11 +12,11 @@ Thumbs.db
 # directory #
 ############
 user_guide/
+filebox/files/
 application/config/email.php
 application/config/database.php
 application/libraries/KTOpen*
 application/libraries/libraries/
-filebox/
 # temp #
 *.bak
 *.swp

@@ -132,8 +132,24 @@ if($key != "" && $keyword != ""){
 						echo "<td>사용자</td>";
 
 					}
+					
+					
+					if($cur_admin == $row->id)
+					{	
 					?>
 
+					
+					<td colspan=2 style="text-align: center;">
+					<span class="label label-warning">Logged User</span>
+				
+
+					</td>
+					<?php 
+					}
+					else
+					{
+					?>
+					
 					<td style="text-align: center;"><input type="button" class="btn btn-small btn-danger"
 						value="Good_Bye" onclick="really_ban(<?=$row->id?>);"></td>
 
@@ -142,6 +158,10 @@ if($key != "" && $keyword != ""){
 							type="button" class="btn btn-small btn-success" value="Admin_set">
 					</a>
 					</td>
+					<?php 
+					}
+					?>
+					
 				</tr>
 
 

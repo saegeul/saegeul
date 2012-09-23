@@ -449,15 +449,17 @@ class Users extends CI_Model
 	}
 
 	function min_admin($id){
+		//level이 admin인 모든 유저를 검색
 		$this->db->select('id');
 		$this->db->from('users');
 		$this->db->where('level', 'admin');
 		
 		$query = $this->db->get();
 		$row = $query->row(1);
+		
 
 		if($query->num_rows() == 1){
-			//admin 값이 1인 유저가 하나이고
+			//level 값이 admin인 유저가 하나이고
 			if($row->id ==$id){
 				//현재 수정하려는 유저가 바로 그 하나의 관리자일 경우 변경 불가능
 				

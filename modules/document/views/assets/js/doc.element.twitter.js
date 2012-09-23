@@ -1,8 +1,9 @@
 var DOC = DOC || {} ; 
 DOC.Element = DOC.Element||{} ; 
 
-DOC.Element.Textarea = function(oConfig){
+DOC.Element.Twitter = function(oConfig){
     var data = {}, 
+        editor = null,
         uid = DOC.Util.uid() ,
         publisher = null, 
         is_editing = false , 
@@ -12,17 +13,6 @@ DOC.Element.Textarea = function(oConfig){
 
     that.uid = function(){
         return uid ; 
-    }; 
-
-    that.makePublisher = function(){ 
-        var publisher = DOC.publisher() ; 
-        for( i in publisher){
-            if(publisher.hasOwnProperty(i) && typeof publisher[i] ==="function"){ 
-                that[i] = publisher[i] ; 
-            }
-        } 
-
-        return that ; 
     }; 
 
     /* Element 객체에 필수적으로 필요한 함수들 */ 
@@ -51,26 +41,31 @@ DOC.Element.Textarea = function(oConfig){
 
     that.editor = function($el){ 
         that.turnOnEditor() ; 
-        var $textarea = $('<div class="well"><div id="textArea"></div><hr/><a class="btn btn-large btn-primary save_btn" >SAVE </a></div>');
+        var $twitter_area = $('<div class="well"><div id="twitter_editor"><div  class="span7"><ul id="selected_twit" style="list-style:none;"> </ul></div> <div class="span4" id="twitter_list"> </div></div><hr/><a class="btn btn-large btn-primary save_btn" >SAVE </a></div>');
 
         if(that.is_empty()){
-            $textarea.appendTo($('#document_body')) ; 
+            $twitter_area .appendTo($('#document_body')) ; 
         }else{
-            $textarea.insertBefore($el) ; 
+            $twitter_area.insertBefore($el) ; 
             $el.remove() ; 
             $el = null ; 
         } 
 
-        tinyMCE.execCommand('mceAddControl', false, 'textArea');
+        var listPanel = DOC.TwitListPanel({
+            target_id : 'twitter_list',
+            url : 'http://search.twitter.com/search.json'
+        }) ; 
+
+        listPanel.render() ;
 
         if(!that.is_empty()){
-            tinyMCE.activeEditor.setContent(that.getRawValue()) ; 
+            //DOC.TwitEditor(that.getData()) ; 
         }; 
 
-        $textarea.find('.save_btn').click(function(){
+        $twitter_area.find('.save_btn').click(function(){
             that.offEditor() ; 
-            $textarea.find('.save_btn').unbind('click'); 
-            $textarea.remove() ; 
+            $twitter_area.find('.save_btn').unbind('click'); 
+            $twitter_area.remove() ; 
         });  
     }; 
 
@@ -93,8 +88,7 @@ DOC.Element.Textarea = function(oConfig){
     that.offEditor = function(){ 
         if(that.is_editing()){
             that.save() ; 
-            tinyMCE.execCommand('mceRemoveControl', false, 'textArea');
-            $('#textArea').parents('.well').remove() ; 
+            $('#twitter_editor').parents('.well').remove() ; 
         } 
 
         that.turnOffEditor() ; 
@@ -112,10 +106,10 @@ DOC.Element.Textarea = function(oConfig){
 
     that.save = function(){ 
         if(that.is_editing()){ 
-            var content = tinyMCE.activeEditor.getContent();	
+            var content = $('#selected_twit').html() ; 
 
 	        if(content != ''){
-		        var $el = $('<div class="element"' +' id="'+uid+'"><div class="handler"><a clsss="btn"><i class="icon icon-move"></i>&nbsp;</a></div><div class="textarea">'+content +'</div></div>').insertAfter($('#document_body .well')); 
+		        var $el = $('<div class="element"' +' id="'+uid+'"><div class="handler"><a clsss="btn"><i class="icon icon-move"></i>&nbsp;</a></div><div class="twitarea"><ul>'+content +'</ul></div></div>').insertAfter($('#document_body .well')); 
 		        
 		        var _data = {
 		            value : content 

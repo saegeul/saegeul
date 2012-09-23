@@ -261,6 +261,7 @@ class Member extends MX_Controller
 			redirect('/member/login/');
 
 		} else {
+			
 			$this->form_validation->set_rules('old_password', 'Old Password', 'trim|required|xss_clean');
 			$this->form_validation->set_rules('new_password', 'New Password', 'trim|required|xss_clean|min_length['.$this->config->item('password_min_length', 'tank_auth').']|max_length['.$this->config->item('password_max_length', 'tank_auth').']|alpha_dash');
 			$this->form_validation->set_rules('confirm_new_password', 'Confirm new Password', 'trim|required|xss_clean|matches[new_password]');
@@ -274,15 +275,29 @@ class Member extends MX_Controller
 					
 					
 					
-					
-					$this->_show_message($this->lang->line('auth_message_password_changed'));
-
+					$this->showshow($this->lang->line('auth_message_password_changed'));
+					break;
+				
 				} else {														// fail
 					$errors = $this->tank_auth->get_error_message();
 					foreach ($errors as $k => $v)	$data['errors'][$k] = $this->lang->line($v);
 				}
 			}
-			$this->load->view('member/change_password_form', $data);
+			$this->load->library('admin_tmpl') ;
+		
+		
+				$section = array(
+						'header'=>'admin/header',
+						'sidebar'=>'admin/sidebar',
+						'body'=>'admin/change_password_form',
+						'footer'=>'admin/footer'
+				) ;
+				
+			
+		
+		$str= $this->admin_tmpl->parse($section,$data);
+		
+		echo $str ;
 		}
 	}
 
@@ -382,8 +397,45 @@ class Member extends MX_Controller
 	 */
 	function _show_message($message)
 	{
+		$message='asdfasdfsadfasdf';
 		$this->session->set_flashdata('message', $message);
-		redirect('/member/');
+		//redirect('/member/');
+		/* $this->load->library('admin_tmpl') ;
+		
+		$section = array(
+				'header'=>'admin/header',
+				'sidebar'=>'admin/sidebar',
+				'body'=>'admin/general_message',
+				'footer'=>'admin/footer'
+		) ;
+		
+		$str= $this->admin_tmpl->parse($section, array('message' => $message));
+		
+		echo $str ; */
+		$this->load->view('admin/general_message',array('message' => $message));
+		//redirect('admin/general_message',array('message' => $message))
+	}
+	
+	
+	function showshow($message)
+	{
+		
+		$this->session->set_flashdata('message', $message);
+		//redirect('/member/');
+		 $this->load->library('admin_tmpl') ;
+	
+		$section = array(
+				'header'=>'admin/header',
+				'sidebar'=>'admin/sidebar',
+				'body'=>'admin/general_message',
+				'footer'=>'admin/footer'
+		) ;
+	
+		$str= $this->admin_tmpl->parse($section, array('message' => $message));
+	
+		echo $str ; 
+		//$this->load->view('admin/general_message',array('message' => $message));
+		//redirect('admin/general_message',array('message' => $message))
 	}
 
 	/**
@@ -552,6 +604,7 @@ class Member extends MX_Controller
 		$data['result']=$this->users->select_entry($start_idx, $page_view, $data);
 		$data['total_record'] = count($this->users->total_entry_count($data));
 		$data['total_page'] = ceil($data['total_record'] / $page_view); 
+		$data['cur_admin'] = $this->tank_auth->get_user_id();
 
 		// 폼 - 정의
 		$data['base_url'] = $base_url;
@@ -577,14 +630,20 @@ class Member extends MX_Controller
 	function good_bye()
 	{
 		$id=$_GET['id'];
-		if($this->users->check_level($id) == 'admin'){
-			echo ("<script>alert('Do not unregister last admin.')</script>");			
+		if($this->users->check_level($id) != 'admin'){
+			
+			$this->users->delete_user($id);
+			echo ("<script>alert('Selected user is unregistered')</script>");
+			
 		}
 		else
 		{
+			if($this->users->min_admin($id)){
+				$this->users->delete_user($id);
+				echo ("<script>alert('Selected user is unregistered')</script>");
+			}
+					
 		
-		$this->users->delete_user($id);
-		echo ("<script>alert('Selected user is unregistered')</script>");
 		}
 
 		//redirect('/member/admin/member/admin_member/');
@@ -823,9 +882,9 @@ class Member extends MX_Controller
 
 					
 				
-					//$this->_show_message($this->lang->line('auth_message_invited_completed'));
+					$this->showshow($this->lang->line('auth_message_invited_completed'));
 					
-					
+					break;
 					
 				} else {
 					if ($this->config->item('email_account_details', 'tank_auth')) {	// send "welcome" email
