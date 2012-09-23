@@ -66,7 +66,9 @@
 		<div class="modal-image"></div>
 	</div>
 	<div class="modal-footer">
-		<a class="btn btn-success modal-play modal-slideshow"
+		<a class="btn modal-download" target="_blank"> <i
+			class="icon-download"></i> <span>Download</span>
+		</a> <a class="btn btn-success modal-play modal-slideshow"
 			data-slideshow="5000"> <i class="icon-play icon-white"></i> <span>Slideshow</span>
 		</a> <a class="btn btn-info modal-prev"> <i
 			class="icon-arrow-left icon-white"></i> <span>Previous</span>
@@ -75,6 +77,7 @@
 		</a>
 	</div>
 </div>
+<!-- The template to display files available for upload -->
 <script id="template-upload" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}
     <tr class="template-upload fade">
@@ -105,6 +108,7 @@
     </tr>
 {% } %}
 </script>
+<!-- The template to display files available for download -->
 <script id="template-download" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}
     <tr class="template-download fade">
