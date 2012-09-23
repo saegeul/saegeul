@@ -382,9 +382,10 @@ class Clouddrive extends MX_Controller {
 			$response = $this->oauth->api_call('createfiletoken',$request_header,$request_body,'POST') ;
 
 			$temp = json_decode($response);
-			$upload_file_url = $temp->redirect_url . "?api_token=" . $api_token . "&file_token=" . $temp->file_token;
-			$download_file = file_get_contents($upload_file_url); // Read the file's contents
-			if($download_file){
+			
+			if(isset($temp->redirect_url)){
+				$upload_file_url = $temp->redirect_url . "?api_token=" . $api_token . "&file_token=" . $temp->file_token;
+				$download_file = file_get_contents($upload_file_url); // Read the file's contents
 				$file_name = $decodeData_name[$i];
 				file_put_contents("filebox/temp/".$file_name, $download_file);
 				$file_url = "filebox/temp/".$file_name;

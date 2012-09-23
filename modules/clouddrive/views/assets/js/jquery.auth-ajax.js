@@ -129,7 +129,7 @@ $(document).ready(function () {
 				+ "</ul>"
 				+ "</div>";
 				$("#files").html(markup);
-				$("#files").hide();
+//				$("#files").hide();
 				
 			}
 	});
@@ -469,9 +469,9 @@ $('.downloadFile').live('click',function() {
 	setTimeout("$().waitingpopup('close')", 3000); 
 });
 
-$('.getList').live('click',function() {
-	$("#files").slideToggle();
-});
+//$('.getList').live('click',function() {
+//	$("#files").slideToggle();
+//});
 
 $('#createFolder').live('click',function() {
 	var addFolder = "<tr>"

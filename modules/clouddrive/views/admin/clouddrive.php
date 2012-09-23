@@ -9,8 +9,6 @@
 
 <div id="container">
 	<div id="layout_center">
-		<h2 align="center">Cloud List</h2>
-		<br>
 		<ul class="breadcrumb"></ul>
 		<div id="bntLine" align="right">
 			<input type="hidden" id="curt_folder"> <a href="javascript:void(0)"
@@ -25,10 +23,7 @@
 		<div id="center_table"></div>
 	</div>
 	<div id="layout_right">
-		<h2 align="center" class="getList">
-			<a style="color: #333333;" href="javascript:void(0)">FileboxList</a>
-		</h2>
-		<div id="files" style="display: none"></div>
+		<div id="files"></div>
 	</div>
 </div>
 
