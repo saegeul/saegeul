@@ -5,17 +5,14 @@ $this->load->helper('asset');
 
 <?echo css_asset('document','style.css') ?>
 <?echo js_asset('document','tiny_mce/tiny_mce.js')?>
+<?echo js_asset('document','doc.util.js')?>
 <?echo js_asset('document','doc.remocon.js')?>
 <?echo js_asset('document','doc.paper.js')?>
-<?echo js_asset('document','doc.remocon.textarea.js')?>
-<?echo js_asset('document','doc.remocon.youtube.js')?>
-<?echo js_asset('document','doc.remocon.image.js')?>
-<?echo js_asset('document','doc.remocon.filebox.js')?> 
-<?echo js_asset('document','doc.remocon.save.js')?> 
-<?echo js_asset('document','doc.remocon.preview.js')?> 
+<?echo js_asset('document','doc.listpanel.js')?>
+<?echo js_asset('document','doc.element.html.js')?>
+<?echo js_asset('document','doc.element.twitter.js')?>
 <?echo js_asset('document','doc.element.textarea.js')?>
 <?echo js_asset('document','doc.element.image.js')?>
-<?echo js_asset('document','doc.element.preview.js')?>
 
 <div class="container-fluid">
     <div class="row-fluid"> 
@@ -40,22 +37,29 @@ $this->load->helper('asset');
 $(function(){
     DOC.remocon_panel.init({
         id : 'remocon' ,
-        cls : 'well' 
+        cls : 'well' ,
+        items : [
+            {
+                btn_tmpl : '<button class="btn"><i class="icon icon-book"></i> 문단</button>', 
+                Element : DOC.Element.Textarea 
+            },{
+                btn_tmpl : '<button class="btn"><i class="icon icon-book"></i> HTML</button>', 
+                Element : DOC.Element.HTML 
+            },{
+                btn_tmpl : '<button class="btn"><i class="icon icon-book"></i> Image</button>', 
+                Element : DOC.Element.Image 
+            },{
+                btn_tmpl : '<button class="btn"><i class="icon icon-book"></i> Twitter</button>', 
+                Element : DOC.Element.Twitter 
+            }
+        ]
     }); 
 
-    DOC.remocon_panel.add([
-        DOC.remocon.textarea , 
-        DOC.remocon.youtube,
-        DOC.remocon.image ,
-        DOC.remocon.filebox ,
-        DOC.remocon.preview ,
-        DOC.remocon.save
-    ]); 
 
     DOC.remocon_panel.render() ; 
-    //DOC.remocon.textarea.trigger(); 
+    //DOC.remocon_panel.trigger(''); 
 
-    /*DOC.paper.init('document_body') ; 
-    DOC.paper.sortable('on');*/
+    DOC.paper.init('document_body') ; 
+    DOC.paper.sortable();
 }); 
 </script>
