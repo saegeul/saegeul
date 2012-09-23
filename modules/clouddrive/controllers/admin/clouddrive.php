@@ -20,12 +20,17 @@ class Clouddrive extends MX_Controller {
 	}
 
 	public function ucloudView(){
-		$api_key = '38629799a8e9388c6ce742ed71fb6233' ;
-		$secret_key = '29b30a42991c73e76032c5f20b4b7858' ;
-		$callback_url = 'http://localhost:8888';
 		$this->load->helper('url') ;
 		$this->load->library('session');
-
+		
+		// get session
+		$api_key = $this->session->userdata('session_kt_api_key');
+		$secret_key = $this->session->userdata('session_kt_secret_key');
+		$oauth_token = $this->session->userdata('session_kt_ucloud_oauth_token');
+		$oauth_verifier = $this->session->userdata('session_kt_ucloud_oauth_verifier');
+		$oauth_token_secret = $this->session->userdata('session_kt_ucloud_oauth_token_secret');
+		
+		$callback_url = 'http://localhost:8888';
 		$this->load->library('oauth',array(
 				'api_key'=>$api_key,
 				'secret_key'=>$secret_key,
@@ -34,17 +39,13 @@ class Clouddrive extends MX_Controller {
 				'provider'=>'Ucloud',
 				'oauth_version'=>'1.0'
 		)) ;
-
+		
 		// check oauth token
-		if($this->input->get_post('oauth_token')){
+		if(isset($oauth_token)){
 			$params = array();
-			$params['oauth_token'] = $this->input->get_post('oauth_token') ;
+			$params['oauth_token'] = $oauth_token ;
 			$params['oauth_token_secret'] = $this->oauth->token('oauth_token_secret');
-			$params['oauth_verifier'] = $this->input->get_post('oauth_verifier') ;
-			
-			// session
-			$this->session->set_userdata('session_oauth_token', $this->input->get_post('oauth_token'));
-			$this->session->set_userdata('session_oauth_token_secret', $this->oauth->token('oauth_token_secret'));
+			$params['oauth_verifier'] = $oauth_verifier ;
 
 			$response = $this->oauth->access_token($params,'POST') ;
 			$this->oauth->token('oauth_token_secret',isset($response['oauth_token_secret'])?$response['oauth_token_secret']:"") ;
@@ -89,9 +90,9 @@ class Clouddrive extends MX_Controller {
 
 		$data = array();
 		// check access token
-		$data['oauth_token'] =  $this->session->userdata('session_oauth_token');
+		$data['oauth_token'] =  $this->session->userdata('session_kt_api_key');
 		// check access token token secrete
-		$data['oauth_token_secret'] = $this->session->userdata('session_oauth_token_secret');
+		$data['oauth_token_secret'] = $this->session->userdata('session_kt_secret_key');
 
 		// view
 		$layout = array() ;
