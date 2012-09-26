@@ -10,9 +10,15 @@ class Clouddrive extends MX_Controller {
 		parent::__construct();
 
 		$this->load->database();
-		$this->username = "root";
-		$this->email = "root@saegeul.com";
-		$this->uid = '1';
+		$this->load->helper('url');
+		$this->load->library('tank_auth');
+
+		$this->username = $this->tank_auth->get_username();
+		$this->uid = $this->tank_auth->get_user_id();
+		$this->email = $this->tank_auth->get_useremail();
+
+		if($this->uid == "")
+			redirect('member/login', 'refresh');
 	}
 
 	public function callback(){
