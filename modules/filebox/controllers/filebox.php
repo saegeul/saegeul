@@ -91,7 +91,7 @@ class Filebox extends MX_Controller {
 		$this->load->library('upload', $config); // upload configuration
 
 		// file upload
-		if($this->upload->do_upload())
+		if($this->upload->do_upload('files[]'))
 		{
 			// file upload
 			$data = $this->upload->data();
