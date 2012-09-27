@@ -78,7 +78,19 @@ class setting extends MX_Controller {
     
 
     public function site(){
+        $this->load->library('admin_tmpl') ; 
 
+        $section = array(
+            'header'=>'setting/header',
+            'sidebar'=>'setting/sidebar',
+            'body'=>'setting/site',
+            'footer'=>'setting/footer'
+        ) ; 
+
+        
+        $str= $this->admin_tmpl->parse($section); 
+
+        echo $str ; 
     }
 
     public function refreshTable(){

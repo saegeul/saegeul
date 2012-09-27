@@ -46,7 +46,7 @@ if($key != "" && $keyword != ""){
 
 
 
-<div class="span9">
+<div class="_content">
 
         <form class="form-search" name="search_form">
 
@@ -97,7 +97,7 @@ if($key != "" && $keyword != ""){
  {  ?>
                                 <tr>
                                         <td style="text-align: center;"><?=$row->doc_id ?></td>
-                                        <td style="text-align: center;"><?=$row->title ?></td>
+                                        <td style="text-align: center;"><a target="_blank" href="<?=base_url();?>blog/welcome/<?=$row->doc_id;?>"><?=$row->title ?></a></td>
                                         <td style="text-align: center;"><?=$row->username ?></td>
                                         <td style="text-align: center;"><?=$row->reg_date ?></td>
                                         <td style="text-align: center;">0</td>

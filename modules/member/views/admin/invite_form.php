@@ -40,13 +40,13 @@ $captcha = array(
 	'maxlength'	=> 8,
 );
 ?>
-
-             <h4>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp새글닷컴의 멤버를 초대해 주세요.</h> 
-            <hr/>
+<div class="_content">
+<h4>새글닷컴의 멤버를 초대해 주세요.</h> 
+<hr/>
             
 <?php 
 echo form_open($this->uri->uri_string()); ?>
-<div class="span9">
+<div>
 	<div class="row">
 	<?php if ($use_username) { ?>
 	
@@ -79,3 +79,5 @@ echo form_open($this->uri->uri_string()); ?>
 
 <?php // echo form_submit('register', 'Register'); ?>
 <?php //echo form_close(); ?>
+
+</div>

@@ -1,4 +1,5 @@
-<div class="span3 bs-docs-sidebar">
+<div class="admin_sidebar_wrapper">
+<div class=" bs-docs-sidebar">
 	<ul class="nav nav-list bs-docs-sidenav affix-top">
 	    <li> 
 	        <a href="<?=site_url("member/admin/member/admin_member")?>"><i class="icon-chevron-right"></i>회원관리</a> 
@@ -10,4 +11,5 @@
 	        <a href="<?=site_url("member/admin/member/change_password")?>"><i class="icon-chevron-right"></i>관리자 비밀번호 변경</a> 
 	    </li>
 	</ul>
+</div>
 </div>

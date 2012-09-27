@@ -26,7 +26,6 @@ class Document extends MX_Controller {
         $this->username = "root";
 		$this->email = "root@saegeul.com";
 		$this->uid = '1';
-
         $this->load->model('Document_model','document_model') ; 
         
         $insert_data;
@@ -77,15 +76,25 @@ class Document extends MX_Controller {
     }
 
     public function document_list($page=1){
-        $this->load->library('admin_tmpl') ; 
+        //$this->load->library('admin_tmpl') ; 
+        $this->load->library('sg_layout') ; 
         $this->load->model('Document_model','document');
 
+        $this->sg_layout->layout('admin/layout') ; 
+        $this->sg_layout->module('document') ; 
+        $this->sg_layout->add('admin/header') ; 
+        $this->sg_layout->add('admin/sidebar') ; 
+        $this->sg_layout->add('admin/document_list') ; 
+        $this->sg_layout->add('admin/footer') ; 
+/*
         $section = array(
             'header'=>'admin/header',
             'sidebar'=>'admin/sidebar',
             'body'=>'admin/document_list',
             'footer'=>'admin/footer'
         ) ; 
+*/
+
         $page_view = 10; // a page recode number
         $base_url = base_url(); // base url
         $act_url = $base_url . "document/admin/document/document_list"; // act url
@@ -122,10 +131,13 @@ class Document extends MX_Controller {
         $data['base_url'] = $base_url;
         $data['act_url'] = $act_url;
 
-        $str= $this->admin_tmpl->parse($section,$data); 
+        //$str= $this->admin_tmpl->parse($section,$data); 
+
+        $this->sg_layout->show($data) ; 
+        //$str= $this->admin_tmpl->parse($section,$data); 
 
 
-        echo $str ;
+        //echo $str ;
     }
 
     public function writeform(){ 

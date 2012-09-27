@@ -46,7 +46,7 @@ if($key != "" && $keyword != ""){
 
 
 
-<div class="span9">
+<div class="_content">
 
 	<form class="form-search" name="search_form">
 

@@ -283,21 +283,18 @@ class Member extends MX_Controller
 					foreach ($errors as $k => $v)	$data['errors'][$k] = $this->lang->line($v);
 				}
 			}
-			$this->load->library('admin_tmpl') ;
+	    $this->load->library('sg_layout') ; 
+
+        $this->sg_layout->layout('admin/layout') ; 
+        $this->sg_layout->module('member') ; 
+
+        $this->sg_layout->add('admin/header') ; 
+        $this->sg_layout->add('admin/sidebar') ; 
+        $this->sg_layout->add('admin/change_password_form') ; 
+        $this->sg_layout->add('admin/footer') ;
+	
+        $this->sg_layout->show($data) ; 
 		
-		
-				$section = array(
-						'header'=>'admin/header',
-						'sidebar'=>'admin/sidebar',
-						'body'=>'admin/change_password_form',
-						'footer'=>'admin/footer'
-				) ;
-				
-			
-		
-		$str= $this->admin_tmpl->parse($section,$data);
-		
-		echo $str ;
 		}
 	}
 
@@ -610,18 +607,21 @@ class Member extends MX_Controller
 		$data['base_url'] = $base_url;
 		$data['act_url'] = $act_url;
 
-			$this->load->library('admin_tmpl') ;
+	    $this->load->library('sg_layout') ; 
+
+        $this->sg_layout->layout('admin/layout') ; 
+        $this->sg_layout->module('member') ; 
+
+        $this->sg_layout->add('admin/header') ; 
+        $this->sg_layout->add('admin/sidebar') ; 
+        $this->sg_layout->add('admin/admin_member') ; 
+        $this->sg_layout->add('admin/footer') ;
+	
+        $this->sg_layout->show($data) ; 
+				
+		/*$str= $this->admin_tmpl->parse($section,$data);
 		
-		$section = array(
-				'header'=>'admin/header',
-				'sidebar'=>'admin/sidebar',
-				'body'=>'admin/admin_member',
-				'footer'=>'admin/footer'
-		) ;
-		
-		$str= $this->admin_tmpl->parse($section,$data);
-		
-		echo $str ;
+		echo $str ;*/
 			
 	}
 
@@ -914,19 +914,18 @@ class Member extends MX_Controller
 		$data['captcha_registration'] = $captcha_registration;
 		$data['use_recaptcha'] = $use_recaptcha;
 
+        $this->load->library('sg_layout') ; 
 
-		$this->load->library('admin_tmpl') ;
-		
-		$section = array(
-				'header'=>'admin/header',
-				'sidebar'=>'admin/sidebar',
-				'body'=>'admin/invite_form',
-				'footer'=>'admin/footer'
-		) ;
-		
-		$str= $this->admin_tmpl->parse($section,$data);
-		
-		echo $str ;
+        $this->sg_layout->layout('admin/layout') ; 
+        $this->sg_layout->module('member') ; 
+
+        $this->sg_layout->add('admin/header') ; 
+        $this->sg_layout->add('admin/sidebar') ; 
+        $this->sg_layout->add('admin/invite_form') ; 
+        $this->sg_layout->add('admin/footer') ;
+	
+        $this->sg_layout->show($data) ; 
+	
 
 	}
 
