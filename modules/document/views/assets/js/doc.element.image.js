@@ -33,7 +33,13 @@ DOC.Element.Image = function(oConfig){
 
     that.editor = function($el){ 
         that.turnOnEditor() ; 
-        var $photoArea = $('<div class="well"><div id="contentArea" ></div><div id="slider" class="ui-slider-horizontal ui-slider" style="margin-top:5px;margin-bottom:5px;width:100%;"></div><div id="selectArea" style="height:150px;background-color:white;border:1px solid black;"></div><hr/><a class="btn btn-large btn-primary append_btn" > APPEND</a></div>');
+        var $photoArea = $('<div class="well">'
+                             + '<div id="contentArea" ></div>'
+                             + '<div id="slider" class="ui-slider-horizontal ui-slider" style="margin-top:5px;margin-bottom:5px;width:100%;"></div>'
+                             + '<div id="selectArea" style="height:150px;background-color:white;border:1px solid black;"></div>'
+                             + '<hr/><a class="btn btn-large btn-primary append_btn" > APPEND</a>'
+                        + '</div>'
+                        );
         $photoArea.appendTo($('#document_body')) ;
 
 
