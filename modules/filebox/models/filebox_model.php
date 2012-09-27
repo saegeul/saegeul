@@ -53,7 +53,11 @@ class Filebox_model extends CI_Model {
 
 		if($data['key'] && $data['keyword'])
 		{
-			$this->db->like($data['key'], $data['keyword']);
+			if($data['key'] == 'tag'){
+				$this->db->where($data['key'], $data['keyword']);
+			}else{
+				$this->db->like($data['key'], $data['keyword']);
+			}
 		}
 		$this->db->order_by("file_srl", "desc");
 		$this->db->limit($offset, $list_num);
@@ -85,26 +89,26 @@ class Filebox_model extends CI_Model {
 
 		return $this->db->update('filebox', $value, array('file_srl' => $data['mod_no']));
 	}
-	
+
 	function down_update_entry($data)
 	{
 		$value->down_cnt = $data['mod_down_cnt'];
 		return $this->db->update('filebox', $value, array('file_srl' => $data['mod_no']));
 	}
-	
-	
+
+
 	function select_tag($uid)
 	{
 		$this->db->select('*');
 		$this->db->select('count(*) as total');
-		
+
 		$this->db->from('filetag');
 		$this->db->where('uid', $uid);
 		$this->db->group_by("tag");
 		$query = $this->db->get();
 		return $query->result();
 	}
-	
+
 	function insert_tag($insert_data)
 	{
 		$this->db->insert('filetag', $insert_data);
