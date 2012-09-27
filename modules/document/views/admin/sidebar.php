@@ -1,4 +1,5 @@
-<div class="span3 bs-docs-sidebar">
+<div class="admin_sidebar_wrapper">
+<div class="bs-docs-sidebar">
 	<ul class="nav nav-list bs-docs-sidenav affix-top">
 	    <li> 
 	        <a><i class="icon-chevron-right"></i>문서목록</a> 
@@ -13,4 +14,5 @@
 	        <a><i class="icon-chevron-right"></i>휴지통</a> 
 	    </li>
 	</ul>
+</div>
 </div>

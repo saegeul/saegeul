@@ -600,8 +600,8 @@ class Member extends MX_Controller
 
 	//admin과 user를 구분해서 페이지를 이동
 	function admin_or_user(){
-		if($this->users->check_level($this->tank_auth->get_username())){
-			redirect('/member/admin/');
+		if($this->users->check_level($this->tank_auth->get_user_id())){
+			redirect('/member/admin/member/admin_member');
 		} else { 
 			redirect('/member/main_page/');
 		} 

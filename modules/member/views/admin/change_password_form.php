@@ -24,12 +24,12 @@ $confirm_new_password = array(
 	'size' 	=> 30,
 );
 ?>
-
-<h4>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp비밀번호를 변경해주세요.</h4> 
+<div class="_content">
+<h4>비밀번호를 변경해주세요.</h4> 
             <hr/>
 
 <?php echo form_open($this->uri->uri_string()); ?>
-<div class="span9">
+<div >
 	<div class="row">
 
 		<div class="span2" style="float:left;"><?php echo form_label('Old Password', $old_password['id']); ?></div>
@@ -53,6 +53,6 @@ $confirm_new_password = array(
 
 <?php //echo form_submit('change', '비밀번호 변경하기'); ?>
 <input type="submit" class="btn btn-success" value="비밀번호 변경하기">
+</div>
 <?php echo form_close(); ?>
 </div>
-

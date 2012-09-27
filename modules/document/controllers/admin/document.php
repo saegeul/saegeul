@@ -26,7 +26,6 @@ class Document extends MX_Controller {
         $this->username = "root";
 		$this->email = "root@saegeul.com";
 		$this->uid = '1';
-
         $this->load->model('Document_model','document_model') ; 
         
         $insert_data;
@@ -77,21 +76,25 @@ class Document extends MX_Controller {
     }
 
     public function document_list(){
-        $this->load->library('admin_tmpl') ; 
+        $this->load->library('sg_layout') ; 
+
+        $this->sg_layout->layout('admin/layout') ; 
+        $this->sg_layout->module('document') ; 
+
         $this->load->model('Document_model','document');
 
-        $section = array(
-            'header'=>'admin/header',
-            'sidebar'=>'admin/sidebar',
-            'body'=>'admin/document_list',
-            'footer'=>'admin/footer'
-        ) ; 
+        $this->sg_layout->add('admin/header') ; 
+        $this->sg_layout->add('admin/sidebar') ; 
+        $this->sg_layout->add('admin/document_list') ; 
+        $this->sg_layout->add('admin/footer') ; 
 
         $data['result'] = $this->document->getDocumentList();
-        $str= $this->admin_tmpl->parse($section,$data); 
+
+        $this->sg_layout->show($data) ; 
+        //$str= $this->admin_tmpl->parse($section,$data); 
 
 
-        echo $str ;
+        //echo $str ;
     }
 
     public function writeform(){ 
