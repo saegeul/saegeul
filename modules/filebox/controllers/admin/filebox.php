@@ -536,6 +536,35 @@ class Filebox extends MX_Controller {
 		echo json_encode($success);
 
 	}
+	
+	public function tagCloud(){
+		
+		// view
+		
+		$layout = array() ;
+		$this->load->library('admin_tmpl') ;
+		
+		$section = array(
+				'header'=>'admin/header',
+				'sidebar'=>'admin/sidebar',
+				'body'=>'admin/tag_cloud',
+				'footer'=>'admin/footer'
+		) ;
+		
+		$str= $this->admin_tmpl->parse($section);
+		
+		echo $str ;
+	}
+	
+	public function getTag(){
+		// get DB library
+		$this->load->model('Filebox_model','filebox');		
+		// get files in DB
+		$data['result']=$this->filebox->select_tag($this->uid);
+		$success = $data;
+		
+		echo json_encode($success);
+	}
 }
 
 /* End of file filebox.php */

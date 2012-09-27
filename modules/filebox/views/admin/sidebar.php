@@ -6,7 +6,7 @@
 	    <li> 
 	        <a href="<?=base_url()?>filebox/admin/filebox/fileList"><i class="icon-chevron-right"></i>파일목록</a> </li>
         <li> 
-	        <a><i class="icon-chevron-right"></i>태그클라우드</a> 
+	        <a href="<?=base_url()?>filebox/admin/filebox/tagCloud"><i class="icon-chevron-right"></i>태그클라우드</a> 
 	    </li>
 	</ul>
 </div>
