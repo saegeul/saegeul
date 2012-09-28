@@ -37,7 +37,23 @@ DOC.Element.Image = function(oConfig){
                              + '<div id="contentArea" ></div>'
                              + '<div id="slider" class="ui-slider-horizontal ui-slider" style="margin-top:5px;margin-bottom:5px;width:100%;"></div>'
                              + '<div id="selectArea" style="height:150px;background-color:white;border:1px solid black;"></div>'
-                             + '<hr/><a class="btn btn-large btn-primary append_btn" > APPEND</a>'
+                            // + '<a class="btn btn-large btn-primary append_btn" > APPEND</a>'
+                             + '<div class="btn-toolbar">'
+                                 + '<div class="btn-group divStyle" data-toggle="buttons-radio">'
+                                     + '<a class="btn btn-large btn-primary divStyle1_btn" > one</a>'
+                                     + '<a class="btn btn-large btn-primary divStyle2_btn" > two-cols</a>'
+                                     + '<a class="btn btn-large btn-primary divStyle3_btn" > three-cols-</a>'
+                                     + '<a class="btn btn-large btn-primary divStyle4_btn" > low + two-cols</a>'
+                                 + '</div>'
+                                 + '<div class="btn-group photoStyle" data-toggle="buttons-radio">'
+                                     + '<a class="btn btn-large btn-primary photoStyle1_btn" > style1</a>'
+                                     + '<a class="btn btn-large btn-primary photoStyle2_btn" > style2</a>'
+                                     + '<a class="btn btn-large btn-primary photoStyle3_btn" > style3</a>'
+                                 + '</div>'
+                                 + '<div class="btn-group" data-toggle="buttons-radio">'
+                                     + '<a class="btn btn-large btn-primary append_btn" > APPEND</a>'
+                                 + '</div>'
+                             + '</div>'
                         + '</div>'
                         );
         $photoArea.appendTo($('#document_body')) ;
@@ -83,6 +99,7 @@ DOC.Element.Image = function(oConfig){
                         helper: "clone",
                         scope : "tasks"
                     });
+       //             $photoArea.find('#contentArea img').mouseenter(function() {    });
 
                 });
                 start_record++;
@@ -92,27 +109,40 @@ DOC.Element.Image = function(oConfig){
             scope: "tasks",
             accept: ".img-polaroid",
             drop: function(event, ui) {
-                $('<img src="'+ui.draggable.attr("src")+'" class="img-polaroid"/ >').appendTo(this).css('width','10%').css('height','140px');
-            }
+                var $photo = $('<img src="'+ui.draggable.attr("src")+'" class="img-polaroid"/ >');
+                $photo.appendTo(this).css('width','10%').css('height','140px').bind('click',function() {
+              //  $('<img src="'+ui.draggable.attr("src")+'" class="img-polaroid"/ >').appendTo(this).css('width','10%').css('height','140px').bind('click',function() {
+                
+                    $('<div>사진선택을 해제하시겠습니까?</div>').dialog({
+                        resizable: false,
+                        height:150,
+                        modal: true,
+                        buttons: {
+                            "DELETE": function() {
+                            $photo.remove(); 
+                            $( this ).dialog( "close" );
+                            },
+                        Cancel: function() {
+                            $( this ).dialog( "close" );
+                            }
+                        }
+                     });
+                });
+
+             }
         });
 
         $photoArea.find('#selectArea').sortable();
 
         $photoArea.find('.append_btn').click(function(){
             var $photo_record = $("#selectArea img"); 
-          //  var $photo_div = $('<div style="background-color:red"></div>');
             var $photo_wrap = $('<div id="'+uid+'"class="photo_wrap" style="text-align:center;margin-top:10px;"></div>').appendTo( $('#document_body') );
             var $photo = "";
             for( var i = 0 ; i < $photo_record.length ; i++ )
             {
-         //       $photo_record.appendTo( $('#document_body') );
                 $photo = $("#selectArea img:eq(0)").css("width","auto").css("height","auto");
                 $photo_wrap.append($photo);
-
-
             }
-           // alert( $photoElement.length );
-           // $photoElement.appendTo( $('#document_body') ) ;
             $('#contentArea').parents('.well').remove() ; 
         });
     }; 
