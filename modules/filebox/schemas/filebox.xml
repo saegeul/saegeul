@@ -1,17 +1,23 @@
 <table name="filebox">
 	<column name="file_srl" type="int" size="11" auto_increment="true" primary_key="true" />
-	<column name="file_type" type="varchar" size="30" />
-	<column name="down_cnt" type="int" size="11" default="0" not_null="true"/>
-	<column name="dir_down" type="varchar" size="1" default="Y" not_null="true"/>
-	<column name="upload_file_name" type="varchar" size="250" />
-	<column name="source_file_name" type="varchar" size="250" />
-	<column name="file_size" type="int" size="11" default="0" not_null="true"/>
+	<column name="file_type" type="varchar" size="50" />
+	<column name="original_file_name" type="varchar" size="250" />
+	<column name="encrypted_file_name" type="varchar" size="250" />
+	<column name="file_size_kb" type="int" size="11" default="0" />
+	<column name="full_path" type="varchar" size="300" />
+	<column name="file_path" type="varchar" size="300" />
+	<column name="is_image" type="int" size="1" default="0" />
+	<column name="image_type" type="varchar" size="30" />
+	<column name="image_height" type="int" size="11" default="0" />
+	<column name="image_width" type="int" size="11" default="0" />
+	<column name="image_thumb_path" type="varchar" size="300" />
 	<column name="tag" type="varchar" size="255" />
-	<column name="isvalid" type="varchar" size="11" default="Y" not_null="true"/>
-	<column name="file_url" type="varchar" size="300" />
+	<column name="isvalid" type="varchar" size="1" default="Y" />
+	<column name="down_cnt" type="int" size="11" default="0" />
+	<column name="dir_down" type="varchar" size="1" default="Y" />
 	<column name="reg_date" type="date" />
-	<column name="ip_address" type="varchar" size="128" />
-    <column name="username" type="varchar" size="50"   not_null="true"/>
-    <column name="email" type="varchar" size="100"   not_null="true"/> 
-    <column name="uid" type="int" size="11" not_null="true"/>
+	<column name="ip_address" type="varchar" size="128" not_null="true" />
+	<column name="uid" type="int" size="11" not_null="true" />
+    <column name="username" type="varchar" size="50"   not_null="true" />
+    <column name="email" type="varchar" size="100"   not_null="true" /> 
 </table>

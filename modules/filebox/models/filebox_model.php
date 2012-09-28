@@ -1,117 +1,67 @@
-<?
+<?php
 class Filebox_model extends CI_Model {
+	var $table = 'filebox';
 
-	var $file_type = '';
-	var $sid = '';
-	var $source_file_name = '';
-	var $upload_file_name = '';
-	var $file_size = '';
-	var $reg_date = '';
-	var $ip_address = '';
-
-	function __construct()
-	{
-		// Call the Model constructor
+	function __construct(){
 		parent::__construct();
+		$this->load->database();
 	}
 
-	function insert_entry($insert_data)
-	{
-		$this->db->insert('filebox', $insert_data);
+	public function insert($data){
+		if($this->db->insert($this->table,$data)){
+			$id = $this->db->insert_id();
+			$data->file_srl = $id;
+
+			return $data;
+		}
+		
+		return null;
 	}
 
-	function view_entry($source_file_name)
-	{
-		$this->db->select('*');
-		$this->db->from('filebox');
-		$this->db->where('source_file_name', $source_file_name);
-
-		$query = $this->db->get();
-		return $query->result();
-	}
-
-	function delete_entry($file_srl)
-	{
-		$this->db->delete('filebox', array('file_srl' => $file_srl));
-	}
-
-	function get_entry($uid)
-	{
-		$this->db->select('*');
-		$this->db->from('filebox');
-		$this->db->where('uid', $uid);
-		$this->db->order_by("file_srl", "desc");
-
-		$query = $this->db->get();
-		return $query->result();
-	}
-
-	function select_entry($list_num,$offset,$data)
-	{
-		$this->db->select('*');
-		$this->db->from('filebox');
-
-		if($data['key'] && $data['keyword'])
-		{
-			if($data['key'] == 'tag'){
-				$this->db->where($data['key'], $data['keyword']);
-			}else{
-				$this->db->like($data['key'], $data['keyword']);
+	public function getFile($file_srl){
+		if($file_srl > 0){
+			$query = $this->db->get_where($this->table , array('file_srl'=>$file_srl));
+			$arr = $query->result();
+			if(count($arr)){
+				return $arr[0];
 			}
 		}
-		$this->db->order_by("file_srl", "desc");
-		$this->db->limit($offset, $list_num);
-
-		$query = $this->db->get();
-		return $query->result();
+		
+		return null;
 	}
 
-	function total_entry_count($data)
-	{
-		$this->db->select('*');
-		$this->db->from('filebox');
+	public function getFileList($page=1,$list_count=10,$search_param=null){
+		$this->db->order_by("file_srl", "desc");
+		$this->db->limit($list_count , ($page-1)*$list_count );
 
-		if($data['key'] && $data['keyword'])
-		{
-			$this->db->like($data['key'], $data['keyword']);
+		if($search_param == null) {
+			$query = $this->db->get($this->table);
+			$total_rows = $this->db->count_all($this->table);
+		}else{
+			$this->db->like($search_param['option'],$search_param['value']);
+			$query = $this->db->get($this->table);
+			$total_rows = $this->db->count_all_results();
 		}
-		$this->db->order_by("file_srl", "desc");
 
-		$query = $this->db->get();
-		return $query->result();
+		$pagination['page'] = $page ;
+		$pagination['list_count'] = $list_count;
+		$pagination['total_rows'] = $total_rows;
+		$pagination['page_count'] = ceil($total_rows / $list_count);
+
+		$result['list'] = $query->result();
+		$result['pagination'] = $pagination;
+
+		return $result ;
 	}
 
-	function update_entry($data)
-	{
-		$value->upload_file_name = $data['mod_name'];
-		$value->tag = $data['mod_tag'];
-		$value->isvalid = $data['mod_isvalid'];
+	public function delete($file_srl){
+		$file_obj = null;
+		if($file_srl > 0 ){
+			$file_obj = $this->getFile($file_srl);
+			$this->db->where('file_srl',$file_srl);
+			$this->db->delete($this->table);
+		}
 
-		return $this->db->update('filebox', $value, array('file_srl' => $data['mod_no']));
-	}
-
-	function down_update_entry($data)
-	{
-		$value->down_cnt = $data['mod_down_cnt'];
-		return $this->db->update('filebox', $value, array('file_srl' => $data['mod_no']));
-	}
-
-
-	function select_tag($uid)
-	{
-		$this->db->select('*');
-		$this->db->select('count(*) as total');
-
-		$this->db->from('filetag');
-		$this->db->where('uid', $uid);
-		$this->db->group_by("tag");
-		$query = $this->db->get();
-		return $query->result();
-	}
-
-	function insert_tag($insert_data)
-	{
-		$this->db->insert('filetag', $insert_data);
+		return $file_obj;
 	}
 }
-?>

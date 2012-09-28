@@ -1,6 +1,7 @@
-<div class="span3 bs-docs-sidebar">
+<div class="admin_sidebar_wrapper">
+<div class=" bs-docs-sidebar">
 	<ul class="nav nav-list bs-docs-sidenav affix-top">
-        <li> 
+	    <li> 
 	        <a href="<?=base_url()?>filebox/admin/filebox/uploadForm"><i class="icon-chevron-right"></i>파일 업로드</a> 
 	    </li>
 	    <li> 
@@ -10,3 +11,5 @@
 	    </li>
 	</ul>
 </div>
+</div>
+
