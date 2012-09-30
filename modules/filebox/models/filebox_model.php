@@ -64,4 +64,23 @@ class Filebox_model extends CI_Model {
 
 		return $file_obj;
 	}
+	
+	function update($data,$file_srl)
+	{
+		if($this->db->update($this->table,$data,array('file_srl' => $file_srl))){
+			return $file_srl;
+		}
+		return null;
+	}
+	
+	public function insert_tag($data,$table){
+		if($this->db->insert($table,$data)){
+			$id = $this->db->insert_id();
+			$data->tag_id = $id;
+	
+			return $data;
+		}
+	
+		return null;
+	}
 }

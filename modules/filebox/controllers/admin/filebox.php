@@ -21,8 +21,8 @@ class Filebox extends MX_Controller {
 		$this->email = $this->tank_auth->get_useremail();
 
 		// check direct acess
-		if($this->uid == "")
-			redirect('member/login', 'refresh');
+				if($this->uid == "")
+					redirect('member/login', 'refresh');
 	}
 
 	// uploadForm : view
@@ -200,9 +200,53 @@ class Filebox extends MX_Controller {
 
 		$file_obj = $this->filebox->getFile($file_srl) ;
 
-		$this->load->helper('download') ;
+		// update DB
+		$new_down_cnt = number_format($file_obj->down_cnt) + 1;
+		$data = array('down_cnt' => $new_down_cnt);
+		$this->filebox->update($data,$file_srl);
 
-		$data = file_get_contents($file_obj->full_path) ;
-		force_download($file_obj->original_file_name , $data) ;
+		// download
+		$this->load->helper('download');
+		$data = file_get_contents($file_obj->full_path);
+		force_download($file_obj->original_file_name , $data);
+	}
+
+	// uploadList : get file
+	public function getFile(){
+		$file_srl = $this->input->get_post('file_srl');
+
+		$this->load->model('Filebox/Filebox_model','filebox');
+		$file_obj = $this->filebox->getFile($file_srl);
+		$file_obj->base_url = base_url();
+
+		echo json_encode($file_obj);
+	}
+
+	// uploadList : modify file
+	public function modify(){
+		$this->load->model('Filebox/Filebox_model','filebox') ;
+
+		// get modify data
+		$file_srl = $this->input->get_post('file_srl');
+		$data['original_file_name'] = $this->input->get_post('original_file_name');
+		$data['isvalid'] = $this->input->get_post('isvalid');
+		$data['tag'] = $this->input->get_post('tag');
+
+		$this->filebox->update($data,$file_srl);
+
+		if($this->input->get_post('tag') != ""){
+			$args;
+			$args->tag = $data['tag'];
+			$args->file_srl = $file_srl;
+			$args->reg_date = standard_date('DATE_ATOM',time());//date("Y-m-d H:i:s",time());
+			$args->username = $this->username;
+			$args->email = $this->email;
+			$args->uid = $this->uid;
+
+			// insert file information in DB
+			$ret_data = $this->filebox->insert_tag($args,'filetag') ;
+		}
+
+		echo json_encode('success');
 	}
 }
