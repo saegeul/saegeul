@@ -60,7 +60,7 @@ $(document).ready(function () {
 
 	$.ajax({
 	       type: "GET",
-	       url: "/saegeul/filebox/getFileList",
+	       url: "/saegeul/filebox/admin/filebox/fileList",
 	       contentType: "application/json; charset=utf-8",
 	       dataType: "json",
 	       data: "page=1",
@@ -129,8 +129,6 @@ $(document).ready(function () {
 				+ "</ul>"
 				+ "</div>";
 				$("#files").html(markup);
-//				$("#files").hide();
-				
 			}
 	});
 });
@@ -199,7 +197,7 @@ $(".pageBtn").live('click',function() {
 	var url = $(this).find('a').attr('id');
 	$.ajax({
 	       type: "GET",
-	       url: "/saegeul/filebox/getFileList",
+	       url: "/saegeul/filebox/admin/filebox/fileList",
 	       contentType: "application/json; charset=utf-8",
 	       dataType: "json",
 	       data: "page=" + url,

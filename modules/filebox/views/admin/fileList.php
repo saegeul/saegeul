@@ -19,20 +19,20 @@
 	<table class="table table-hover">
 		<thead>
 			<tr>
-				<th><input type="checkbox" /></th>
+				<th><input type="checkbox" id="all_file_check"/></th>
 				<th>filename</th>
 				<th>size(KB)</th>
 				<th>filetype</th>
 				<th>username</th>
-				<th><button class="btn btn-small btn-danger deleteall">All Delete</button>
+				<th><button class="btn btn-small btn-danger delete_all">All Delete</button>
 				</th>
 			</tr>
 		</thead>
 		<tbody>
 			<?php foreach($fileList as $key => $file) :?>
-			<tr>
+			<tr id='<?=$file->file_srl;?>'>
 				<td><label for="check_id"><?=$file->file_srl;?><br /> <input
-						type="checkbox" name="check_id" /> </label>
+						type="checkbox" class="file_check" /> </label>
 				</td>
 				<td>
 					<div style="padding-left: 160px;">
@@ -55,8 +55,7 @@
 				</td>
 				<td><?=$file->username;?>
 				</td>
-				<td><a class="btn btn-small btn-warning"
-					href="<?=base_url()?>filebox/admin/filebox/delete/<?=$file->file_srl;?>">DEL
+				<td><a class="btn btn-small btn-warning btn_delete">DEL
 				</a>
 				</td>
 			</tr>

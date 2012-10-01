@@ -21,8 +21,8 @@ class Filebox extends MX_Controller {
 		$this->email = $this->tank_auth->get_useremail();
 
 		// check direct acess
-				if($this->uid == "")
-					redirect('member/login', 'refresh');
+		if($this->uid == "")
+			redirect('member/login', 'refresh');
 	}
 
 	// uploadForm : view
@@ -79,7 +79,7 @@ class Filebox extends MX_Controller {
 			return $this->_upload();
 
 		} else if($request_method == 'GET'){
-			return $this->_today();
+// 			return $this->_today();
 		} else {
 			header('HTTP/1.1 405 Method Not Allowed');
 		}
@@ -189,9 +189,11 @@ class Filebox extends MX_Controller {
 	}
 
 	// fileList : delete
-	public function delete($file_srl){
+	public function delete(){
+		$file_srl = $this->input->get_post('file_srl');
 		$this->_delete($file_srl);
-		$this->fileList($page=1,$list_count=10);
+		
+		echo json_encode('success');
 	}
 
 	// uploadList : download file
@@ -248,5 +250,30 @@ class Filebox extends MX_Controller {
 		}
 
 		echo json_encode('success');
+	}
+	
+	public function tagCloud(){
+		
+		$this->load->library('sg_layout');
+		
+		$this->sg_layout->layout('admin/layout');
+		$this->sg_layout->module('filebox');
+		
+		$this->sg_layout->add('admin/header');
+		$this->sg_layout->add('admin/sidebar');
+		$this->sg_layout->add('admin/tagCloud');
+		$this->sg_layout->add('admin/footer');
+		
+		$this->sg_layout->show();
+	}
+	
+	public function getTag(){
+		// get DB library
+		$this->load->model('Filebox/Filebox_model','filebox') ;
+		// get files in DB
+		$data['result']=$this->filebox->select_tag($this->uid,'filetag');
+		$success = $data;
+	
+		echo json_encode($success);
 	}
 }

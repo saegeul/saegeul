@@ -63,4 +63,52 @@ $(document).ready(function (e) {
 			}
 		});
 	});
+	
+	// all file select
+	$('#all_file_check').click(function(e) {
+		if(this.checked == false) {
+			$('.file_check:checked').attr('checked',false);
+		} else {
+			$('.file_check:not(:checked)').attr('checked',true);
+		}
+	});
+	
+	$('.delete_all').click(function(e) {
+		$("input[class=file_check]").each(function(){
+			if($(this).is(':checked')){
+				var file_srl = $(this).closest("td").text();
+				$.ajax({
+					type : "GET",
+					url : "/saegeul/filebox/admin/filebox/delete",
+					contentType : "application/json; charset=utf-8",
+					dataType : "json",
+					data : "file_srl=" + file_srl,
+					error : function() {
+						//alert("error");
+					},
+					success : function(data) {
+						$('.file_check:checked').attr('checked',false);
+						location.reload();
+					}
+				});
+			}
+		});
+	});
+	
+	$('.btn_delete').click(function(e) {
+		var file_srl = $(this).parent().parent().attr('id');
+		$.ajax({
+			type : "GET",
+			url : "/saegeul/filebox/admin/filebox/delete",
+			contentType : "application/json; charset=utf-8",
+			dataType : "json",
+			data : "file_srl=" + file_srl,
+			error : function() {
+				alert("error");
+			},
+			success : function(data) {
+				location.reload();
+			}
+		});
+	});
 });

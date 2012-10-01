@@ -83,4 +83,17 @@ class Filebox_model extends CI_Model {
 	
 		return null;
 	}
+	
+	function select_tag($uid,$table)
+	{	
+		$this->db->select('*');
+		$this->db->select('count(*) as total');
+	
+		$this->db->from($table);
+		$this->db->where('uid', $uid);
+		$this->db->group_by("tag");
+		$query = $this->db->get();
+		
+		return $query->result();
+	}
 }
