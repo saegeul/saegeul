@@ -1,12 +1,9 @@
-<?php $this->load->helper('url') ?>
 <?php $this->load->helper('asset') ?>
 <?echo css_asset('clouddrive','jquery.waitingpopup-min.css')?>
 <?echo css_asset('clouddrive','style.css')?>
-<?echo common_js_asset('jquery/js/jquery-1.7.2.min.js')?>
-<?echo common_js_asset('jquery/js/jquery-ui-1.8.22.custom.min.js')?>
 <?echo js_asset('clouddrive','jquery.waitingpopup-min.js')?>
 <?echo js_asset('clouddrive','jquery.auth-ajax.js')?>
-
+<br>
 <div id="container">
 	<div id="layout_center">
 		<ul class="breadcrumb"></ul>

@@ -13,10 +13,16 @@ class Clouddrive extends MX_Controller {
 
 		$this->load->database();
 		$this->load->library('session');
+		$this->load->library('tank_auth');
 		
-		$this->username = "root";
-		$this->email = "root@saegeul.com";
-		$this->uid = '1';
+		// get session data
+		$this->username = $this->tank_auth->get_username();
+		$this->uid = $this->tank_auth->get_user_id();
+		$this->email = $this->tank_auth->get_useremail();
+
+		// check direct acess
+		if($this->uid == "")
+			redirect('member/login', 'refresh');
 		
 		// get session
 		$this->api_key = $this->session->userdata('session_kt_api_key');

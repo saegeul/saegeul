@@ -1,4 +1,3 @@
-<?php $this->load->helper('url') ?>
 <?php $this->load->helper('asset') ?>
 <script type="text/javascript">
 $("#oauth").live('click',function(e) {
