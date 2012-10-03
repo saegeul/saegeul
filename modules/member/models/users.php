@@ -393,7 +393,7 @@ class Users extends CI_Model
 		$this->db->delete($this->profile_table_name);
 	}
 
-	//admin 페이지에서 회원목록을 출력하기 위해 회원정보를 모두 반환
+	//admin �섏씠吏�뿉���뚯썝紐⑸줉��異쒕젰�섍린 �꾪빐 �뚯썝�뺣낫瑜�紐⑤몢 諛섑솚
 	function admin_db(){ 
 		
 		$this->db->select('*');
@@ -435,7 +435,7 @@ class Users extends CI_Model
 		return $query->result();
 	}
 
-	//선택한 유저의 권한이 무엇인지 체크(admin,manager,member,guest)
+	//�좏깮���좎���沅뚰븳��臾댁뾿�몄� 泥댄겕(admin,manager,member,guest)
 	function check_level($user_id){ 
 		$this->db->select('level');
 		$this->db->from('users');
@@ -449,7 +449,7 @@ class Users extends CI_Model
 	}
 
 	function min_admin($id){
-		//level이 admin인 모든 유저를 검색
+		//level��admin��紐⑤뱺 �좎�瑜�寃�깋
 		$this->db->select('id');
 		$this->db->from('users');
 		$this->db->where('level', 'admin');
@@ -459,11 +459,10 @@ class Users extends CI_Model
 		
 
 		if($query->num_rows() == 1){
-			//level 값이 admin인 유저가 하나이고
+			//level 媛믪씠 admin���좎�媛��섎굹�닿퀬
 			if($row->id ==$id){
-				//현재 수정하려는 유저가 바로 그 하나의 관리자일 경우 변경 불가능
-				
-				echo ("<script>alert('관리자는 최소 1명 이상이어야 합니다!')</script>");
+				//�꾩옱 �섏젙�섎젮���좎�媛�諛붾줈 洹��섎굹��愿�━�먯씪 寃쎌슦 蹂�꼍 遺덇���				
+				echo ("<script>alert('愿�━�먮뒗 理쒖냼 1紐��댁긽�댁뼱���⑸땲��')</script>");
 				
 				return false;
 			}
@@ -478,7 +477,7 @@ class Users extends CI_Model
 		}
 	}
 
-	//받아온 값으로 권한값을 변경
+	//諛쏆븘��媛믪쑝濡�沅뚰븳媛믪쓣 蹂�꼍
 	function admin_set($id,$admin){ 
 
 		$this->db->set('level',$admin );
@@ -487,7 +486,7 @@ class Users extends CI_Model
 
 	}
 
-	//권한변경 버튼을 눌렀을 때 관리자->유저, 유저->관리자 로 변경
+	//沅뚰븳蹂�꼍 踰꾪듉���뚮�����愿�━��>�좎�, �좎�->愿�━��濡�蹂�꼍
 	function admin_value($id){
 		$this->db->select('level');
 		$this->db->from('users');
@@ -497,11 +496,11 @@ class Users extends CI_Model
 
 		$row = $query->row(1);
 		if($row->level == 'admin'){
-			//관리자를 유저로 변경
+			//愿�━�먮� �좎�濡�蹂�꼍
 			return 'user';
 		}
 		else {
-			//유저를 관리자로 변경
+			//�좎�瑜�愿�━�먮줈 蹂�꼍
 			return 'admin';
 		}
 
@@ -544,6 +543,7 @@ class Users extends CI_Model
 
     function setAdminByEmail($email){
         $this->db->set('level','admin' );
+        $this->db->set('activated',1);
 		$this->db->where('email', $email);
 		$this->db->update($this->table_name);
     } 
