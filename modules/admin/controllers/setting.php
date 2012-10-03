@@ -38,29 +38,32 @@ class setting extends MX_Controller {
     public function setupEmail(){
     	
     	$params = array(
-    			'email_smtp_host'=>'',
-    			'email_addr'=>'',
-    			'email_pw'=>'',
-    			'email_smtp_port'=>'',
+    			'email'=>'',
     			'email_protocol'=>'',
-    			'email_lib_path'=>''
-    	);
+    			'email_path'=>'',
+    			'smtp_port'=>'',
+    			'smtp_host'=>'',
+    			'smtp_pass'=>''
+    	    	);
     
     	
-    	$email_smtp_host = $this->input->post('email_smtp_host') ;
-    	$email_addr = $this->input->post('email_addr') ;
-    	$email_pw = $this->input->post('email_pw') ;
-    	$email_smtp_port = $this->input->post('email_smtp_port') ;
+    	$email = $this->input->post('email_addr') ;
     	$email_protocol = $this->input->post('email_protocol') ;
-    	$email_lib_path = $this->input->post('email_lib_path') ;
+    	$email_path = $this->input->post('email_lib_path') ;
+    	$smtp_port = $this->input->post('email_smtp_port') ;
+    	$smtp_host = $this->input->post('email_smtp_host') ;
+    	$smtp_pass = $this->input->post('email_pw') ;
+    	    	
     
-    	$params['email_smtp_host'] = $email_smtp_host ;
-    	$params['email_addr'] = $email_addr ;
-    	$params['email_pw'] = $email_pw ;
-    	$params['email_smtp_port'] = $email_smtp_port ;
+    	$params['email'] = $email ;
     	$params['email_protocol'] = $email_protocol ;
-    	$params['email_lib_path'] = $email_lib_path ;
+    	$params['email_path'] = $email_path ;
+    	$params['smtp_port'] = $smtp_port ;
+    	$params['smtp_host'] = $smtp_host ;
+    	$params['smtp_pass'] = $smtp_pass ;
     	 
+    	 $this->load->model('admin_model') ;
+    	 $this->admin_model->save_emailset($params); 
     
     	$this->load->helper('file') ;
     	$f = read_file('./modules/admin/files/email.txt') ;
@@ -70,6 +73,24 @@ class setting extends MX_Controller {
     	}
     
     	write_file(APPPATH.'config/email.php',$f) ;
+    	
+    	
+    	$this->load->library('admin_tmpl') ;
+    	
+    	 $section = array(
+            'header'=>'setting/header',
+            'sidebar'=>'setting/sidebar',
+            'body'=>'setting/email',
+            'footer'=>'setting/footer'
+        ) ; 
+    	
+    	$str= $this->admin_tmpl->parse($section, 'complete');
+    	
+    	echo $str ;
+    	
+    	
+    	
+    	
     }
     
     
