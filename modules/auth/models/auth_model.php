@@ -7,22 +7,27 @@ class Auth_model extends CI_Model {
 		parent::__construct();
 	}
 
-	function insert_entry($insert_data)
-	{
-		$this->db->insert('oauthtoken', $insert_data);
+	public function insert($data){
+		if($this->db->insert('oauthtoken',$data)){
+			$id = $this->db->insert_id();
+			$data->oauth_id = $id;
+			return $data;
+		}
+		return null;
 	}
 
-	function view_entry($uid, $cloud_enterprise)
+	function view_entry($uid, $cloud_enterprise="")
 	{
 		$this->db->select('*');
 		$this->db->from('oauthtoken');
 		$this->db->where('uid', $uid);
-		$this->db->where('cloud_enterprise', $cloud_enterprise);
+		if($cloud_enterprise!="")
+			$this->db->where('cloud_enterprise', $cloud_enterprise);
 
 		$query = $this->db->get();
 		return $query->result();
 	}
-	
+
 	function update_entry($data)
 	{
 		$value->oauth_token = $data['mod_oauth_token'];
