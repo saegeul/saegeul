@@ -2,19 +2,7 @@
 
 class setting extends MX_Controller { 
     public function index(){
-        $layout = array() ; 
-        $this->load->library('admin_tmpl') ; 
-
-        $section = array(
-            'header'=>'setting/header',
-            'sidebar'=>'setting/sidebar',
-            'body'=>'setting/site',
-            'footer'=>'setting/footer'
-        ) ; 
-
-        $str= $this->admin_tmpl->parse($section); 
-
-        echo $str ; 
+       $this->site();
 
     }
 
@@ -74,20 +62,18 @@ class setting extends MX_Controller {
     
     	write_file(APPPATH.'config/email.php',$f) ;
     	
-    	
     	$this->load->library('admin_tmpl') ;
     	
-    	 $section = array(
-            'header'=>'setting/header',
-            'sidebar'=>'setting/sidebar',
-            'body'=>'setting/email',
-            'footer'=>'setting/footer'
-        ) ; 
+    	$section = array(
+    			'header'=>'setting/header',
+    			'sidebar'=>'setting/sidebar',
+    			'body'=>'setting/general_message',
+    			'footer'=>'setting/footer'
+    	) ;
     	
-    	$str= $this->admin_tmpl->parse($section, 'complete');
+    	$str= $this->admin_tmpl->parse($section);
     	
     	echo $str ;
-    	
     	
     	
     	
@@ -113,6 +99,52 @@ class setting extends MX_Controller {
 
         echo $str ; 
     }
+    
+    public function setupSite(){
+    	 
+    	$params = array(
+    			'title'=>'',
+    			'site_url'=>'',
+    			'on_register'=>''
+    			
+    	);
+    
+    	 
+    	$site_name = $this->input->post('site_name') ;
+    	$site_url = $this->input->post('site_url') ;
+    	$join_available = $this->input->post('join_available') ;
+    
+    	$params['title'] = $site_name ;
+    	$params['site_url'] = $site_url ;
+    	$params['on_register'] = $join_available ;
+    	
+    	$this->load->model('admin_model') ;
+      $this->admin_model->save_siteset($params);
+    
+    	/* $this->load->helper('file') ;
+    	$f = read_file('./modules/admin/files/email.txt') ;
+    
+    	foreach($params as $key => $value){
+    		$f = str_replace('{'.$key.'}', $value ,$f);
+    	}
+    
+    	write_file(APPPATH.'config/email.php',$f) ;
+     */	 
+    	 $this->load->library('admin_tmpl') ;
+    	
+    	$section = array(
+    			'header'=>'setting/header',
+    			'sidebar'=>'setting/sidebar',
+    			'body'=>'setting/general_message',
+    			'footer'=>'setting/footer'
+    	) ;
+    	
+    	$str= $this->admin_tmpl->parse($section);
+    	
+    	echo $str ;
+    	 
+    }
+    
 
     public function refreshTable(){
         $table_name = $this->input->post('table_name') ;
@@ -200,6 +232,31 @@ class setting extends MX_Controller {
 
         echo $str ; 
     }
+}
+
+function showshow($message)
+{
+
+	$this->session->set_flashdata('message', $message);
+	
+
+
+	
+	$this->load->library('admin_tmpl') ;
+	 
+	$section = array(
+			'header'=>'setting/header',
+			'sidebar'=>'setting/sidebar',
+			'body'=>'setting/general_message',
+			'footer'=>'setting/footer'
+	) ;
+	 
+	$str= $this->admin_tmpl->parse($section, array('message' => $message));
+	 
+	echo $str ;
+	 
+	 
+	
 }
 
 /* End of file setting.php */
