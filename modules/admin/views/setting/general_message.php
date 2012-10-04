@@ -5,7 +5,7 @@
 &nbsp&nbsp	<h4>
 
     <div class="alert alert-success">
-<?php echo $message; ?>    
+setting is changed and saved.    
     </div>
 
 

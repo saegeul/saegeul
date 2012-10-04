@@ -11,9 +11,14 @@ class Admin_model extends CI_Model {
 
 	function save_emailset($data){
 		$this->db->insert('email_config', $data);
-		
-		
+				
 	}
+	
+	function save_siteset($data){
+		$this->db->insert('site_config', $data);
+	
+	}
+	
 }
 	
 
