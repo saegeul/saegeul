@@ -9,20 +9,36 @@ class Auth extends MX_Controller {
 		parent::__construct();
 
 		$this->load->database();
-		$this->username = "root";
-		$this->email = "root@saegeul.com";
-		$this->uid = '1';
-		$this->cloud_enterprise = "KTUcloud";
+		$this->load->helper('date');
+		$this->load->helper('url');
+		$this->load->library('session');
+		
+		$this->load->library('tank_auth');
+		$this->username = $this->tank_auth->get_username();
+		$this->uid = $this->tank_auth->get_user_id();
+		$this->email = $this->tank_auth->get_useremail();
 	}
 
-	public function auth(){
-
+	public function createApi(){
+		$this->load->model('Auth_model','auth');
+		$args->api_key = $this->input->get_post('api_key');
+		$args->secret_key = $this->input->get_post('secretkey');
+		$args->username = $this->username;
+		$args->email = $this->email;
+		$args->uid = $this->uid;
+		$args->reg_date = standard_date('DATE_ATOM',time());;
+		$args->ip_address = $this->input->ip_address();
+		
+		// insert file information in DB
+		$ret_data = $this->auth->insert($args);
+		
+		redirect('clouddrive/admin/clouddrive/checkOauth', 'refresh');
 	}
-
+	
 	public function call(){
 		$this->load->helper('url') ;
 		$this->load->library('session');
-		
+
 		// get session
 		$api_key = $this->session->userdata('session_kt_api_key');
 		$secret_key = $this->session->userdata('session_kt_secret_key');
@@ -56,25 +72,11 @@ class Auth extends MX_Controller {
 
 	// kt ucloud oauth
 	public function oauth(){
-		$this->load->helper('url') ;
-		$this->load->library('session');
-		// get DB library
-		$this->load->model('Auth_model','auth');
-		
-		$cloud_enterprise ="KTUcloud";
-		// get api_key , secret_key
-		$data = $this->auth->view_entry($this->uid,$cloud_enterprise);
-		
-		foreach($data as $key => $value){
-			$api_key = $value->api_key;
-			$secret_key = $value->secret_key;
-		}
-
+		$api_key = $this->session->userdata('session_kt_api_key');
+		$secret_key = $this->session->userdata('session_kt_secret_key');
 		// setting session
-		$this->session->set_userdata('session_kt_api_key', $api_key);
-		$this->session->set_userdata('session_kt_secret_key', $secret_key);
-		$this->session->set_userdata('cloud_enterprise', $cloud_enterprise);
-		
+		$this->session->set_userdata('cloud_enterprise', "KTUcloud");
+
 		// uclod oauth
 		$callback_url = 'http://localhost:8888';
 		$this->load->library('oauth',array(

@@ -272,6 +272,7 @@ class Filebox extends MX_Controller {
 		$this->load->model('Filebox/Filebox_model','filebox') ;
 		// get files in DB
 		$data['result']=$this->filebox->select_tag($this->uid,'filetag');
+		$data['base_url'] = base_url();
 		$success = $data;
 	
 		echo json_encode($success);

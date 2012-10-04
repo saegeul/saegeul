@@ -8,7 +8,7 @@ class Clouddrive extends MX_Controller {
 
 	protected $api_key;
 	protected $secret_key;
-	protected $oauth_token ;
+	protected $oauth_token;
 	protected $oauth_verifier;
 	protected $oauth_token_secret;
 
@@ -79,8 +79,6 @@ class Clouddrive extends MX_Controller {
 	}
 
 	public function ucloudView(){
-		// check oauth token
-
 		$request_body = array('api_token'=>$this->api_token) ;
 		$response = $this->oauth->api_call('getsyncfolder',$this->request_header,$request_body,'POST') ;
 
@@ -102,11 +100,29 @@ class Clouddrive extends MX_Controller {
 
 	// check oauth
 	public function checkOauth(){
+		if($this->api_key=="" && $this->secret_key==""){
+			// get DB library
+			$this->load->model('auth/Auth_model','auth');
+			// get api_key , secret_key
+			$data = $this->auth->view_entry($this->uid);
+			if(count($data) != 0){
+				// setting session
+				$this->session->set_userdata('session_kt_api_key', $data[0]->api_key);
+				$this->session->set_userdata('session_kt_secret_key', $data[0]->secret_key);
+
+				$this->api_key = $this->session->userdata('session_kt_api_key');
+				$this->secret_key = $this->session->userdata('session_kt_secret_key');
+			}
+		}
 		$data = array();
+		// check api key
+		$data['api_key'] =  $this->api_key;
+		// check secrete key
+		$data['secret_key'] = $this->secret_key;
 		// check access token
-		$data['oauth_token'] =  $this->api_key;
+		$data['oauth_token'] =  $this->oauth_token;
 		// check access token token secrete
-		$data['oauth_token_secret'] = $this->secret_key;
+		$data['oauth_token_secret'] = $this->oauth_token_secret;
 
 		$this->load->library('sg_layout');
 			
@@ -238,10 +254,10 @@ class Clouddrive extends MX_Controller {
 		if(!($upload_data = $this->uploadhandler->move($file_path))){
 			return null;
 		}
-		
+
 		// load filebox model
 		$this->load->model('Filebox/Filebox_model','filebox');
-		
+
 		$args->file_type = $upload_data['file_type'];
 		$args->full_path = $upload_data['full_path'];
 		$args->file_path = $upload_data['file_path'];
@@ -258,13 +274,13 @@ class Clouddrive extends MX_Controller {
 		$args->username = $this->username;
 		$args->email = $this->email;
 		$args->ip_address = $this->input->ip_address();
-		
+
 		// insert file information in DB
 		$ret_data = $this->filebox->insert($args) ;
-		
+
 		return $ret_data;
 	}
-	
+
 	public function deleteKtCloudData(){
 		$data = $this->input->get_post('data') ;
 		$decodeData = json_decode($data);
