@@ -38,18 +38,20 @@ class Filebox_model extends CI_Model {
 			$query = $this->db->get($this->table);
 			$total_rows = $this->db->count_all($this->table);
 		}else{
-			$this->db->like($search_param['option'],$search_param['value']);
+			$this->db->like($search_param['search_key'],$search_param['search_keyword']);
 			$query = $this->db->get($this->table);
-			$total_rows = $this->db->count_all_results();
+			
+			$this->db->like($search_param['search_key'],$search_param['search_keyword']);
+			$total_rows = $this->db->count_all_results($this->table);
 		}
 
-		$pagination['page'] = $page ;
-		$pagination['list_count'] = $list_count;
-		$pagination['total_rows'] = $total_rows;
-		$pagination['page_count'] = ceil($total_rows / $list_count);
+		 $pagination['page'] = $page ;
+        $pagination['list_count'] = $list_count ; 
+        $pagination['total_rows'] = $total_rows ; 
+        $pagination['page_count'] = ceil($total_rows / $list_count) ; 
 
-		$result['list'] = $query->result();
-		$result['pagination'] = $pagination;
+        $result['list'] = $query->result() ; 
+        $result['pagination'] = $pagination ; 
 
 		return $result ;
 	}

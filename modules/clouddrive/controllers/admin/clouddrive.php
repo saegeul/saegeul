@@ -153,7 +153,7 @@ class Clouddrive extends MX_Controller {
 
 	public function fileBoxList($page=1,$list_count=6){
 		$this->load->model('Filebox/Filebox_model','filebox');
-
+		$page = $this->input->get_post('page');
 		if($this->input->get_post('key') && $this->input->get_post('keyword')){
 			$search_param['option'] = $this->input->get('key');
 			$search_param['value'] = $this->input->get('keyword');
@@ -163,6 +163,7 @@ class Clouddrive extends MX_Controller {
 		}
 
 		$data['fileList'] = $result['list'];
+		$data['pagination'] = $result['pagination'];
 		$data['base_url'] = base_url();
 		echo json_encode($data);
 	}

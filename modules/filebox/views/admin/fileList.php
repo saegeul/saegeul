@@ -4,15 +4,19 @@
 <div class="content">
 	<form class="well well-small form-search" name="search_form">
 		<div align="left">
-			<select name="key" size="1">
-				<option value="original_file_name">파일이름</option>
-				<option value="username">작성자</option>
-				<option value="reg_date">작성날짜</option>
+			<select name="search_key" size="1">
+				<option value="original_file_name"
+				<? if($search_key == "original_file_name") echo "selected"; ?>>파일이름</option>
+				<option value="username"
+				<? if($search_key == "username") echo "selected"; ?>>작성자</option>
+				<option value="reg_date"
+				<? if($search_key == "reg_date") echo "selected"; ?>>작성날짜</option>
+				<option value="tag" <? if($search_key == "tag") echo "selected"; ?>>파일태그</option>
 			</select>
 			<div class="input-append">
-				<input type="text" name="keyword" class="span2 search-query"> <a
-					class="btn" href="javascript:search_confirm();"><i
-					class="icon-search"></i> </a>
+				<input type="text" name="search_keyword"
+					value="<?=$search_keyword?>" class="span2 search-query"> <a
+					class="btn search_btn"><i class="icon-search"></i> </a>
 			</div>
 		</div>
 	</form>
@@ -63,17 +67,34 @@
 	</table>
 	<div class="pagination pagination-centered">
 		<?php
-		$first_page = $pagination['page'] - 5 <= 0 ? 1 : $pagination['page'] - 5 ;
-		$next_limit =  $pagination['page']+5 < $pagination['page_count'] ? $pagination['page']+5 : $pagination['page_count'] ;
+		if($pagination['page_count'] >= 5){
+			$first_page = $pagination['page'] > 3 ? $pagination['page'] - 2 : 1;
+			$last_page = $pagination['page'] > 3 ? $pagination['page'] + 2 : 5;
+			if($last_page > $pagination['page_count']){
+				$last_page = $pagination['page_count'];
+				if(($last_page % 5) != 0){
+					$temp = 5 - ($last_page % 5);
+					$first_page = $last_page - ($temp + 1);
+				}else{
+					$first_page = $last_page - 4;
+				}
+			}
+		}else{
+			$first_page = $pagination['page'];
+			$last_page = $pagination['page_count'];
+		}
 		?>
 		<ul>
 			<?php for($i=$first_page ; $i <$pagination['page'];$i++):?>
-			<li><a href="<?=base_url()?>filebox/admin/filebox/fileList/<?=$i;?>"><?=$i;?>
+			<li><a
+				href="<?=base_url()?>filebox/admin/filebox/fileList/<?=$i?>/?search_key=<?=$search_key?>&search_keyword=<?=$search_keyword?>"><?=$i?>
 			</a></li>
 			<?php endfor;?>
-			<li class="active"><a href="#"><?=$pagination['page'];?> </a></li>
-			<?php for($i=$pagination['page']+1 ; $i <=$next_limit;$i++):?>
-			<li><a href="<?=base_url()?>filebox/admin/filebox/fileList/<?=$i;?>"><?=$i;?>
+			<li class="active"><a href="javascript:void(0)"><?=$pagination['page'];?>
+			</a></li>
+			<?php for($i=$pagination['page']+1 ; $i <= $last_page;$i++):?>
+			<li><a
+				href="<?=base_url()?>filebox/admin/filebox/fileList/<?=$i?>/?search_key=<?=$search_key?>&search_keyword=<?=$search_keyword?>"><?=$i?>
 			</a></li>
 			<?php endfor;?>
 		</ul>

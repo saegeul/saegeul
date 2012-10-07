@@ -68,6 +68,24 @@ $(document).ready(function () {
 	       	alert("저장된 파일이 없습니다.");
 	        },
 	       success: function(data){
+	    	   var page_count = parseInt(data.pagination.page_count);
+	    	   var page = parseInt(data.pagination.page);
+	    	   var first_page;
+	    	   var last_page;
+	    	   var temp
+	    	   if(page_count >= 5){
+	    		   first_page = page > 3 ? page - 2 : 1;
+	    		   last_page = page > 3 ? page + 2 : 5;
+	    		   if(last_page > page_count){
+	    			   last_page = page_count;
+	    			   temp = 5 - (last_page % 5);
+	    			   first_page = last_page - (temp + 1);
+	    		   }
+	    	   }else {
+	    		   first_page = page;
+	    		   last_page = page_count;
+	    	   }
+	    	   
 	    	   var markup = "<div style='margin-left:28px;'>&nbsp;all&nbsp;<input type='checkbox' id='all_img_check' style='margin-top:-4px'/>&nbsp;<a href='javascript:void(0)' id='moveUcloud' style='color: #333333;'><i class='icon-upload'></i>MoveUcloud</a></div><br><ul class='thumbnails' style='margin-left: 0px;'>";
 	    	   
 	    		$.each(data.fileList, function(key,state){
@@ -78,7 +96,90 @@ $(document).ready(function () {
 		  	   			+ "<div class='caption'><p>" + obj.original_file_name.substring(0, 12) +"</p></div>"
 		  	   			+ "</div>";
 	    		});
-	    		$("#files").html(markup);
+	    		
+	    		markup += "</ul>"
+					+ "<div class='pagination' align='center' style='margin-left:-10px;'>"
+					+ "<ul>"
+				for(var i=first_page;i<page;i++){
+					markup += "<li class='pageBtn'>"
+					+ "<a id='" + i + "' style='color: #333333;'>" + i + "</a>"
+					+ "</li>";
+				}
+	    		markup += "<li class=active><a href=javascript:void(0)>" + page + "</a></li>"
+	    		for(var i=(page + 1);i<=last_page;i++){
+					markup += "<li class='pageBtn'>"
+					+ "<a id='" + i + "' style='color: #333333;'>" + i + "</a>"
+					+ "</li>";
+				}
+	    		markup += "</ul></div>";
+	    		
+			$("#files").html(markup);
+			}
+	});
+});
+
+$(".pageBtn").live('click',function() {
+	var page = $(this).find('a').attr('id');
+	$.ajax({
+		type: "GET",
+	       url: "/saegeul/clouddrive/admin/clouddrive/fileBoxList",
+	       contentType: "application/json; charset=utf-8",
+	       dataType: "json",
+	       data: "page=" + page,
+	       error: function() { 
+	       	alert("저장된 파일이 없습니다.");
+	        },
+	       success: function(data){
+	    	   var page_count = parseInt(data.pagination.page_count);
+	    	   var page = parseInt(data.pagination.page);
+	    	   var first_page;
+	    	   var last_page;
+	    	   var temp
+	    	   if(page_count >= 5){
+	    		   first_page = page > 3 ? page - 2 : 1;
+	    		   last_page = page > 3 ? page + 2 : 5;
+	    		   if(last_page > page_count){
+	    			   last_page = page_count;
+	    			   if((last_page % 5) != 0){
+	    				   temp = parseInt(5 - (last_page % 5));
+	    				   first_page = last_page - (temp + 1);
+	    			   }else{
+	    				   first_page = last_page - 4;
+	    			   }
+	    		   }
+	    	   }else {
+	    		   first_page = page;
+	    		   last_page = page_count;
+	    	   }
+	    	   
+	    	   var markup = "<div style='margin-left:28px;'>&nbsp;all&nbsp;<input type='checkbox' id='all_img_check' style='margin-top:-4px'/>&nbsp;<a href='javascript:void(0)' id='moveUcloud' style='color: #333333;'><i class='icon-upload'></i>MoveUcloud</a></div><br><ul class='thumbnails' style='margin-left: 0px;'>";
+	    	   
+	    		$.each(data.fileList, function(key,state){
+	    			obj = state;
+	    			markup += "<li>"
+			   			+ "<div align='center' style='height:120px;width:120px;-moz-transition: all 0.2s ease-in-out 0s;border: 1px solid #DDDDDD;border-radius: 4px 4px 4px 4px;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);display: block;line-height: 20px;padding: 4px;'><input type='checkbox' class='imgcheck'/>"
+		  	   			+ "<img alt='" + obj.file_srl + "' src='" + data.base_url + obj.image_thumb_path + "'>"
+		  	   			+ "<div class='caption'><p>" + obj.original_file_name.substring(0, 12) +"</p></div>"
+		  	   			+ "</div>";
+	    		});
+	    		
+	    		markup += "</ul>"
+					+ "<div class='pagination' align='center' style='margin-left:-10px;'>"
+					+ "<ul>"
+				for(var i=first_page;i<page;i++){
+					markup += "<li class='pageBtn'>"
+					+ "<a id='" + i + "' style='color: #333333;'>" + i + "</a>"
+					+ "</li>";
+				}
+	    		markup += "<li class=active><a href=javascript:void(0)>" + page + "</a></li>"
+	    		for(var i=(page + 1);i<=last_page;i++){
+					markup += "<li class='pageBtn'>"
+					+ "<a id='" + i + "' style='color: #333333;'>" + i + "</a>"
+					+ "</li>";
+				}
+	    		markup += "</ul></div>";
+	    		
+			$("#files").html(markup);
 			}
 	});
 });

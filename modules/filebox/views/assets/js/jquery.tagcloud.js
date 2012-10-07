@@ -13,7 +13,7 @@ $(document).ready(function () {
 	    	json = eval(data);
 	    	$.each(json.result, function(key,state){
 				obj = state;
-				var jsonObject = jQuery.parseJSON('{"text":"' + obj.tag + '","weight": "' + (parseInt(obj.total)) + '", "link" : "' + json.base_url + 'filebox/admin/filebox/fileList?key=tag&keyword='+ obj.tag + '"}');
+				var jsonObject = jQuery.parseJSON('{"text":"' + obj.tag + '","weight": "' + (parseInt(obj.total)) + '", "link" : "' + json.base_url + 'filebox/admin/filebox/fileList?search_key=tag&search_keyword='+ obj.tag + '"}');
 				jsonArray.push(jsonObject)
 			});
 	    	$("#tag_cloud").jQCloud(jsonArray);
