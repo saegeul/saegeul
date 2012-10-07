@@ -76,6 +76,10 @@ class Auth extends MX_Controller {
 		$secret_key = $this->session->userdata('session_kt_secret_key');
 		// setting session
 		$this->session->set_userdata('cloud_enterprise', "KTUcloud");
+		
+		$this->session->unset_userdata('session_kt_ucloud_oauth_token');
+		$this->session->unset_userdata('session_kt_ucloud_oauth_verifier');
+		$this->session->unset_userdata('session_kt_ucloud_oauth_token_secret');
 
 		// uclod oauth
 		$callback_url = 'http://localhost:8888';
