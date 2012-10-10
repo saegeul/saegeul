@@ -1,71 +1,28 @@
 <?php $this->load->helper('url') ?>
 <?php $this->load->helper('asset') ?>
 <?php $this->load->helper('form') ?>
-
-
-<script>
-function search_confirm()
-{
-	if(document.search_form.keyword.value == '')
-	{
-		alert('검색어를 입력하세요.');
-		document.serch_form.keyword.focus();
-                return;
-        }
-
-        document.search_form.submit();
-}
-
-function really_ban(ban_id){
-    conf = confirm("정말 탈퇴 시키겠습니까??");
-    if(conf){
-
-        location.href=" <?=site_url("/member/admin/member/good_bye?")?>id="+ban_id;
-    }
-
-}
-
-
-</script>
-
-
-<?php
-// 페이징 만들기
-$page_per_block = 5;
-$prev_page = $page - 1;
-$next_page = $page + 1;
-$first_page = ((integer)(($page-1)/$page_per_block) * $page_per_block) + 1;
-$last_page = $first_page + $page_per_block - 1;
-if ($last_page > $total_page)
-    $last_page = $total_page;
-$etc = "";
-if($key != "" && $keyword != ""){
-    $etc = "?key=" . $key . "&keyword=" . $keyword;
-}
-?>
+<?echo js_asset('document','jquery.documentlist.js')?>
 
 
 
 <div class="_content">
-    <form class="form-search" name="search_form">
+     <form class="well well-small form-search" name="search_form">
 
                 <!-- 검색부분    -->
         <div align="right">
-            <select name="key" size="1" class="span2">
+	    <select name="search_key" size="1">
                 <option value="username"
-                    <? if($key == "username") echo "selected"; ?>>글쓴이</option>
-                            <option value="doc_id" <? if($key == "doc_id") echo "selected"; ?>>번호</option>
-                            <option value="title" <? if($key == "title") echo "selected"; ?>>글제목</option>
+                <? if($search_key == "username") echo "selected"; ?>>글쓴이</option>
+                            <option value="doc_id" <? if($search_key == "doc_id") echo "selected"; ?>>번호</option>
+                            <option value="title" <? if($search_key == "title") echo "selected"; ?>>글제목</option>
                         </select>
                         <div class="input-append">
-                                <input type="text" name="keyword" class="span2 search-query"
-                                        value="<?//=$keyword?>">
-                                <button class="btn" onclick="search_confirm();">
-                                        <i class="icon-search"></i>
-                                </button>
+                                <input type="text" name="search_keyword" class="span2 search-query"
+					value="<?=$search_keyword?>" class="span2 search-query"> <a
+					class="btn search_btn"><i class="icon-search"></i> </a>
                         </div>
                 </div>
-
+        </form>
                 <!-- 검색부분    -->
 
                 <br>
@@ -90,65 +47,58 @@ if($key != "" && $keyword != ""){
                                 </tr>
                         </thead>
                         <tbody>
-<? foreach($result as $row)
-{  ?>
+<?php foreach($fileList as $key => $file) :?>
                                 <tr>
-                                        <td style="text-align: center;"><?=$row->doc_id ?></td>
-                                        <td style="text-align: center;"><a target="_blank" href="<?=base_url();?>blog/welcome/<?=$row->doc_id;?>"><?=$row->title ?></a></td>
-                                        <td style="text-align: center;"><?=$row->username ?></td>
-                                        <td style="text-align: center;"><?=$row->reg_date ?></td>
+                                        <td style="text-align: center;"><?=$file->doc_id ?></td>
+                                        <td style="text-align: center;"><a target="_blank" href="<?=base_url();?>blog/welcome/<?=$file->doc_id;?>"><?=$file->title ?></a></td>
+                                        <td style="text-align: center;"><?=$file->username ?></td>
+                                        <td style="text-align: center;"><?=$file->reg_date ?></td>
                                         <td style="text-align: center;">0</td>
                                 </tr>
-<? } ?>
+<?php endforeach ;?>
                         </tbody>
 
                         <tfoot>
                                 <tr>
                                         <td colspan="7">
 
-                <div class="pagination" style="text-align:center;">
-                                                        <ul>
-                                                                <li><a href="<?=$act_url?>/1<?=$etc?>">&laquo;</a></li>
-<?php 
-if($page>1) {
-?>
-                                                                <li><a href="<?=$act_url?>/<?=$prev_page?><?=$etc?>">prev</a></li>
-<?php 
-}else {
-?>
-                                                                <li class="active"><a>prev</a></li>
-<?php 
-}
-for ($i=$first_page;$i<=$last_page;$i++):
-    if($page == $i) {
-?>
-                                                                <li class="active"><a><?=$i?>
-                                                                </a></li>
-<?php
-    } else {
-?>
-                                                                <li><a href="<?=$act_url?>/<?=$i?><?=$etc?>"><?=$i?> </a>
-                                                                </li>
-<?php 
-    }
-endfor;
+	<div class="pagination pagination-centered">
+		<?php
+		if($pagination['page_count'] >= 5){
+			$first_page = $pagination['page'] > 3 ? $pagination['page'] - 2 : 1;
+			$last_page = $pagination['page'] > 3 ? $pagination['page'] + 2 : 5;
+			if($last_page > $pagination['page_count']){
+				$last_page = $pagination['page_count'];
+				if(($last_page % 5) != 0){
+					$temp = 5 - ($last_page % 5);
+					$first_page = $last_page - ($temp + 1);
+				}else{
+					$first_page = $last_page - 4;
+				}
+			}
+		}else{
+			$first_page = $pagination['page'];
+			$last_page = $pagination['page_count'];
+		}
+		?>
+		<ul>
+			<?php for($i=$first_page ; $i <$pagination['page'];$i++):?>
+			<li><a
+				href="<?=base_url()?>document/admin/document/document_list/<?=$i?>/?search_key=<?=$search_key?>&search_keyword=<?=$search_keyword?>"><?=$i?>
+			</a></li>
+			<?php endfor;?>
+			<li class="active"><a href="javascript:void(0)"><?=$pagination['page'];?>
+			</a></li>
+			<?php for($i=$pagination['page']+1 ; $i <= $last_page;$i++):?>
+			<li><a
+				href="<?=base_url()?>document/admin/document/document_list/<?=$i?>/?search_key=<?=$search_key?>&search_keyword=<?=$search_keyword?>"><?=$i?>
+			</a></li>
+			<?php endfor;?>
+		</ul>
+	</div>
 
-if($page < $total_page) {
-?>
-                                                                <li><a href="<?=$act_url?>/<?=$next_page?><?=$etc?>">next</a></li>
-<?php 
-}else {
-?>
-                                                                <li class="active"><a>next</a></li>
-<?php 
-}
-?>
-                                                                <li><a href="<?=$act_url?>/<?=$total_page?><?=$etc?>">&raquo;</a>
-                                                                </li>
-                                                        </ul>
-                                                </div>
 
-                                        </td>
+                                       </td>
                                 </tr>
                         </tfoot>
                         <!-- Pagination    -->

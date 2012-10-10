@@ -1,10 +1,14 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed') ; 
 class Document_model extends CI_Model {
 
+    var $table = 'documents';
+    var $table2 = 'filebox';
+
     function __construct()
     {
         // Call the Model constructor
         parent::__construct(); 
+        $this->load->database();
     }
 
     public function insert($args){ 
@@ -20,22 +24,31 @@ class Document_model extends CI_Model {
         return $query->result();
     }
 
-    public function getDocumentList($list_num,$offset,$data){ 
-   // public function getDocumentList(){ 
-        $this->db->select('*');
-        $this->db->from('SG_documents');
-
-        if($data['key'] && $data['keyword'])
-        {
-            $this->db->like($data['key'], $data['keyword']);
-        }
-        $this->db->limit($offset, $list_num);
-
+    public function getDocumentList($page=1,$list_count=10,$search_param=null){
         $this->db->order_by("doc_id", "desc");
-        $query = $this->db->get();
-        return $query->result();
-    } 
+        $this->db->limit($list_count , ($page-1)*$list_count );
 
+        if($search_param == null) {
+            $query = $this->db->get($this->table);
+            $total_rows = $this->db->count_all($this->table);
+        }else{
+            $this->db->like($search_param['search_key'],$search_param['search_keyword']);
+            $query = $this->db->get($this->table);
+
+            $this->db->like($search_param['search_key'],$search_param['search_keyword']);
+            $total_rows = $this->db->count_all_results($this->table);
+        }
+
+        $pagination['page'] = $page ;
+        $pagination['list_count'] = $list_count ; 
+        $pagination['total_rows'] = $total_rows ; 
+        $pagination['page_count'] = ceil($total_rows / $list_count) ; 
+
+        $result['list'] = $query->result() ; 
+        $result['pagination'] = $pagination ; 
+
+            return $result ;
+    }
 
     function total_entry_count($data)
     {
@@ -52,14 +65,41 @@ class Document_model extends CI_Model {
         return $query->result();
     }
 
+    function getImageList($page=1,$list_count=10,$search_param=null){
+        //$this->db->from('SG_filebox');
+        $this->db->order_by("file_srl", "desc");
+            $this->db->limit($list_count , ($page-1)*$list_count );
+            
+            if($search_param == null) {
+                $query = $this->db->get($this->table2);
+                $total_rows = $this->db->count_all($this->table2);
+            }else{
+            $this->db->like($search_param['search_key'],$search_param['search_keyword']);
+            $query = $this->db->get($this->table2);
 
-function select_image()
-{
-    $this->db->select('*');
-    $this->db->from('SG_filebox');
+        $this->db->like($search_param['search_key'],$search_param['search_keyword']);
+        $total_rows = $this->db->count_all_results();
+            }
+            
+            $pagination['page'] = $page ;
+        $pagination['list_count'] = $list_count ; 
+        $pagination['total_rows'] = $total_rows ; 
+        $pagination['page_count'] = ceil($total_rows / $list_count) ; 
 
-    $query = $this->db->get();
-    return $query->result();
-}
+        $result['list'] = $query->result() ; 
+        $result['pagination'] = $pagination ; 
+            
+            return $result ;
+    }
+
+
+    function select_image()
+    {
+        $this->db->select('*');
+        $this->db->from('SG_filebox');
+
+        $query = $this->db->get();
+        return $query->result();
+    }
 }
 ?>

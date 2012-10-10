@@ -75,70 +75,37 @@ class Document extends MX_Controller {
 
     }
 
-    public function document_list($page=1){
-        //$this->load->library('admin_tmpl') ; 
-        $this->load->library('sg_layout') ; 
+
+
+    public function document_list($page=1,$list_count=5){
+        $data['action'] = 'document_list';
         $this->load->model('Document_model','document');
 
+        $search_param = null;
+        $data['search_key'] = '';
+        $data['search_keyword'] = '';
+
+        if($this->input->get_post('search_key') && $this->input->get_post('search_keyword')){
+            $search_param = array(); 
+            $data['search_key'] =  $search_param['search_key'] = $this->input->get_post('search_key');
+            $data['search_keyword'] = $search_param['search_keyword'] = $this->input->get_post('search_keyword');
+        }
+        $result = $this->document->getDocumentList($page,$list_count,$search_param);
+
+        $data['fileList'] = $result['list'];
+        $data['pagination'] = $result['pagination'];
+
+        $this->load->library('sg_layout');
         $this->sg_layout->layout('admin/layout') ; 
         $this->sg_layout->module('document') ; 
         $this->sg_layout->add('admin/header') ; 
         $this->sg_layout->add('admin/sidebar') ; 
         $this->sg_layout->add('admin/document_list') ; 
         $this->sg_layout->add('admin/footer') ; 
-/*
-        $section = array(
-            'header'=>'admin/header',
-            'sidebar'=>'admin/sidebar',
-            'body'=>'admin/document_list',
-            'footer'=>'admin/footer'
-        ) ; 
-*/
 
-        $page_view = 10; // a page recode number
-        $base_url = base_url(); // base url
-        $act_url = $base_url . "document/admin/document/document_list"; // act url
-        $page_per_block = 5; // a page recode moveing number
-
-        // return data setting
-        $data = "";
-
-        if($page < 1){
-            $page = 1;
-            $data['page'] = 1;
-        }else{
-            $data['page'] = $page;
-        }
-
-        $start_idx = ($page - 1) * $page_view;
-
-        // search keyworld
-        if($this->input->get('key') && $this->input->get('keyword')){
-            $data['key'] = $this->input->get('key');
-            $data['keyword'] = $this->input->get('keyword');
-        }else {
-            $data['key'] = "";
-            $data['keyword']= "";
-        }
-
-
-        // get files in DB
-        $data['result']=$this->document->getDocumentList($start_idx, $page_view, $data);
-        // get page tocal count
-        $data['total_record'] = count($this->document->total_entry_count($data));
-        $data['total_page'] = ceil($data['total_record'] / $page_view);
-        // url
-        $data['base_url'] = $base_url;
-        $data['act_url'] = $act_url;
-
-        //$str= $this->admin_tmpl->parse($section,$data); 
-
-        $this->sg_layout->show($data) ; 
-        //$str= $this->admin_tmpl->parse($section,$data); 
-
-
-        //echo $str ;
+        $this->sg_layout->show($data) ;
     }
+
 
     public function writeform(){ 
 /*
@@ -173,57 +140,23 @@ class Document extends MX_Controller {
         $this->load->view('tempwriteform') ; 
     }        
 
-    public function photoform($page=1) {
+    public function photoform($page=1,$list_count=10) {
+
         $this->load->model('Document_model','document');
-        // page setting
-        $data = "";
-        $data['page_view'] = $page_view = 18; // a page recode number
-        $base_url = base_url(); // base url
-        $act_url = $base_url . "document/admin/photoform"; // act url
-        $page_per_block = 5; // a page recode moveing number
-        $start_idx = ($page - 1) * $page_view;
-/*
-        $prev_page = $page - 1;
-        $next_page = $page + 1;
-        $first_page = ((integer)(($page-1)/$page_per_block) * $page_per_block) + 1;
-        $last_page = $first_page + $page_per_block - 1;
-        $etc ="";
-        if($last_page > $total_page){
-            $last_page = $total_page;
-        }
-        if($key != "" && $keyword != ""){
-        $etc = "?key=" . $key . "&keyword=" . $keyword;
-        }
-        if($page < 1){
-            $page = 1;
-            $data['page'] = 1;
-        }else{
-            $data['page'] = $page;
-        }
-
-        $start_idx = ($page - 1) * $page_view;
-        // search keyworld 
-        if($this->input->get('key') && $this->input->get('keyword')){
-            $data['key'] = $this->input->get('key');
-            $data['keyword'] = $this->input->get('keyword');
-        }else {
-            $data['key'] = "";
-            $data['keyword']= "";
-        }
-*/
-        // get files in DB
-        $data['result']=$this->document->select_image();
-        // get page tocal count
-        $data['total_record'] = count($data['result']);
-        $data['total_page'] =ceil($data['total_record'] / $page_view);
-        // url
-        $data['base_url'] = $base_url;
-        $data['act_url'] = $act_url;
-
-
-        // get files in DB
-        //$data['result']=$this->document->select_url();
+            $page = $this->input->get_post('page');
+        //    if($this->input->get_post('key') && $this->input->get_post('keyword')){
+          //      $search_param['option'] = $this->input->get('key');
+            //    $search_param['value'] = $this->input->get('keyword');
+           //     $result = $this->filebox->getImageList($page,$list_count,$search_param);
+          //  }else {
+            $result = $this->document->getImageList($page,$list_count);
+        //    }
+        
+            $data['fileList'] = $result['list'];
+        $data['pagination'] = $result['pagination'];
+        $data['base_url'] = base_url();
         echo json_encode($data);
+
     }
 
     public function fileform() {
