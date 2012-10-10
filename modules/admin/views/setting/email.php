@@ -3,14 +3,14 @@
         <div class="control-group">
             <label class="control-label" for="input01">Email Addr</label>
             <div class="controls">
-                <input type="text" class="input-xlarge" name="email_addr" placeholder="your_email@abc.com">
+                <input type="text" class="input-xlarge" name="email" placeholder="your_email@abc.com">
                 <p class="help-block">메일 전송을위해 사용하실 이메일 주소를 적어주세요.</p>
             </div>
         </div> 
         <div class="control-group">
             <label class="control-label" for="input02">Email Password</label>
             <div class="controls">
-                <input type="text" class="input-xlarge" name="email_pw" placeholder="put your email password">
+                <input type="text" class="input-xlarge" name="smtp_pass" placeholder="put your email password">
                 <p class="help-block">입력하신 이메일주소의 비밀번호를 입력해주세요.</p>
             </div>
         </div>
@@ -28,14 +28,14 @@
         <div class="control-group">
             <label class="control-label" for="input04">SMTP HOST</label>
             <div class="controls">
-                <input type="text" class="input-xlarge" name="email_smtp_host">
+                <input type="text" class="input-xlarge" name="smtp_host">
                 <p class="help-block">SMTP HOST를 입력해주세요.</p>
             </div>
         </div>
         <div class="control-group">
             <label class="control-label" for="input05">SMTP PORT</label>
             <div class="controls">
-                <input type="text" class="input-xlarge" name="email_smtp_port">
+                <input type="text" class="input-xlarge" name="smtp_port">
                 <p class="help-block">SMTP PORT를 입력해주세요.</p>
             </div>
         </div> 

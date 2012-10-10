@@ -35,12 +35,12 @@ class setting extends MX_Controller {
     	    	);
     
     	
-    	$email = $this->input->post('email_addr') ;
+    	$email = $this->input->post('email') ;
     	$email_protocol = $this->input->post('email_protocol') ;
     	$email_path = $this->input->post('email_lib_path') ;
-    	$smtp_port = $this->input->post('email_smtp_port') ;
-    	$smtp_host = $this->input->post('email_smtp_host') ;
-    	$smtp_pass = $this->input->post('email_pw') ;
+    	$smtp_port = $this->input->post('smtp_port') ;
+    	$smtp_host = $this->input->post('smtp_host') ;
+    	$smtp_pass = $this->input->post('smtp_pass') ;
     	    	
     
     	$params['email'] = $email ;
@@ -51,7 +51,7 @@ class setting extends MX_Controller {
     	$params['smtp_pass'] = $smtp_pass ;
     	 
     	 $this->load->model('admin_model') ;
-    	 $this->admin_model->save_emailset($params); 
+    	 //$this->admin_model->save_emailset($params); 
     
     	$this->load->helper('file') ;
     	$f = read_file('./modules/admin/files/email.txt') ;

@@ -7,7 +7,7 @@
     <column name="mailtype" type="varchar" size="10" />
     <column name="charset" type="varchar" size="30" />
     <column name="smtp_port" type="int" size="5" />
-    <column name="smtp_host" type="int" size="5" />
-    <column name="smtp_user" type="int" size="5" />
+    <column name="smtp_host" type="varchar" size="5" />
+    <column name="smtp_user" type="varchar" size="5" />
     <column name="smtp_pass" type="varchar" size="25" />
 </table>
