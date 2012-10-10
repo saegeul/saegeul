@@ -11,7 +11,7 @@
 				<th></th>
 				<th>Manu Name</th>
 				<th>Menu Module</th>
-				<th style='text-align:center;width:265px;'>Menu Set</th>
+				<th style='text-align: center; width: 265px;'>Menu Set</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -22,9 +22,11 @@
 				<td><?=$site->site_module?></td>
 				<td>
 					<div>
-						<a class="btn btn-link btn_append" style='color: #333333;'><i class="icon-plus"></i>Append</a>
-						<a class="btn btn-link btn_edit" style='color: #333333;'><i class="icon-pencil"></i>Edit</a>
-						<a class="btn btn-link btn_delete" style='color: #333333;'><i class="icon-trash"></i>Delete</a>
+						<a class="btn btn-link btn_append" style='color: #333333;'><i
+							class="icon-plus"></i>Append</a> <a class="btn btn-link btn_edit"
+							style='color: #333333;'><i class="icon-pencil"></i>Edit</a> <a
+							class="btn btn-link btn_delete" style='color: #333333;'><i
+							class="icon-trash"></i>Delete</a>
 					</div>
 				</td>
 			</tr>
@@ -57,19 +59,25 @@
 					</label>
 				</div>
 			</div>
-			<div class="control-group hide" id='moduleCreate'>
+			<div class="control-group createModule hide">
 				<label class="control-label">모듈</label>
 				<div class="controls">
 					<select id='creatModuleValue' style='width: 100px; float: left;'>
 						<option value='document'>Document</option>
 						<option value='file'>File</option>
 						<option value='page'>Page</option>
-					</select> &nbsp; <select style='width: 210px;' class='hide'
-						id='moduleLink'>
+					</select> &nbsp; <select style='width: 210px;'
+						class='linkModule hide'>
 					</select>
 				</div>
 			</div>
-			<div class="control-group hide" id='linkURL'>
+			<div class="control-group createModuleId hide">
+				<label class="control-label">모듈 아이디 생성</label>
+				<div class="controls">
+					<input type="text" id="inputModuleId">
+				</div>
+			</div>
+			<div class="control-group linkURL hide">
 				<label class="control-label">연결URL</label>
 				<div class="controls">
 					<input type="text" id="inputLinkURL">

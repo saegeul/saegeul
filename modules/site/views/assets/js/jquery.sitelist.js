@@ -6,26 +6,31 @@ $(document).ready(function() {
 	$("input:radio[name=module]").click(function() {
 		var radio_val = $(":input:radio[name=module]:checked").val();
 		if(radio_val == 1){
-			$('#moduleCreate').show();
-			$('#moduleLink').hide();
-			$('#linkURL').hide();
+			$('.createModule').show();
+			$('.createModuleId').show();
+			$('.linkModule').hide();
+			$('.linkURL').hide();
 		}else if(radio_val == 2){
-			$('#moduleCreate').show();
-			$('#moduleLink').show();
-			$('#linkURL').hide();
+			$('.createModule').show();
+			$('.createModuleId').hide();
+			$('.linkModule').show();
+			$('.linkURL').hide();
 		}else{
-			$('#moduleCreate').hide();
-			$('#moduleLink').hide();
-			$('#linkURL').show();
+			$('.createModule').hide();
+			$('.createModuleId').hide();
+			$('.linkModule').hide();
+			$('.linkURL').show();
 		}
 	});
 	
 	$('.save_data').click(function() {
+		var module_id;
+		var module_val;
 		var menu_name = $('#inputMenuName').val();
 		var module_sel = $(':input:radio[name=module]:checked').val();
-		var module_val;
 		if(module_sel == 1){
 			module_val = $('#creatModuleValue').val();
+			module_id = $('#inputModuleId').val();
 		}else if(module_sel == 2){
 			module_val = $('#moduleLink').val();
 		}else if(module_sel == 3){
@@ -37,13 +42,14 @@ $(document).ready(function() {
 			url : "/saegeul/site/admin/site/saveMenu",
 			contentType : "application/json; charset=utf-8",
 			dataType : "json",
-			data : "menu_name=" + menu_name + "&module_sel=" + module_sel + "&module_val=" + module_val,
+			data : "menu_name=" + menu_name + "&module_sel=" + module_sel + "&module_val=" + module_val + "&module_id=" + module_id,
 			error : function() {
 				alert("error");
 			},
 			success : function(data) {
 				$('#inputMenuName').val('');
 				$('#creatModuleValue').val('');
+				$('#inputModuleId').val('');
 				$('#moduleLink').val('');
 				$('#inputLinkURL').val('');
 				$(':input:radio[name=module]:checked').attr('checked',false);

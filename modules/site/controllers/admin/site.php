@@ -52,11 +52,13 @@ class Site extends MX_Controller {
 		$data->module_sel = $this->input->get_post('module_sel');
 		$data->menu_name = $this->input->get_post('menu_name');
 		$data->module_val = $this->input->get_post('module_val');
+		$data->module_id = $this->input->get_post('module_id');
 
 		$module = $this->setSiteModule($data);
 
 		$args->site_name = $module->site_name;
 		$args->site_module = $module->site_module;
+		$args->site_module_id = $module->site_module_id;
 		$args->site_url = $module->site_url;
 		$args->reg_date = standard_date('DATE_ATOM',time());;
 		$args->uid = $this->uid;
@@ -69,19 +71,19 @@ class Site extends MX_Controller {
 
 		return json_encode(array($ret_data));
 	}
-	
+
 	public function deleteMenu(){
 		// load filebox model
 		$this->load->model('Site/Site_model','site');
-	
+
 		$site_srl = $this->input->get_post('site_srl');
-	
+
 		// insert file information in DB
 		$ret_data = $this->site->delete($site_srl) ;
-	
+
 		return json_encode(array($ret_data));
 	}
-	
+
 	public function setSiteModule($param){
 		$ret;
 		switch ($param->module_sel) {
@@ -92,6 +94,8 @@ class Site extends MX_Controller {
 					$ret->site_url = base_url() . "filebox/admin/filebox/uploadForm";
 				else if($param->module_val == "page")
 					$ret->site_url = base_url() . "page/admin/page/createPage";
+				$ret->site_module_id = $param->module_id;
+				$ret->site_module = $param->module_val;
 				break;
 			case 2:
 				if($param->module_val == "document")
@@ -103,11 +107,11 @@ class Site extends MX_Controller {
 				break;
 			case 3:
 				$ret->site_module = "LinkURL/" . $param->module_val;
+				$ret->site_url = $param->module_val;
 				break;
 			default:
 				break;
 		}
-		$ret->site_url = $param->module_val;
 		$ret->site_name = $param->menu_name;
 
 		return $ret;

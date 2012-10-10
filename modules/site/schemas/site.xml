@@ -3,6 +3,7 @@
 	<column name="site_name" type="varchar" size="250" />
 	<column name="site_url" type="varchar" size="250" />
 	<column name="site_module" type="varchar" size="50" />
+	<column name="site_module_id" type="varchar" size="50" />
 	<column name="parent_site_name" type="varchar" size="250" default="0"/>
 	<column name="parent_site_url" type="varchar" size="250"  default="0"/>
 	<column name="isvalid" type="varchar" size="1" default="Y" />
