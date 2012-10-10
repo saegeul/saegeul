@@ -1,0 +1,14 @@
+<table name="site">
+	<column name="site_srl" type="int" size="11" auto_increment="true" primary_key="true" />
+	<column name="site_name" type="varchar" size="250" />
+	<column name="site_url" type="varchar" size="250" />
+	<column name="site_module" type="varchar" size="50" />
+	<column name="parent_site_name" type="varchar" size="250" default="0"/>
+	<column name="parent_site_url" type="varchar" size="250"  default="0"/>
+	<column name="isvalid" type="varchar" size="1" default="Y" />
+	<column name="reg_date" type="date" />
+	<column name="ip_address" type="varchar" size="128" not_null="true" />
+	<column name="uid" type="int" size="11" not_null="true" />
+    <column name="username" type="varchar" size="50"   not_null="true" />
+    <column name="email" type="varchar" size="100"   not_null="true" /> 
+</table>

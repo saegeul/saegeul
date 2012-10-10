@@ -41,8 +41,8 @@ class Clouddrive extends MX_Controller {
 		$this->oauth_verifier = $this->session->userdata('session_kt_ucloud_oauth_verifier');
 		$this->oauth_token_secret = $this->session->userdata('session_kt_ucloud_oauth_token_secret');
 		
-		if($this->oauth_token == "" || $this->oauth_token_secret == "")
-			redirect('auth/oauth', 'refresh');
+// 		if($this->oauth_token == "" || $this->oauth_token_secret == "")
+// 			redirect('auth/oauth', 'refresh');
 			
 
 		$this->load->library('oauth',array(
