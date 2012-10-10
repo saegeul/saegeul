@@ -1,5 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed') ; 
-class Site extends MX_Controller {
+class Sitemap extends MX_Controller {
 
 	// DB isert user information
 	protected $username;
@@ -25,17 +25,17 @@ class Site extends MX_Controller {
 			redirect('member/login', 'refresh');
 	}
 
-	public function setSiteMap(){
-		$data['action'] = 'siteMap';
-		$this->load->model('Site/Site_model','site');
+	public function siteMap(){
+		$data['action'] = 'SiteMap';
+		$this->load->model('Sitemap/Sitemap_model','sitemap');
 
-		$result = $this->site->getSiteList();
-		$data['siteList'] = $result['list'];
+		$result = $this->sitemap->getSiteList();
+		$data['siteMapList'] = $result['list'];
 
 		$this->load->library('sg_layout');
 
 		$this->sg_layout->layout('admin/layout');
-		$this->sg_layout->module('site');
+		$this->sg_layout->module('sitemap');
 
 		$this->sg_layout->add('admin/header');
 		$this->sg_layout->add('admin/sidebar');
@@ -47,7 +47,7 @@ class Site extends MX_Controller {
 
 	public function saveMenu(){
 		// load filebox model
-		$this->load->model('Site/Site_model','site');
+		$this->load->model('Sitemap/Sitemap_model','sitemap');
 
 		$data->module_sel = $this->input->get_post('module_sel');
 		$data->menu_name = $this->input->get_post('menu_name');
@@ -56,30 +56,30 @@ class Site extends MX_Controller {
 
 		$module = $this->setSiteModule($data);
 
-		$args->site_name = $module->site_name;
-		$args->site_module = $module->site_module;
-		$args->site_module_id = $module->site_module_id;
-		$args->site_url = $module->site_url;
-		$args->reg_date = standard_date('DATE_ATOM',time());;
+		$args->site_name = isset($module->site_name)?$module->site_name:"";
+		$args->site_module = isset($module->site_module)?$module->site_module:"";
+		$args->site_module_id = isset($module->site_module_id)?$module->site_module_id:"";
+		$args->site_url = isset($module->site_url)?$module->site_url:"";
+		$args->reg_date = standard_date('DATE_ATOM',time());
 		$args->uid = $this->uid;
 		$args->username = $this->username;
 		$args->email = $this->email;
 		$args->ip_address = $this->input->ip_address();
 
 		// insert file information in DB
-		$ret_data = $this->site->insert($args) ;
+		$ret_data = $this->sitemap->insert($args) ;
 
 		return json_encode(array($ret_data));
 	}
 
 	public function deleteMenu(){
 		// load filebox model
-		$this->load->model('Site/Site_model','site');
+		$this->load->model('Sitemap/Sitemap_model','sitemap');
 
 		$site_srl = $this->input->get_post('site_srl');
 
 		// insert file information in DB
-		$ret_data = $this->site->delete($site_srl) ;
+		$ret_data = $this->sitemap->delete($site_srl) ;
 
 		return json_encode(array($ret_data));
 	}

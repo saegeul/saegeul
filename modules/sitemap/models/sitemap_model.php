@@ -1,5 +1,5 @@
 <?php
-class Site_model extends CI_Model {
+class Sitemap_model extends CI_Model {
 	var $table = 'site';
 
 	function __construct(){

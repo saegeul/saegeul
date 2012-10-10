@@ -39,7 +39,7 @@ $(document).ready(function() {
 		
 		$.ajax({
 			type : "GET",
-			url : "/saegeul/site/admin/site/saveMenu",
+			url : "/saegeul/sitemap/admin/sitemap/saveMenu",
 			contentType : "application/json; charset=utf-8",
 			dataType : "json",
 			data : "menu_name=" + menu_name + "&module_sel=" + module_sel + "&module_val=" + module_val + "&module_id=" + module_id,
@@ -70,7 +70,7 @@ $(document).ready(function() {
 		var site_srl = $(this).parent().parent().parent().attr('id');
 		$.ajax({
 			type : "GET",
-			url : "/saegeul/site/admin/site/deleteMenu",
+			url : "/saegeul/sitemap/admin/sitemap/deleteMenu",
 			contentType : "application/json; charset=utf-8",
 			dataType : "json",
 			data : "site_srl=" + site_srl,

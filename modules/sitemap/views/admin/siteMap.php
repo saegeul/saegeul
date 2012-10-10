@@ -1,5 +1,5 @@
 <?php $this->load->helper('asset') ?>
-<?echo js_asset('site','jquery.sitelist.js')?>
+<?echo js_asset('sitemap','jquery.sitemaplist.js')?>
 <div class="content" style='width: 98%;'>
 	<br>
 	<div style='float: right;'>
@@ -11,11 +11,11 @@
 				<th></th>
 				<th>Manu Name</th>
 				<th>Menu Module</th>
-				<th style='text-align: center; width: 265px;'>Menu Set</th>
+				<th style='text-align: center; width: 265px;'>Menu 만들기</th>
 			</tr>
 		</thead>
 		<tbody>
-			<?php foreach($siteList as $key => $site) :?>
+			<?php foreach($siteMapList as $key => $site) :?>
 			<tr id='<?=$site->site_srl?>'>
 				<td><?=$site->site_srl?></td>
 				<td><?=$site->site_name?></td>
