@@ -2,6 +2,7 @@
 #selectable .ui-selected { background: #F39814; color: white; }
 #selectable { list-style-type: none;}
 #selectable li { float:left;height:100%; width:23%;}
+.replace { height: 130px; line-height: 12em;  width: 13%;}
 /*
 #content_body {
 float: left;

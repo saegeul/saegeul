@@ -34,11 +34,11 @@ DOC.Element.Image = function(oConfig){
     that.editor = function($el){ 
         that.turnOnEditor() ; 
         var $photoArea = $('<div class="well">'
-                             + '<div id="contentArea" ></div>'
-                             + '<div id="slider" class="ui-slider-horizontal ui-slider" style="margin-top:5px;margin-bottom:5px;width:100%;"></div>'
+                             + '<div id="contentArea" style="background-color:white;"></div>'
+                             + '<div id="parginationArea" style=""></div>'
 //pargination start
 //pagination end
-                             + '<div id="selectArea" style="height:130px;background-color:white;border:1px solid black;"></div>'
+                             + '<div id="selectArea" style="height:140px;background-color:white;" ></div>'
                              + '<a class="btn btn-large btn-primary append_btn" > APPEND</a>'
                           + '</div>'
                         );
@@ -77,20 +77,23 @@ DOC.Element.Image = function(oConfig){
 	    		$.each(data.fileList, function(key,state){
 	    			obj = state;
 	    			markup += "<li>"
-			   			+ "<div align='center' style='height:120px;width:120px;-moz-transition: all 0.2s ease-in-out 0s;border: 1px solid #DDDDDD;border-radius: 4px 4px 4px 4px;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);display: block;line-height: 20px;padding: 4px;'>"
-		  	   			+ "<img alt='" + obj.file_srl + "' src='" + data.base_url + obj.image_thumb_path + "'>"
+			   			+ "<div class='imgPolaroid' align='center' style='background-color:white;height:120px;width:120px;-moz-transition: all 0.2s ease-in-out 0s;border: 1px solid #DDDDDD;border-radius: 4px 4px 4px 4px;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);display: block;line-height: 20px;padding: 4px;'>"
+		  	   			+ "<img alt='" + obj.file_srl + "' src='" + data.base_url + obj.image_thumb_path + "' style='height:100%' value='" +data.base_url + obj.full_path + "'>"
+
 		  	   			+ "</div>";
 	    		});
 	    		
-	    		markup += "</ul>"
-					+ "<div class='pagination' align='center' style='margin-left:-10px;'>"
-					+ "<ul>"
+	    		markup += "</ul>";
+	 $('#contentArea').html(markup);   		
+
+		        markup = "<div class='pagination' align='center' style='margin-left:-10px;'>"
+					+ "<ul>";
 				for(var i=first_page;i<page;i++){
 					markup += "<li class='pageBtn'>"
 					+ "<a id='" + i + "' style='color: #333333;'>" + i + "</a>"
 					+ "</li>";
 				}
-	    		markup += "<li class=active><a href=javascript:void(0)>" + page + "</a></li>"
+	    		markup += "<li class=active><a href=javascript:void(0)>" + page + "</a></li>";
 	    		for(var i=(page + 1);i<=last_page;i++){
 					markup += "<li class='pageBtn'>"
 					+ "<a id='" + i + "' style='color: #333333;'>" + i + "</a>"
@@ -98,9 +101,17 @@ DOC.Element.Image = function(oConfig){
 				}
 	    		markup += "</ul></div>";
 	    		
-	 $('#contentArea').html(markup);   		
-			}
-	
+	 $('#parginationArea').html(markup);   		
+
+        $photoArea.find('#contentArea div').draggable({
+            helper: "clone",
+            scope : "tasks",
+            drag: function(event,ui) {
+            ui.helper.css('width','200px');
+            ui.helper.css('height','200px');
+            },
+        });
+}	
         });
 $(".pageBtn").live('click',function() {
 	var page = $(this).find('a').attr('id');
@@ -141,14 +152,15 @@ $(".pageBtn").live('click',function() {
 	    		$.each(data.fileList, function(key,state){
 	    			obj = state;
 	    			markup += "<li>"
-			   			+ "<div align='center' style='height:120px;width:120px;-moz-transition: all 0.2s ease-in-out 0s;border: 1px solid #DDDDDD;border-radius: 4px 4px 4px 4px;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);display: block;line-height: 20px;padding: 4px;'>"
-		  	   			+ "<img alt='" + obj.file_srl + "' src='" + data.base_url + obj.image_thumb_path + "'>"
+			   			+ "<div class='imgPolaroid' align='center' style='height:120px;width:120px;-moz-transition: all 0.2s ease-in-out 0s;border: 1px solid #DDDDDD;border-radius: 4px 4px 4px 4px;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);display: block;line-height: 20px;padding: 4px;'>"
+		  	   			+ "<img alt='" + obj.file_srl + "' src='" + data.base_url + obj.image_thumb_path + "' style='height:100%' value='" + data.base_url + obj.full_path + "'>"
 		  	   			+ "</div>";
 	    		});
 	    		
-	    		markup += "</ul>"
-					+ "<div class='pagination' align='center' style='margin-left:-10px;'>"
-					+ "<ul>"
+	    		markup += "</ul>";
+	 $('#contentArea').html(markup);   		
+		        markup = "<div class='pagination' align='center' style='margin-left:-10px;'>"
+					+ "<ul>";
 				for(var i=first_page;i<page;i++){
 					markup += "<li class='pageBtn'>"
 					+ "<a id='" + i + "' style='color: #333333;'>" + i + "</a>"
@@ -162,78 +174,30 @@ $(".pageBtn").live('click',function() {
 				}
 	    		markup += "</ul></div>";
 	    		
-	 $('#contentArea').html(markup);   		
+	 $('#parginationArea').html(markup);   		
+         $photoArea.find('#contentArea div').draggable({
+             helper: "clone",
+             scope : "tasks",
+             drag: function(event,ui) {
+                 ui.helper.css('width','200px');
+                 ui.helper.css('height','200px');
+             },
+         });
+
+
 			}
 	});
 });
 
 
 
-       
-
-      //  markup.find('#selectArea').sortable();
-
-/*
-        var jsonimage = "photoform";
-        var params = {
-            from: 1,
-            to: 10
-        };
-
-        $.getJSON(jsonimage, params, function(data, status) {
-
-        var $sliderStep = (100 - ( 100 % parseInt(data.total_page - 1))) / parseInt(data.total_page - 1);
-
-
-        imageInsert(0, data, data.page_view);
-//        console.log(data);
-
-        $photoArea.find('#slider').slider({
-            range: "min",
-            animate: true,
-            max : 100,
-            min : 0,
-            step : $sliderStep,
-            slide: function( event, ui ) {
-                var record = data.page_view * ( ui.value / $sliderStep ) ; 
-                $("#contentArea .img-polaroid").remove();
-                imageInsert( record, data, data.page_view);
-            }
-        });
-
-        });
-        function imageInsert(start_record, data, page_view )
-        {
-            for( var i =  start_record , j = 0 ; j < page_view ; j++,i++ )
-            //    console.log(file_url);
-            {
-                if( i == data.total_record ) break;
-                $(function()  {
-                    $photoArea.find('#contentArea').append('<img class="img-polaroid" src="/saegeul/'+data.result[i].image_thumb_path+'" value="/saegeul/'+data.result[i].full_path+'" style="margin:1px;width:10%;height:100px;">');          
-                    $photoArea.find('#contentArea img').draggable({
-         //               connectToSortable: "#selectArea",
-                        helper: "clone",
-                        scope : "tasks",
-                        drag: function(event,ui) {
-                            ui.helper.css('width','200px');
-                            ui.helper.css('height','200px');
-                        }
-                    });
-       //             $photoArea.find('#contentArea img').mouseenter(function() {    });
-
-                });
-                start_record++;
-            }
-        }   
-
-
-*/
-               $photoArea.find('#selectArea').droppable({
+        $photoArea.find('#selectArea').droppable({
             scope: "tasks",
-            accept: ".img-polaroid",
+            accept: ".imgPolaroid",
+            activeClass: "ui-state-highlight",
             drop: function(event, ui) {
-                var $photo = $('<img src="'+ui.draggable.attr("value")+'" class="img img-polaroid"/ >');
-                $photo.appendTo('#selectArea').css('width','12%').css('height','120px');
+                var $photo = $('<img src="'+ui.draggable.find('img').attr("value")+'" class="img img-polaroid"/ >');
+               $photo.appendTo('#selectArea').css('height','130px').css('width','13%');
                 $photo.click( function() {
                     $('<div>사진 선택을 해제하시겠습니까?</div>').dialog({
                         resizable: false,
@@ -253,7 +217,11 @@ $(".pageBtn").live('click',function() {
                 });
             }
         });
-       // $photoArea.find('#selectArea').sortable();
+        
+        $photoArea.find('#selectArea').sortable({
+            placeholder: "replace ui-state-highlight", 
+        });
+        $photoArea.find('#selectArea').disableSelection();
 
         $photoArea.find('.append_btn').click(function(){
             var $photo_record = $("#selectArea img"); 
