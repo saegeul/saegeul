@@ -82,7 +82,7 @@ $(document).ready(function () {
 	    			   first_page = last_page - (temp + 1);
 	    		   }
 	    	   }else {
-	    		   first_page = page;
+	    		   first_page = 1;
 	    		   last_page = page_count;
 	    	   }
 	    	   
@@ -148,7 +148,7 @@ $(".pageBtn").live('click',function() {
 	    			   }
 	    		   }
 	    	   }else {
-	    		   first_page = page;
+	    		   first_page = 1;
 	    		   last_page = page_count;
 	    	   }
 	    	   

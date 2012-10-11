@@ -80,7 +80,7 @@
 				}
 			}
 		}else{
-			$first_page = $pagination['page'];
+			$first_page = 1;
 			$last_page = $pagination['page_count'];
 		}
 		?>
