@@ -25,6 +25,11 @@
 	line-height: 30px;
 }
 
+li:hover {
+  color: black ;
+  background-color: #def ;
+}
+
 .side {
 	float: right;
 }
