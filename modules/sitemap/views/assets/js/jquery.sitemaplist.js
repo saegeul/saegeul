@@ -1,4 +1,33 @@
 $(document).ready(function() {
+	
+	$('.menu').each(function() {
+		var parent_site_srl = $(this).attr('id');
+		var markup="";
+		$.ajax({
+			type : "GET",
+			url : "/saegeul/sitemap/admin/sitemap/getChildMenu",
+			contentType : "application/json; charset=utf-8",
+			dataType : "json",
+			data : "parent_site_srl=" + parent_site_srl,
+			error : function() {
+				alert("error");
+			},
+			success : function(data) {
+				$.each(data.list, function(key,state){
+	    			obj = state;
+	    			markup += "<li class='childMenu' id='" + obj.site_srl + "'>" 
+							+ "<span class='menuInfo'><a class='btn btn-link btnMoveSite' style='color: #333333;'><i class='icon-move'></i></a>" + obj.site_name + "</span>"
+							+ "<span class='side'> "
+								+ "<a class='btn btn-link btnEditSite' style='color: #333333;'><i class='icon-pencil'></i>Edit</a>"
+								+ "<a class='btn btn-link btnDeleteSite' style='color: #333333;'><i class='icon-trash'></i>Delete</a>"
+							+ "</span>"
+						+ "</li>";
+	    		});
+				$(markup).appendTo("#"+parent_site_srl);
+			}
+		});
+	});
+	
 	$('.btnCreateMenu').click(function() {
 		$('#inputMenuName').val('');
 		$('#inputLinkURL').val('');
@@ -12,6 +41,7 @@ $(document).ready(function() {
 		$('.isValid').hide();
 		$('.saveData').show();
 		$('.modifyData').hide();
+		$('.appendData').hide();
 		$('#menuModal').modal('show');
 	});
 
@@ -73,11 +103,56 @@ $(document).ready(function() {
 	});
 	
 	$('.btnAppendSite').click(function() {
-		alert("aa");
+		var site_srl = $(this).parent().parent().attr('id');
+		$('#inputParentSrl').val(site_srl);
+		$('#inputMenuName').val('');
+		$('#inputLinkURL').val('');
+		$(":input:radio[name=module]:checked").attr('checked',false);
+		$('#radioIsValidOk').attr('checked','checked');
+		$('#radioCreateModule').attr('disabled',false);
+		$('.createModule').hide();
+		$('.createModuleId').hide();
+		$('.linkModule').hide();
+		$('.linkURL').hide();
+		$('.isValid').hide();
+		$('.saveData').hide();
+		$('.modifyData').hide();
+		$('.appendData').show();
+		$('#menuModal').modal('show');
 	});
 	
-	$('.btnEditSite').click(function() {
-		var site_srl = $(this).parent().parent().parent().attr('id');
+	$('.appendData').click(function() {
+		var site_srl = $('#inputParentSrl').val();
+		var moduleId;
+		var moduleValue;
+		var menuName = $('#inputMenuName').val();
+		var moduleOrLinUrl = $(':input:radio[name=module]:checked').val();
+		var menuIsValid = $(':input:radio[name=isvalid]:checked').val();
+		if(moduleOrLinUrl == 1){
+			moduleValue = $('#creatModuleValue').val();
+			moduleId = $('#inputModuleId').val();
+		}else if(moduleOrLinUrl == 2){
+			
+		}else if(moduleOrLinUrl == 3){
+			moduleValue = $('#inputLinkURL').val();
+		}
+		$.ajax({
+			type : "GET",
+			url : "/saegeul/sitemap/admin/sitemap/saveMenu",
+			contentType : "application/json; charset=utf-8",
+			dataType : "json",
+			data : "menuName=" + menuName + "&moduleOrLinUrl=" + moduleOrLinUrl + "&moduleValue=" + moduleValue + "&moduleId=" + moduleId + "&menuIsValid=" + menuIsValid + "&site_srl=" + site_srl,
+			error : function() {
+				alert("error");
+			},
+			success : function(data) {
+				location.reload();
+			}
+		});
+	});
+	
+	$('.btnEditSite').live('click',function() {
+		var site_srl = $(this).parent().parent().attr('id');
 		$.ajax({
 			type : "GET",
 			url : "/saegeul/sitemap/admin/sitemap/getMenu",
@@ -105,6 +180,7 @@ $(document).ready(function() {
 					$('.isValid').show();
 					$('.modifyData').show();
 					$('.saveData').hide();
+					$('.appendData').hide();
 					$('#menuModal').modal('show');
 				}else{
 					$('#inputMenuName').val(data.site_name);
@@ -121,14 +197,15 @@ $(document).ready(function() {
 					$('.isValid').show();
 					$('.modifyData').show();
 					$('.saveData').hide();
+					$('.appendData').hide();
 					$('#menuModal').modal('show');
 				}
 			}
 		});
 	});
 	
-	$('.btnDeleteSite').click(function() {
-		var site_srl = $(this).parent().parent().parent().attr('id');
+	$('.btnDeleteSite').live('click',function() {
+		var site_srl = $(this).parent().parent().attr('id');
 		$.ajax({
 			type : "GET",
 			url : "/saegeul/sitemap/admin/sitemap/deleteMenu",

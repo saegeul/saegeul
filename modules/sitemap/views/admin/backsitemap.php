@@ -1,30 +1,37 @@
 <?php $this->load->helper('asset') ?>
-<?echo css_asset('sitemap','sitemap.css')?>
 <?echo js_asset('sitemap','jquery.sitemaplist.js')?>
 <div class="content" style='width: 98%;'>
 	<br>
 	<div style='float: right;'>
 		<a class="btn btnCreateMenu"><i class="icon-plus"></i> 메뉴추가</a>
 	</div>
-	<br> <br> <br>
-	<div class="siteMap">
-		<br>
-		<ul class='nav nav-list'>
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>Manu Name</th>
+				<th>Menu Module</th>
+				<th style='text-align: center; width: 265px;'>Menu 만들기</th>
+			</tr>
+		</thead>
+		<tbody>
 			<?php foreach($siteMapList as $key => $site) :?>
-			<li class='menu' id='<?=$site->site_srl;?>'>
-				<span class="menuInfo"><a class="btn btn-link btnMoveSite" style='color: #333333;'><i class="icon-move"></i></a><?=$site->site_name;?> </span> 
-				<span class="side"> <a class="btn btn-link btnAppendSite"
-						style='color: #333333;'><i class="icon-plus"></i>Append</a> <a
-						class="btn btn-link btnEditSite" style='color: #333333;'><i
+			<tr id='<?=$site->site_srl?>'>
+				<td><?=$site->site_name?></td>
+				<td><?=$site->site_module?></td>
+				<td>
+					<div>
+						<a class="btn btn-link btnAppendSite" style='color: #333333;'><i
+							class="icon-plus"></i>Append</a> <a
+							class="btn btn-link btnEditSite" style='color: #333333;'><i
 							class="icon-pencil"></i>Edit</a> <a
-						class="btn btn-link btnDeleteSite" style='color: #333333;'><i
+							class="btn btn-link btnDeleteSite" style='color: #333333;'><i
 							class="icon-trash"></i>Delete</a>
-				</span>
-			</li>
+					</div>
+				</td>
+			</tr>
 			<?php endforeach ;?>
-		</ul>
-		<br>
-	</div>
+		</tbody>
+	</table>
 </div>
 <div class="modal hide fade" id="menuModal" style="width: 490px;">
 	<div class="modal-header">
@@ -90,8 +97,8 @@
 		</div>
 	</div>
 	<div class="modal-footer">
-		<a class="btn" data-dismiss="modal">Close</a> <a
-			href="javascript:void(0)" class="btn btn-primary saveData hide">저장</a>
+		<a class="btn" data-dismiss="modal">Close</a> 
+		<a href="javascript:void(0)" class="btn btn-primary saveData hide">저장</a>
 		<a href="javascript:void(0)" class="btn btn-primary modifyData hide">수정</a>
 		<a href="javascript:void(0)" class="btn btn-primary appendData hide">추가</a>
 	</div>

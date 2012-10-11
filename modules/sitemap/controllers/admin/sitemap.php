@@ -47,9 +47,11 @@ class Sitemap extends MX_Controller {
 
 	public function saveMenu(){
 		$this->load->model('Sitemap/Sitemap_model','sitemap');
-		
+
+		$parent_site_srl = $this->input->get_post('site_srl');
+
 		$data->menuName = $this->input->get_post('menuName');
-		$data->moduleOrLinUrl = $this->input->get_post('moduleOrLinUrl');		
+		$data->moduleOrLinUrl = $this->input->get_post('moduleOrLinUrl');
 		$data->moduleValue = $this->input->get_post('moduleValue');
 		$data->moduleId = $this->input->get_post('moduleId');
 		$data->menuIsValid = $this->input->get_post('menuIsValid');
@@ -60,6 +62,7 @@ class Sitemap extends MX_Controller {
 		$args->site_module = isset($module->site_module)?$module->site_module:"";
 		$args->site_module_id = isset($module->site_module_id)?$module->site_module_id:"";
 		$args->site_url = isset($module->site_url)?$module->site_url:"";
+		$args->parent_site_srl = $parent_site_srl?$parent_site_srl:0;
 		$args->is_Valid = isset($module->is_valid)?$module->is_valid:"";
 		$args->reg_date = standard_date('DATE_ATOM',time());
 		$args->uid = $this->uid;
@@ -72,7 +75,7 @@ class Sitemap extends MX_Controller {
 
 		return json_encode(array($ret_data));
 	}
-	
+
 	public function grouppingParam($param){
 		$ret;
 		switch ($param->moduleOrLinUrl) {
@@ -103,13 +106,13 @@ class Sitemap extends MX_Controller {
 		}
 		$ret->is_valid = $param->menuIsValid;
 		$ret->site_name = $param->menuName;
-	
+
 		return $ret;
 	}
 
 	public function deleteMenu(){
 		$site_srl = $this->input->get_post('site_srl');
-		
+
 		// load sitemap model
 		$this->load->model('Sitemap/Sitemap_model','sitemap');
 		// insert file information in DB
@@ -117,28 +120,40 @@ class Sitemap extends MX_Controller {
 
 		return json_encode(array($ret_data));
 	}
-	
+
 	public function getMenu(){
 		$site_srl = $this->input->get_post('site_srl');
-	
+
 		// load sitemap model
 		$this->load->model('Sitemap/Sitemap_model','sitemap');
 		$menu_obj = $this->sitemap->getSite($site_srl);
-	
+
 		echo json_encode($menu_obj);
 	}
-	
+
+	public function getChildMenu(){
+		$parent_site_srl = $this->input->get_post('parent_site_srl');
+
+		// load sitemap model
+		$this->load->model('Sitemap/Sitemap_model','sitemap');
+		$result = $this->sitemap->getChildSiteList($parent_site_srl);
+
+		$data['list'] = $result['list'];
+
+		echo json_encode($data);
+	}
+
 	public function modifyMenu(){
 		$this->load->model('Filebox/Filebox_model','filebox') ;
-	
+
 		// get modify data
 		$file_srl = $this->input->get_post('file_srl');
 		$data['original_file_name'] = $this->input->get_post('original_file_name');
 		$data['isvalid'] = $this->input->get_post('isvalid');
 		$data['tag'] = $this->input->get_post('tag');
-	
+
 		$this->filebox->update($data,$file_srl);
-	
+
 		if($this->input->get_post('tag') != ""){
 			$args;
 			$args->tag = $data['tag'];
@@ -147,11 +162,11 @@ class Sitemap extends MX_Controller {
 			$args->username = $this->username;
 			$args->email = $this->email;
 			$args->uid = $this->uid;
-	
+
 			// insert file information in DB
 			$ret_data = $this->filebox->insert_tag($args,'filetag') ;
 		}
-	
+
 		echo json_encode('success');
 	}
 }
