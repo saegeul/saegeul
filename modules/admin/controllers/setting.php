@@ -58,7 +58,7 @@ class setting extends MX_Controller {
     	$params['smtp_pass'] = $smtp_pass ;
     	 
     	 $this->load->model('admin_model') ;
-    	 //$this->admin_model->save_emailset($params); 
+    	$this->admin_model->save_emailset($params); 
     
     	$this->load->helper('file') ;
     	$f = read_file('./modules/admin/files/email.txt') ;
