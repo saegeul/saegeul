@@ -1,26 +1,33 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed') ; 
 
 class setting extends MX_Controller { 
+	
+	
+	function __construct()
+	{
+		parent::__construct();
+	
+		$this->load->helper(array('form', 'url'));
+		
+	}
+	
     public function index(){
        $this->site();
 
     }
 
     public function email(){ 
-        $layout = array() ; 
-        $this->load->library('admin_tmpl') ; 
+        $this->load->library('sg_layout') ; 
 
-        $section = array(
-            'header'=>'setting/header',
-            'sidebar'=>'setting/sidebar',
-            'body'=>'setting/email',
-            'footer'=>'setting/footer'
-        ) ; 
+        $this->sg_layout->layout('admin/layout') ; 
+        $this->sg_layout->module('admin') ; 
 
-        
-        $str= $this->admin_tmpl->parse($section); 
-
-        echo $str ; 
+        $this->sg_layout->add('setting/header') ; 
+       	$this->sg_layout->add('setting/sidebar') ; 
+        $this->sg_layout->add('setting/email') ; 
+        $this->sg_layout->add('setting/footer') ;
+	
+        $this->sg_layout->show() ; 
     }
     
     public function setupEmail(){
@@ -51,7 +58,7 @@ class setting extends MX_Controller {
     	$params['smtp_pass'] = $smtp_pass ;
     	 
     	 $this->load->model('admin_model') ;
-    	 //$this->admin_model->save_emailset($params); 
+    	$this->admin_model->save_emailset($params); 
     
     	$this->load->helper('file') ;
     	$f = read_file('./modules/admin/files/email.txt') ;
@@ -62,18 +69,17 @@ class setting extends MX_Controller {
     
     	write_file(APPPATH.'config/email.php',$f) ;
     	
-    	$this->load->library('admin_tmpl') ;
-    	
-    	$section = array(
-    			'header'=>'setting/header',
-    			'sidebar'=>'setting/sidebar',
-    			'body'=>'setting/general_message',
-    			'footer'=>'setting/footer'
-    	) ;
-    	
-    	$str= $this->admin_tmpl->parse($section);
-    	
-    	echo $str ;
+    	 $this->load->library('sg_layout') ; 
+
+        $this->sg_layout->layout('admin/layout') ; 
+        $this->sg_layout->module('admin') ; 
+
+        $this->sg_layout->add('setting/header') ; 
+       	$this->sg_layout->add('setting/sidebar') ; 
+        $this->sg_layout->add('setting/general_message') ; 
+        $this->sg_layout->add('setting/footer') ;
+	
+        $this->sg_layout->show() ; 
     	
     	
     	
@@ -85,19 +91,17 @@ class setting extends MX_Controller {
     
 
     public function site(){
-        $this->load->library('admin_tmpl') ; 
+     $this->load->library('sg_layout') ; 
 
-        $section = array(
-            'header'=>'setting/header',
-            'sidebar'=>'setting/sidebar',
-            'body'=>'setting/site',
-            'footer'=>'setting/footer'
-        ) ; 
+        $this->sg_layout->layout('admin/layout') ; 
+        $this->sg_layout->module('admin') ; 
 
-        
-        $str= $this->admin_tmpl->parse($section); 
-
-        echo $str ; 
+        $this->sg_layout->add('setting/header') ; 
+       	$this->sg_layout->add('setting/sidebar') ; 
+        $this->sg_layout->add('setting/site') ; 
+        $this->sg_layout->add('setting/footer') ;
+	
+        $this->sg_layout->show() ; 
     }
     
     public function setupSite(){
@@ -130,18 +134,17 @@ class setting extends MX_Controller {
     
     	write_file(APPPATH.'config/email.php',$f) ;
      */	 
-    	 $this->load->library('admin_tmpl') ;
-    	
-    	$section = array(
-    			'header'=>'setting/header',
-    			'sidebar'=>'setting/sidebar',
-    			'body'=>'setting/general_message',
-    			'footer'=>'setting/footer'
-    	) ;
-    	
-    	$str= $this->admin_tmpl->parse($section);
-    	
-    	echo $str ;
+    	 $this->load->library('sg_layout') ; 
+
+        $this->sg_layout->layout('admin/layout') ; 
+        $this->sg_layout->module('admin') ; 
+
+        $this->sg_layout->add('setting/header') ; 
+       	$this->sg_layout->add('setting/sidebar') ; 
+        $this->sg_layout->add('setting/general_message') ; 
+        $this->sg_layout->add('setting/footer') ;
+	
+        $this->sg_layout->show() ; 
     	 
     }
     
@@ -217,47 +220,44 @@ class setting extends MX_Controller {
 
         $data['schema_list']= $file_list ;
         //$this->_register_admin() ; 
-        $layout = array() ; 
-        $this->load->library('admin_tmpl') ; 
+        $this->load->library('sg_layout') ; 
 
-        $section = array(
-            'header'=>'setting/header',
-            'sidebar'=>'setting/sidebar',
-            'body'=>'setting/dbtable',
-            'footer'=>'setting/footer'
-        ) ; 
+        $this->sg_layout->layout('admin/layout') ; 
+        $this->sg_layout->module('admin') ; 
 
-        
-        $str= $this->admin_tmpl->parse($section,$data); 
-
-        echo $str ; 
+        $this->sg_layout->add('setting/header') ; 
+       	$this->sg_layout->add('setting/sidebar') ; 
+        $this->sg_layout->add('setting/dbtable') ; 
+        $this->sg_layout->add('setting/footer') ;
+	
+        $this->sg_layout->show($data) ; 
     }
 }
 
-function showshow($message)
-{
+// function showshow($message)
+// {
 
-	$this->session->set_flashdata('message', $message);
+// 	$this->session->set_flashdata('message', $message);
 	
 
 
 	
-	$this->load->library('admin_tmpl') ;
+// 	$this->load->library('admin_tmpl') ;
 	 
-	$section = array(
-			'header'=>'setting/header',
-			'sidebar'=>'setting/sidebar',
-			'body'=>'setting/general_message',
-			'footer'=>'setting/footer'
-	) ;
+// 	$section = array(
+// 			'header'=>'setting/header',
+// 			'sidebar'=>'setting/sidebar',
+// 			'body'=>'setting/general_message',
+// 			'footer'=>'setting/footer'
+// 	) ;
 	 
-	$str= $this->admin_tmpl->parse($section, array('message' => $message));
+// 	$str= $this->admin_tmpl->parse($section, array('message' => $message));
 	 
-	echo $str ;
+// 	echo $str ;
 	 
 	 
 	
-}
+// }
 
 /* End of file setting.php */
 /* Location : ./modules/admin/setting.php */ 
