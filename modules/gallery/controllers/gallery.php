@@ -10,7 +10,10 @@ class Gallery extends MX_Controller {
     }
 
     public function index(){ 
-        
+    	$this->load->model('Gallery_model'); // 모델 - 호출
+    	$data['result'] = $this->Gallery_model->get_entry();
+    	
+        $this->load->view('gal', $data);
     }
 
     public function photo(){ 
@@ -19,22 +22,10 @@ class Gallery extends MX_Controller {
     	
     	//DB Get
     	$this->load->model('Gallery_model'); // 모델 - 호출
-    	$data = $this->Gallery_model->get_entry($this->sid);
-    	$files = array();
-    	foreach($data as $key => $value){
-    		$folder = date ('Ymd', strtotime ($value->reg_date));
-    		$fold_url = 'filebox/files/img/' . $folder . '/';
-    		if(is_file($fold_url . $value->source_img_name)){
-    			$file = new stdClass();
-    			$file->name = $value->source_img_name;
-    			$file->size = filesize($fold_url . $value->source_img_name);
-    			$file->url = base_url() . $fold_url . $value->source_img_name;
-    			$file->thumbnail_url = base_url() . $fold_url . 'thumbs/' . $value->source_img_name;
-    			$files[$key] = $file;
-    		}
-    	}
-    	
-    	$this->load->view('gallery',$files) ; 
+    	//$data['result'] = $this->Gallery_model->get_entry();
+    	//echo $data['result']->original_file_name;
+    	//$this->load->view('gallery', $data) ;
+    	$this->load->view('gallery') ;  
     } 
 
     public function save(){ 
