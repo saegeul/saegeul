@@ -144,14 +144,17 @@ class Document extends MX_Controller {
 
         $this->load->model('Document_model','document');
             $page = $this->input->get_post('page');
-        //    if($this->input->get_post('key') && $this->input->get_post('keyword')){
-          //      $search_param['option'] = $this->input->get('key');
-            //    $search_param['value'] = $this->input->get('keyword');
-           //     $result = $this->filebox->getImageList($page,$list_count,$search_param);
-          //  }else {
-            $result = $this->document->getImageList($page,$list_count);
-        //    }
-        
+            //if($this->input->get_post('key') && $this->input->get_post('keyword')){
+             //   $search_param['option'] = $this->input->get('key');
+             //   $search_param['value'] = $this->input->get('keyword');
+             //   $result = $this->filebox->getImageList($page,$list_count,$search_param);
+            if($this->input->get_post('key') && $this->input->get_post('keyword')){
+                $search_param['option'] = $this->input->get('key');
+                $search_param['value'] = $this->input->get('keyword');
+                $result = $this->document->getImageList($page,$list_count,$search_param);
+            }else {
+                $result = $this->document->getImageList($page,$list_count);
+            }
             $data['fileList'] = $result['list'];
         $data['pagination'] = $result['pagination'];
         $data['base_url'] = base_url();

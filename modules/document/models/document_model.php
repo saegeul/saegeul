@@ -75,11 +75,13 @@ class Document_model extends CI_Model {
                 $query = $this->db->get($this->table2);
                 $total_rows = $this->db->count_all($this->table2);
             }else{
-            $this->db->like($search_param['search_key'],$search_param['search_keyword']);
+            //$this->db->like($search_param['search_key'],$search_param['search_keyword']);
+            $this->db->like($search_param['option'],$search_param['value']);
             $query = $this->db->get($this->table2);
 
-        $this->db->like($search_param['search_key'],$search_param['search_keyword']);
-        $total_rows = $this->db->count_all_results();
+        //$this->db->like($search_param['search_key'],$search_param['search_keyword']);
+        $this->db->like($search_param['option'],$search_param['value']);
+        $total_rows = $this->db->count_all_results($this->table2);
             }
             
             $pagination['page'] = $page ;

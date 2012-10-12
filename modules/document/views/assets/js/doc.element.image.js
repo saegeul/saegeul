@@ -9,6 +9,8 @@ DOC.Element.Image = function(oConfig){
         $dom = null;
 
     var that = {} ; 
+    var key = "";
+    var keyword = "";
 
 
     that.uid = function() {
@@ -34,21 +36,30 @@ DOC.Element.Image = function(oConfig){
     that.editor = function($el){ 
         that.turnOnEditor() ; 
         var $photoArea = $('<div class="well">'
+                            + '<div id=searchArea">'
+                                + '<select id="search_key" name="search_key" size="1">'
+                                    + '<option value="original_file_name">&gt파일이름</option>'
+                                    + '<option value="tag">&gt태그</option>'
+                                + '</select>'
+                            + '</div>'
+                            + '<div class="input-append">'
+                                + '<input id="search_keyword" type="text" name="search_keyword" class="span2 search-query">'
+                                + '<a class="btn search_btn"><i class="icon-search"></i> </a>'
+                            + '</div>'
                              + '<div id="contentArea" style="background-color:white;"></div>'
                              + '<div id="parginationArea" style=""></div>'
-//pargination start
-//pagination end
                              + '<div id="selectArea" style="height:140px;background-color:white;" ></div>'
                              + '<a class="btn btn-large btn-primary append_btn" > APPEND</a>'
                           + '</div>'
                         );
         $photoArea.appendTo($('#document_body')) ;	
 
+
 	$.ajax({
 	       type: "GET",
 	       url: "photoform",
 	       contentType: "application/json; charset=utf-8",
-	       dataType: "json",
+	       dataType: "json", 
 	       data: "page=1",
 	       error: function() { 
 	       	alert("저장된 파일이 없습니다.");
@@ -189,8 +200,89 @@ $(".pageBtn").live('click',function() {
 	});
 });
 
+    $(".search_btn").live('click',function() {
 
+        keyword =  $('#search_keyword').attr('value');
+        key = $('#search_key').attr('value');
+      //  var data = new Array();
+      //  data['page'] = 1;
+      //  data['key'] = key;
+      //  data['keyword'] = keyword;
 
+	$.ajax({
+	       type: "GET",
+	       url: "photoform",
+	       contentType: "application/json; charset=utf-8",
+	       dataType: "json", 
+	       data: "page=1 &key="+key+"&keyword="+keyword,
+	       //data: "page=1",
+	       //data: data,
+	       //data2: "key",
+	       error: function() { 
+	       	alert("저장된 파일이 없습니다.");
+	        },
+	       success: function(data){
+	    	   var page_count = parseInt(data.pagination.page_count);
+	    	   var page = parseInt(data.pagination.page);
+	    	   var first_page;
+	    	   var last_page;
+	    	   var temp
+	    	   if(page_count >= 5){
+	    		   first_page = page > 3 ? page - 2 : 1;
+	    		   last_page = page > 3 ? page + 2 : 5;
+	    		   if(last_page > page_count){
+	    			   last_page = page_count;
+	    			   temp = 5 - (last_page % 5);
+	    			   first_page = last_page - (temp + 1);
+	    		   }
+	    	   }else {
+	    		   first_page = 1;
+	    		   last_page = page_count;
+	    	   }
+	    	   
+	    	   var markup = "<div style='margin-left:28px;'><ul class='thumbnails' style='margin-left: 0px;'>";
+	    	   
+	    		$.each(data.fileList, function(key,state){
+	    			obj = state;
+	    			markup += "<li>"
+			   			+ "<div class='imgPolaroid' align='center' style='background-color:white;height:120px;width:120px;-moz-transition: all 0.2s ease-in-out 0s;border: 1px solid #DDDDDD;border-radius: 4px 4px 4px 4px;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.055);display: block;line-height: 20px;padding: 4px;'>"
+		  	   			+ "<img alt='" + obj.file_srl + "' src='" + data.base_url + obj.image_thumb_path + "' style='height:100%' value='" +data.base_url + obj.full_path + "'>"
+
+		  	   			+ "</div>";
+	    		});
+	    		
+	    		markup += "</ul>";
+	 $('#contentArea').html(markup);   		
+
+		        markup = "<div class='pagination' align='center' style='margin-left:-10px;'>"
+					+ "<ul>";
+				for(var i=first_page;i<page;i++){
+					markup += "<li class='pageBtn'>"
+					+ "<a id='" + i + "' style='color: #333333;'>" + i + "</a>"
+					+ "</li>";
+				}
+	    		markup += "<li class=active><a href=javascript:void(0)>" + page + "</a></li>";
+	    		for(var i=(page + 1);i<=last_page;i++){
+					markup += "<li class='pageBtn'>"
+					+ "<a id='" + i + "' style='color: #333333;'>" + i + "</a>"
+					+ "</li>";
+				}
+	    		markup += "</ul></div>";
+	    		
+	 $('#parginationArea').html(markup);   		
+
+        $photoArea.find('#contentArea img').parent().draggable({
+            helper: "clone",
+            scope : "tasks",
+            drag: function(event,ui) {
+            ui.helper.css('width','200px');
+            ui.helper.css('height','200px');
+            },
+        });
+}	
+        });
+
+    });
         $photoArea.find('#selectArea').droppable({
             scope: "tasks",
             accept: ".imgPolaroid",
