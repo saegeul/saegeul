@@ -1,6 +1,6 @@
 <?php
 class Sitemap_model extends CI_Model {
-	var $table = 'site';
+	var $table = 'sitemap';
 
 	function __construct(){
 		parent::__construct();
@@ -18,8 +18,8 @@ class Sitemap_model extends CI_Model {
 		return null;
 	}
 
-	public function getFile($site_srl){
-		if($file_srl > 0){
+	public function getSite($site_srl){
+		if($site_srl > 0){
 			$query = $this->db->get_where($this->table , array('site_srl'=>$site_srl));
 			$arr = $query->result();
 			if(count($arr)){
@@ -30,8 +30,16 @@ class Sitemap_model extends CI_Model {
 		return null;
 	}
 
+	public function getChildSiteList($parent_site_srl){
+		$query = $this->db->get_where($this->table , array('parent_site_srl'=>$parent_site_srl));
+		$result['list'] = $query->result();
+
+		return $result ;
+	}
+
 	public function getSiteList(){
-		$this->db->order_by("site_srl", "desc");
+		$this->db->where('parent_site_srl',0);
+		//$this->db->order_by("site_srl", "desc");
 		$query = $this->db->get($this->table);
 		$result['list'] = $query->result() ;
 

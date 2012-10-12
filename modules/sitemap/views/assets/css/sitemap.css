@@ -1,0 +1,28 @@
+@CHARSET "UTF-8";
+
+.menuInfo {
+	margin-left:10px;
+}
+
+.menu {
+	margin-top:5px;
+	margin-left:10px;
+	position: relative;
+	line-height: 30px;
+}
+
+.childMenu {
+	margin-top:5px;
+	margin-left:50px;
+	position: relative;
+	line-height: 30px;
+}
+
+li:hover {
+  color: black ;
+  background-color: #def ;
+}
+
+.side {
+	float: right;
+}
