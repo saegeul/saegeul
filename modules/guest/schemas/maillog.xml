@@ -1,4 +1,4 @@
-<table name="maillog
+<table name="maillog">
 	<column name="id" type="int" size="11" auto_increment="true" primary_key="true" />
 	<column name="usermail" type="varchar" size="50" not_null="true"/>
 	<column name="reg_date" type="date" />
