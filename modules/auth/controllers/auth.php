@@ -74,6 +74,10 @@ class Auth extends MX_Controller {
 	public function oauth(){
 		$api_key = $this->session->userdata('session_kt_api_key');
 		$secret_key = $this->session->userdata('session_kt_secret_key');
+		
+		if($api_key == false || $secret_key == false)
+				redirect(base_url().'clouddrive/admin/clouddrive/checkOauth', 'refresh');
+		
 		// setting session
 		$this->session->set_userdata('cloud_enterprise', "KTUcloud");
 		
