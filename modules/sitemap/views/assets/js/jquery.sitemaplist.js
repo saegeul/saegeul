@@ -15,8 +15,8 @@ $(document).ready(function() {
 			success : function(data) {
 				$.each(data.list, function(key,state){
 	    			obj = state;
-	    			markup += "<li class='childMenu' id='" + obj.site_srl + "'>" 
-							+ "<span class='menuInfo'><a class='btn btn-link btnMoveSite' style='color: #333333;'><i class='icon-move'></i></a>" + obj.site_name + "</span>"
+	    			markup += "<li class='childMenu' id='" + obj.site_srl + "'><i class='icon-move'></i>" 
+							+ "<span class='menuInfo'>" + obj.site_name + "</span>"
 							+ "<span class='side'> "
 								+ "<a class='btn btn-link btnEditSite' style='color: #333333;'><i class='icon-pencil'></i>Edit</a>"
 								+ "<a class='btn btn-link btnDeleteSite' style='color: #333333;'><i class='icon-trash'></i>Delete</a>"
@@ -26,6 +26,18 @@ $(document).ready(function() {
 				$(markup).insertAfter("#"+parent_site_srl);
 			}
 		});
+	});
+	
+	$(function() {
+		$('#siteMap').sortable({
+			change: function(event, ui) {
+				//alert($(this).attr('class'));
+	        },
+			update: function(event, ui) {
+				//alert("a");
+			}
+		});
+		$( "#siteMap" ).disableSelection();
 	});
 	
 	$('.btnCreateMenu').click(function() {
@@ -100,6 +112,40 @@ $(document).ready(function() {
 				location.reload();
 			}
 		});
+	});
+
+	$('.modifyData').click(function() {
+		var moduleId;
+		var moduleValue;
+		var menuName = $('#inputMenuName').val();
+		var moduleOrLinUrl = $(':input:radio[name=module]:checked').val();
+		var menuIsValid = $(':input:radio[name=isvalid]:checked').val();
+		if(moduleOrLinUrl == 1){
+			moduleValue = $('#creatModuleValue').val();
+			moduleId = $('#inputModuleId').val();
+		}else if(moduleOrLinUrl == 2){
+			
+		}else if(moduleOrLinUrl == 3){
+			moduleValue = $('#inputLinkURL').val();
+		}
+//		$.ajax({
+//			type : "GET",
+//			url : "/saegeul/sitemap/admin/sitemap/saveMenu",
+//			contentType : "application/json; charset=utf-8",
+//			dataType : "json",
+//			data : "menuName=" + menuName + "&moduleOrLinUrl=" + moduleOrLinUrl + "&moduleValue=" + moduleValue + "&moduleId=" + moduleId + "&menuIsValid=" + menuIsValid,
+//			error : function() {
+//				alert("error");
+//			},
+//			success : function(data) {
+//				$('#inputMenuName').val('');
+//				$('#creatModuleValue').val('');
+//				$('#inputModuleId').val('');
+//				$('#inputLinkURL').val('');
+//				$(':input:radio[name=module]:checked').attr('checked',false);
+//				location.reload();
+//			}
+//		});
 	});
 	
 	$('.btnAppendSite').click(function() {

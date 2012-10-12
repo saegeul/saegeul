@@ -9,10 +9,10 @@
 	<br> <br> <br>
 	<div class="siteMap">
 		<br>
-		<ul class='nav nav-list'>
+		<ul class='nav nav-list' id='siteMap'>
 			<?php foreach($siteMapList as $key => $site) :?>
-			<li class='menu' id='<?=$site->site_srl;?>'>
-				<span class="menuInfo"><a class="btn btn-link btnMoveSite" style='color: #333333;'><i class="icon-move"></i></a><?=$site->site_name;?> </span> 
+			<li class='menu' id='<?=$site->site_srl;?>'><i class="icon-move"></i>
+				<span class="menuInfo"><?=$site->site_name;?> </span> 
 				<span class="side"> <a class="btn btn-link btnAppendSite"
 						style='color: #333333;'><i class="icon-plus"></i>Append</a> <a
 						class="btn btn-link btnEditSite" style='color: #333333;'><i
