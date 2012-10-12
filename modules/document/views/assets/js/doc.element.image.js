@@ -36,22 +36,26 @@ DOC.Element.Image = function(oConfig){
     that.editor = function($el){ 
         that.turnOnEditor() ; 
         var $photoArea = $('<div class="well">'
-                            + '<div id=searchArea">'
+                            + '<div name="search_form" class="form-search" align="right">'
+                            //+ '<div id=searchArea" name="search_key" size="1">'
                                 + '<select id="search_key" name="search_key" size="1">'
-                                    + '<option value="original_file_name">&gt파일이름</option>'
-                                    + '<option value="tag">&gt태그</option>'
+                                    + '<option value="original_file_name">파일이름</option>'
+                                    + '<option value="tag">태그</option>'
                                 + '</select>'
-                            + '</div>'
+                            //+ '</div>'
                             + '<div class="input-append">'
                                 + '<input id="search_keyword" type="text" name="search_keyword" class="span2 search-query">'
                                 + '<a class="btn search_btn"><i class="icon-search"></i> </a>'
                             + '</div>'
+                            + '</div>'
+                            + '<br />'
                              + '<div id="contentArea" style="background-color:white;"></div>'
                              + '<div id="parginationArea" style=""></div>'
                              + '<div id="selectArea" style="height:140px;background-color:white;" ></div>'
                              + '<a class="btn btn-large btn-primary append_btn" > APPEND</a>'
                           + '</div>'
                         );
+
         $photoArea.appendTo($('#document_body')) ;	
 
 
@@ -61,6 +65,7 @@ DOC.Element.Image = function(oConfig){
 	       contentType: "application/json; charset=utf-8",
 	       dataType: "json", 
 	       data: "page=1",
+	       //data: "page=1 &key="+key+"&keyword="+keyword,
 	       error: function() { 
 	       	alert("저장된 파일이 없습니다.");
 	        },
@@ -122,6 +127,30 @@ DOC.Element.Image = function(oConfig){
             ui.helper.css('height','200px');
             },
         });
+        $photoArea.find('#contentArea img').parent().dblclick(function(){
+            if( $('#selectArea img').length > 6 ) return;
+                var $photo = $('<img src="'+$(this).find('img').attr("value")+'" class="img img-polaroid"/ >');
+               $photo.appendTo('#selectArea').css('height','130px').css('width','13%');
+                $photo.click( function() {
+                    $('<div>사진 선택을 해제하시겠습니까?</div>').dialog({
+                        resizable: false,
+                        height:150,
+                        modal: true,
+                        buttons: {
+                            "delete": function() {
+                                $photo.remove(); 
+                                $( this ).dialog( "close" );
+                            },
+                        Cancel: function() {
+                            $( this ).dialog( "close" );
+                            }
+                        }
+                    });
+
+                });
+
+
+        });
 }	
         });
 $(".pageBtn").live('click',function() {
@@ -131,7 +160,8 @@ $(".pageBtn").live('click',function() {
 	       url: "photoform",
 	       contentType: "application/json; charset=utf-8",
 	       dataType: "json",
-	       data: "page=" + page,
+	       //data: "page=" + page,
+	      data: "page="+page+" &key="+key+"&keyword="+keyword,
 	       error: function() { 
 	       	alert("저장된 파일이 없습니다.");
 	        },
@@ -186,7 +216,7 @@ $(".pageBtn").live('click',function() {
 	    		markup += "</ul></div>";
 	    		
 	 $('#parginationArea').html(markup);   		
-         $photoArea.find('#contentArea div').draggable({
+         $photoArea.find('#contentArea img').parent().draggable({
              helper: "clone",
              scope : "tasks",
              drag: function(event,ui) {
@@ -194,6 +224,31 @@ $(".pageBtn").live('click',function() {
                  ui.helper.css('height','200px');
              },
          });
+
+        $photoArea.find('#contentArea img').parent().dblclick(function(){
+            if( $('#selectArea img').length > 6 ) return;
+                var $photo = $('<img src="'+$(this).find('img').attr("value")+'" class="img img-polaroid"/ >');
+               $photo.appendTo('#selectArea').css('height','130px').css('width','13%');
+                $photo.click( function() {
+                    $('<div>사진 선택을 해제하시겠습니까?</div>').dialog({
+                        resizable: false,
+                        height:150,
+                        modal: true,
+                        buttons: {
+                            "delete": function() {
+                                $photo.remove(); 
+                                $( this ).dialog( "close" );
+                            },
+                        Cancel: function() {
+                            $( this ).dialog( "close" );
+                            }
+                        }
+                    });
+
+                });
+
+
+        });
 
 
 			}
@@ -204,10 +259,6 @@ $(".pageBtn").live('click',function() {
 
         keyword =  $('#search_keyword').attr('value');
         key = $('#search_key').attr('value');
-      //  var data = new Array();
-      //  data['page'] = 1;
-      //  data['key'] = key;
-      //  data['keyword'] = keyword;
 
 	$.ajax({
 	       type: "GET",
@@ -215,9 +266,6 @@ $(".pageBtn").live('click',function() {
 	       contentType: "application/json; charset=utf-8",
 	       dataType: "json", 
 	       data: "page=1 &key="+key+"&keyword="+keyword,
-	       //data: "page=1",
-	       //data: data,
-	       //data2: "key",
 	       error: function() { 
 	       	alert("저장된 파일이 없습니다.");
 	        },
@@ -279,6 +327,34 @@ $(".pageBtn").live('click',function() {
             ui.helper.css('height','200px');
             },
         });
+
+        $photoArea.find('#contentArea img').parent().dblclick(function(){
+            if( $('#selectArea img').length > 6 ) return;
+                var $photo = $('<img src="'+$(this).find('img').attr("value")+'" class="img img-polaroid"/ >');
+               $photo.appendTo('#selectArea').css('height','130px').css('width','13%');
+                $photo.click( function() {
+                    $('<div>사진 선택을 해제하시겠습니까?</div>').dialog({
+                        resizable: false,
+                        height:150,
+                        modal: true,
+                        buttons: {
+                            "delete": function() {
+                                $photo.remove(); 
+                                $( this ).dialog( "close" );
+                            },
+                        Cancel: function() {
+                            $( this ).dialog( "close" );
+                            }
+                        }
+                    });
+
+                });
+
+
+        });
+
+
+
 }	
         });
 
