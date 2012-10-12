@@ -51,7 +51,7 @@ DOC.Element.Textarea = function(oConfig){
 
     that.editor = function($el){ 
         that.turnOnEditor() ; 
-        var $textarea = $('<div class="well"><div id="textArea"></div><hr/><a class="btn btn-large btn-primary save_btn" >SAVE </a></div>');
+        var $textarea = $('<div class="well"><div id="textArea"></div><a class="btn btn-large btn-primary save_btn" >SAVE </a></div>');
 
         if(that.is_empty()){
             $textarea.appendTo($('#document_body')) ; 

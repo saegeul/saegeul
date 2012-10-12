@@ -67,6 +67,7 @@ class Document_model extends CI_Model {
 
     function getImageList($page=1,$list_count=10,$search_param=null){
         //$this->db->from('SG_filebox');
+        $this->db->where('is_image',1);
         $this->db->order_by("file_srl", "desc");
             $this->db->limit($list_count , ($page-1)*$list_count );
             

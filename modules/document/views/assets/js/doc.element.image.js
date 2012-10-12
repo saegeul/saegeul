@@ -68,7 +68,7 @@ DOC.Element.Image = function(oConfig){
 	    			   first_page = last_page - (temp + 1);
 	    		   }
 	    	   }else {
-	    		   first_page = page;
+	    		   first_page = 1;
 	    		   last_page = page_count;
 	    	   }
 	    	   
@@ -103,7 +103,7 @@ DOC.Element.Image = function(oConfig){
 	    		
 	 $('#parginationArea').html(markup);   		
 
-        $photoArea.find('#contentArea div').draggable({
+        $photoArea.find('#contentArea img').parent().draggable({
             helper: "clone",
             scope : "tasks",
             drag: function(event,ui) {
@@ -143,7 +143,7 @@ $(".pageBtn").live('click',function() {
 	    			   }
 	    		   }
 	    	   }else {
-	    		   first_page = page;
+	    		   first_page = 1;
 	    		   last_page = page_count;
 	    	   }
 	    	   
@@ -196,6 +196,7 @@ $(".pageBtn").live('click',function() {
             accept: ".imgPolaroid",
             activeClass: "ui-state-highlight",
             drop: function(event, ui) {
+                if( $('#selectArea img').length > 6 ) return;
                 var $photo = $('<img src="'+ui.draggable.find('img').attr("value")+'" class="img img-polaroid"/ >');
                $photo.appendTo('#selectArea').css('height','130px').css('width','13%');
                 $photo.click( function() {
