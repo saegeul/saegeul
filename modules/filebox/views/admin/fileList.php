@@ -1,7 +1,8 @@
 <?php $this->load->helper('asset') ?>
 <?echo js_asset('filebox','jquery.filelist.js')?>
 <br>
-<div class="content">
+<br>
+<div class="content" style='width: 95%;'>
 	<form class="well well-small form-search" name="search_form">
 		<div align="left">
 			<select name="search_key" size="1">
@@ -59,7 +60,9 @@
 				</td>
 				<td><?=$file->username;?>
 				</td>
-				<td><a class="btn btn-small btn-warning btn_delete">DEL </a>
+				<td><a
+						class="btn btn-link btn_delete" style='color: #333333;'><i
+							class="icon-trash"></i>Delete</a>
 				</td>
 			</tr>
 			<?php endforeach ;?>

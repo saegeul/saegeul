@@ -5,11 +5,10 @@
 	rel="stylesheet"
 	href="http://blueimp.github.com/Bootstrap-Image-Gallery/css/bootstrap-image-gallery.min.css">
 <?echo css_asset('filebox','jquery.fileupload-ui.css')?>
-<div class="container">
-	<div class="span8">
-		<div class="group" align="center">
-			<h2>Drag and DropFile Upload</h2>
-		</div>
+<div class="container" style="width: 95%;">
+<br>
+<br>
+	<div >
 		<div class="droparea">
 			<p class="dropfiletext">Drop files here</p>
 		</div>
