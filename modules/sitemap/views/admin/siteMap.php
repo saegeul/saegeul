@@ -3,10 +3,14 @@
 <?echo js_asset('sitemap','jquery.sitemaplist.js')?>
 <div class="content" style='width: 98%;'>
 	<br>
+	<br>
+	<div class="alert alert-success" align="center">
+		사이트 맵을 작성 하여 주십시오.
+	</div>
 	<div style='float: right;'>
 		<a class="btn btnCreateMenu"><i class="icon-plus"></i> 메뉴추가</a>
 	</div>
-	<br> <br> <br>
+	<br>
 	<div class="siteMap">
 		<br>
 		<ul class='nav nav-list' id='siteMap'>
