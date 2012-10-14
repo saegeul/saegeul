@@ -8,7 +8,7 @@
 	        <a href="<?=site_url("admin/document/document_list")?>"><i class="icon-chevron-right"></i>문서목록</a> 
 	    </li> 
 	    <li> 
-	        <a href="<?=site_url("")?>" ><i class="icon-chevron-right"></i>휴지통</a> 
+	        <a href="<?=site_url("admin/document/recyclebin_list")?>" ><i class="icon-chevron-right"></i>휴지통</a> 
 	    </li>
 	</ul>
 </div>

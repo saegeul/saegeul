@@ -42,8 +42,8 @@
                 <td><?=$file->username ?></td>
                 <td><?=$file->reg_date ?></td>
                 <td style="text-algin:right;">0</td>
-                <td><button class="btn btn-info btn-small">수정</button> </td>
-                <td><button class="btn btn-warning btn-small">휴지통</button> </td> 
+                <td><button class="btn btn-info btn-small modify_btn" value="<?=$file->doc_id?>" >수정</button> </td>
+                <td><button class="btn btn-warning btn-small trash_btn" value="<?=$file->doc_id?>">휴지통</button> </td> 
             </tr>
         <?php endforeach ;?>
         </tbody> 

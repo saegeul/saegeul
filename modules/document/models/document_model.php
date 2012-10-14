@@ -24,7 +24,22 @@ class Document_model extends CI_Model {
         return $query->result();
     }
 
-    public function getDocumentList($page=1,$list_count=10,$search_param=null){
+    public function setTrash($data,$doc_id) {
+       if( $this->db->update($this->table,$data,array('doc_id' => $doc_id ))){
+           return $doc_id;
+       }
+       return null;
+    }
+
+    public function delete($doc_id){
+
+                $this->db->where('doc_id',$doc_id);
+                $this->db->delete($this->table);
+    }
+
+
+    public function getDocumentList($page=1,$list_count=10,$search_param=null,$is_trash){
+        $this->db->where("is_trash",$is_trash);
         $this->db->order_by("doc_id", "desc");
         $this->db->limit($list_count , ($page-1)*$list_count );
 
