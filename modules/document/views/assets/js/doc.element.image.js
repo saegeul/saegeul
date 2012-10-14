@@ -37,12 +37,10 @@ DOC.Element.Image = function(oConfig){
         that.turnOnEditor() ; 
         var $photoArea = $('<div class="well">'
                             + '<div name="search_form" class="form-search" align="right">'
-                            //+ '<div id=searchArea" name="search_key" size="1">'
                                 + '<select id="search_key" name="search_key" size="1">'
                                     + '<option value="original_file_name">파일이름</option>'
                                     + '<option value="tag">태그</option>'
                                 + '</select>'
-                            //+ '</div>'
                             + '<div class="input-append">'
                                 + '<input id="search_keyword" type="text" name="search_keyword" class="span2 search-query">'
                                 + '<a class="btn search_btn"><i class="icon-search"></i> </a>'
