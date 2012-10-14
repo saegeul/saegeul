@@ -86,7 +86,7 @@ class CI_Utf8 {
 	{
 		if ($this->_is_ascii($str) === FALSE)
 		{
-			$str = @iconv('UTF-8', 'UTF-8//IGNORE', $str);
+			//$str = @iconv('UTF-8', 'UTF-8//IGNORE', $str);
 		}
 
 		return $str;

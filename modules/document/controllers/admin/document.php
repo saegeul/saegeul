@@ -103,36 +103,25 @@ class Document extends MX_Controller {
         $this->sg_layout->add('admin/document_list') ; 
         $this->sg_layout->add('admin/footer') ; 
 
+        $data['action'] = 'document_list' ;
         $this->sg_layout->show($data) ;
     }
 
 
     public function writeform(){ 
-/*
-        $this->load->library('admin_tmpl') ; 
-
-        $section = array(
-            'header'=>'admin/header',
-            //'sidebar'=>'admin/sidebar',
-            'body'=>'admin/writeform',
-            'footer'=>'admin/footer'
-        ) ; 
-
-        $str= $this->admin_tmpl->parse($section); 
-
-        echo $str ;
-*/
         $this->load->library('sg_layout') ; 
         $this->load->model('Document_model','document');
 
         $this->sg_layout->layout('admin/layout') ; 
         $this->sg_layout->module('document') ; 
         $this->sg_layout->add('admin/header') ; 
-       // $this->sg_layout->add('admin/sidebar') ; 
+        $this->sg_layout->add('admin/sidebar') ; 
         $this->sg_layout->add('admin/writeform') ; 
         $this->sg_layout->add('admin/footer') ; 
 
-        $this->sg_layout->show() ; 
+        $data['action'] = 'writeform' ;
+
+        $this->sg_layout->show($data) ; 
     }
     
 

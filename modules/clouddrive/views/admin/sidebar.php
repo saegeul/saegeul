@@ -23,8 +23,6 @@ $oauth_verifier =  $this->session->userdata('session_kt_ucloud_oauth_verifier');
 			<?php }?>
 			<li><a><i class="icon-chevron-right"></i>SK Tcloud</a>
 			</li>
-			<li><a><i class="icon-chevron-right"></i>Google Drive</a>
-			</li>
 		</ul>
 	</div>
 </div>

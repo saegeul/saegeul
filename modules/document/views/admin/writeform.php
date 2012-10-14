@@ -14,19 +14,11 @@ $this->load->helper('asset');
 <?echo js_asset('document','doc.element.textarea.js')?>
 <?echo js_asset('document','doc.element.image.js')?>
 
-<div class="container-fluid">
-    <form action ="save"  method="post" id="document_form" >
-    <div class="row-fluid"> 
-        <div class="span7">
-            <br />
-            <input type="text" name="title" placeholder="제목을 입력하세요" style="width:100%;"/> 
-            <input type="hidden" name="content"  style="width:100%;"/> 
-        </div>
-        <div class="span2">
-            <br />
-            <button type="text" class="btn btn-primary" id="save_btn">저장..</button>
-        </div>
-    </div> 
+<div class="_content" >
+    <form action ="save"  method="post" id="document_form" class="form-inline" > 
+        <input type="text" class="span7"  name="title" placeholder="제목을 입력하세요"/> 
+        <button type="text" class="btn btn-primary" id="save_btn">저장..</button>
+        <input type="hidden" name="content" /> 
     </form>
     <div id="document_body" >
 
@@ -39,13 +31,7 @@ $this->load->helper('asset');
 </div>
 
 <script> 
-$(function(){
-    $('#document_form').submit(function(){
-        var html = DOC.paper.html() ;  
-        $('#document_form').find('[name=content]').val(encodeURI(html)) ; 
-
-    }); 
-     
+$(function(){ 
     DOC.remocon_panel.init({
         id : 'remocon' ,
         cls : 'well' ,

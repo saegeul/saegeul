@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed') ; 
 
-class Admin extends MX_Controller { 
+class Admin_mgr extends MX_Controller { 
     var $layout = array() ; 
 
     public function __construct(){
@@ -32,18 +32,7 @@ class Admin extends MX_Controller {
         
         return $layout ; 
     }
-
-    
-
-    public function module($module_name='',$action=''){ 
-        $header = $this->load->view('header','',true) ; 
-        $footer = $this->load->view('footer','',true) ; 
-
-        $body =  modules::run($module_name.'/'.$action) ; 
-
-        echo $header.$body.$footer; 
-    } 
-
+   
     public function save(){ 
 
     } 
