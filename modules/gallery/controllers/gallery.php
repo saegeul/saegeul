@@ -13,7 +13,7 @@ class Gallery extends MX_Controller {
     	$this->load->model('Gallery_model'); // 모델 - 호출
     	$data['result'] = $this->Gallery_model->get_entry();
     	
-        $this->load->view('gal', $data);
+        $this->load->view('gallery', $data);
     }
 
     public function photo(){ 
@@ -22,19 +22,10 @@ class Gallery extends MX_Controller {
     	
     	//DB Get
     	$this->load->model('Gallery_model'); // 모델 - 호출
-    	//$data['result'] = $this->Gallery_model->get_entry();
-    	//echo $data['result']->original_file_name;
-    	//$this->load->view('gallery', $data) ;
     	$this->load->view('gallery') ;  
     } 
 
-    public function save(){ 
 
-    } 
-
-    public function remove(){ 
-
-    } 
 } 
 /* End of file admin.php */
 /* Location : ./modules/admin/admin.php */

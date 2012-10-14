@@ -18,10 +18,12 @@ $this->load->helper('asset');
     <form action ="save"  method="post" id="document_form" >
     <div class="row-fluid"> 
         <div class="span7">
-            <input type="text" name="title"  style="width:100%;"/> 
+            <br />
+            <input type="text" name="title" placeholder="제목을 입력하세요" style="width:100%;"/> 
             <input type="hidden" name="content"  style="width:100%;"/> 
         </div>
         <div class="span2">
+            <br />
             <button type="text" class="btn btn-primary" id="save_btn">저장..</button>
         </div>
     </div> 

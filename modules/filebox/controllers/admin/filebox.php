@@ -79,7 +79,7 @@ class Filebox extends MX_Controller {
 			return $this->_upload();
 
 		} else if($request_method == 'GET'){
-// 			return $this->_today();
+			// 			return $this->_today();
 		} else {
 			header('HTTP/1.1 405 Method Not Allowed');
 		}
@@ -168,9 +168,9 @@ class Filebox extends MX_Controller {
 		$search_param = null;
 		$data['search_key'] = '';
 		$data['search_keyword'] = '';
-		
+
 		if($this->input->get_post('search_key') && $this->input->get_post('search_keyword')){
-			$search_param = array(); 
+			$search_param = array();
 			$data['search_key'] =  $search_param['search_key'] = $this->input->get_post('search_key');
 			$data['search_keyword'] = $search_param['search_keyword'] = $this->input->get_post('search_keyword');
 		}
@@ -195,7 +195,7 @@ class Filebox extends MX_Controller {
 	public function delete(){
 		$file_srl = $this->input->get_post('file_srl');
 		$this->_delete($file_srl);
-		
+
 		echo json_encode('success');
 	}
 
@@ -239,37 +239,41 @@ class Filebox extends MX_Controller {
 
 		$this->filebox->update($data,$file_srl);
 
-		if($this->input->get_post('tag') != ""){
-			$args;
-			$args->tag = $data['tag'];
-			$args->file_srl = $file_srl;
-			$args->reg_date = standard_date('DATE_ATOM',time());//date("Y-m-d H:i:s",time());
-			$args->username = $this->username;
-			$args->email = $this->email;
-			$args->uid = $this->uid;
-
-			// insert file information in DB
+		if($data['tag'] != ""){
+			$args  = array();
+			$pairs    = explode(",", $data['tag']);
+			foreach ($pairs as $pair) {
+				
+				$args[] = array(
+						'tag' => $pair,
+						'file_srl' => $file_srl,
+						'reg_date' => standard_date('DATE_ATOM',time()),
+						'username' => $this->username,
+						'email' => $this->email,
+						'uid' => $this->uid
+				);
+			}
 			$ret_data = $this->filebox->insert_tag($args,'filetag') ;
 		}
 
 		echo json_encode('success');
 	}
-	
+
 	public function tagCloud(){
-		
+
 		$this->load->library('sg_layout');
-		
+
 		$this->sg_layout->layout('admin/layout');
 		$this->sg_layout->module('filebox');
-		
+
 		$this->sg_layout->add('admin/header');
 		$this->sg_layout->add('admin/sidebar');
 		$this->sg_layout->add('admin/tagCloud');
 		$this->sg_layout->add('admin/footer');
-		
+
 		$this->sg_layout->show();
 	}
-	
+
 	public function getTag(){
 		// get DB library
 		$this->load->model('Filebox/Filebox_model','filebox') ;
@@ -277,7 +281,7 @@ class Filebox extends MX_Controller {
 		$data['result']=$this->filebox->select_tag($this->uid,'filetag');
 		$data['base_url'] = base_url();
 		$success = $data;
-	
+
 		echo json_encode($success);
 	}
 }

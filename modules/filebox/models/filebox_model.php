@@ -14,7 +14,7 @@ class Filebox_model extends CI_Model {
 
 			return $data;
 		}
-		
+
 		return null;
 	}
 
@@ -26,7 +26,7 @@ class Filebox_model extends CI_Model {
 				return $arr[0];
 			}
 		}
-		
+
 		return null;
 	}
 
@@ -40,18 +40,18 @@ class Filebox_model extends CI_Model {
 		}else{
 			$this->db->like($search_param['search_key'],$search_param['search_keyword']);
 			$query = $this->db->get($this->table);
-			
+				
 			$this->db->like($search_param['search_key'],$search_param['search_keyword']);
 			$total_rows = $this->db->count_all_results($this->table);
 		}
 
-		 $pagination['page'] = $page ;
-        $pagination['list_count'] = $list_count ; 
-        $pagination['total_rows'] = $total_rows ; 
-        $pagination['page_count'] = ceil($total_rows / $list_count) ; 
+		$pagination['page'] = $page ;
+		$pagination['list_count'] = $list_count ;
+		$pagination['total_rows'] = $total_rows ;
+		$pagination['page_count'] = ceil($total_rows / $list_count) ;
 
-        $result['list'] = $query->result() ; 
-        $result['pagination'] = $pagination ; 
+		$result['list'] = $query->result() ;
+		$result['pagination'] = $pagination ;
 
 		return $result ;
 	}
@@ -66,7 +66,7 @@ class Filebox_model extends CI_Model {
 
 		return $file_obj;
 	}
-	
+
 	function update($data,$file_srl)
 	{
 		if($this->db->update($this->table,$data,array('file_srl' => $file_srl))){
@@ -74,28 +74,24 @@ class Filebox_model extends CI_Model {
 		}
 		return null;
 	}
-	
+
 	public function insert_tag($data,$table){
-		if($this->db->insert($table,$data)){
-			$id = $this->db->insert_id();
-			$data->tag_id = $id;
-	
-			return $data;
+		foreach($data as $key => $tag) {
+			$this->db->insert($table,$tag);
 		}
-	
-		return null;
+		return $data;
 	}
-	
+
 	function select_tag($uid,$table)
-	{	
+	{
 		$this->db->select('*');
 		$this->db->select('count(*) as total');
-	
+
 		$this->db->from($table);
 		$this->db->where('uid', $uid);
 		$this->db->group_by("tag");
 		$query = $this->db->get();
-		
+
 		return $query->result();
 	}
 }
