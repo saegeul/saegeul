@@ -26,7 +26,7 @@
 						href="<?=base_url()?>admin/sitemap/siteMap">SiteMap</a>
 					</li>
 					<li <?php if($this->uri->segment(2)=='dashboard'):?> class="active"
-					<?php endif;?>><a href="<?=base_url()?>admin/dashboard">Dashboard</a>
+					<?php endif;?>><a href="<?=base_url()?>admin_mgr/dashboard">Dashboard</a>
 					</li> 
 					<li <?php if($this->uri->segment(2)=='member'):?> class="active"
 					<?php endif;?>><a
@@ -49,7 +49,7 @@
 						href="<?=base_url()?>admin/filebox/fileList">File</a>
 					</li>
 					<li <?php if($this->uri->segment(2)=='setting'):?> class="active"
-					<?php endif;?>><a href="<?=base_url()?>admin/setting">Setting</a>
+					<?php endif;?>><a href="<?=base_url()?>admin_mgr/setting">Setting</a>
 					</li>
 					<li>
 						<div class="btn-group">

@@ -2,7 +2,7 @@
 <div class="bs-docs-sidebar">
 	<ul class="nav nav-list bs-docs-sidenav affix-top">
         <li> 
-	        <a href="<?=site_url("document/admin/document/document_list")?>"><i class="icon-chevron-right"></i>새글 작성 </a> 
+	        <a href="<?=site_url("document/admin/document/writeform")?>"><i class="icon-chevron-right"></i>새글 작성 </a> 
 	    </li>
 	    <li> 
 	        <a href="<?=site_url("document/admin/document/document_list")?>"><i class="icon-chevron-right"></i>문서목록</a> 
