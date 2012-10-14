@@ -74,27 +74,37 @@
 <body>			
 
 	<ul id="myGallery">
+		<?php foreach($fileList as $key => $file) :?>
+			<li>
+						
+							
+					 <img data-frame="<?=base_url().$file->image_thumb_path;?>" src="<?=base_url().$file->full_path;?>" title="<?=$file->original_file_name?>" data-description="" />
+					 
+					</li>
+			<?php endforeach ;?>
 		<?php
-				foreach($result as $row):
+			
+	/*			foreach($result as $row):
 				$fileType = $row->file_type;
 				$ext = explode(".", $fileType);
 				$ext = strtolower(trim($ext[count($ext)-1]));
 		 		if($ext == "image/jpeg" || $ext == "image/JPEG" || $ext == "image/jpg" || $ext == "image/JPG" || $ext == "image/gif" || $ext == "image/GIF" || $ext == "image/png" || $ext == "image/PNG")
 				{
 					
-		
+		*/
 		?>
+		<!--  
 					<li>
 						
 							
-					 <img data-frame="<?=$row->image_thumb_path?>" src="<?=$row->full_path?>" title="<?=$row->original_file_name?>" data-description="" />
+					 <img data-frame="<?//=$row->image_thumb_path?>" src="<?//=$row->full_path?>" title="<?=$row->original_file_name?>" data-description="" />
 					 
 					</li>
-
+-->
 			<?php
-				}
+			//	}
 				
-					endforeach;
+					//endforeach;
 			?>
 			
 					
