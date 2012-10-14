@@ -103,6 +103,7 @@ class Document extends MX_Controller {
         $this->sg_layout->add('admin/document_list') ; 
         $this->sg_layout->add('admin/footer') ; 
 
+        $data['action'] = 'document_list' ;
         $this->sg_layout->show($data) ;
     }
 
@@ -118,7 +119,9 @@ class Document extends MX_Controller {
         $this->sg_layout->add('admin/writeform') ; 
         $this->sg_layout->add('admin/footer') ; 
 
-        $this->sg_layout->show() ; 
+        $data['action'] = 'writeform' ;
+
+        $this->sg_layout->show($data) ; 
     }
     
 
