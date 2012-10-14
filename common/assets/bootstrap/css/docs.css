@@ -15,7 +15,7 @@ body {
   padding-top: 40px;*/
 }
 
-div.body_wrapper { padding-top:25px;}
+div.body_wrapper { padding-top:20px;}
 div.admin_content_wrapper {padding-left:300px; }
 div.admin_content_wrapper ._content {padding-top:30px;padding-right:20px;}
 div.admin_sidebar_wrapper {padding-left:20px; margin-left:-300px;float:left;}

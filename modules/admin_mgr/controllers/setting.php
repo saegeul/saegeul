@@ -35,7 +35,7 @@ class setting extends MX_Controller {
 		$this->load->library('sg_layout') ;
 
 		$this->sg_layout->layout('admin/layout') ;
-		$this->sg_layout->module('admin') ;
+		$this->sg_layout->module('admin_mgr') ;
 
 		$this->sg_layout->add('setting/header') ;
 		$this->sg_layout->add('setting/sidebar') ;
@@ -87,7 +87,7 @@ class setting extends MX_Controller {
 		$this->load->library('sg_layout') ;
 
 		$this->sg_layout->layout('admin/layout') ;
-		$this->sg_layout->module('admin') ;
+		$this->sg_layout->module('admin_mgr') ;
 
 		$this->sg_layout->add('setting/header') ;
 		$this->sg_layout->add('setting/sidebar') ;
@@ -96,20 +96,13 @@ class setting extends MX_Controller {
 
 		$this->sg_layout->show() ;
 		 
-		 
-		 
-	}
-
-
-
-
-
+	} 
 
 	public function site(){
 		$this->load->library('sg_layout') ;
 
 		$this->sg_layout->layout('admin/layout') ;
-		$this->sg_layout->module('admin') ;
+		$this->sg_layout->module('admin_mgr') ;
 
 		$this->sg_layout->add('setting/header') ;
 		$this->sg_layout->add('setting/sidebar') ;
@@ -152,7 +145,7 @@ class setting extends MX_Controller {
 		$this->load->library('sg_layout') ;
 
 		$this->sg_layout->layout('admin/layout') ;
-		$this->sg_layout->module('admin') ;
+		$this->sg_layout->module('admin_mgr') ;
 
 		$this->sg_layout->add('setting/header') ;
 		$this->sg_layout->add('setting/sidebar') ;
@@ -238,7 +231,7 @@ class setting extends MX_Controller {
 		$this->load->library('sg_layout') ;
 
 		$this->sg_layout->layout('admin/layout') ;
-		$this->sg_layout->module('admin') ;
+		$this->sg_layout->module('admin_mgr') ;
 
 		$this->sg_layout->add('setting/header') ;
 		$this->sg_layout->add('setting/sidebar') ;
@@ -248,31 +241,6 @@ class setting extends MX_Controller {
 		$this->sg_layout->show($data) ;
 	}
 }
-
-// function showshow($message)
-// {
-
-// 	$this->session->set_flashdata('message', $message);
-
-
-
-
-// 	$this->load->library('admin_tmpl') ;
-
-// 	$section = array(
-// 			'header'=>'setting/header',
-// 			'sidebar'=>'setting/sidebar',
-// 			'body'=>'setting/general_message',
-// 			'footer'=>'setting/footer'
-// 	) ;
-
-// 	$str= $this->admin_tmpl->parse($section, array('message' => $message));
-
-// 	echo $str ;
-
-
-
-// }
 
 /* End of file setting.php */
 /* Location : ./modules/admin/setting.php */

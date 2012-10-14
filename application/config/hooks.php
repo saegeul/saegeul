@@ -10,7 +10,13 @@
 |
 */
 
-
+$hook['pre_controller'] = array(
+        'class'    => 'Check_auth',
+        'function' => 'check_auth',
+        'filename' => 'Check_auth.php',
+        'filepath' => 'hooks',
+        'params'   => array()
+        );
 
 /* End of file hooks.php */
 /* Location: ./application/config/hooks.php */

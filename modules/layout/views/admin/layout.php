@@ -18,42 +18,37 @@
 	<div class="navbar">
 		<div class="navbar-inner navbar-fixed-top">
 			<div>
-				<a class="brand" style="color: #fff; font-weight: bold;"><?echo img_asset('admin','saegeul_logo.png')?>
+				<a class="brand" style="color: #ddd; font-weight: bold;"> <span style="color:#898989;">Saegeul</span> <small>for social curation</small>
 				</a>
 				<ul class="nav">
 					<li <?php if($this->uri->segment(2)=='template'):?> class="active"
 					<?php endif;?>><a
-						href="<?=base_url()?>sitemap/admin/sitemap/siteMap">SiteMap</a>
+						href="<?=base_url()?>admin/sitemap/siteMap">SiteMap</a>
 					</li>
 					<li <?php if($this->uri->segment(2)=='dashboard'):?> class="active"
-					<?php endif;?>><a href="<?=base_url()?>index.php/admin/dashboard">Dashboard</a>
+					<?php endif;?>><a href="<?=base_url()?>admin/dashboard">Dashboard</a>
+					</li> 
+					<li <?php if($this->uri->segment(2)=='member'):?> class="active"
+					<?php endif;?>><a
+						href="<?=base_url()?>admin/member/admin_member">Member </a>
 					</li>
-					<li <?php if($this->uri->segment(2)=='dashboard'):?> class="active"
-					<?php endif;?>><a href="<?=base_url()?>index.php/admin/dashboard">WEB
-							Wizard</a>
+					<li <?php if($this->uri->segment(2)=='document'):?> class="active"
+					<?php endif;?>><a
+						href="<?=base_url()?>admin/document/document_list">Document</a>
+					</li>
+					<li <?php if($this->uri->segment(2)=='clouddrive'):?> class="active"
+					<?php endif;?>><a
+						href="<?=base_url()?>admin/clouddrive/checkOauth">Cloud Drive</a>
 					</li>
 					<li <?php if($this->uri->segment(2)=='webzine'):?> class="active"
 					<?php endif;?>><a
-						href="<?=base_url()?>member/admin/member/admin_member">Member </a>
+						href="<?=base_url()?>admin/document/writeform">Page</a>
 					</li>
-					<li <?php if($this->uri->segment(2)=='webzine'):?> class="active"
+					<li <?php if($this->uri->segment(2)=='filebox'):?> class="active"
 					<?php endif;?>><a
-						href="<?=base_url()?>document/admin/document/document_list">Document</a>
+						href="<?=base_url()?>admin/filebox/fileList">File</a>
 					</li>
-					<li <?php if($this->uri->segment(2)=='webzine'):?> class="active"
-					<?php endif;?>><a
-						href="<?=base_url()?>clouddrive/admin/clouddrive/checkOauth">Cloud
-							Drive</a>
-					</li>
-					<li <?php if($this->uri->segment(2)=='webzine'):?> class="active"
-					<?php endif;?>><a
-						href="<?=base_url()?>index.php/admin/document/writeform">Page</a>
-					</li>
-					<li <?php if($this->uri->segment(2)=='template'):?> class="active"
-					<?php endif;?>><a
-						href="<?=base_url()?>filebox/admin/filebox/fileList">File</a>
-					</li>
-					<li <?php if($this->uri->segment(2)=='template'):?> class="active"
+					<li <?php if($this->uri->segment(2)=='setting'):?> class="active"
 					<?php endif;?>><a href="<?=base_url()?>admin/setting">Setting</a>
 					</li>
 					<li>
