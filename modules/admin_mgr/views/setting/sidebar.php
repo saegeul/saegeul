@@ -7,7 +7,7 @@
 	    <li <?php if($action=='email') echo 'class="active"'; ?>> 
 	         <a href="<?=site_url("admin_mgr/setting/email")?>"><i class="icon-chevron-right"></i>Email Setting</a> 
 	    </li> 
-        <li <?php if($action=='email') echo 'class="active"'; ?>> 
+        <li <?php if($action=='openapi') echo 'class="active"'; ?>> 
 	         <a href="<?=site_url("admin_mgr/setting/openapi")?>"><i class="icon-chevron-right"></i>Open API Setting</a> 
 	    </li> 
         <li <?php if($action=='dbtable') echo 'class="active"' ;?>> 
