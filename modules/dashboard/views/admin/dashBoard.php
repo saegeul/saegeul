@@ -22,11 +22,11 @@
 		<div class="siteInfo">
 			<h4>사이트 정보</h4>
 			<ul>
-				<li>이름 : <?=$site[0]->title?>
+				<li>이름 : <?=isset($site[0]->title)?$site[0]->title:""?>
 				</li>
-				<li>URL : <?=$site[0]->site_url?>
+				<li>URL : <?=isset($site[0]->site_url)?$site[0]->title:""?>
 				</li>
-				<li>회원가입 가능 여부 : <?=$site[0]->on_register==1?"허락":"불가"?>
+				<li>회원가입 가능 여부 : <?=(isset($site[0]->on_register)?$site[0]->on_register:"")==1?"허락":"불가"?>
 				</li>
 			</ul>
 		</div>
@@ -34,13 +34,13 @@
 		<div class="emailInfo">
 			<h4>E-mail 정보</h4>
 			<ul>
-				<li>E-mail 주소 : <?=$email[0]->email?>
+				<li>E-mail 주소 : <?=isset($email[0]->email)?$email[0]->email:""?>
 				</li>
-				<li>E-mail Protocal : <?=$email[0]->email_protocol?>
+				<li>E-mail Protocal : <?=isset($email[0]->email_protocol)?$email[0]->email_protocol:""?>
 				</li>
-				<li>SMTP Host : <?=$email[0]->smtp_host?>
+				<li>SMTP Host : <?=isset($email[0]->smtp_host)?$email[0]->smtp_host:""?>
 				</li>
-				<li>SMTP Port : <?=$email[0]->smtp_port?>
+				<li>SMTP Port : <?=isset($email[0]->smtp_port)?$email[0]->smtp_port:""?>
 				</li>
 			</ul>
 		</div>

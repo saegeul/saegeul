@@ -547,6 +547,32 @@ class Users extends CI_Model
 		$this->db->where('email', $email);
 		$this->db->update($this->table_name);
     } 
+    
+    function getUserList($page=1,$list_count=10,$search_param=null){
+    	$this->db->order_by("id", "desc");
+    	$this->db->limit($list_count , ($page-1)*$list_count );
+    	 
+    	if($search_param == null) {
+    		$query = $this->db->get($this->table_name);
+    		$total_rows = $this->db->count_all($this->table_name);
+    	}else{
+    		$this->db->like($search_param['search_key'],$search_param['search_keyword']);
+    		$query = $this->db->get($this->table_name) ;
+    		 
+    		$this->db->like($search_param['search_key'],$search_param['search_keyword']);
+    		$total_rows = $this->db->count_all_results($this->table_name);
+    	}
+    	 
+    	$pagination['page'] = $page ;
+    	$pagination['list_count'] = $list_count ;
+    	$pagination['total_rows'] = $total_rows ;
+    	$pagination['page_count'] = ceil($total_rows / $list_count) ;
+    	 
+    	$result['list'] = $query->result() ;
+    	$result['pagination'] = $pagination ;
+    	 
+    	return $result ;
+    }
 }
 
 /* End of file users.php */
