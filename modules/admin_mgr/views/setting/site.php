@@ -7,6 +7,8 @@
 				<label class="control-label" for="input01">Site 이름</label>
 				<div class="controls">
 					<input type="text" class="input-xlarge" name="site_name"
+					value="<?if($set_info){echo $set_info->title;}?>"
+}
 						placeholder="saegeul">
 					<p class="help-block">Site 이름</p>
 				</div>
@@ -15,6 +17,7 @@
 				<label class="control-label" for="input02">Site URL</label>
 				<div class="controls">
 					<input type="text" class="input-xlarge" name="site_url"
+						value="<?if($set_info){echo $set_info->site_url;}?>"
 						placeholder="http://www.saegeul.com">
 					<p class="help-block">Site URL을 입력하세요.</p>
 				</div>
@@ -22,9 +25,9 @@
 			<div class="control-group">
 				<label class="control-label" for="input03">회원가입 가능 </label>
 				<div class="controls">
-					<select name="join_available">
-						<option value="1">ON</option>
-						<option value="0">OFF</option>
+					<select name="join_available" >
+						<option <?if($set_info){if($set_info->on_register == "1"){echo "selected";}}?> value="1">ON</option>
+						<option <?if($set_info){if($set_info->on_register == "0"){echo "selected";}}?> value="0">OFF</option>
 					</select>
 					<p class="help-block">회원가입 가능 여부.</p>
 				</div>

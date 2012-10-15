@@ -42,7 +42,12 @@ class setting extends MX_Controller {
 		$this->sg_layout->add('setting/email') ;
 		$this->sg_layout->add('setting/footer') ;
        
+		$this->load->model('admin_model') ;
+		
         $data = array() ; 
+        
+        $data['set_info']=$this->admin_model->getEmailInfo();
+        
         $data['action'] = 'email' ;
 		$this->sg_layout->show($data) ;
 	}
@@ -112,8 +117,19 @@ class setting extends MX_Controller {
 		$this->sg_layout->add('setting/site') ;
 		$this->sg_layout->add('setting/footer') ;
         
-        $data = array() ; 
-        $data['action'] = 'site' ; 
+		$this->load->model('admin_model') ;
+		
+		$data = array() ;
+		
+		
+		$data['set_info']=$this->admin_model->getSiteInfo();
+		
+		
+		
+        
+        $data['action'] = 'site' ;
+
+        
 		$this->sg_layout->show($data) ;
 	}
 
