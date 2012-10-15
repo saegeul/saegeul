@@ -18,11 +18,11 @@ $(document).ready(function (e) {
 				$('#mod_type').attr('value',data.file_type);
 				$('#mod_author').attr('value',data.username);
 				if(data.isvalid == 'Y'){
-					$('#mod_isvalid_yes').attr('class','btn btn-small active');
-					$('#mod_isvalid_no').attr('class','btn btn-small');
-				}else{
 					$('#mod_isvalid_yes').attr('class','btn btn-small');
 					$('#mod_isvalid_no').attr('class','btn btn-small active');
+				}else{
+					$('#mod_isvalid_yes').attr('class','btn btn-small active');
+					$('#mod_isvalid_no').attr('class','btn btn-small');
 				}
 				$('#mod_tag').attr('value',data.tag);
 				$('#mod_down_cnt').attr('value',data.down_cnt);

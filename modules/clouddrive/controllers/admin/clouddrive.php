@@ -76,9 +76,10 @@ class Clouddrive extends MX_Controller {
 	}
 
 	public function ucloudView(){
+		$data['action'] = 'ucloudView';
+		
 		$request_body = array('api_token'=>$this->api_token) ;
 		$response = $this->oauth->api_call('getsyncfolder',$this->request_header,$request_body,'POST') ;
-
 		$data['result'] = $response;
 
 		$this->load->library('sg_layout');
@@ -97,6 +98,7 @@ class Clouddrive extends MX_Controller {
 
 	// check oauth
 	public function checkOauth(){
+		$data['action'] = 'checkOauth';
 		if($this->api_key=="" && $this->secret_key==""){
 			// get DB library
 			$this->load->model('auth/Auth_model','auth');
