@@ -41,7 +41,7 @@ DOC.Element.Twitter = function(oConfig){
 
     that.editor = function($el){ 
         that.turnOnEditor() ; 
-        var $twitter_area = $('<div class="well"><div id="twitter_editor"><div  class="span7"><ul id="selected_twit" style="list-style:none;"> </ul></div> <div class="span4" id="twitter_list"> </div></div><hr/><a class="btn btn-large btn-primary save_btn" >SAVE </a></div>');
+        var $twitter_area = $('<div class="well"><div id="twitter_editor"></div><hr/><a class="btn btn-large btn-primary save_btn" >SAVE </a></div>');
 
         if(that.is_empty()){
             $twitter_area .appendTo($('#document_body')) ; 
@@ -51,15 +51,15 @@ DOC.Element.Twitter = function(oConfig){
             $el = null ; 
         } 
 
-        var listPanel = DOC.TwitListPanel({
-            target_id : 'twitter_list',
+        var twitEditor = DOC.TwitEditor({
+            target_id : 'twitter_editor',
             url : 'http://search.twitter.com/search.json'
         }) ; 
 
-        listPanel.render() ;
+        twitEditor.render() ;
 
         if(!that.is_empty()){
-            //DOC.TwitEditor(that.getData()) ; 
+
         }; 
 
         $twitter_area.find('.save_btn').click(function(){

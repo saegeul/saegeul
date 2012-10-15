@@ -1,0 +1,13 @@
+<table name="openapi">
+    <column name="openapi_id" type="int" size="11" auto_increment="true" primary_key="true" />
+    <column name="provider" type="varchar" size="200" not_null="true" />
+    <column name="api_key" type="varchar" size="200" not_null="true" />
+    <column name="secret_key" type="varchar" size="200" not_null="true" />
+	<column name="oauth_token" type="varchar" size="200" not_null="true"/>
+	<column name="oauth_secret_token" type="varchar" size="200" not_null="true"/>
+	<column name="regdate" type="datetime" />
+	<column name="ip_address" type="varchar" size="128" /> 
+    <column name="username" type="varchar" size="50"   not_null="true"/>
+    <column name="email" type="varchar" size="100"   not_null="true"/> 
+    <column name="uid" type="int" size="11" not_null="true"/>
+</table>

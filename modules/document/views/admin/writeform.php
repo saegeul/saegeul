@@ -32,6 +32,10 @@ $this->load->helper('asset');
 
 <script> 
 $(function(){ 
+    $('#document_form').submit(function(){
+        var html = DOC.paper.html() ; 
+        $('#document_form').find('[name=content]').val(html) ; 
+    }) ; 
     DOC.remocon_panel.init({
         id : 'remocon' ,
         cls : 'well' ,

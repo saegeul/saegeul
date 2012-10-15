@@ -20,14 +20,14 @@
 			<div>
 				<a class="brand" style="color: #ddd; font-weight: bold;"> <span style="color:#898989;">Saegeul</span> <small>for social curation</small>
 				</a>
-				<ul class="nav">
-					<li <?php if($this->uri->segment(2)=='template'):?> class="active"
-					<?php endif;?>><a
-						href="<?=base_url()?>admin/sitemap/siteMap">SiteMap</a>
-					</li>
+				<ul class="nav"> 
 					<li <?php if($this->uri->segment(2)=='dashboard'):?> class="active"
 					<?php endif;?>><a href="<?=base_url()?>admin_mgr/dashboard">Dashboard</a>
 					</li> 
+                    <li <?php if($this->uri->segment(2)=='template'):?> class="active"
+					<?php endif;?>><a
+						href="<?=base_url()?>admin/sitemap/siteMap">SiteMap</a>
+					</li>
 					<li <?php if($this->uri->segment(2)=='member'):?> class="active"
 					<?php endif;?>><a
 						href="<?=base_url()?>admin/member/admin_member">Member </a>

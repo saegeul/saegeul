@@ -82,7 +82,7 @@ DOC.ListPanel = function(config){
         var _height = height+'px'; 
         var _body_height = (height-80)+'px';
         $el = $('<div style="width:'+_width+';min-height:'+_height+';background:#fff;padding:4px;border:1px solid #ccc;" id="'+uid+'">'+
-            '<div class="_list_panel_header" style="background:#f7f7f7;"><form> </form> '+
+            '<div class="_list_panel_header" style="background:#f7f7f7;"><form></form> '+
             '</div>'+
             '<div class="_list_panel_body" style="min-height:'+_body_height+';"> <ul style="padding:0px;margin:0px;list-style:none;"> </ul>'+
             '</div>'+
@@ -133,7 +133,7 @@ DOC.ListPanel = function(config){
     return that ; 
 };
 
-DOC.TwitListPanel = function(config){
+DOC.TwitEditor = function(config){
     var url = config.url ,
         uid = DOC.Util.uid(),
         $header ,

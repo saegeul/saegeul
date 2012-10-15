@@ -84,14 +84,14 @@ if($key != "" && $keyword != ""){
 			<thead class="row">
 				<tr>
 
-					<td class="span1" style="text-align: center;"><h4>번호</h4></td>
-					<td class="span1" style="text-align: center;"><h4>ID</h4></td>
-					<td class="span1" style="text-align: center;"><h4>Name</h4></td>
-					<td class="span1" style="text-align: center;"><h4>E-Mail</h4></td>
-					<td class="span1" style="text-align: center;"><h4>Activated</h4></td>
-					<td class="span1" style="text-align: center;"><h4>권한</h4></td>
-					<td class="span1" style="text-align: center;"><h4>Goodbye</h4></td>
-					<td class="span1" style="text-align: center;"><h4>Grant Admin</h4></td>
+					<td class="span1" style="text-align: center;">번호</td>
+					<td class="span1" style="text-align: center;">ID</td>
+					<td class="span1" style="text-align: center;">Name</td>
+					<td class="span1" style="text-align: center;">E-Mail</td>
+					<td class="span1" style="text-align: center;">Activated</td>
+					<td class="span1" style="text-align: center;">권한</td>
+					<td class="span1" style="text-align: center;">Goodbye</td>
+					<td class="span1" style="text-align: center;">Grant Admin</td>
 
 				</tr>
 			</thead>
