@@ -834,9 +834,33 @@ function admin_or_user(){
 
 	}
 
+	function check_emailset(){
+		//$this->load->model('admin_model','',TRUE);
+		
+		if($this->users->check_emailset()){
+			$this->do_invite();
+		}
+		else
+		{
+			
+			$data['message']="Before invite user, set email.";
+			$this->load->library('sg_layout') ;
+			
+			$this->sg_layout->layout('admin/layout') ;
+			$this->sg_layout->module('member') ;
+			
+			$this->sg_layout->add('admin/header') ;
+			$this->sg_layout->add('admin/sidebar') ;
+			$this->sg_layout->add('admin/general_message') ;
+			$this->sg_layout->add('admin/footer') ;
+			
+			$this->sg_layout->show($data) ;
+		}
+	}
 
 	function do_invite(){ 
-
+	
+		
 
 		$use_username = $this->config->item('use_username', 'tank_auth');
 

@@ -573,6 +573,14 @@ class Users extends CI_Model
     	 
     	return $result ;
     }
+    
+    function check_emailset()
+    {
+    	$query = $this->db->get('email_config');
+    
+    
+    	return $query->num_rows();
+    }
 }
 
 /* End of file users.php */
