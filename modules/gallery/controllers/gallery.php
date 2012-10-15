@@ -48,7 +48,7 @@ class Gallery extends MX_Controller {
     	$this->sg_layout->module('gallery');
     
     	$this->sg_layout->add('header');
-    	//$this->sg_layout->add('admin/sidebar');
+    	$this->sg_layout->add('sidebar');
     	$this->sg_layout->add('gallery');
     	$this->sg_layout->add('footer');
     
