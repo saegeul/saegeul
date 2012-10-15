@@ -1,12 +1,8 @@
 <?php $this->load->helper('asset') ?>
 <?echo css_asset('sitemap','sitemap.css')?>
 <?echo js_asset('sitemap','jquery.sitemaplist.js')?>
-<div class="content" style='width: 98%;'>
-	<br>
-	<br>
-	<div class="alert alert-success" align="center">
-		사이트 맵을 작성 하여 주십시오.
-	</div>
+<div class="_content">
+	<div class="alert alert-success" align="center">사이트 맵을 작성 하여 주십시오.</div>
 	<div style='float: right;'>
 		<a class="btn btnCreateMenu"><i class="icon-plus"></i> 메뉴추가</a>
 	</div>
@@ -16,14 +12,14 @@
 		<ul class='nav nav-list' id='siteMap'>
 			<?php foreach($siteMapList as $key => $site) :?>
 			<li class='menu' id='<?=$site->site_srl;?>'><i class="icon-move"></i>
-				<span class="menuInfo"><?=$site->site_name;?> </span> 
-				<span class="side"> <a class="btn btn-link btnAppendSite"
-						style='color: #333333;'><i class="icon-plus"></i>Append</a> <a
-						class="btn btn-link btnEditSite" style='color: #333333;'><i
-							class="icon-pencil"></i>Edit</a> <a
-						class="btn btn-link btnDeleteSite" style='color: #333333;'><i
-							class="icon-trash"></i>Delete</a>
-				</span>
+				<span class="menuInfo"><?=$site->site_name;?> </span> <span
+				class="side"> <a class="btn btn-link btnAppendSite"
+					style='color: #333333;'><i class="icon-plus"></i>Append</a> <a
+					class="btn btn-link btnEditSite" style='color: #333333;'><i
+						class="icon-pencil"></i>Edit</a> <a
+					class="btn btn-link btnDeleteSite" style='color: #333333;'><i
+						class="icon-trash"></i>Delete</a>
+			</span>
 			</li>
 			<?php endforeach ;?>
 		</ul>

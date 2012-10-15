@@ -13,11 +13,11 @@ $oauth_verifier =  $this->session->userdata('session_kt_ucloud_oauth_verifier');
 			<?php 
 			if($oauth_token != null && $oauth_token != ""){
 				?>
-			<li><a href="<?=base_url()?>clouddrive/admin/clouddrive/ucloudView"><i
+			<li><a href="<?=base_url()?>admin/clouddrive/ucloudView"><i
 					class="icon-chevron-right"></i> KTUcloud</a>
 			</li>
 			<?php }else{?>
-			<li><a href="<?=base_url()?>clouddrive/admin/clouddrive/checkOauth"><i
+			<li><a href="<?=base_url()?>admin/clouddrive/checkOauth"><i
 					class="icon-chevron-right"></i> KT Ucloud</a>
 			</li>
 			<?php }?>

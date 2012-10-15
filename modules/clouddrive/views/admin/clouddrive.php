@@ -3,8 +3,7 @@
 <?echo css_asset('clouddrive','style.css')?>
 <?echo js_asset('clouddrive','jquery.waitingpopup-min.js')?>
 <?echo js_asset('clouddrive','jquery.auth-ajax.js')?>
-<br>
-<div id="container">
+<div class="_content">
 	<div id="layout_center">
 		<ul class="breadcrumb"></ul>
 		<div id="bntLine" align="right">
@@ -23,4 +22,3 @@
 		<div id="files"></div>
 	</div>
 </div>
-

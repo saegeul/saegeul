@@ -20,9 +20,6 @@ class Filebox extends MX_Controller {
 		$this->uid = $this->tank_auth->get_user_id();
 		$this->email = $this->tank_auth->get_useremail();
 
-		// check direct acess
-		if($this->uid == "")
-			redirect('member/login', 'refresh');
 	}
 
 	// uploadForm : view
@@ -154,7 +151,7 @@ class Filebox extends MX_Controller {
 		$ret->type = $data->file_type ;
 		$ret->url = base_url().$data->full_path ;
 		$ret->thumbnail_url = base_url().$data->image_thumb_path;
-		$ret->delete_url = base_url().'filebox/admin/filebox/process?file_srl='.$ret->id;
+		$ret->delete_url = base_url().'admin/filebox/process?file_srl='.$ret->id;
 		$ret->delete_type = 'DELETE' ;
 
 		return $ret ;
