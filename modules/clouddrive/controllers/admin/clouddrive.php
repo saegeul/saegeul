@@ -31,9 +31,6 @@ class Clouddrive extends MX_Controller {
 		$this->uid = $this->tank_auth->get_user_id();
 		$this->email = $this->tank_auth->get_useremail();
 
-		if($this->uid == "")
-			redirect('member/login', 'refresh');
-
 		// get session
 		$this->api_key = $this->session->userdata('session_kt_api_key');
 		$this->secret_key = $this->session->userdata('session_kt_secret_key');
@@ -44,7 +41,7 @@ class Clouddrive extends MX_Controller {
 		$this->load->library('oauth',array(
 				'api_key'=>$this->api_key,
 				'secret_key'=>$this->secret_key,
-				'callback_url'=>base_url().'clouddrive/admin/clouddrive/ucloudView',
+				'callback_url'=>base_url().'admin/clouddrive/ucloudView',
 				'signature_method'=>'HMAC-SHA1',
 				'provider'=>'Ucloud',
 				'oauth_version'=>'1.0'

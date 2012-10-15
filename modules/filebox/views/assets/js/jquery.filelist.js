@@ -4,7 +4,7 @@ $(document).ready(function (e) {
 		var file_srl = $(this).data('id');
 		$.ajax({
 			type : "GET",
-			url : "/saegeul/filebox/admin/filebox/getFile",
+			url : "/saegeul/admin/filebox/getFile",
 			contentType : "application/json; charset=utf-8",
 			dataType : "json",
 			data : "file_srl=" + file_srl,
@@ -42,7 +42,7 @@ $(document).ready(function (e) {
 		
 		$.ajax({
 			type : "GET",
-			url : "/saegeul/filebox/admin/filebox/modify",
+			url : "/saegeul/admin/filebox/modify",
 			contentType : "application/json; charset=utf-8",
 			dataType : "json",
 			data : "file_srl=" + file_srl + "&original_file_name=" + original_file_name + "&isvalid=" + isvalid + "&tag=" + tag,
@@ -70,7 +70,7 @@ $(document).ready(function (e) {
 				var file_srl = $(this).closest("td").text();
 				$.ajax({
 					type : "GET",
-					url : "/saegeul/filebox/admin/filebox/delete",
+					url : "/saegeul/admin/filebox/delete",
 					contentType : "application/json; charset=utf-8",
 					dataType : "json",
 					data : "file_srl=" + file_srl,
@@ -90,7 +90,7 @@ $(document).ready(function (e) {
 		var file_srl = $(this).parent().parent().attr('id');
 		$.ajax({
 			type : "GET",
-			url : "/saegeul/filebox/admin/filebox/delete",
+			url : "/saegeul/admin/filebox/delete",
 			contentType : "application/json; charset=utf-8",
 			dataType : "json",
 			data : "file_srl=" + file_srl,

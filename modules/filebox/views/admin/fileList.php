@@ -1,8 +1,6 @@
 <?php $this->load->helper('asset') ?>
 <?echo js_asset('filebox','jquery.filelist.js')?>
-<br>
-<br>
-<div class="content" style='width: 95%;'>
+<div class="_content">
 	<form class="well well-small form-search" name="search_form">
 		<div align="left">
 			<select name="search_key" size="1">
@@ -49,7 +47,7 @@
 						</div>
 						<p>
 							<a
-								href="<?=base_url()?>filebox/admin/filebox/download/<?=$file->file_srl?>"><?=$file->original_file_name;?>
+								href="<?=base_url()?>admin/filebox/download/<?=$file->file_srl?>"><?=$file->original_file_name;?>
 							</a>
 						</p>
 					</div>
@@ -90,14 +88,14 @@
 		<ul>
 			<?php for($i=$first_page ; $i <$pagination['page'];$i++):?>
 			<li><a
-				href="<?=base_url()?>filebox/admin/filebox/fileList/<?=$i?>/?search_key=<?=$search_key?>&search_keyword=<?=$search_keyword?>"><?=$i?>
+				href="<?=base_url()?>admin/filebox/fileList/<?=$i?>/?search_key=<?=$search_key?>&search_keyword=<?=$search_keyword?>"><?=$i?>
 			</a></li>
 			<?php endfor;?>
 			<li class="active"><a href="javascript:void(0)"><?=$pagination['page'];?>
 			</a></li>
 			<?php for($i=$pagination['page']+1 ; $i <= $last_page;$i++):?>
 			<li><a
-				href="<?=base_url()?>filebox/admin/filebox/fileList/<?=$i?>/?search_key=<?=$search_key?>&search_keyword=<?=$search_keyword?>"><?=$i?>
+				href="<?=base_url()?>admin/filebox/fileList/<?=$i?>/?search_key=<?=$search_key?>&search_keyword=<?=$search_keyword?>"><?=$i?>
 			</a></li>
 			<?php endfor;?>
 		</ul>

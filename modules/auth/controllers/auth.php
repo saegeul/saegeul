@@ -32,7 +32,7 @@ class Auth extends MX_Controller {
 		// insert file information in DB
 		$ret_data = $this->auth->insert($args);
 		
-		redirect('clouddrive/admin/clouddrive/checkOauth', 'refresh');
+		redirect('admin/clouddrive/checkOauth', 'refresh');
 	}
 	
 	public function call(){
@@ -47,7 +47,7 @@ class Auth extends MX_Controller {
 		$this->load->library('oauth',array(
 				'api_key'=>$api_key,
 				'secret_key'=>$secret_key,
-				'callback_url'=>base_url().'clouddrive/admin/clouddrive/ucloudView',
+				'callback_url'=>base_url().'admin/clouddrive/ucloudView',
 				'signature_method'=>'HMAC-SHA1',
 				'provider'=>'Ucloud',
 				'oauth_version'=>'1.0'
@@ -67,7 +67,7 @@ class Auth extends MX_Controller {
 		$this->session->set_userdata('session_kt_ucloud_oauth_verifier', $this->input->get_post('oauth_verifier'));
 		$this->session->set_userdata('session_kt_ucloud_oauth_token_secret', $this->oauth->token('oauth_token_secret'));
 
-		redirect(base_url().'clouddrive/admin/clouddrive/ucloudView', 'refresh');
+		redirect(base_url().'admin/clouddrive/ucloudView', 'refresh');
 	}
 
 	// kt ucloud oauth
@@ -76,7 +76,7 @@ class Auth extends MX_Controller {
 		$secret_key = $this->session->userdata('session_kt_secret_key');
 		
 		if($api_key == false || $secret_key == false)
-				redirect(base_url().'clouddrive/admin/clouddrive/checkOauth', 'refresh');
+				redirect(base_url().'admin/clouddrive/checkOauth', 'refresh');
 		
 		// setting session
 		$this->session->set_userdata('cloud_enterprise', "KTUcloud");

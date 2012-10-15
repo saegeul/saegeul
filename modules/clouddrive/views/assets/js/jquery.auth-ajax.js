@@ -6,7 +6,7 @@ $(document).ready(function () {
 	
 	$.ajax({
 	       type: "GET",
-	       url: "/saegeul/clouddrive/admin/clouddrive/getKtCloudData",
+	       url: "/saegeul/admin/clouddrive/getKtCloudData",
 	       contentType: "application/json; charset=utf-8",
 	       dataType: "json",
 	       data: "",
@@ -60,7 +60,7 @@ $(document).ready(function () {
 	
 	$.ajax({
 	       type: "GET",
-	       url: "/saegeul/clouddrive/admin/clouddrive/fileBoxList",
+	       url: "/saegeul/admin/clouddrive/fileBoxList",
 	       contentType: "application/json; charset=utf-8",
 	       dataType: "json",
 	       data: "page=1",
@@ -122,7 +122,7 @@ $(".pageBtn").live('click',function() {
 	var page = $(this).find('a').attr('id');
 	$.ajax({
 		type: "GET",
-	       url: "/saegeul/clouddrive/admin/clouddrive/fileBoxList",
+	       url: "/saegeul/admin/clouddrive/fileBoxList",
 	       contentType: "application/json; charset=utf-8",
 	       dataType: "json",
 	       data: "page=" + page,
@@ -192,7 +192,7 @@ $(".clickFolder").live('click',function(e) {
 	$("input[id=curt_folder]").val(select_folder).change();
 	$.ajax({
 	       type: "GET",
-	       url: "/saegeul/clouddrive/admin/clouddrive/getKtCloudData",
+	       url: "/saegeul/admin/clouddrive/getKtCloudData",
 	       contentType: "application/json; charset=utf-8",
 	       dataType: "json",
 	       data: "folder_id=" + select_folder,
@@ -250,7 +250,7 @@ $('.crumb').live('click',function(e) {
 		select_folder = "";
 	$.ajax({
 	       type: "GET",
-	       url: "/saegeul/clouddrive/admin/clouddrive/getKtCloudData",
+	       url: "/saegeul/admin/clouddrive/getKtCloudData",
 	       contentType: "application/json; charset=utf-8",
 	       dataType: "json",
 	       data: "folder_id=" + select_folder,
@@ -342,7 +342,7 @@ $('.createAddFolderBtn').live('click',function(e) {
 	}else{
 		$.ajax({
 		       type: "GET",
-		       url: "/saegeul/clouddrive/admin/clouddrive/createKtCloudFolder",
+		       url: "/saegeul/admin/clouddrive/createKtCloudFolder",
 		       contentType: "application/json; charset=utf-8",
 		       dataType: "json",
 		       data: "addFolderName=" + folderName + "&upload_folder=" + upload_folder, 
@@ -377,7 +377,7 @@ $('#moveUcloud').live('click',function() {
 		var str = JSON.stringify(arr);
 		$.ajax({
 		       type: "GET",
-		       url: "/saegeul/clouddrive/admin/clouddrive/movefileBoxToKtCloud",
+		       url: "/saegeul/admin/clouddrive/movefileBoxToKtCloud",
 		       contentType: "application/json; charset=utf-8",
 		       dataType: "json",
 		       data: "data=" + str + "&upload_folder=" + upload_folder, 
@@ -409,7 +409,7 @@ $('#moveFilebox').live('click',function() {
 	var data_name = JSON.stringify(arr_name);
 	$.ajax({
 		type: "GET",
-		 url: "/saegeul/clouddrive/admin/clouddrive/moveKtCloudTofileBox",
+		 url: "/saegeul/admin/clouddrive/moveKtCloudTofileBox",
 	    contentType: "application/json; charset=utf-8",
 	    dataType: "json",
 	    data: "data_id=" + data_id + "&data_name=" + data_name +"&upload_folder=" + upload_folder, 
@@ -431,7 +431,7 @@ $('.downloadFile').live('click',function() {
 	var file_id = $(this).closest("td").attr("id");
 	var file_name = $(this).closest("td").text();
 	
-	document.location.href = "/saegeul/clouddrive/admin/clouddrive/downloadKtCloudFile?file_id=" + file_id + "&file_name=" + file_name;
+	document.location.href = "/saegeul/admin/clouddrive/downloadKtCloudFile?file_id=" + file_id + "&file_name=" + file_name;
 	setTimeout("$().waitingpopup('close')", 3000); 
 });
 
@@ -450,7 +450,7 @@ $('#deletFile').live('click',function() {
 	var str = JSON.stringify(arr);
 	$.ajax({
 	       type: "GET",
-	       url: "/saegeul/clouddrive/admin/clouddrive/deleteKtCloudData",
+	       url: "/saegeul/admin/clouddrive/deleteKtCloudData",
 	       contentType: "application/json; charset=utf-8",
 	       dataType: "json",
 	       data: "data=" + str, 

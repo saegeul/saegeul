@@ -81,21 +81,21 @@ class Sitemap extends MX_Controller {
 		switch ($param->moduleOrLinUrl) {
 			case 1:
 				if($param->moduleValue == "document")
-					$ret->site_url = base_url() . "document/admin/document/document_list";
+					$ret->site_url = base_url() . "admin/document/document_list";
 				else if($param->moduleValue == "file")
-					$ret->site_url = base_url() . "filebox/admin/filebox/uploadForm";
+					$ret->site_url = base_url() . "admin/filebox/uploadForm";
 				else if($param->moduleValue == "page")
-					$ret->site_url = base_url() . "page/admin/page/createPage";
+					$ret->site_url = base_url() . "admin/page/createPage";
 				$ret->site_module_id = $param->moduleId;
 				$ret->site_module = $param->moduleValue;
 				break;
 			case 2:
 				if($param->moduleValue == "document")
-					$ret->site_url = base_url() . "document/admin/document/document_list";
+					$ret->site_url = base_url() . "admin/document/document_list";
 				else if($param->moduleValue == "file")
-					$ret->site_url = base_url() . "filebox/admin/filebox/uploadForm";
+					$ret->site_url = base_url() . "admin/filebox/uploadForm";
 				else if($param->moduleValue == "page")
-					$ret->site_url = base_url() . "page/admin/page/createPage";
+					$ret->site_url = base_url() . "admin/page/createPage";
 				break;
 			case 3:
 				$ret->site_module = "link";
