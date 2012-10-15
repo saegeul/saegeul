@@ -7,7 +7,7 @@ class Check_auth extends CI_Controller {
         $url = uri_string() ; 
 
         if (strpos($url,'admin') === 0 ){
-            if($ci->tank_auth->is_logged_in()) {// not_logged_in 
+            if(!$ci->tank_auth->is_logged_in()) {// not_logged_in 
                 echo modules::run('member/do_login') ; 
                 exit() ; 
             }
