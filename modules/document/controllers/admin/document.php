@@ -24,18 +24,18 @@ class Document extends MX_Controller {
 
     public function save(){
         $this->username = "root";
-		$this->email = "root@saegeul.com";
-		$this->uid = '1';
+        $this->email = "root@saegeul.com";
+        $this->uid = '1';
         $this->load->model('Document_model','document_model') ; 
-        
+
         $insert_data;
-		$insert_data->reg_date = standard_date('DATE_ATOM',time());//date("Y-m-d H:i:s",time());
-		$insert_data->ip_address = $this->input->ip_address();
-		$insert_data->content = $this->input->post('content');
-		$insert_data->title = $this->input->post('title');
-		$insert_data->username = 'jaehee' ; 
-		$insert_data->email = 'jaehee@saegeul.com' ; 
-		$insert_data->uid = 1 ; 
+        $insert_data->reg_date = standard_date('DATE_ATOM',time());//date("Y-m-d H:i:s",time());
+        $insert_data->ip_address = $this->input->ip_address();
+        $insert_data->content = $this->input->post('content');
+        $insert_data->title = $this->input->post('title');
+        $insert_data->username = 'jaehee' ; 
+        $insert_data->email = 'jaehee@saegeul.com' ; 
+        $insert_data->uid = 1 ; 
 
 		$this->document_model->insert($insert_data); 
         $this->load->helper('url') ; 
@@ -177,6 +177,27 @@ class Document extends MX_Controller {
         $this->sg_layout->add('admin/footer') ; 
 
         $this->sg_layout->show($data) ; 
+    }
+    public function modify_document($doc_id=null)
+    {
+        $data['action'] = 'writeform';
+
+        $this->load->library('sg_layout') ; 
+        $this->load->model('Document_model','document');
+
+        $this->sg_layout->layout('admin/layout') ; 
+        $this->sg_layout->module('document') ; 
+        $this->sg_layout->add('admin/header') ; 
+        $this->sg_layout->add('admin/sidebar') ; 
+        $this->sg_layout->add('admin/writeform') ; 
+        $this->sg_layout->add('admin/footer') ; 
+
+        $doc_id = $this->input->get_post('doc_id'); 
+        $result = $this->document->getDoc($doc_id);
+        $data['content'] = $result['content'];
+
+        $this->sg_layout->show($data) ; 
+
     }
     
 

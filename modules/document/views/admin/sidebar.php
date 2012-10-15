@@ -7,7 +7,7 @@
 	    <li <?php if($action=='document_list'):?> class="active" <?endif;?>> 
 	        <a href="<?=site_url("admin/document/document_list")?>"><i class="icon-chevron-right"></i>문서목록</a> 
 	    </li> 
-	    <li> 
+	    <li <?php if($action=='recyclebin_list'):?> class="active" <?endif;?>> 
 	        <a href="<?=site_url("admin/document/recyclebin_list")?>" ><i class="icon-chevron-right"></i>휴지통</a> 
 	    </li>
 	</ul>

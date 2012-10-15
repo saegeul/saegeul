@@ -54,7 +54,7 @@ $(function(){
 
 
     DOC.remocon_panel.render() ; 
-    //DOC.remocon_panel.trigger(''); 
+    DOC.remocon_panel.trigger(''); 
 
     DOC.paper.init('document_body') ; 
     DOC.paper.sortable();

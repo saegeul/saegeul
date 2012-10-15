@@ -23,6 +23,15 @@ class Document_model extends CI_Model {
         $query = $this->db->get();
         return $query->result();
     }
+    public function getDoc($doc_id) {
+        $this->db->where("doc_id",$doc_id);
+        $query = $this->db->get($this->table);
+        $result['content'] = $query->result() ; 
+
+        return $result;
+
+
+    }
 
     public function setTrash($data,$doc_id) {
        if( $this->db->update($this->table,$data,array('doc_id' => $doc_id ))){
@@ -45,7 +54,10 @@ class Document_model extends CI_Model {
 
         if($search_param == null) {
             $query = $this->db->get($this->table);
-            $total_rows = $this->db->count_all($this->table);
+            //$total_rows = $this->db->count_all($this->table);
+            
+            $this->db->like("is_trash",$is_trash);
+            $total_rows = $this->db->count_all_results($this->table);
         }else{
             $this->db->like($search_param['search_key'],$search_param['search_keyword']);
             $query = $this->db->get($this->table);
