@@ -41,8 +41,15 @@ class setting extends MX_Controller {
 		$this->sg_layout->add('setting/sidebar') ;
 		$this->sg_layout->add('setting/email') ;
 		$this->sg_layout->add('setting/footer') ;
-
-		$this->sg_layout->show() ;
+       
+		$this->load->model('admin_model') ;
+		
+        $data = array() ; 
+        
+        $data['set_info']=$this->admin_model->getEmailInfo();
+        
+        $data['action'] = 'email' ;
+		$this->sg_layout->show($data) ;
 	}
 
 	public function setupEmail(){
@@ -93,8 +100,9 @@ class setting extends MX_Controller {
 		$this->sg_layout->add('setting/sidebar') ;
 		$this->sg_layout->add('setting/general_message') ;
 		$this->sg_layout->add('setting/footer') ;
-
-		$this->sg_layout->show() ;
+        $data = array() ; 
+        $data['action'] = 'email' ;
+		$this->sg_layout->show($data) ;
 		 
 	} 
 
@@ -108,8 +116,21 @@ class setting extends MX_Controller {
 		$this->sg_layout->add('setting/sidebar') ;
 		$this->sg_layout->add('setting/site') ;
 		$this->sg_layout->add('setting/footer') ;
+        
+		$this->load->model('admin_model') ;
+		
+		$data = array() ;
+		
+		
+		$data['set_info']=$this->admin_model->getSiteInfo();
+		
+		
+		
+        
+        $data['action'] = 'site' ;
 
-		$this->sg_layout->show() ;
+        
+		$this->sg_layout->show($data) ;
 	}
 
 	public function setupSite(){
@@ -152,7 +173,9 @@ class setting extends MX_Controller {
 		$this->sg_layout->add('setting/general_message') ;
 		$this->sg_layout->add('setting/footer') ;
 
-		$this->sg_layout->show() ;
+        $data = array() ; 
+        $data['action'] = 'site' ; 
+		$this->sg_layout->show($data) ;
 
 	}
 
@@ -187,6 +210,25 @@ class setting extends MX_Controller {
 			$this->dbforge->drop_table($table_name) ;
 		}
 	}
+
+    public function openapi(){
+        $this->load->library('sg_layout') ;
+
+		$this->sg_layout->layout('admin/layout') ;
+		$this->sg_layout->module('admin_mgr') ;
+
+		$this->sg_layout->add('setting/header') ;
+		$this->sg_layout->add('setting/sidebar') ;
+		$this->sg_layout->add('setting/openapi') ;
+		$this->sg_layout->add('setting/footer') ;
+        
+        $data = array() ; 
+        $data['action'] = 'openapi' ; 
+
+        $data['api_key_list'] = array() ; 
+
+		$this->sg_layout->show($data) ;
+    }
 
 	public function dbtable(){
 
@@ -237,6 +279,8 @@ class setting extends MX_Controller {
 		$this->sg_layout->add('setting/sidebar') ;
 		$this->sg_layout->add('setting/dbtable') ;
 		$this->sg_layout->add('setting/footer') ;
+
+        $data['action'] = 'dbtable' ; 
 
 		$this->sg_layout->show($data) ;
 	}

@@ -5,7 +5,7 @@ $(document).ready(function() {
 		var markup="";
 		$.ajax({
 			type : "GET",
-			url : "/saegeul/sitemap/admin/sitemap/getChildMenu",
+			url : "/saegeul/admin/sitemap/getChildMenu",
 			contentType : "application/json; charset=utf-8",
 			dataType : "json",
 			data : "parent_site_srl=" + parent_site_srl,
@@ -96,7 +96,7 @@ $(document).ready(function() {
 		}
 		$.ajax({
 			type : "GET",
-			url : "/saegeul/sitemap/admin/sitemap/saveMenu",
+			url : "/saegeul/admin/sitemap/saveMenu",
 			contentType : "application/json; charset=utf-8",
 			dataType : "json",
 			data : "menuName=" + menuName + "&moduleOrLinUrl=" + moduleOrLinUrl + "&moduleValue=" + moduleValue + "&moduleId=" + moduleId + "&menuIsValid=" + menuIsValid,
@@ -128,24 +128,6 @@ $(document).ready(function() {
 		}else if(moduleOrLinUrl == 3){
 			moduleValue = $('#inputLinkURL').val();
 		}
-//		$.ajax({
-//			type : "GET",
-//			url : "/saegeul/sitemap/admin/sitemap/saveMenu",
-//			contentType : "application/json; charset=utf-8",
-//			dataType : "json",
-//			data : "menuName=" + menuName + "&moduleOrLinUrl=" + moduleOrLinUrl + "&moduleValue=" + moduleValue + "&moduleId=" + moduleId + "&menuIsValid=" + menuIsValid,
-//			error : function() {
-//				alert("error");
-//			},
-//			success : function(data) {
-//				$('#inputMenuName').val('');
-//				$('#creatModuleValue').val('');
-//				$('#inputModuleId').val('');
-//				$('#inputLinkURL').val('');
-//				$(':input:radio[name=module]:checked').attr('checked',false);
-//				location.reload();
-//			}
-//		});
 	});
 	
 	$('.btnAppendSite').click(function() {
@@ -184,7 +166,7 @@ $(document).ready(function() {
 		}
 		$.ajax({
 			type : "GET",
-			url : "/saegeul/sitemap/admin/sitemap/saveMenu",
+			url : "/saegeul/admin/sitemap/saveMenu",
 			contentType : "application/json; charset=utf-8",
 			dataType : "json",
 			data : "menuName=" + menuName + "&moduleOrLinUrl=" + moduleOrLinUrl + "&moduleValue=" + moduleValue + "&moduleId=" + moduleId + "&menuIsValid=" + menuIsValid + "&site_srl=" + site_srl,
@@ -201,7 +183,7 @@ $(document).ready(function() {
 		var site_srl = $(this).parent().parent().attr('id');
 		$.ajax({
 			type : "GET",
-			url : "/saegeul/sitemap/admin/sitemap/getMenu",
+			url : "/saegeul/admin/sitemap/getMenu",
 			contentType : "application/json; charset=utf-8",
 			dataType : "json",
 			data : "site_srl=" + site_srl,
@@ -254,7 +236,7 @@ $(document).ready(function() {
 		var site_srl = $(this).parent().parent().attr('id');
 		$.ajax({
 			type : "GET",
-			url : "/saegeul/sitemap/admin/sitemap/deleteMenu",
+			url : "/saegeul/admin/sitemap/deleteMenu",
 			contentType : "application/json; charset=utf-8",
 			dataType : "json",
 			data : "site_srl=" + site_srl,

@@ -5,7 +5,7 @@
 	        <a href="<?=site_url("member/admin/member/admin_member")?>"><i class="icon-chevron-right"></i>회원관리</a> 
 	    </li>
 	    <li> 
-	        <a href="<?=site_url("member/admin/member/do_invite")?>"><i class="icon-chevron-right"></i>회원초대</a> 
+	        <a href="<?=site_url("member/admin/member/check_emailset")?>"><i class="icon-chevron-right"></i>회원초대</a> 
 	    </li>
 	    <li> 
 	        <a href="<?=site_url("member/admin/member/change_password")?>"><i class="icon-chevron-right"></i>관리자 비밀번호 변경</a> 

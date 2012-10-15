@@ -1,0 +1,22 @@
+@CHARSET "UTF-8";
+
+.box{
+	width: 50%;
+	float: left;
+}
+
+.siteCurrentStatus{
+}
+
+.adminInfo .siteInfo .emailInfo{
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #E9E9E9;
+    border-radius: 5px 5px 5px 5px;
+    margin: 1em 0;
+    overflow: hidden;
+    padding: 0;
+    position: relative;
+}
+
+.moduleDBInfo{
+}

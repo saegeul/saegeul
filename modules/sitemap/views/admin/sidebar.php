@@ -2,7 +2,7 @@
 <div class=" bs-docs-sidebar">
 	<ul class="nav nav-list bs-docs-sidenav affix-top">
 	    <li> 
-	        <a href="<?=base_url()?>sitemap/admin/sitemap/siteMap"><i class="icon-chevron-right"></i>사이트 맵</a> 
+	        <a href="<?=base_url()?>admin/sitemap/siteMap"><i class="icon-chevron-right"></i>사이트 맵</a> 
 	    </li>
 	</ul>
 </div>
