@@ -27,14 +27,13 @@ class Dashboard extends MX_Controller {
 	}
 
 	public function siteCurrentStatus(){
-                
-                $data['action'] = "siteCurrentStatus";
 
-		$result = $this->userList($page=1,$list_count=10,$level="admin");
+		$data['action'] = "siteCurrentStatus";
+
+		$result = $this->userList($page=1,$list_count=1,$level="admin");
 		$data['admin'] = $result['userList'];
 		$data['site'] = $this->getSiteInfo();
 		$data['email'] = $this->getEmailInfo();
-		$data['module'] = $this->getModuleInfo();
 
 		$this->load->library('sg_layout');
 
@@ -48,26 +47,22 @@ class Dashboard extends MX_Controller {
 
 		$this->sg_layout->show($data);
 	}
-	
+
 	public function moduleCurrentStatus(){
-                $data['action'] = "moduleCurrentStatus";
-	
-		$result = $this->userList($page=1,$list_count=10,$level="admin");
-		$data['admin'] = $result['userList'];
-		$data['site'] = $this->getSiteInfo();
-		$data['email'] = $this->getEmailInfo();
+		$data['action'] = "moduleCurrentStatus";
+
 		$data['module'] = $this->getModuleInfo();
-	
+
 		$this->load->library('sg_layout');
-	
+
 		$this->sg_layout->layout('admin/layout');
 		$this->sg_layout->module('dashboard');
-	
+
 		$this->sg_layout->add('admin/header');
 		$this->sg_layout->add('admin/sidebar');
 		$this->sg_layout->add('admin/moduleStatus');
 		$this->sg_layout->add('admin/footer');
-	
+
 		$this->sg_layout->show($data);
 	}
 

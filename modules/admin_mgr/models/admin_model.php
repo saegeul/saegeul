@@ -23,17 +23,12 @@ class Admin_model extends CI_Model {
 	
 	function getSiteInfo(){
 		$query = $this->db->get('site_config');
-		$row = $query->row(1);
-	
-		return $row;
-		
+		return $query->result();
 	}
 	
 	function getEmailInfo(){
 		$query = $this->db->get('email_config');
-		$row = $query->row(1);
-	
-		return $row;
+		return $query->result();
 	}
 	
 	
