@@ -843,7 +843,6 @@ function admin_or_user(){
 		else
 		{
 			
-			$data['message']="Before invite user, set email.";
 			$this->load->library('sg_layout') ;
 			
 			$this->sg_layout->layout('admin/layout') ;
@@ -851,10 +850,10 @@ function admin_or_user(){
 			
 			$this->sg_layout->add('admin/header') ;
 			$this->sg_layout->add('admin/sidebar') ;
-			$this->sg_layout->add('admin/general_message') ;
+			$this->sg_layout->add('admin/email_message') ;
 			$this->sg_layout->add('admin/footer') ;
 			
-			$this->sg_layout->show($data) ;
+			$this->sg_layout->show() ;
 		}
 	}
 
