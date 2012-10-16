@@ -27,6 +27,8 @@ class Dashboard extends MX_Controller {
 	}
 
 	public function siteCurrentStatus(){
+                
+                $data['action'] = "siteCurrentStatus";
 
 		$result = $this->userList($page=1,$list_count=10,$level="admin");
 		$data['admin'] = $result['userList'];
@@ -48,6 +50,7 @@ class Dashboard extends MX_Controller {
 	}
 	
 	public function moduleCurrentStatus(){
+                $data['action'] = "moduleCurrentStatus";
 	
 		$result = $this->userList($page=1,$list_count=10,$level="admin");
 		$data['admin'] = $result['userList'];

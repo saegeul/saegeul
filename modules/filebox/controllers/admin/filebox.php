@@ -24,6 +24,7 @@ class Filebox extends MX_Controller {
 
 	// uploadForm : view
 	public function uploadForm(){
+                $data['action'] = "uploadForm";
 		$this->load->library('sg_layout');
 
 		$this->sg_layout->layout('admin/layout');
@@ -34,7 +35,7 @@ class Filebox extends MX_Controller {
 		$this->sg_layout->add('admin/uploadForm');
 		$this->sg_layout->add('admin/footer');
 
-		$this->sg_layout->show();
+		$this->sg_layout->show($data);
 	}
 
 	// uploadForm : click event process
@@ -257,6 +258,7 @@ class Filebox extends MX_Controller {
 	}
 
 	public function tagCloud(){
+                $data['action'] = "tagCloud";
 
 		$this->load->library('sg_layout');
 
@@ -268,7 +270,7 @@ class Filebox extends MX_Controller {
 		$this->sg_layout->add('admin/tagCloud');
 		$this->sg_layout->add('admin/footer');
 
-		$this->sg_layout->show();
+		$this->sg_layout->show($data);
 	}
 
 	public function getTag(){

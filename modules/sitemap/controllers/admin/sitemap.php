@@ -26,7 +26,7 @@ class Sitemap extends MX_Controller {
 	}
 
 	public function siteMap(){
-		$data['action'] = 'SiteMap';
+		$data['action'] = 'siteMap';
 		$this->load->model('Sitemap/Sitemap_model','sitemap');
 
 		$result = $this->sitemap->getSiteList();
