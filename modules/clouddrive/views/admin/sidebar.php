@@ -19,7 +19,7 @@ $oauth_verifier =  $this->session->userdata('session_kt_ucloud_oauth_verifier');
 					class="icon-chevron-right"></i> KTUcloud</a>
 			</li>
 			<?php }else{?>
-			<li <?php if($action=='checkOauth'):?> class="active" <?endif;?>><a
+			<li <?php if($action=='ucloudView'):?> class="active" <?endif;?>><a
 				href="<?=site_url("admin/clouddrive/checkOauth")?>"><i
 					class="icon-chevron-right"></i> KT Ucloud</a>
 			</li>

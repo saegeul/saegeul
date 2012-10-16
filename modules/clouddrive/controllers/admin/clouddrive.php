@@ -98,7 +98,6 @@ class Clouddrive extends MX_Controller {
 
 	// check oauth
 	public function checkOauth(){
-		$data['action'] = 'checkOauth';
 		if($this->api_key=="" && $this->secret_key==""){
 			// get DB library
 			$this->load->model('auth/Auth_model','auth');
@@ -113,7 +112,7 @@ class Clouddrive extends MX_Controller {
 				$this->secret_key = $this->session->userdata('session_kt_secret_key');
 			}
 		}
-		$data = array();
+		$data['action'] = 'checkOauth';
 		// check api key
 		$data['api_key'] =  $this->api_key;
 		// check secrete key
