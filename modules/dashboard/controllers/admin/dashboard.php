@@ -22,28 +22,11 @@ class Dashboard extends MX_Controller {
 
 	}
 
-    public function index(){
-        $result = $this->userList($page=1,$list_count=10,$level="admin");
-		$data['admin'] = $result['userList'];
-		$data['site'] = $this->getSiteInfo();
-		$data['email'] = $this->getEmailInfo();
-		$data['module'] = $this->getModuleInfo();
+	public function index(){
 
-		$this->load->library('sg_layout');
+	}
 
-		$this->sg_layout->layout('admin/layout');
-		$this->sg_layout->module('dashboard');
-
-		$this->sg_layout->add('admin/header');
-		$this->sg_layout->add('admin/sidebar');
-		$this->sg_layout->add('admin/dashBoard');
-		$this->sg_layout->add('admin/footer');
-
-		$this->sg_layout->show($data);
-    }
-
-	// uploadForm : view
-	public function dashBoardForm(){
+	public function siteCurrentStatus(){
 
 		$result = $this->userList($page=1,$list_count=10,$level="admin");
 		$data['admin'] = $result['userList'];
@@ -58,9 +41,30 @@ class Dashboard extends MX_Controller {
 
 		$this->sg_layout->add('admin/header');
 		$this->sg_layout->add('admin/sidebar');
-		$this->sg_layout->add('admin/dashBoard');
+		$this->sg_layout->add('admin/siteStatus');
 		$this->sg_layout->add('admin/footer');
 
+		$this->sg_layout->show($data);
+	}
+	
+	public function moduleCurrentStatus(){
+	
+		$result = $this->userList($page=1,$list_count=10,$level="admin");
+		$data['admin'] = $result['userList'];
+		$data['site'] = $this->getSiteInfo();
+		$data['email'] = $this->getEmailInfo();
+		$data['module'] = $this->getModuleInfo();
+	
+		$this->load->library('sg_layout');
+	
+		$this->sg_layout->layout('admin/layout');
+		$this->sg_layout->module('dashboard');
+	
+		$this->sg_layout->add('admin/header');
+		$this->sg_layout->add('admin/sidebar');
+		$this->sg_layout->add('admin/moduleStatus');
+		$this->sg_layout->add('admin/footer');
+	
 		$this->sg_layout->show($data);
 	}
 
@@ -104,6 +108,7 @@ class Dashboard extends MX_Controller {
 	public function getModuleInfo(){
 		$this->load->helper('directory') ;
 		$this->load->helper('file') ;
+		$this->load->library('sg_dbutil') ;
 		$map = directory_map('./modules',2);
 		$module_list = array() ;
 		$cnt = 0;
@@ -112,6 +117,7 @@ class Dashboard extends MX_Controller {
 			$module_info['module_name'] = $key;
 			$module_info['module_schema'] = "";
 			$module_info['module_schema_cnt'] = 0;
+			$module_info['module_schema_is_exists'] = 0;
 			$path = './modules/'.$key.'/schemas' ;
 			for($i=0 ; $i < count($row) ;$i++){
 				if($row[$i] == 'schemas'){
@@ -124,6 +130,8 @@ class Dashboard extends MX_Controller {
 							$module_info['module_schema'] = $module_info['module_schema'] . $result[0];
 							if($j < count($schema_list) - 1)
 								$module_info['module_schema'] = $module_info['module_schema'] . " , ";
+							if($this->sg_dbutil->is_exists($result[0])==true)
+								++$module_info['module_schema_is_exists'];
 						}
 					}
 				}
