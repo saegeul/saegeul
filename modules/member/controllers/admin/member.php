@@ -738,7 +738,7 @@ function admin_or_user(){
 				$data['captcha_html'] = $this->_create_captcha();
 			}
 		}
-		$this->load->view('member/admin/login_form', $data);
+		$this->load->view('member/login_form', $data);
 
 
 
