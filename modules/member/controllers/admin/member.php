@@ -19,7 +19,7 @@ class Member extends MX_Controller
 		if ($message = $this->session->flashdata('message')) {
 			$this->load->view('member/general_message', array('message' => $message));
 		} else {
-			redirect('/member/login/');
+			redirect('/member/admin/member/login/');
 			//$this->load->view('member/test');
 		}
 	}
@@ -285,6 +285,8 @@ class Member extends MX_Controller
 			}
 	    $this->load->library('sg_layout') ; 
 
+	    $data['action']='change_password';
+	    
         $this->sg_layout->layout('admin/layout') ; 
         $this->sg_layout->module('member') ; 
 
@@ -396,21 +398,8 @@ class Member extends MX_Controller
 	{
 		$message='asdfasdfsadfasdf';
 		$this->session->set_flashdata('message', $message);
-		//redirect('/member/');
-		/* $this->load->library('admin_tmpl') ;
 		
-		$section = array(
-				'header'=>'admin/header',
-				'sidebar'=>'admin/sidebar',
-				'body'=>'admin/general_message',
-				'footer'=>'admin/footer'
-		) ;
-		
-		$str= $this->admin_tmpl->parse($section, array('message' => $message));
-		
-		echo $str ; */
 		$this->load->view('admin/general_message',array('message' => $message));
-		//redirect('admin/general_message',array('message' => $message))
 	}
 	
 	
@@ -606,7 +595,8 @@ class Member extends MX_Controller
 		// 폼 - 정의
 		$data['base_url'] = $base_url;
 		$data['act_url'] = $act_url;
-
+		$data['action'] = 'admin_member' ;
+		
 	    $this->load->library('sg_layout') ; 
 
         $this->sg_layout->layout('admin/layout') ; 
@@ -748,7 +738,7 @@ function admin_or_user(){
 				$data['captcha_html'] = $this->_create_captcha();
 			}
 		}
-		$this->load->view('member/login_form', $data);
+		$this->load->view('member/admin/login_form', $data);
 
 
 
@@ -844,7 +834,8 @@ function admin_or_user(){
 		{
 			
 			$this->load->library('sg_layout') ;
-			
+			$data['action']='invite';
+				
 			$this->sg_layout->layout('admin/layout') ;
 			$this->sg_layout->module('member') ;
 			
@@ -853,7 +844,7 @@ function admin_or_user(){
 			$this->sg_layout->add('admin/email_message') ;
 			$this->sg_layout->add('admin/footer') ;
 			
-			$this->sg_layout->show() ;
+			$this->sg_layout->show($data) ;
 		}
 	}
 
@@ -937,6 +928,7 @@ function admin_or_user(){
 		$data['captcha_registration'] = $captcha_registration;
 		$data['use_recaptcha'] = $use_recaptcha;
 
+		
         $this->load->library('sg_layout') ; 
 
         $this->sg_layout->layout('admin/layout') ; 
