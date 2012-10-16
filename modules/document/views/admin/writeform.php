@@ -13,6 +13,7 @@ $this->load->helper('asset');
 <?echo js_asset('document','doc.element.twitter.js')?>
 <?echo js_asset('document','doc.element.textarea.js')?>
 <?echo js_asset('document','doc.element.image.js')?>
+<?echo js_asset('document','doc.element.file.js')?>
 
 <div class="_content" >
     <form action ="save"  method="post" id="document_form" class="form-inline" > 
@@ -52,6 +53,9 @@ $(function(){
             },{
                 btn_tmpl : '<button class="btn"><i class="icon icon-book"></i> Twitter</button>', 
                 Element : DOC.Element.Twitter 
+            },{
+                btn_tmpl : '<button class="btn"><i class="icon icon-book"></i> File</button>', 
+                Element : DOC.Element.File
             }
         ]
     }); 

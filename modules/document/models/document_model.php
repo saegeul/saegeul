@@ -93,34 +93,61 @@ class Document_model extends CI_Model {
     }
 
     function getImageList($page=1,$list_count=10,$search_param=null){
-        //$this->db->from('SG_filebox');
         $this->db->where('is_image',1);
         $this->db->order_by("file_srl", "desc");
-            $this->db->limit($list_count , ($page-1)*$list_count );
-            
-            if($search_param == null) {
-                $query = $this->db->get($this->table2);
-                $total_rows = $this->db->count_all($this->table2);
-            }else{
-            //$this->db->like($search_param['search_key'],$search_param['search_keyword']);
+        $this->db->limit($list_count , ($page-1)*$list_count );
+
+        if($search_param == null) {
+            $query = $this->db->get($this->table2);
+            $this->db->where('is_image',1);
+            $total_rows = $this->db->count_all_results($this->table2);
+        }else{
             $this->db->like($search_param['option'],$search_param['value']);
             $query = $this->db->get($this->table2);
 
-        //$this->db->like($search_param['search_key'],$search_param['search_keyword']);
-        $this->db->like($search_param['option'],$search_param['value']);
-        $total_rows = $this->db->count_all_results($this->table2);
-            }
-            
-            $pagination['page'] = $page ;
+            $this->db->like($search_param['option'],$search_param['value']);
+            $total_rows = $this->db->count_all_results($this->table2);
+        }
+
+        $pagination['page'] = $page ;
         $pagination['list_count'] = $list_count ; 
         $pagination['total_rows'] = $total_rows ; 
         $pagination['page_count'] = ceil($total_rows / $list_count) ; 
 
         $result['list'] = $query->result() ; 
         $result['pagination'] = $pagination ; 
-            
-            return $result ;
+
+        return $result ;
     }
+
+    function getFileList($page=1,$list_count=10,$search_param=null){
+        $this->db->where('is_image',0);
+        $this->db->order_by("file_srl", "desc");
+        $this->db->limit($list_count , ($page-1)*$list_count );
+
+        if($search_param == null) {
+            $query = $this->db->get($this->table2);
+            $this->db->like('is_image',0);
+            $total_rows = $this->db->count_all_results($this->table2);
+        }else{
+            $this->db->like($search_param['option'],$search_param['value']);
+            $query = $this->db->get($this->table2);
+
+            $this->db->like($search_param['option'],$search_param['value']);
+            $total_rows = $this->db->count_all_results($this->table2);
+        }
+
+        $pagination['page'] = $page ;
+        $pagination['list_count'] = $list_count ; 
+        $pagination['total_rows'] = $total_rows ; 
+        $pagination['page_count'] = ceil($total_rows / $list_count) ; 
+
+        $result['list'] = $query->result() ; 
+        $result['pagination'] = $pagination ; 
+
+        return $result ;
+    }
+
 
 
     function select_image()

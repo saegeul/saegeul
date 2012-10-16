@@ -1,7 +1,7 @@
 var DOC = DOC || {} ; 
 DOC.Element = DOC.Element||{} ; 
 
-DOC.Element.Image = function(oConfig){
+DOC.Element.File = function(oConfig){
     var data = {}, 
         uid = DOC.Util.uid()
         publisher = null, 
@@ -59,7 +59,7 @@ DOC.Element.Image = function(oConfig){
 
 	$.ajax({
 	       type: "GET",
-	       url: "getPhoto",
+	       url: "getFile",
 	       contentType: "application/json; charset=utf-8",
 	       dataType: "json", 
 	       data: "page=1",
@@ -155,7 +155,7 @@ $(".pageBtn").live('click',function() {
 	var page = $(this).find('a').attr('id');
 	$.ajax({
 		type: "GET",
-	       url: "getPhoto",
+	       url: "getFile",
 	       contentType: "application/json; charset=utf-8",
 	       dataType: "json",
 	       //data: "page=" + page,
@@ -260,7 +260,7 @@ $(".pageBtn").live('click',function() {
 
 	$.ajax({
 	       type: "GET",
-	       url: "getPhoto",
+	       url: "getFile",
 	       contentType: "application/json; charset=utf-8",
 	       dataType: "json", 
 	       data: "page=1 &key="+key+"&keyword="+keyword,

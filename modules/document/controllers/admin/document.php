@@ -205,7 +205,7 @@ class Document extends MX_Controller {
         $this->load->view('tempwriteform') ; 
     }        
 
-    public function photoform($page=1,$list_count=10) {
+    public function getPhoto($page=1,$list_count=10) {
 
         $this->load->model('Document_model','document');
         $page = $this->input->get_post('page');
@@ -222,6 +222,25 @@ class Document extends MX_Controller {
         echo json_encode($data);
 
     }
+
+    public function getFile($page=1,$list_count=10) {
+
+        $this->load->model('Document_model','document');
+        $page = $this->input->get_post('page');
+        if($this->input->get_post('key') && $this->input->get_post('keyword')){
+            $search_param['option'] = $this->input->get('key');
+            $search_param['value'] = $this->input->get('keyword');
+            $result = $this->document->getFileList($page,$list_count,$search_param);
+        }else {
+            $result = $this->document->getFileList($page,$list_count);
+        }
+        $data['fileList'] = $result['list'];
+        $data['pagination'] = $result['pagination'];
+        $data['base_url'] = base_url();
+        echo json_encode($data);
+
+    }
+
 
     public function fileform() {
         $this->load->view('fileform') ;
