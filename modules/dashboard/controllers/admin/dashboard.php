@@ -22,6 +22,26 @@ class Dashboard extends MX_Controller {
 
 	}
 
+    public function index(){
+        $result = $this->userList($page=1,$list_count=10,$level="admin");
+		$data['admin'] = $result['userList'];
+		$data['site'] = $this->getSiteInfo();
+		$data['email'] = $this->getEmailInfo();
+		$data['module'] = $this->getModuleInfo();
+
+		$this->load->library('sg_layout');
+
+		$this->sg_layout->layout('admin/layout');
+		$this->sg_layout->module('dashboard');
+
+		$this->sg_layout->add('admin/header');
+		$this->sg_layout->add('admin/sidebar');
+		$this->sg_layout->add('admin/dashBoard');
+		$this->sg_layout->add('admin/footer');
+
+		$this->sg_layout->show($data);
+    }
+
 	// uploadForm : view
 	public function dashBoardForm(){
 

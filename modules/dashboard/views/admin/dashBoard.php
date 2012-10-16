@@ -7,8 +7,9 @@
 		Management System)입니다.
 	</div>
 	<div class="box siteCurrentStatus">
-		<div class="adminInfo">
-			<h4>관리자 정보</h4>
+        <div style="padding-right:20px;">
+		<div class="adminInfo well">
+			<h4>관리자 정보<a href="<?=base_url()?>admin_mgr/setting/email"><span class="pull-right label label-info">more</span></a></h4>
 			<ul>
 				<li>이름 : <?=$admin[0]->username?>
 				</li>
@@ -19,8 +20,8 @@
 			</ul>
 		</div>
 		<br>
-		<div class="siteInfo">
-			<h4>사이트 정보</h4>
+		<div class="siteInfo well">
+			<h4>사이트 정보<a href="<?=base_url()?>admin_mgr/setting/site"><span class="pull-right label label-info">more</span></a></h4>
 			<ul>
 				<li>이름 : <?=isset($site[0]->title)?$site[0]->title:""?>
 				</li>
@@ -31,8 +32,8 @@
 			</ul>
 		</div>
 		<br>
-		<div class="emailInfo">
-			<h4>E-mail 정보</h4>
+		<div class="emailInfo well">
+			<h4>E-mail 정보<a href="<?=base_url()?>admin_mgr/setting/email"><span class="pull-right label label-info">more</span></a></h4>
 			<ul>
 				<li>E-mail 주소 : <?=isset($email[0]->email)?$email[0]->email:""?>
 				</li>
@@ -44,14 +45,23 @@
 				</li>
 			</ul>
 		</div>
+        </div>
 	</div>
 	<div class="box moduleDBInfo">
-		<h4>모듈별 현황</h4>
-		<table class="table table-hover">
+		<h6>모듈별 현황</h6>
+		<table class="table table-condensed table-hover">
+            <thead>
+                <tr> 
+                    <th>설치된 모듈 </th>
+                    <th>필요 DB테이블 </th>
+                    <th>설치여부</th>
+                </tr>
+            </thead>
 			<?php foreach($module as $key => $value) :?>
 			<tr>
-				<td><?=$value['module_name']?><?php if($value['module_schema'] !=""){?>(<?=$value['module_schema']?>)<?php }?></td>
-				<td><?=$value['module_schema_cnt']?></td>
+				<td><?=$value['module_name']?></td>
+                <td> </td>
+                <td> </td>
 			</tr>
 			<?php endforeach ;?>
 		</table>
