@@ -22,9 +22,9 @@
 				</a>
 				<ul class="nav"> 
 					<li <?php if($this->uri->segment(2)=='dashboard'):?> class="active"
-					<?php endif;?>><a href="<?=base_url()?>admin/dashboard/dashBoardForm">Dashboard</a>
+					<?php endif;?>><a href="<?=base_url()?>admin/dashboard/siteCurrentStatus">Dashboard</a>
 					</li> 
-                    <li <?php if($this->uri->segment(2)=='template'):?> class="active"
+                    <li <?php if($this->uri->segment(2)=='sitemap'):?> class="active"
 					<?php endif;?>><a
 						href="<?=base_url()?>admin/sitemap/siteMap">SiteMap</a>
 					</li>
