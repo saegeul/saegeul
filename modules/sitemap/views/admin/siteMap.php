@@ -42,9 +42,9 @@
 				<label class="control-label">모듈 또는 URL</label>
 				<div class="controls">
 					<label class="radio inline"> <input type="radio" value="1"
-						name='module' id='radioCreateModule'> 모듈 생성
+						name='module' id='radioCreateModule' class='hide'> <!-- 모듈 생성 -->
 					</label> <label class="radio inline"> <input type="radio" value="2"
-						name='module' id='radioLinkModule'> 모듈 연결
+						name='module' id='radioLinkModule' class='hide'> <!-- 모듈 연결 -->
 					</label> <label class="radio inline"> <input type="radio" value="3"
 						name='module' id='radioLinkURL'> URL 연결
 					</label>
