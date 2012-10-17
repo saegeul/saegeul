@@ -15,7 +15,7 @@
 				<span class="menuInfo"><?=$site->site_name;?> </span> <span
 				class="side"> <a class="btn btn-link btnAppendSite"
 					style='color: #333333;'><i class="icon-plus"></i>Append</a> <a
-					class="btn btn-link btnEditSite" style='color: #333333;'><i
+					class="btn btn-link btnEditSite hide" style='color: #333333;'><i
 						class="icon-pencil"></i>Edit</a> <a
 					class="btn btn-link btnDeleteSite" style='color: #333333;'><i
 						class="icon-trash"></i>Delete</a>

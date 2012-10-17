@@ -18,7 +18,7 @@ $(document).ready(function() {
 	    			markup += "<li class='childMenu' id='" + obj.site_srl + "'><i class='icon-move'></i>" 
 							+ "<span class='menuInfo'>" + obj.site_name + "</span>"
 							+ "<span class='side'> "
-								+ "<a class='btn btn-link btnEditSite' style='color: #333333;'><i class='icon-pencil'></i>Edit</a>"
+								+ "<a class='btn btn-link btnEditSite hide' style='color: #333333;'><i class='icon-pencil'></i>Edit</a>"
 								+ "<a class='btn btn-link btnDeleteSite' style='color: #333333;'><i class='icon-trash'></i>Delete</a>"
 							+ "</span>"
 						+ "</li>";
