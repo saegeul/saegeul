@@ -927,7 +927,7 @@ function admin_or_user(){
 		$data['use_username'] = $use_username;
 		$data['captcha_registration'] = $captcha_registration;
 		$data['use_recaptcha'] = $use_recaptcha;
-
+		$data['action']='admin_member';
 		
         $this->load->library('sg_layout') ; 
 
