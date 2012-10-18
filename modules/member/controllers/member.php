@@ -651,7 +651,7 @@ class Member extends MX_Controller
 		$data['errors'] = array();
 
 		if(!$ret = $this->_check_validation($fields)){
-            echo "validation error"  ; 
+           // echo "validation error"  ; 
         }
 
         if ($this->tank_auth->login(

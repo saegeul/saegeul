@@ -704,7 +704,7 @@ function admin_or_user(){
 
 		$data['errors'] = array();
 
-		if(!$ret = $this->_check_validation($fields)){
+		 if(!$ret = $this->_check_validation($fields)){
             echo "validation error"  ; 
         }
 

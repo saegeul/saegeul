@@ -46,6 +46,12 @@ $captcha = array(
 
 
 <body style="background: #000;">
+<br>
+<br>
+<br>
+<br>
+<br>
+
 	<div class="container">
 		<div class="hero-unit">
 			<h1>
