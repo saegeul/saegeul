@@ -738,6 +738,16 @@ function admin_or_user(){
 				$data['captcha_html'] = $this->_create_captcha();
 			}
 		}
+		
+
+		
+	$data['set_info']='';
+		
+	  foreach ($this->users->getsiteInfo() as $row)
+        {
+        
+        	 $data['set_info']=$row;
+        } 
 		$this->load->view('member/login_form', $data);
 
 

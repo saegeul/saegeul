@@ -581,6 +581,11 @@ class Users extends CI_Model
     
     	return $query->num_rows();
     }
+    
+function getSiteInfo(){
+		$query = $this->db->get('site_config');
+		return $query->result();
+	}
 }
 
 /* End of file users.php */
