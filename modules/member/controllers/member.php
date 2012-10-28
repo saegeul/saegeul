@@ -13,7 +13,7 @@ class Member extends MX_Controller
         $this->lang->load('tank_auth');
     } 
 
-    //�쒖옉�섏씠吏�    function index()
+    function index()
     {
         if ($message = $this->session->flashdata('message')) {
             $this->load->view('member/general_message', array('message' => $message));
@@ -598,7 +598,7 @@ class Member extends MX_Controller
 	//admin怨�user瑜�援щ텇�댁꽌 �섏씠吏�� �대룞
 	function admin_or_user(){
 		if($this->users->check_level($this->tank_auth->get_user_id())){
-			redirect('/member/admin/member/admin_member');
+			redirect('admin/member/admin_member');
 		} else { 
 			redirect('/member/main_page/');
 		} 
