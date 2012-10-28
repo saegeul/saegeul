@@ -25,20 +25,22 @@ class Gallery extends MX_Controller {
     	$this->load->view('gallery') ;  
     } 
 
+    public function getPhoto($page=1,$list_count=10) {
+        $this->load->model('Gallery_model','gallery');
+        $page = $this->input->get_post('page');
+        $result = $this->gallery->getImageList($page,$list_count);
+        $data['fileList'] = $result['list'];
+        $data['pagination'] = $result['pagination'];
+        $data['base_url'] = base_url();
+        echo json_encode($data);
+
+    }
+
     public function index($page=1,$list_count=10){
     	$data['action'] = 'fileList';
     	$this->load->model('Filebox/Filebox_model','filebox');
     
-    	$search_param = null;
-    	$data['search_key'] = '';
-    	$data['search_keyword'] = '';
-    
-    	if($this->input->get_post('search_key') && $this->input->get_post('search_keyword')){
-    		$search_param = array();
-    		$data['search_key'] =  $search_param['search_key'] = $this->input->get_post('search_key');
-    		$data['search_keyword'] = $search_param['search_keyword'] = $this->input->get_post('search_keyword');
-    	}
-    	$result = $this->filebox->getFileList($page,$list_count,$search_param);
+    	$result = $this->filebox->getFileList($page,$list_count);
     
     	$data['fileList'] = $result['list'];
     	$data['pagination'] = $result['pagination'];
