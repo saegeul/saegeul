@@ -58,12 +58,10 @@ var base_url = '<?=base_url();?>' ;
 								<span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu">
-								<li><a href="<?=base_url()?>document/admin/document/writeform"><i
+								<li><a href="<?=base_url()?>admin/document/writeform"><i
 										class="icon-plus"></i> DOCUMENT</a></li>
-								<li><a href="<?=base_url()?>filebox/admin/filebox/uploadForm"><i
+								<li><a href="<?=base_url()?>admin/filebox/uploadForm"><i
 										class="icon-plus"></i> FILE</a></li>
-								<li><a href="<?=base_url()?>page/admin/page/createPage"><i
-										class="icon-plus"></i> PAGE</a></li>
 							</ul>
 						</div>
 					</li>
