@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0" />
 <title>새글</title>
 <?echo common_css_asset('bootstrap/css/bootstrap.css')?>
-<?echo common_css_asset('bootstrap/css/bootstrap-responsive.css')?>
 <?echo common_css_asset('bootstrap/css/docs.css')?>
 <?echo common_css_asset('jquery/css/smoothness/jquery-ui-1.8.22.custom.css')?>
 <?echo common_js_asset('jquery/js/jquery-1.7.2.min.js')?>
@@ -14,13 +13,19 @@
 <?= $_header_data;?> 
 </head>
 <body>
-    <header class="">
-
+    <header class="container">
+        <div style="text-align:center;margin-top:70px;margin-bottom:70px;">
+            <h1 style=""><a href="<?=base_url()?>blog">Saegeul Blog</a> </h1>
+            <small><a href="<?=base_url()?>blog/rss" target="_blank"><?=base_url()?>blog/rss</a></small>
+        </div>
+        <hr/>
     </header>
 
 	<div class="container">
         <div class="row">
-		<?=$_contents;?> 
+            <div style="padding-left:50px;padding-right:50px;;">
+		    <?=$_contents;?> 
+            </div>
         </div>
 	</div>
 

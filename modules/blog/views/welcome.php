@@ -2,18 +2,19 @@
 	<ul class="sg_document_list">
 		<?php foreach($document_list as $key => $document):?>
 		<li>
-			<h6 class="title">
-				<a href="<?=base_url()?>blog/read/<?=$document->doc_id?>"><?php echo $document->title; ?> </a>
-			</h6>
-			<div class="metainfo">
-				<span>&nbsp;<?php echo $document->reg_date;?>
-				</span> &nbsp;&nbsp;&nbsp;&nbsp;<span>&nbsp;by <?php echo $document->username;?>
-				</span>
-			</div>
-			<p class="description">
-				<a href="<?=base_url()?>blog/read/<?=$document->doc_id?>"><?php echo $document->description; ?>
-				</a>
-			</p>
+            <div class="item">
+                <div class="item_date">
+                    <span class="date"><?php echo date("F d Y",strtotime($document->reg_date));?></span>
+                </div>
+                <div class="item_content">
+		            <h6 class="title">
+						<a href="<?=base_url()?>blog/read/<?=$document->doc_id?>"><?php echo $document->title; ?> </a>
+					</h6>
+                    <p class="description">
+				        <a href="<?=base_url()?>blog/read/<?=$document->doc_id?>"><?php echo $document->description; ?> </a>
+			        </p>
+                </div>
+            </div> 
 		</li>
 		<?php endforeach;?>
 	</ul>
