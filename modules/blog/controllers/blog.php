@@ -41,7 +41,7 @@ class Blog extends MX_Controller {
 
 
 
-	public function entry($id) {
+	public function read($id) {
 		$this->load->database() ;
 		$this->load->model('document/Document_model','document_model');
 		$document = $this->document_model->getDocument($id);
