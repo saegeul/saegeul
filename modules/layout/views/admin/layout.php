@@ -41,10 +41,6 @@ var base_url = '<?=base_url();?>' ;
 					<?php endif;?>><a
 						href="<?=base_url()?>admin/clouddrive/checkOauth">Cloud Drive</a>
 					</li>
-					<li <?php if($this->uri->segment(2)=='webzine'):?> class="active"
-					<?php endif;?>><a
-						href="<?=base_url()?>admin/document/writeform">Page</a>
-					</li>
 					<li <?php if($this->uri->segment(2)=='filebox'):?> class="active"
 					<?php endif;?>><a
 						href="<?=base_url()?>admin/filebox/fileList">File</a>
