@@ -59,6 +59,9 @@ class Blog extends MX_Controller {
 		$this->sg_layout->addHeaderData($data) ;
 		$this->sg_layout->show($data) ;
 
+        $this->config->item('commentCount','blog'); 
+        $this->config->item('theme','blog'); 
+
 		//$this->load->view('readpage',$data) ;
 	}
 
