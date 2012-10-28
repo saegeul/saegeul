@@ -283,4 +283,34 @@ class Filebox extends MX_Controller {
 
 		echo json_encode($success);
 	}
+
+    public function getImageList(){
+        $page = $this->input->get_post('page');
+        $page = 1 ; 
+        $list_count = 10 ; 
+
+		$this->load->model('Filebox/Filebox_model','filebox') ;
+
+        if($this->input->get_post('key') && $this->input->get_post('keyword')){
+            $search_param['option'] = $this->input->get('key');
+            $search_param['value'] = $this->input->get('keyword');
+            $result = $this->filebox->getImageList($page,$list_count,$search_param);
+        }else {
+            $result = $this->filebox->getImageList($page,$list_count);
+        }
+
+        $result_list = $result['list'] ; 
+
+        $this->load->helper('image') ; 
+
+        foreach($result_list as $key => $row){
+            $result_list[$key]->thumbnail_url = thumbImage('filebox',$row->file_srl,$row->full_path,110,90) ; 
+        } 
+
+        $data = array() ; 
+        $data['items'] = $result['list'];
+        $data['pagination'] = $result['pagination'];
+        $data['base_url'] = base_url();
+        echo json_encode($data);
+    }
 }
