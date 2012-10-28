@@ -25,28 +25,15 @@ DOC.Element.Textarea = function(oConfig){
         return that ; 
     }; 
 
-    /* Element 객체에 필수적으로 필요한 함수들 */ 
-    that.is_dirty = function(){ // 객체가 현재 write가 되었는지 체크 
-        return true ; 
-    }; 
-
     that.html = function(){
         return  '<div>'+that.getRawValue()+'</div>'; 
     }; 
-
-    that.is_null = function(){
-        return data == null ? null : data ; 
-    };
 
     that.is_empty = function(){ //data is null ?
         if(!data.hasOwnProperty('value')){
             return true ; 
         } 
         return false ; 
-    }; 
-
-    that.remove = function(){
-
     }; 
 
     that.editor = function($el){ 
