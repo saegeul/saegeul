@@ -10,7 +10,7 @@
 |	http://codeigniter.com/user_guide/libraries/email.html
 |
 */
-$config['list_count']="{listCount}";
+$config['listCount']="{listCount}";
 $config['facebookId']="{facebookId}";
 
 /* End of file blog.php */

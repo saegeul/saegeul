@@ -14,6 +14,7 @@ $(document).ready(function() {
 				alert("error");
 			},
 			success : function(data) {
+				alert("완료 되었습니다.");
 				location.reload();
 			}
 		});
