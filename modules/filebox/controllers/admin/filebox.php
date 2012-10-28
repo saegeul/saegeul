@@ -116,6 +116,11 @@ class Filebox extends MX_Controller {
 		// pilter return data
 		$ret = $this->_param_filter($ret_data) ;
 
+
+		$this->load->helper('image') ;
+		thumbImage('filebox',$ret_data->file_srl,$ret_data->full_path,700,460) ;
+		thumbImage('filebox',$ret_data->file_srl,$ret_data->full_path,300,200) ;
+
 		return json_encode(array($ret));
 	}
 
@@ -311,7 +316,8 @@ class Filebox extends MX_Controller {
 		$this->load->helper('image') ;
 
 		foreach($result_list as $key => $row){
-			$result_list[$key]->thumbnail_url = thumbImage('filebox',$row->file_srl,$row->full_path,110,90) ;
+			$result_list[$key]->thumbnail_url = thumbImage('filebox',$row->file_srl,$row->full_path,300,200) ;
+			$result_list[$key]->large_thumbnail_url = thumbImage('filebox',$row->file_srl,$row->full_path,700,460) ;
 		}
 
 		$data = array() ;

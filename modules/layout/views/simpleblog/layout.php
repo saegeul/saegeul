@@ -16,7 +16,7 @@
     <header class="container">
         <div style="text-align:center;margin-top:70px;margin-bottom:70px;">
             <h1 style=""><a href="<?=base_url()?>blog">Saegeul Blog</a> </h1>
-            <small><a href="<?=base_url()?>blog"><?=base_url()?>blog</a></small>
+            <small><a href="<?=base_url()?>blog/rss" target="_blank"><?=base_url()?>blog/rss</a></small>
         </div>
         <hr/>
     </header>
