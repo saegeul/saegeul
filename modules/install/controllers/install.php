@@ -189,6 +189,9 @@ class Install extends MX_Controller {
             $this->header = $this->load->view('header',$data,true) ; 
             echo $this->header.$this->body.$this->footer ; 
         }
+		$this->load->model('users') ;
+        
+        $this->users->siteset_init();
     }
 
     function _register_admin(){
@@ -207,7 +210,7 @@ class Install extends MX_Controller {
 		
 		$email_activation = $this->config->item('email_activation', 'tank_auth');
 		
-		if ($this->form_validation->run()) {								// 유효성 체크 통과
+		if ($this->form_validation->run()) {								// �좏슚��泥댄겕 �듦낵
 			if (!is_null($data = $this->tank_auth->create_user(
 					$this->form_validation->set_value('username'),
 					$this->form_validation->set_value('email'),

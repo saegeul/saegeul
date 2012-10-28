@@ -31,7 +31,7 @@ class Member extends MX_Controller
     function login()
     {
         $this->load->model('users','',TRUE);
-        if ($this->tank_auth->is_logged_in()) {									// logged in 嚥≪뮄�뉛옙占쏙옙�뤿선占쎈뜄�롳쭖占�            $this->admin_or_user(); 
+        if ($this->tank_auth->is_logged_in()) {									// logged in �β돦裕꾬옙�쏆삕�좎룞�숋옙琉우꽑�좎럥�꾬옙濡녹춺�좑옙            $this->admin_or_user(); 
         } elseif ($this->tank_auth->is_logged_in(FALSE)) {						// logged in, not activated
             $this->admin_or_user(); 
         } else { 
@@ -57,12 +57,11 @@ class Member extends MX_Controller
 
     /**
      * Register user on the site
-     * 占쎈슣�앭첎占쎌뿯
-     * @return void
+     * �좎럥�ｏ옙��쾸�좎럩肉�     * @return void
      */
     function register()
     {
-        if ($this->tank_auth->is_logged_in()) {									// logged in //占쎈�占�嚥≪뮄�뉛옙紐껊쭆 占쎄낱源�옙�겹늺,
+        if ($this->tank_auth->is_logged_in()) {									// logged in //�좎럥占썲뜝占썲슖�る츇占쎈돍�숋쭗猿딆춨 �좎럡�길틦占쎌삕占쎄껸��
             redirect('');
 
         } elseif ($this->tank_auth->is_logged_in(FALSE)) {						// logged in, not activated
@@ -524,7 +523,7 @@ class Member extends MX_Controller
 				$page_view = 10; 
 					$base_url = base_url(); // base_url
 		$act_url = $base_url . "member/admin_member";
-		$page_per_block = 5; // 占쎌꼷�좑쭪占쏙옙��짗 揶쏆뮇��( 1 .. 5)
+		$page_per_block = 5; // �좎럩瑗뤄옙醫묒��좎룞�숋옙占쎌쭢 �띠룇裕뉛옙占� 1 .. 5)
 			
 		
 		$data = "";
@@ -679,7 +678,7 @@ class Member extends MX_Controller
 		}
 		
 		$data['set_info']='';
-                $this->users->siteset_init();
+              
 		
 		foreach ($this->users->getsiteInfo() as $row)
 		{
