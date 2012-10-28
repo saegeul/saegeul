@@ -79,6 +79,7 @@ $(document).ready(function (e) {
 					},
 					success : function(data) {
 						$('.file_check:checked').attr('checked',false);
+						$('#all_file_check').attr('checked',false);
 						location.reload();
 					}
 				});
