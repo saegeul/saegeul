@@ -18,7 +18,6 @@ class Admin_model extends CI_Model {
 	function save_siteset($data){
 		$this->db->empty_table('site_config');
 		$this->db->insert('site_config', $data);
-	
 	}
 	
 	function getSiteInfo(){
