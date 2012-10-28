@@ -9,22 +9,6 @@ class Gallery extends MX_Controller {
     	$this->load->helper('date');
     }
 
-    public function index1(){ 
-    	$this->load->model('Gallery_model'); // 모델 - 호출
-    	$data['result'] = $this->Gallery_model->get_entry();
-    	
-        $this->load->view('gallery', $data);
-    }
-
-    public function photo(){ 
-    	$this->sid = 'root';
-    	$this->module_srl = 'filebox';
-    	
-    	//DB Get
-    	$this->load->model('Gallery_model'); // 모델 - 호출
-    	$this->load->view('gallery') ;  
-    } 
-
     public function getPhoto($page=1,$list_count=10) {
         $this->load->model('Gallery_model','gallery');
         $page = $this->input->get_post('page');
@@ -38,12 +22,6 @@ class Gallery extends MX_Controller {
 
     public function index($page=1,$list_count=10){
     	$data['action'] = 'fileList';
-    	$this->load->model('Filebox/Filebox_model','filebox');
-    
-    	$result = $this->filebox->getFileList($page,$list_count);
-    
-    	$data['fileList'] = $result['list'];
-    	$data['pagination'] = $result['pagination'];
     
     	$this->load->library('sg_layout');
     	$this->sg_layout->layout('admin/layout');
