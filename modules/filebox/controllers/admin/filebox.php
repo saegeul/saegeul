@@ -24,7 +24,7 @@ class Filebox extends MX_Controller {
 
 	// uploadForm : view
 	public function uploadForm(){
-                $data['action'] = "uploadForm";
+		$data['action'] = "uploadForm";
 		$this->load->library('sg_layout');
 
 		$this->sg_layout->layout('admin/layout');
@@ -192,7 +192,14 @@ class Filebox extends MX_Controller {
 	// fileList : delete
 	public function delete(){
 		$file_srl = $this->input->get_post('file_srl');
-		$this->_delete($file_srl);
+
+		$this->load->model('Filebox/Filebox_model','filebox') ;
+		$file_obj = $this->filebox->getFile($file_srl) ;
+
+		if(is_file($file_obj->full_path))
+			if(unlink($file_obj->full_path))
+				$this->_delete($file_srl);
+
 
 		echo json_encode('success');
 	}
@@ -241,7 +248,7 @@ class Filebox extends MX_Controller {
 			$args  = array();
 			$pairs    = explode(",", $data['tag']);
 			foreach ($pairs as $pair) {
-				
+
 				$args[] = array(
 						'tag' => $pair,
 						'file_srl' => $file_srl,
@@ -258,7 +265,7 @@ class Filebox extends MX_Controller {
 	}
 
 	public function tagCloud(){
-                $data['action'] = "tagCloud";
+		$data['action'] = "tagCloud";
 
 		$this->load->library('sg_layout');
 
@@ -284,33 +291,33 @@ class Filebox extends MX_Controller {
 		echo json_encode($success);
 	}
 
-    public function getImageList(){
-        $page = $this->input->get_post('page');
-        $page = 1 ; 
-        $list_count = 10 ; 
+	public function getImageList(){
+		$page = $this->input->get_post('page');
+		$page = 1 ;
+		$list_count = 10 ;
 
 		$this->load->model('Filebox/Filebox_model','filebox') ;
 
-        if($this->input->get_post('key') && $this->input->get_post('keyword')){
-            $search_param['option'] = $this->input->get('key');
-            $search_param['value'] = $this->input->get('keyword');
-            $result = $this->filebox->getImageList($page,$list_count,$search_param);
-        }else {
-            $result = $this->filebox->getImageList($page,$list_count);
-        }
+		if($this->input->get_post('key') && $this->input->get_post('keyword')){
+			$search_param['option'] = $this->input->get('key');
+			$search_param['value'] = $this->input->get('keyword');
+			$result = $this->filebox->getImageList($page,$list_count,$search_param);
+		}else {
+			$result = $this->filebox->getImageList($page,$list_count);
+		}
 
-        $result_list = $result['list'] ; 
+		$result_list = $result['list'] ;
 
-        $this->load->helper('image') ; 
+		$this->load->helper('image') ;
 
-        foreach($result_list as $key => $row){
-            $result_list[$key]->thumbnail_url = thumbImage('filebox',$row->file_srl,$row->full_path,110,90) ; 
-        } 
+		foreach($result_list as $key => $row){
+			$result_list[$key]->thumbnail_url = thumbImage('filebox',$row->file_srl,$row->full_path,110,90) ;
+		}
 
-        $data = array() ; 
-        $data['items'] = $result['list'];
-        $data['pagination'] = $result['pagination'];
-        $data['base_url'] = base_url();
-        echo json_encode($data);
-    }
+		$data = array() ;
+		$data['items'] = $result['list'];
+		$data['pagination'] = $result['pagination'];
+		$data['base_url'] = base_url();
+		echo json_encode($data);
+	}
 }
