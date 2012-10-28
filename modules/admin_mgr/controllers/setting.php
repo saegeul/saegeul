@@ -373,12 +373,37 @@ class setting extends MX_Controller {
 		$this->sg_layout->add('setting/blog') ;
 		$this->sg_layout->add('setting/footer') ;
 			
-		$this->load->model('admin_model') ;
+		$this->config->load('blog');
 	
-		$data = array() ;			
+		$data = array() ;	
+		$data['listCount'] = $this->config->item('listCount');
+		$data['facebookId'] = $this->config->item('facebookId');
 	
 		$data['action'] = 'blog' ;
 		$this->sg_layout->show($data) ;
+	}
+	
+	public function setBlog() {
+		$params = array(
+				'listCount'=>'',
+				'facebookId'=>''
+		);
+		
+		$listCount = $this->input->get_post('list_count');
+		$facebookId = $this->input->get_post('facebook_id');
+		
+		$params['listCount'] = $listCount;
+		$params['facebookId'] = $facebookId;
+		
+		$this->load->helper('file') ;
+		$f = read_file('./modules/admin_mgr/files/blog.txt') ;
+		
+		foreach($params as $key => $value){
+			$f = str_replace('{'.$key.'}', $value ,$f);
+		}
+		
+		write_file(APPPATH.'config/blog.php',$f) ;
+		echo json_encode('success');
 	}
 }
 
