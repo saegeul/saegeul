@@ -21,7 +21,7 @@ class Gallery extends MX_Controller {
     }
 
     public function index($page=1,$list_count=10){
-    	$data['action'] = 'fileList';
+    	$data['action'] = 'gallery';
     
     	$this->load->library('sg_layout');
     	$this->sg_layout->layout('admin/layout');
