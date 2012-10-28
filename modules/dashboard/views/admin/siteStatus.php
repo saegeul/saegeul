@@ -31,7 +31,7 @@
 				<ul>
 					<li>이름 : <?=isset($site[0]->title)?$site[0]->title:""?>
 					</li>
-					<li>URL : <?=isset($site[0]->site_url)?$site[0]->title:""?>
+					<li>URL : <?=isset($site[0]->site_url)?$site[0]->site_url:""?>
 					</li>
 					<li>회원가입 가능 여부 : <?=(isset($site[0]->on_register)?$site[0]->on_register:"")==1?"허락":"불가"?>
 					</li>

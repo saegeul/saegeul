@@ -116,7 +116,7 @@ class setting extends MX_Controller {
 			
 	}
 
-	public function site(){
+public function site(){
 		$this->load->library('sg_layout') ;
 
 		$this->sg_layout->layout('admin/layout') ;
@@ -130,21 +130,32 @@ class setting extends MX_Controller {
 		$this->load->model('admin_model') ;
 
 		$data = array() ;
+		
+		$ret_data = $this->admin_model->getsiteInfo();
+		// pilter return data
+		$ret = $this->getSiteInfo($ret_data);
 
-		$data['set_info']='';
+		$data['set_info']=$ret;
+		
+// 		foreach ($this->admin_model->getsiteInfo() as $row)
+// 		{
 
-		foreach ($this->admin_model->getsiteInfo() as $row)
-		{
-
-			$data['set_info']=$row;
-		}
-
+// 			$data['set_info']=$row;
+// 		}
 
 
 		$data['action'] = 'site' ;
 
 
 		$this->sg_layout->show($data) ;
+	}
+	
+	public function getSiteInfo($param){
+		$ret->title = $param[0]->title ;
+		$ret->site_url = $param[0]->site_url ;
+		$ret->on_register = $param[0]->on_register;
+		
+		return $ret ;
 	}
 
 	public function setupSite(){
