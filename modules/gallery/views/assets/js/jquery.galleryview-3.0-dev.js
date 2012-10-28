@@ -154,14 +154,39 @@ if (typeof Object.create !== 'function') {
 		
 		// create gvImage objects for each image in gallery
 		storeImages: function() {
+		/*
+                       $.ajax({
+                               type: "GET",
+                               url: "gallery/getPhoto",
+                               contentType: "application/json; charset=utf-8",
+                               dataType: "json", 
+                               data: "page=1",
+                               //data: "page=1 &key="+key+"&keyword="+keyword,
+                               error: function() { 
+                                alert("저장된 파일이 없습니다.");
+                                },
+                               success: function(data){
+                                   var markup = "";
+                                        $.each(data.fileList, function(key,state){
+                                                obj = state;
+                                                markup += "<li><img  data-frame='" + data.base_url + obj.image_thumb_path + "' src='" + data.base_url + obj.full_path + "' title='"+obj.original_file_name+"' data-description='' /></li>";
+
+                                        });
+                       $('#myGallery').html(markup);   		
+                        }
+                       });
+*/
+
 			var self = this;
 			this.sourceImgs = $('li>img',this.$el);
+//numImages = total Image count
 			this.numImages = this.sourceImgs.length;
 			this.gvImages = [];
 			this.sourceImgs.each(function(i,img) {
 				self.gvImages[i] = new gvImage($(img));
 			});
 		},
+
 		
 		setDimensions: function() {
 			var self = this,
@@ -556,6 +581,7 @@ if (typeof Object.create !== 'function') {
 		
 		showNext: function() {
 			this.navAction = 'next';
+//Next 
 			this.showItem(this.frameIterator+1);
 		},
 		
@@ -567,10 +593,9 @@ if (typeof Object.create !== 'function') {
 		showItem: function(i) {
 			if(isNaN(i)) { return; }
 			if(!this.opts.show_filmstrip) { i = i % this.numImages; }
-			
-			var self = this,
-				dom = this.dom,
-				frame_i = i,
+                        var self = this,
+                            dom = this.dom,
+                            frame_i = i,
 				newPanelStart,
 				oldPanelEnd,
 				oldIterator,
@@ -1067,7 +1092,7 @@ if (typeof Object.create !== 'function') {
 		show_panels: true, 				//BOOLEAN - flag to show or hide panel portion of gallery
 		show_panel_nav: true, 			//BOOLEAN - flag to show or hide panel navigation buttons
 		enable_overlays: false, 			//BOOLEAN - flag to show or hide panel overlays
-		panel_width: 800, 				//INT - width of gallery panel (in pixels)
+		panel_width: 850, 				//INT - width of gallery panel (in pixels)
 		panel_height: 400, 				//INT - height of gallery panel (in pixels)
 		panel_animation: 'fade', 		//STRING - animation method for panel transitions (crossfade,fade,slide,none)
 		panel_scale: 'crop', 			//STRING - cropping option for panel images (crop = scale image and fit to aspect ratio determined by panel_width and panel_height, fit = scale image and preserve original aspect ratio)

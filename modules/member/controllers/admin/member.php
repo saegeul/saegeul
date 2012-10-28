@@ -13,7 +13,6 @@ class Member extends MX_Controller
 		$this->lang->load('tank_auth');
 	} 
 
-	//시작페이지
 	function index()
 	{
 		if ($message = $this->session->flashdata('message')) {
@@ -32,7 +31,7 @@ class Member extends MX_Controller
 	function login()
 	{
 		$this->load->model('users','',TRUE);
-		if ($this->tank_auth->is_logged_in()) {									// logged in 로그인 되어있다면,
+		if ($this->tank_auth->is_logged_in()) {									// logged in 濡쒓렇���섏뼱�덈떎硫�
 			$this->admin_or_user(); 
 		} elseif ($this->tank_auth->is_logged_in(FALSE)) {						// logged in, not activated
 			$this->admin_or_user(); 
@@ -59,12 +58,12 @@ class Member extends MX_Controller
 
 	/**
 	 * Register user on the site
-	 * 회원가입
+	 * �뚯썝媛�엯
 	 * @return void
 	 */
 	function register()
 	{
-		if ($this->tank_auth->is_logged_in()) {									// logged in //이미 로그인된 상태라면,
+		if ($this->tank_auth->is_logged_in()) {									// logged in //�대� 濡쒓렇�몃맂 �곹깭�쇰㈃,
 			redirect('');
 
 		} elseif ($this->tank_auth->is_logged_in(FALSE)) {						// logged in, not activated
@@ -274,9 +273,9 @@ class Member extends MX_Controller
 						$this->form_validation->set_value('new_password'))) {	// success
 					
 					
-					
-					$this->showshow($this->lang->line('auth_message_password_changed'));
-					break;
+					$action = 'change_password';
+					$this->showshow($this->lang->line('auth_message_password_changed'),$action);
+					exit;
 				
 				} else {														// fail
 					$errors = $this->tank_auth->get_error_message();
@@ -396,17 +395,17 @@ class Member extends MX_Controller
 	 */
 	function _show_message($message)
 	{
-		$message='asdfasdfsadfasdf';
+		
 		$this->session->set_flashdata('message', $message);
 		
 		$this->load->view('admin/general_message',array('message' => $message));
 	}
 	
 	
-	function showshow($message)
+	function showshow($message,$action)
 	{
 		
-		$this->session->set_flashdata('message', $message);
+		/* $this->session->set_flashdata('message', $message);
 		//redirect('/member/');
 		 $this->load->library('admin_tmpl') ;
 	
@@ -419,9 +418,25 @@ class Member extends MX_Controller
 	
 		$str= $this->admin_tmpl->parse($section, array('message' => $message));
 	
-		echo $str ; 
-		//$this->load->view('admin/general_message',array('message' => $message));
-		//redirect('admin/general_message',array('message' => $message))
+		echo $str ;  */
+		
+		
+		$this->load->library('sg_layout') ;
+		$data['action']=$action;
+		$data['message']=$message;
+		
+		$this->sg_layout->layout('admin/layout') ;
+		$this->sg_layout->module('member') ;
+			
+		$this->sg_layout->add('admin/header') ;
+		$this->sg_layout->add('admin/sidebar') ;
+		$this->sg_layout->add('admin/general_message') ;
+		$this->sg_layout->add('admin/footer') ;
+			
+		$this->sg_layout->show($data) ;
+		
+			
+		
 	}
 
 	/**
@@ -560,12 +575,10 @@ class Member extends MX_Controller
 
 		$data['result']=$this->users->admin_db();
 			
-		// 세팅 - 설정
-		$base_segment = 3; // CI페이징 세그먼트 주소위치값
-		$page_view = 6; // 한 페이지에 보여줄 레코드 수
-		$base_url = base_url(); // base_url
+		// �명똿 - �ㅼ젙
+		$base_segment = 3; 		$page_view = 6; 		$base_url = base_url(); // base_url
 		$act_url = $base_url . "member/admin/member/admin_member";
-		$page_per_block = 5; // 페이징 이동 개수 ( 1 .. 5)
+		$page_per_block = 5; // �섏씠吏��대룞 媛쒖닔 ( 1 .. 5)
 			
 		$data = "";
 
@@ -592,7 +605,7 @@ class Member extends MX_Controller
 		$data['total_page'] = ceil($data['total_record'] / $page_view); 
 		$data['cur_admin'] = $this->tank_auth->get_user_id();
 
-		// 폼 - 정의
+		// ��- �뺤쓽
 		$data['base_url'] = $base_url;
 		$data['act_url'] = $act_url;
 		$data['action'] = 'admin_member' ;
@@ -652,7 +665,7 @@ class Member extends MX_Controller
 		$this->admin_member();
 	}
 
-	//admin과 user를 구분해서 페이지를 이동
+	//admin怨�user瑜�援щ텇�댁꽌 �섏씠吏�� �대룞
 function admin_or_user(){
 		if($this->users->check_level($this->tank_auth->get_user_id())){
 			redirect('/member/admin/member/admin_member');
@@ -780,7 +793,7 @@ function admin_or_user(){
 
 		$email_activation = $this->config->item('email_activation', 'tank_auth');
 
-		if ($this->form_validation->run()) {								// 유효성 체크 통과
+		if ($this->form_validation->run()) {								// �좏슚��泥댄겕 �듦낵
 			if (!is_null($data = $this->tank_auth->create_user(
 					$use_username ? $this->form_validation->set_value('username') : '',
 					$this->form_validation->set_value('email'),
@@ -885,7 +898,7 @@ function admin_or_user(){
 
 		$email_activation = $this->config->item('email_activation', 'tank_auth');
 
-		if ($this->form_validation->run()) {								// 유효성 체크 통과
+		if ($this->form_validation->run()) {								// �좏슚��泥댄겕 �듦낵
 			if (!is_null($data = $this->tank_auth->create_user(
 					$use_username ? $this->form_validation->set_value('username') : '',
 					$this->form_validation->set_value('email'),
@@ -905,10 +918,10 @@ function admin_or_user(){
 					unset($data['password']); // Clear password (just for any case)
 
 					
-				
-					$this->showshow($this->lang->line('auth_message_invited_completed'));
+					$action='invite';
+					$this->showshow($this->lang->line('auth_message_invited_completed'),$action);
 					
-					break;
+					exit;
 					
 				} else {
 					if ($this->config->item('email_account_details', 'tank_auth')) {	// send "welcome" email
@@ -919,8 +932,9 @@ function admin_or_user(){
 
 					}
 					unset($data['password']); // Clear password (just for any case)
-
-					$this->_show_message($this->lang->line('auth_message_registration_completed_2').' '.anchor('/member/login/', 'Login'));
+					$action='invite';
+				 $this->showshow($this->lang->line('auth_message_invited_completed'),$action);
+				 exit;
 				}
 			} else {
 				$errors = $this->tank_auth->get_error_message();
@@ -937,7 +951,7 @@ function admin_or_user(){
 		$data['use_username'] = $use_username;
 		$data['captcha_registration'] = $captcha_registration;
 		$data['use_recaptcha'] = $use_recaptcha;
-		$data['action']='admin_member';
+		$data['action']='invite';
 		
         $this->load->library('sg_layout') ; 
 

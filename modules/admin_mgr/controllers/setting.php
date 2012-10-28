@@ -93,7 +93,7 @@ class setting extends MX_Controller {
 		$this->admin_model->save_emailset($params);
 
 		$this->load->helper('file') ;
-		$f = read_file('./modules/admin/files/email.txt') ;
+		$f = read_file('./modules/admin_mgr/files/email.txt') ;
 
 		foreach($params as $key => $value){
 			$f = str_replace('{'.$key.'}', $value ,$f);
