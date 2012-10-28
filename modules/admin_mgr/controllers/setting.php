@@ -380,7 +380,8 @@ class setting extends MX_Controller {
 		$data['rssCount'] = $this->config->item('rssCount');
 		$data['facebookId'] = $this->config->item('facebookId');
 		$data['commentCount'] = $this->config->item('commentCount');
-		$data['thema'] = $this->config->item('thema');
+		$data['commentWidth'] = $this->config->item('commentWidth');
+		$data['theme'] = $this->config->item('theme');
 	
 		$data['action'] = 'blog' ;
 		$this->sg_layout->show($data) ;
@@ -392,20 +393,23 @@ class setting extends MX_Controller {
 				'rssCount'=>'',
 				'facebookId'=>'',
 				'commentCount'=>'',
-				'thema'=>''
+				'commentWidth'=>'',
+				'theme'=>''
 		);
 		
 		$listCount = $this->input->get_post('list_count');
 		$rssCount = $this->input->get_post('rss_count');
 		$facebookId = $this->input->get_post('facebook_id');
 		$commentCount = $this->input->get_post('comment_count');
-		$thema = $this->input->get_post('thema');
+		$commentWidth = $this->input->get_post('comment_width');
+		$theme = $this->input->get_post('theme');
 		
 		$params['listCount'] = $listCount;
 		$params['rssCount'] = $rssCount;
 		$params['facebookId'] = $facebookId;
 		$params['commentCount'] = $commentCount;
-		$params['thema'] = $thema;
+		$params['commentWidth'] = $commentWidth;
+		$params['theme'] = $theme;
 		
 		$this->load->helper('file') ;
 		$f = read_file('./modules/admin_mgr/files/blog.txt') ;
