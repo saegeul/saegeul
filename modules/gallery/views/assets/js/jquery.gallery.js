@@ -32,7 +32,6 @@ $(document).ready(function(){
                         } else {
                             var height = obj.image_height;
                         }
-                        console.log(marginLeft);
                         if(markup == "" ) {
                             markup = "<div class='active item' value='"+$imageSrl+"' ><img src='" + data.base_url + obj.full_path + "' style='height:"+height+"px;width:"+ width +"px;margin-left:"+ marginLeft +"px;margin-top:"+ marginTop +"px' /></div>";
                         } else {
@@ -42,12 +41,14 @@ $(document).ready(function(){
                         $('.carousel-inner').append(markup);   		
                     });
                         $totalImage = data.pagination.total_rows;
-                    $numImage = $('.carousel-inner > div').length;
+                        $numImage = $('.carousel-inner > div').length;
                 }
     });
 
     $('.right').click(function() {
-        if( $numImage -  $('.active').attr('value') == 4 ) {
+    console.log( $numImage);
+    console.log( $('.carousel-inner').find('.active').attr('value') );
+        if( ($numImage -  $('.carousel-inner').find('.active').attr('value') ) == 4 ) {
             $.ajax({
                 type: "GET",
                     url: "gallery/getPhoto",
