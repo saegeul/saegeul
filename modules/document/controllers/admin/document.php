@@ -71,9 +71,7 @@ class Document extends MX_Controller {
 
         echo $str ; 
 
-    }
-
-
+    } 
 
     public function document_list($page=1,$list_count=5){
         $data['action'] = 'document_list';
@@ -91,7 +89,7 @@ class Document extends MX_Controller {
         }
         $result = $this->document->getDocumentList($page,$list_count,$search_param,$is_trash);
 
-        $data['fileList'] = $result['list'];
+        $data['document_list'] = $result['list'];
         $data['pagination'] = $result['pagination'];
 
         $this->load->library('sg_layout');
@@ -175,6 +173,29 @@ class Document extends MX_Controller {
         $this->sg_layout->add('admin/footer') ; 
 
         $this->sg_layout->show($data) ; 
+    }
+
+    public function correctform($doc_id=1){
+        $data = array() ; 
+
+        $data['action'] = 'writeform';
+
+        $this->load->library('sg_layout') ; 
+        $this->load->model('Document_model','document');
+
+        $this->sg_layout->layout('admin/layout') ; 
+        $this->sg_layout->module('document') ; 
+        $this->sg_layout->add('admin/header') ; 
+        $this->sg_layout->add('admin/sidebar') ; 
+        $this->sg_layout->add('admin/correctform') ; 
+        $this->sg_layout->add('admin/footer') ; 
+
+        $result = $this->document->getDocument($doc_id);
+        
+        $data['document'] = $result;
+
+
+        $this->sg_layout->show($data) ;
     }
 
     public function modify_document($doc_id=null)
