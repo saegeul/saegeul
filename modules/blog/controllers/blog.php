@@ -16,8 +16,13 @@ class Blog extends MX_Controller {
 
 	public function page($page = 1){
 		$this->load->database() ;
+		
+		$this->config->load('blog', FALSE, TRUE);
+		$listCount = $this->config->item('listCount');
+		
+		
 		$this->load->model('document/document_model','document_model');
-		$result = $this->document_model->getDocumentList($page,10,null);
+		$result = $this->document_model->getDocumentList($page,$listCount,null);
 
 		$data = array() ;
 
@@ -29,8 +34,6 @@ class Blog extends MX_Controller {
 		$this->sg_layout->add('sidebar') ;
 		$this->sg_layout->add('footer') ;
 		$this->sg_layout->addHeaderData($data) ;
-
-		 
 
 		$this->sg_layout->show($data) ;
 	}
