@@ -2,102 +2,102 @@
 
 class Member extends MX_Controller
 {
-	function __construct()
-	{
-		parent::__construct();
+    function __construct()
+    {
+        parent::__construct();
 
-		$this->load->helper(array('form', 'url'));
-		$this->load->library('form_validation');
-		$this->load->helper('security');
-		$this->load->library('tank_auth');
-		$this->lang->load('tank_auth');
-	} 
+        $this->load->helper(array('form', 'url'));
+        $this->load->library('form_validation');
+        $this->load->helper('security');
+        $this->load->library('tank_auth');
+        $this->lang->load('tank_auth');
+    } 
 
-	//시작페이지
-	function index()
-	{
-		if ($message = $this->session->flashdata('message')) {
-			$this->load->view('member/general_message', array('message' => $message));
-		} else {
-			redirect('/member/login/');
-			//$this->load->view('member/test');
-		}
-	}
+    //시작페이지
+    function index()
+    {
+        if ($message = $this->session->flashdata('message')) {
+            $this->load->view('member/general_message', array('message' => $message));
+        } else {
+            redirect('/member/login/');
+            //$this->load->view('member/test');
+        }
+    }
 
-	/**
-	 * Login user on the site
-	 *
-	 * @return void
-	 */
-	function login()
-	{
-		$this->load->model('users','',TRUE);
-		if ($this->tank_auth->is_logged_in()) {									// logged in 로그인 되어있다면,
-			$this->admin_or_user(); 
-		} elseif ($this->tank_auth->is_logged_in(FALSE)) {						// logged in, not activated
-			$this->admin_or_user(); 
-		} else { 
-			$this->do_login();
-		}
-	}
+    /**
+     * Login user on the site
+     *
+     * @return void
+     */
+    function login()
+    {
+        $this->load->model('users','',TRUE);
+        if ($this->tank_auth->is_logged_in()) {									// logged in 로그인 되어있다면,
+            $this->admin_or_user(); 
+        } elseif ($this->tank_auth->is_logged_in(FALSE)) {						// logged in, not activated
+            $this->admin_or_user(); 
+        } else { 
+            $this->do_login();
+        }
+    }
 
-	/**
-	 * Logout user
-	 *
-	 * @return void
-	 */
-	function logout()
-	{
-		$this->tank_auth->logout();
+    /**
+     * Logout user
+     *
+     * @return void
+     */
+    function logout()
+    {
+        $this->tank_auth->logout();
 
-		redirect('/member/login/');
+        redirect('/member/login/');
 
-		//$this->_show_message($this->lang->line('auth_message_logged_out'));
+        //$this->_show_message($this->lang->line('auth_message_logged_out'));
 
 
-	}
+    }
 
-	/**
-	 * Register user on the site
-	 * 회원가입
-	 * @return void
-	 */
-	function register()
-	{
-		if ($this->tank_auth->is_logged_in()) {									// logged in //이미 로그인된 상태라면,
-			redirect('');
+    /**
+     * Register user on the site
+     * 회원가입
+     * @return void
+     */
+    function register()
+    {
+        if ($this->tank_auth->is_logged_in()) {									// logged in //이미 로그인된 상태라면,
+            redirect('');
 
-		} elseif ($this->tank_auth->is_logged_in(FALSE)) {						// logged in, not activated
-			redirect('/member/send_again/');
+        } elseif ($this->tank_auth->is_logged_in(FALSE)) {						// logged in, not activated
+            redirect('/member/send_again/');
 
-		} elseif (!$this->config->item('allow_registration', 'tank_auth')) {	// registration is off
-			$this->_show_message($this->lang->line('auth_message_registration_disabled'));
+        } elseif (!$this->config->item('allow_registration', 'tank_auth')) {	// registration is off
+            $this->_show_message($this->lang->line('auth_message_registration_disabled'));
 
-		} else {
-			
-				
-			$this->do_register();
-		}
-	}
+        } else {
 
-	/**
-	 * Send activation email again, to the same or new email address
-	 *
-	 * @return void
-	 */
-	function send_again()
-	{
-		if (!$this->tank_auth->is_logged_in(FALSE)) {							// not logged in or activated
-			redirect('/member/login/');
 
-		} else {
-			$this->form_validation->set_rules('email', 'Email', 'trim|required|xss_clean|valid_email');
+            $this->do_register();
+        }
+    }
 
-			$data['errors'] = array();
+    /**
+     * Send activation email again, to the same or new email address
+     *
+     * @return void
+     */
+    function send_again()
+    {
+        if (!$this->tank_auth->is_logged_in(FALSE)) {							// not logged in or activated
+            redirect('/member/login/');
 
-			if ($this->form_validation->run()) {								// validation ok
-				if (!is_null($data = $this->tank_auth->change_email(
-						$this->form_validation->set_value('email')))) {			// success
+        } else {
+            $this->form_validation->set_rules('email', 'Email', 'trim|required|xss_clean|valid_email');
+
+            $data['errors'] = array();
+
+            if ($this->form_validation->run()) {								// validation ok
+                if (!is_null($data = $this->tank_auth->change_email(
+                    $this->form_validation->set_value('email')))) {			// success
 
 					$data['site_name']	= $this->config->item('website_name', 'tank_auth');
 					$data['activation_period'] = $this->config->item('email_activation_expire', 'tank_auth') / 3600;
@@ -651,7 +651,7 @@ class Member extends MX_Controller
 		$data['errors'] = array();
 
 		if(!$ret = $this->_check_validation($fields)){
-            echo "validation error"  ; 
+           // echo "validation error"  ; 
         }
 
         if ($this->tank_auth->login(
@@ -684,6 +684,16 @@ class Member extends MX_Controller
 				$data['captcha_html'] = $this->_create_captcha();
 			}
 		}
+		
+		$data['set_info']='';
+                $this->users->siteset_init();
+		
+		foreach ($this->users->getsiteInfo() as $row)
+		{
+		
+			$data['set_info']=$row;
+		}
+		
 		$this->load->view('member/login_form', $data);
 
 

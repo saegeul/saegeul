@@ -100,6 +100,7 @@ class User_Autologin extends CI_Model
 		$this->db->where('last_ip', $this->input->ip_address());
 		$this->db->delete($this->table_name);
 	}
+        
 }
 
 /* End of file user_autologin.php */
