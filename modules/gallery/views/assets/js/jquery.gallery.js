@@ -19,10 +19,16 @@ $(document).ready(function(){
                         obj = state;
                         var marginLeft =( parseInt($divWidthSize) - obj.image_width ) / 2;
                         var marginTop = ( parseInt($divHeightSize) - obj.image_height) /2;
-                        var width = obj.image_width;
                         if( marginTop < 0 ) { marginTop = 0 };
-                        if(obj.image_height > 500 ) {
-                            var height = 500;
+                        if( marginLeft< 0 ) { marginLeft = 0 };
+                        if( obj.image_width > $divWidthSize ) {
+                            var width = $divWidthSize; 
+                        } else {
+                            var width = obj.image_width;
+                        }
+
+                        if(obj.image_height > $divHeightSize ) {
+                            var height = $divHeightSize-10;
                         } else {
                             var height = obj.image_height;
                         }
@@ -35,12 +41,12 @@ $(document).ready(function(){
                         $('.carousel-inner').append(markup);   		
                     });
                         $totalImage = data.pagination.total_rows;
-                    $numImage = $('.carousel-inner > div').length;
+                        $numImage = $('.carousel-inner > div').length;
                 }
     });
 
     $('.right').click(function() {
-        if( $numImage -  $('.active').attr('value') == 4 ) {
+        if( ($numImage -  $('.carousel-inner').find('.active').attr('value') ) == 4 ) {
             $.ajax({
                 type: "GET",
                     url: "gallery/getPhoto",
@@ -54,15 +60,21 @@ $(document).ready(function(){
                             var markup = "";
                             $.each(data.fileList, function(key,state){
                                 obj = state;
-                                var width = obj.image_width;
+                                var marginLeft =( parseInt($divWidthSize) - obj.image_width ) / 2;
                                 var marginTop = ( parseInt($divHeightSize) - obj.image_height) /2;
                                 if( marginTop < 0 ) { marginTop = 0 };
-                                if(obj.image_height > 500 ) {
-                                    var height = 500;
+                                if( marginLeft< 0 ) { marginLeft = 0 };
+                                if( obj.image_width > $divWidthSize ) {
+                                    var width = $divWidthSize; 
+                                } else {
+                                    var width = obj.image_width;
+                                }
+
+                                if(obj.image_height > $divHeightSize ) {
+                                    var height = $divHeightSize -10;
                                 } else {
                                     var height = obj.image_height;
                                 }
-                                var marginLeft =( parseInt($divWidthSize) - obj.image_width ) / 2;
                                 markup = "<div class='item' value='"+$imageSrl+"' ><img src='" + data.base_url + obj.full_path + "' style='height:"+height+"px;width:"+ width +"px;margin-left:"+ marginLeft +"px;margin-top:"+ marginTop +"px' /></div>";
                                     $imageSrl++;
                             $('.carousel-inner').append(markup);   		
