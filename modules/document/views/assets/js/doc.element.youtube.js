@@ -1,8 +1,12 @@
 var DOC = DOC || {} ; 
 DOC.Element = DOC.Element||{} ; 
 
+
 DOC.Element.Youtube = function(oConfig){
+    oConfig = oConfig||{} ; 
     var data = {}, 
+        editor = null,
+        wrapper_cls = oConfig.wrapper_cls||'youtube-area' , 
         uid = DOC.Util.uid() ,
         publisher = null, 
         is_editing = false , 
@@ -14,32 +18,12 @@ DOC.Element.Youtube = function(oConfig){
         return uid ; 
     }; 
 
-    that.makePublisher = function(){ 
-        var publisher = DOC.publisher() ; 
-        for( i in publisher){
-            if(publisher.hasOwnProperty(i) && typeof publisher[i] ==="function"){ 
-                that[i] = publisher[i] ; 
-            }
-        } 
-
-        return that ; 
-    }; 
-
-    /* Element 객체에 필수적으로 필요한 함수들 */ 
-    that.is_dirty = function(){ // 객체가 현재 write가 되었는지 체크 
-        return true ; 
-    }; 
-
     that.html = function(){
-        return  that.getRawValue(); 
+        return '<div class="'+wrapper_cls+'">'+editor.getContent()+'</div>' ;
     }; 
-
-    that.is_null = function(){
-        return data == null ? null : data ; 
-    };
 
     that.is_empty = function(){ //data is null ?
-        if(!data.hasOwnProperty('value')){
+        if(!data.selectedItems){
             return true ; 
         } 
         return false ; 
@@ -47,47 +31,71 @@ DOC.Element.Youtube = function(oConfig){
 
     that.remove = function(){
 
-    }; 
+    };
 
     that.editor = function($el){ 
         that.turnOnEditor() ; 
-        var $textarea = $('<div class="well"><div id="youtube_editor"></div><hr/><a class="btn btn-large btn-primary save_btn" >SAVE </a></div>');
+        var $editor_area = $('<div class="well"><div id="_youtube_editor"></div><hr/><a class="btn btn-large btn-primary save_btn" >SAVE </a></div>');
 
         if(that.is_empty()){
-            $textarea.appendTo($('#document_body')) ; 
-        }else{
-            $textarea.insertBefore($el) ; 
+            $editor_area .appendTo($('#document_body')) ; 
+        } else {
+            $editor_area.insertBefore($el) ; 
             $el.remove() ; 
             $el = null ; 
         } 
 
-        //tinyMCE.execCommand('mceAddControl', false, 'textArea');
-        //youtube listpanel 만들기
-        //
-        var listPanel = DOC.ListPanel({
-            target_id : 'youtube_editor',
-            url : 'sample_list' 
+        var youtubeEditor = DOC.ListPanel({
+            target_id : '_youtube_editor',
+            url : base_url+'openapi/youtube_api/search' , 
+            greetings : '<div style="height:100px;"><strong>유튜브 영상을 검색하세요.</strong><p>내가 필요한 영상을 검색하세요.</p></div>',
+            item_config :{
+                tmpl : '<div class="clearfix"><div style="padding-left:200px;"><div style="margin-left:-200px;float:left;margin-right:20px;width:200px;"><img style="width:100%;" src="{thumbnail_url}" /> </div><div><h4>{title} </h4><p>{description} </p> </div></div></div>', 
+                //item_wrapper_css : 'width:150px;height:150px;overflow:hidden;float:left;margin:10px;',
+                display_fields : [{
+                    name : 'thumbnail_url' 
+                },{
+                    name : 'description' 
+                },{
+                    name : 'title' 
+                }] ,
+                width : 200 , 
+                height : 200 
+            },
+            selected_item_config :{
+                tmpl : '<div class="clearfix"><img src="{thumbnail_url}" /> </div>', 
+                //item_wrapper_css : 'width:150px;height:150px;overflow:hidden;float:left;margin:10px;',
+                display_fields : [{
+                    name : 'thumbnail_url' 
+                }] ,
+                width : 200, 
+                height : 200  
+            },
+            display_item_config :{
+                tmpl : '<div class="clearfix"><iframe src="{content}" width="560" height="315" frameborder="0" allowfullscreen> </iframe> </div>', 
+                //item_wrapper_css : 'width:150px;height:150px;overflow:hidden;float:left;margin:10px;',
+                display_fields : [{
+                    name : 'content' 
+                }] ,
+                width : 200, 
+                height : 200  
+            }  
         }) ; 
 
-        listPanel.render() ; 
+        editor = youtubeEditor ; 
+
 
         if(!that.is_empty()){
-            //tinyMCE.activeEditor.setContent(that.getRawValue()) ; 
+            youtubeEditor.setSelectedItems(data.selectedItems) ; 
         }; 
 
-        $textarea.find('.save_btn').click(function(){
+        youtubeEditor.render() ; 
+
+        $editor_area.find('.save_btn').click(function(){
             that.offEditor() ; 
-            $textarea.find('.save_btn').unbind('click'); 
-            $textarea.remove() ; 
-        });  
-    }; 
-
-    that.render = function(){
-
-    }; 
-
-    that.replaceEditor = function($el){ 
-        that.editor($el) ; 
+            $editor_area.find('.save_btn').unbind('click'); 
+            $editor_area.remove() ; 
+        });
     }; 
 
     that.is_editing = function(val){
@@ -101,8 +109,7 @@ DOC.Element.Youtube = function(oConfig){
     that.offEditor = function(){ 
         if(that.is_editing()){
             that.save() ; 
-            tinyMCE.execCommand('mceRemoveControl', false, 'textArea');
-            $('#textArea').parents('.well').remove() ; 
+            $('#twitter_editor').parents('.well').remove() ; 
         } 
 
         that.turnOffEditor() ; 
@@ -118,15 +125,21 @@ DOC.Element.Youtube = function(oConfig){
         is_editing = false ; 
     }; 
 
+    that.setSelectedItems = function(items){
+        selected_items = items ; 
+    }; 
+
     that.save = function(){ 
         if(that.is_editing()){ 
-            var content = tinyMCE.activeEditor.getContent();	
+            var content = editor.getContent() ; 
 
 	        if(content != ''){
-		        var $el = $('<div class="element"' +' id="'+uid+'"><div class="handler"><a clsss="btn"><i class="icon icon-move"></i>&nbsp;</a></div><div class="textarea">'+content +'</div></div>').insertAfter($('#document_body .well')); 
+		        var $el = $('<div class="element"' +' id="'+uid+'"><div class="handler"><a clsss="btn"><i class="icon icon-move"></i>&nbsp;</a></div><div class="_editable">'+that.html() +'</div></div>').insertAfter($('#document_body .well')); 
+                that.setSelectedItems(editor.getSelectedItems()) ;
 		        
 		        var _data = {
-		            value : content 
+		            value : content ,
+                    selectedItems :editor.getSelectedItems() 
 		        }; 
 	
 		        that.setData(_data) ; 
@@ -147,7 +160,7 @@ DOC.Element.Youtube = function(oConfig){
     };
 
     that.editable = function($el){
-        $el.find('.textarea').bind('click',function(){ 
+        $el.find('._editable').bind('click',function(){ 
             DOC.paper.offEditor() ; 
 	        that.editor($el); 
 	    });
@@ -173,4 +186,5 @@ DOC.Element.Youtube = function(oConfig){
     } 
 
     return that ;
+
 }; 

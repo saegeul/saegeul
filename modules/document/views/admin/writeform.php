@@ -7,6 +7,7 @@
 <?echo js_asset('document','doc.element.html.js')?>
 <?echo js_asset('document','doc.element.twitter.js')?>
 <?echo js_asset('document','doc.element.textarea.js')?>
+<?echo js_asset('document','doc.element.youtube.js')?>
 <?echo js_asset('document','doc.element.image.js')?>
 <?echo js_asset('document','doc.element.file.js')?>
 
@@ -58,7 +59,7 @@ $(function(){
                 Element : DOC.Element.File
             },{
                 btn_tmpl : '<button class="btn"><i class="icon icon-book"></i> 유튜브 </button>', 
-                Element : DOC.Element.File
+                Element : DOC.Element.Youtube
             },{
                 btn_tmpl : '<button class="btn"><i class="icon icon-book"></i>페이스북</button>', 
                 Element : DOC.Element.File
