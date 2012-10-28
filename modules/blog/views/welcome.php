@@ -3,7 +3,7 @@
 		<?php foreach($document_list as $key => $document):?>
 		<li>
 			<h6 class="title">
-				<a><?php echo $document->title; ?> </a>
+				<a href="<?=base_url()?>blog/read/<?=$document->doc_id?>"><?php echo $document->title; ?> </a>
 			</h6>
 			<div class="metainfo">
 				<span>&nbsp;<?php echo $document->reg_date;?>
@@ -11,7 +11,7 @@
 				</span>
 			</div>
 			<p class="description">
-				<a><?php echo $document->description; ?>
+				<a href="<?=base_url()?>blog/read/<?=$document->doc_id?>"><?php echo $document->description; ?>
 				</a>
 			</p>
 		</li>
