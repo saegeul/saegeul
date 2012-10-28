@@ -30,9 +30,6 @@ class Admin_model extends CI_Model {
 		$query = $this->db->get('email_config');
 		return $query->result();
 	}
-	
-
-	
 }
 	
 

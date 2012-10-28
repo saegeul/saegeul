@@ -84,17 +84,25 @@
 			<br>
 			<div class="popularDocumentInfo well">
 				<h4>
-					인기글<a href="<?=base_url()?>"><span
+					인기글<a href="<?=base_url()?>admin/document/document_list"><span
 						class="pull-right label label-info">more</span> </a>
 				</h4>
 				<table class="table table-condensed table-hover">
-					<thead>
+					<tbody>
+						<?php foreach($hitDoc as $key => $hit) :?>
 						<tr>
-							<th>제목</th>
-							<th>작성자</th>
-							<th>등록일</th>
+							<td style="padding-top: 7px;padding-bottom: 7px;"><?=$hit->title?> <br>
+								<div style="margin-top: 5px;font-size:0.9em;color:#aaa;">
+									by
+									<?=$hit->username?>
+									<div class="pull-right">
+										<?=$hit->reg_date?>
+									</div>
+								</div>
+							</td>
 						</tr>
-					</thead>
+						<?php endforeach ;?>
+					</tbody>
 				</table>
 			</div>
 			<br>

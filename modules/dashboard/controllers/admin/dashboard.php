@@ -34,8 +34,10 @@ class Dashboard extends MX_Controller {
 		$data['admin'] = $result['userList'];
 		$data['site'] = $this->getSiteInfo();
 		$data['email'] = $this->getEmailInfo();
-		$result = $this->document_list();
+		$result = $this->document_list($page=1,$list_count=5);
 		$data['recentDoc'] = $result['documentList'];
+		$result = $this->document_list($page=1,$list_count=5,$order='hit');
+		$data['hitDoc'] = $result['documentList'];
 
 		$this->load->library('sg_layout');
 
@@ -68,7 +70,7 @@ class Dashboard extends MX_Controller {
 		$this->sg_layout->show($data);
 	}
 
-	public function document_list($page=1,$list_count=5){
+	public function document_list($page=1,$list_count=5,$order=null){
 		$this->load->model('document/Document_model','document');
 	
 		$search_param = null;
@@ -81,7 +83,7 @@ class Dashboard extends MX_Controller {
 			$data['search_key'] =  $search_param['search_key'] = $this->input->get_post('search_key');
 			$data['search_keyword'] = $search_param['search_keyword'] = $this->input->get_post('search_keyword');
 		}
-		$result = $this->document->getDocumentList($page,$list_count,$search_param,$is_trash);
+		$result = $this->document->getDocumentList($page,$list_count,$search_param,$is_trash,$order);
 	
 		$data['documentList'] = $result['list'];
 		$data['pagination'] = $result['pagination'];
