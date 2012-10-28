@@ -11,7 +11,10 @@
 |
 */
 $config['listCount']="{listCount}";
+$config['rssCount']="{rssCount}";
 $config['facebookId']="{facebookId}";
+$config['commentCount']="{commentCount}";
+$config['thema']="{thema}";
 
 /* End of file blog.php */
 /* Location: ./application/config/blog.php */
