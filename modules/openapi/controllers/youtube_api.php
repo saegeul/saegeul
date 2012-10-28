@@ -12,19 +12,15 @@ class Youtube_api extends MX_Controller {
         $page = $this->input->get_post('page') ; 
 
         if($page){
-            $url=$url.'&page='.($page-1)*$list_count; 
+            $url=$url.'&start-index='.($page-1)*$list_count; 
         }
 
-
-        //$url = urlencode($url) ; 
 
         $ch = curl_init() ; 
         curl_setopt($ch,CURLOPT_URL,$url) ; 
         curl_setopt($ch,CURLOPT_POST,0) ; 
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1) ; 
         $data = curl_exec($ch) ; 
-        //echo $data ; 
-
 
         $data = json_decode($data) ;
 
@@ -33,10 +29,11 @@ class Youtube_api extends MX_Controller {
 
         $store = array() ; 
 
+
         foreach($items as $key => $item){ 
             $obj->title = $item->title ;
             $obj->description = $item->description ;
-            $obj->player = $item->player->default ; 
+            $obj->youtube_link = $item->player->default ; 
             $obj->thumbnail_url = $item->thumbnail->hqDefault ; 
             $obj->content = $item->content->{"5"} ; 
 

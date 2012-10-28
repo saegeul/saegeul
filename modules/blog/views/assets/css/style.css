@@ -1,5 +1,11 @@
 ul.sg_document_list { list-style : none; }
-ul.sg_document_list li {padding :20px;border-bottom:1px solid #efefef; }
-ul.sg_document_list li h6.title { font-size:1.3em;}
+ul.sg_document_list li {padding :20px;border-bottom:1px dotted #efefef; }
+ul.sg_document_list li h6.title { font-size:1.5em;}
+ul.sg_document_list li h6.title a {color:#989898 ;}
 ul.sg_document_list li div.metainfo { color:#ccc;}
-ul.sg_document_list li p.description {margin-top:20px;margin-bottom:20px;min-height:90px; background : url('./../img/quote75x75.png') no-repeat top left ;padding-left:100px; }
+ul.sg_document_list li p.description {margin-top:50px;margin-bottom:00px;min-height:90px; background : url('./../img/quote75x75.png') no-repeat top left ;padding-left:100px; }
+
+ul.sg_document_list .item { padding-left:200px; }
+ul.sg_document_list .item_date { margin-left:-200px;width:180px;float:left ;  }
+ul.sg_document_list .item_date .date {font-size:1.5em;font-weight:bold; }
+ul.sg_document_list .item_content {border-left:1px solid #dfdfdf;padding-left:20px; }
