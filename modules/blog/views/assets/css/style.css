@@ -1,0 +1,5 @@
+ul.sg_document_list { list-style : none; }
+ul.sg_document_list li {padding :20px;border-bottom:1px solid #efefef; }
+ul.sg_document_list li h6.title { font-size:1.3em;}
+ul.sg_document_list li div.metainfo { color:#ccc;}
+ul.sg_document_list li p.description {margin-top:20px;margin-bottom:20px;min-height:90px; background : url('./../img/quote75x75.png') no-repeat top left ;padding-left:100px; }

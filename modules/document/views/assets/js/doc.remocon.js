@@ -83,7 +83,7 @@ tinyMCE.init({
     mode : "none",
     theme : "advanced",
     skin : "o2k7",
-    height:200,
+    height:300,
     skin_variant : "black",
     plugins : "pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template", 
     forced_root_block : false,

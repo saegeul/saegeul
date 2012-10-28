@@ -1,5 +1,3 @@
-<?php $this->load->helper('url') ?>
-<?php $this->load->helper('asset') ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,6 +11,9 @@
 <?echo common_js_asset('jquery/js/jquery-1.7.2.min.js')?>
 <?echo common_js_asset('jquery/js/jquery-ui-1.8.22.custom.min.js')?>
 <?echo common_js_asset('bootstrap/js/bootstrap.min.js') ?>
+<script>
+var base_url = '<?=base_url();?>' ; 
+</script>
 </head>
 <body>
 	<div class="navbar">

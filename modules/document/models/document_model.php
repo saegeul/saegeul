@@ -21,8 +21,15 @@ class Document_model extends CI_Model {
         $this->db->where('doc_id', $docu_id);
 
         $query = $this->db->get();
-        return $query->result();
+
+        if($query->result()){
+            $t = $query->result() ; 
+            return $t[0] ; 
+        }
+
+        return null ;
     }
+
     public function getDoc($doc_id) {
         $this->db->where("doc_id",$doc_id);
         $query = $this->db->get($this->table);
@@ -47,7 +54,7 @@ class Document_model extends CI_Model {
     }
 
 
-    public function getDocumentList($page=1,$list_count=10,$search_param=null,$is_trash){
+    public function getDocumentList($page=1,$list_count=10,$search_param=null,$is_trash=0){
         $this->db->where("is_trash",$is_trash);
         $this->db->order_by("doc_id", "desc");
         $this->db->limit($list_count , ($page-1)*$list_count );

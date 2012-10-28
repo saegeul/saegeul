@@ -8,6 +8,7 @@
 	<column name="reg_date" type="datetime" />
 	<column name="ip_address" type="varchar" size="128" not_null="true"/>
 	<column name="is_trash" type="int" size="1" default="0" />
+	<column name="hit" type="int" size="11" default="0" />
 
     <column name="username" type="varchar" size="50"   not_null="true"/>
     <column name="email" type="varchar" size="100"   not_null="true"/> 

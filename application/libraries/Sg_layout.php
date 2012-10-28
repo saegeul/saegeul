@@ -39,11 +39,11 @@ class Sg_layout{
 
     public function compile($data){ 
         if($this->header_data){
-            $data['header_data'] = $this->header_data ; 
+            $data['_header_data'] = $this->header_data ; 
         }
 
         if($this->footer_data){
-            $data['footer_data'] = $this->footer_data ; 
+            $data['_footer_data'] = $this->footer_data ; 
         }
 
         $body_html = '' ; 

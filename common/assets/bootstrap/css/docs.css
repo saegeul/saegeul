@@ -122,7 +122,8 @@ hr.soften {
   line-height: 30px;
   margin-bottom: 30px;
 }
-
+.simple_list { list-style :none;padding:0px;margin:0px; }
+.simple_list li { padding:10px; border-bottom:1px solid #efefef;}
 /* Link styles (used on .masthead-links as well) */
 .jumbotron a {
   color: #fff;

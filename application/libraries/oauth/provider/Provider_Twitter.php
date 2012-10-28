@@ -7,16 +7,16 @@ class Provider_Twiiter extends Provider {
 	}
 
 	function _getRequestTokenURL(){
-		return $url = $this->url_prefix.'request_token' ;
+		return 'https://api.twitter.com/oauth/request_token';
 	}
 
 	function _getAccessTokenURL(){
-		return $url = $this->url_prefix.'access_token' ;
+		return 'https://api.twitter.com/oauth/access_token';;
 	}
 
 
 	function _getAuthorizeURL(){
-		return $url = $this->url_prefix.'authorize' ;
+		return 'https://api.twitter.com/oauth/authenticate';
 	}
 
 	function _getAPIUrl($api_name){
