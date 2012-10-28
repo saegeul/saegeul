@@ -46,7 +46,17 @@ class setting extends MX_Controller {
 		
         $data = array() ; 
         
-        $data['set_info']=$this->admin_model->getEmailInfo();
+        
+        $data['set_info']='';
+        
+        
+         foreach ($this->admin_model->getEmailInfo() as $row)
+        {
+        
+        	 $data['set_info']=$row;
+        } 
+        
+       
         
         $data['action'] = 'email' ;
 		$this->sg_layout->show($data) ;
@@ -121,11 +131,15 @@ class setting extends MX_Controller {
 		
 		$data = array() ;
 		
+		$data['set_info']='';
 		
-		$data['set_info']=$this->admin_model->getSiteInfo();
+	  foreach ($this->admin_model->getsiteInfo() as $row)
+        {
+        
+        	 $data['set_info']=$row;
+        } 
 		
-		
-		
+				
         
         $data['action'] = 'site' ;
 

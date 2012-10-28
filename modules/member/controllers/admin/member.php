@@ -704,7 +704,7 @@ function admin_or_user(){
 
 		$data['errors'] = array();
 
-		if(!$ret = $this->_check_validation($fields)){
+		 if(!$ret = $this->_check_validation($fields)){
             echo "validation error"  ; 
         }
 
@@ -738,6 +738,16 @@ function admin_or_user(){
 				$data['captcha_html'] = $this->_create_captcha();
 			}
 		}
+		
+
+		
+	$data['set_info']='';
+		
+	  foreach ($this->users->getsiteInfo() as $row)
+        {
+        
+        	 $data['set_info']=$row;
+        } 
 		$this->load->view('member/login_form', $data);
 
 
@@ -927,7 +937,7 @@ function admin_or_user(){
 		$data['use_username'] = $use_username;
 		$data['captcha_registration'] = $captcha_registration;
 		$data['use_recaptcha'] = $use_recaptcha;
-
+		$data['action']='admin_member';
 		
         $this->load->library('sg_layout') ; 
 
