@@ -373,7 +373,7 @@ class setting extends MX_Controller {
 		$this->sg_layout->add('setting/blog') ;
 		$this->sg_layout->add('setting/footer') ;
 			
-		$this->config->load('blog');
+		$this->config->load('blog', FALSE, TRUE);
 	
 		$data = array() ;	
 		$data['listCount'] = $this->config->item('listCount');
