@@ -28,7 +28,7 @@
 		<div class="control-group">
 			<label class="control-label">Comment Number</label>
 			<div class="controls">
-				<input type="text" id="inputCommentCount" value="<?=isset($rssCount)?$rssCount:""?>">
+				<input type="text" id="inputCommentCount" value="<?=isset($commentCount)?$commentCount:""?>">
 				<p class="help-block">페이스북 코멘트 출력 수를 적어주세요.</p>
 			</div>
 		</div>
