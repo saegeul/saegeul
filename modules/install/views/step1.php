@@ -37,6 +37,6 @@
         </p>
         <?php else  :?>
         <p> 
-            <a class="btn btn-danger" href="<?=base_url().'install/checkEnvirionment'?>"><i class="icon-circle-arrow-right icon-white"></i> 새로고침...</a>
+            <a class="btn btn-danger" href="<?=base_url().'install/checkEnvironment'?>"><i class="icon-circle-arrow-right icon-white"></i> 새로고침...</a>
         </p>
         <?php endif ;?>

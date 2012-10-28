@@ -19,7 +19,7 @@ class Auth extends MX_Controller {
 		$this->email = $this->tank_auth->get_useremail();
 	}
 
-	public function createApi(){
+	public function resisterKtApi(){
 		$this->load->model('Auth_model','auth');
 		$args->api_key = $this->input->get_post('api_key');
 		$args->secret_key = $this->input->get_post('secretkey');
