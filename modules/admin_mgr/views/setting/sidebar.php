@@ -12,6 +12,9 @@
 	    </li> 
         <li <?php if($action=='dbtable') echo 'class="active"' ;?>> 
 	         <a href="<?=site_url("admin_mgr/setting/dbtable")?>"><i class="icon-chevron-right"></i>DB Table Setting</a> 
+	    </li>
+	    <li <?php if($action=='blog') echo 'class="active"' ;?>> 
+	         <a href="<?=site_url("admin_mgr/setting/blog")?>"><i class="icon-chevron-right"></i>Blog Setting</a> 
 	    </li> 
 	</ul>
 </div>

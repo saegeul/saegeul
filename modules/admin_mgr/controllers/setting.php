@@ -9,17 +9,17 @@ class setting extends MX_Controller {
 	function __construct()
 	{
 		parent::__construct();
-		
+
 		$this->load->database();
 		$this->load->helper('url');
 		$this->load->helper('date');
 		$this->load->library('tank_auth');
-		
+
 		// get session data
 		$this->username = $this->tank_auth->get_username();
 		$this->uid = $this->tank_auth->get_user_id();
 		$this->email = $this->tank_auth->get_useremail();
-		
+
 		// check direct acess
 		if($this->uid == "")
 			redirect('member/login', 'refresh');
@@ -41,29 +41,29 @@ class setting extends MX_Controller {
 		$this->sg_layout->add('setting/sidebar') ;
 		$this->sg_layout->add('setting/email') ;
 		$this->sg_layout->add('setting/footer') ;
-       
+		 
 		$this->load->model('admin_model') ;
-		
-        $data = array() ; 
-        
-        
-        $data['set_info']='';
-        
-        
-         foreach ($this->admin_model->getEmailInfo() as $row)
-        {
-        
-        	 $data['set_info']=$row;
-        } 
-        
-       
-        
-        $data['action'] = 'email' ;
+
+		$data = array() ;
+
+
+		$data['set_info']='';
+
+
+		foreach ($this->admin_model->getEmailInfo() as $row)
+		{
+
+			$data['set_info']=$row;
+		}
+
+		 
+
+		$data['action'] = 'email' ;
 		$this->sg_layout->show($data) ;
 	}
 
 	public function setupEmail(){
-		 
+			
 		$params = array(
 				'email'=>'',
 				'email_protocol'=>'',
@@ -73,7 +73,7 @@ class setting extends MX_Controller {
 				'smtp_pass'=>''
 		);
 
-		 
+			
 		$email = $this->input->post('email') ;
 		$email_protocol = $this->input->post('email_protocol') ;
 		$email_path = $this->input->post('email_lib_path') ;
@@ -100,7 +100,7 @@ class setting extends MX_Controller {
 		}
 
 		write_file(APPPATH.'config/email.php',$f) ;
-		 
+			
 		$this->load->library('sg_layout') ;
 
 		$this->sg_layout->layout('admin/layout') ;
@@ -110,11 +110,11 @@ class setting extends MX_Controller {
 		$this->sg_layout->add('setting/sidebar') ;
 		$this->sg_layout->add('setting/general_message') ;
 		$this->sg_layout->add('setting/footer') ;
-        $data = array() ; 
-        $data['action'] = 'email' ;
+		$data = array() ;
+		$data['action'] = 'email' ;
 		$this->sg_layout->show($data) ;
-		 
-	} 
+			
+	}
 
 	public function site(){
 		$this->load->library('sg_layout') ;
@@ -126,24 +126,24 @@ class setting extends MX_Controller {
 		$this->sg_layout->add('setting/sidebar') ;
 		$this->sg_layout->add('setting/site') ;
 		$this->sg_layout->add('setting/footer') ;
-        
-		$this->load->model('admin_model') ;
-		
-		$data = array() ;
-		
-		$data['set_info']='';
-		
-	  foreach ($this->admin_model->getsiteInfo() as $row)
-        {
-        
-        	 $data['set_info']=$row;
-        } 
-		
-				
-        
-        $data['action'] = 'site' ;
 
-        
+		$this->load->model('admin_model') ;
+
+		$data = array() ;
+
+		$data['set_info']='';
+
+		foreach ($this->admin_model->getsiteInfo() as $row)
+		{
+
+			$data['set_info']=$row;
+		}
+
+
+
+		$data['action'] = 'site' ;
+
+
 		$this->sg_layout->show($data) ;
 	}
 
@@ -153,7 +153,7 @@ class setting extends MX_Controller {
 				'title'=>'',
 				'site_url'=>'',
 				'on_register'=>''
-				 
+					
 		);
 
 
@@ -164,7 +164,7 @@ class setting extends MX_Controller {
 		$params['title'] = $site_name ;
 		$params['site_url'] = $site_url ;
 		$params['on_register'] = $join_available ;
-		 
+			
 		$this->load->model('admin_model') ;
 		$this->admin_model->save_siteset($params);
 
@@ -187,8 +187,8 @@ class setting extends MX_Controller {
 		$this->sg_layout->add('setting/general_message') ;
 		$this->sg_layout->add('setting/footer') ;
 
-        $data = array() ; 
-        $data['action'] = 'site' ; 
+		$data = array() ;
+		$data['action'] = 'site' ;
 		$this->sg_layout->show($data) ;
 
 	}
@@ -225,8 +225,8 @@ class setting extends MX_Controller {
 		}
 	}
 
-    public function openapi(){
-        $this->load->library('sg_layout') ;
+	public function openapi(){
+		$this->load->library('sg_layout') ;
 
 		$this->sg_layout->layout('admin/layout') ;
 		$this->sg_layout->module('admin_mgr') ;
@@ -235,14 +235,14 @@ class setting extends MX_Controller {
 		$this->sg_layout->add('setting/sidebar') ;
 		$this->sg_layout->add('setting/openapi') ;
 		$this->sg_layout->add('setting/footer') ;
-        
-        $data = array() ; 
-        $data['action'] = 'openapi' ; 
 
-        $data['api_key_list'] = array() ; 
+		$data = array() ;
+		$data['action'] = 'openapi' ;
+		$result = $this->getOpenApiList();
+		$data['api_key_list'] = $result['openApiList'];
 
 		$this->sg_layout->show($data) ;
-    }
+	}
 
 	public function dbtable(){
 
@@ -294,8 +294,90 @@ class setting extends MX_Controller {
 		$this->sg_layout->add('setting/dbtable') ;
 		$this->sg_layout->add('setting/footer') ;
 
-        $data['action'] = 'dbtable' ; 
+		$data['action'] = 'dbtable' ;
 
+		$this->sg_layout->show($data) ;
+	}
+
+	public function getOpenApiList($page=1,$list_count=30){
+		$this->load->model('Openapi/Openapi_model','openapi');
+
+		$search_param = null;
+		$data['search_key'] = '';
+		$data['search_keyword'] = '';
+
+		if($this->input->get_post('search_key') && $this->input->get_post('search_keyword')){
+			$search_param = array();
+			$data['search_key'] =  $search_param['search_key'] = $this->input->get_post('search_key');
+			$data['search_keyword'] = $search_param['search_keyword'] = $this->input->get_post('search_keyword');
+		}
+		$result = $this->openapi->getApiList($page,$list_count,$search_param);
+
+		$data['openApiList'] = $result['list'];
+		$data['pagination'] = $result['pagination'];
+
+		return $data;
+	}
+
+	function resisterOpenApi() {
+		$this->load->model('Openapi/Openapi_model','openapi');
+		
+		$args->provider = $this->input->get('provider');
+		$args->api_key = $this->input->get('api_key');
+		$args->secret_key = $this->input->get('secret_key');
+		$args->username = $this->username;
+		$args->email = $this->email;
+		$args->uid = $this->uid;
+		$args->regdate = standard_date('DATE_ATOM',time());;
+		$args->ip_address = $this->input->ip_address();
+
+		// insert file information in DB
+		$ret_data = $this->openapi->insert($args);
+
+		return json_encode(array($ret_data));
+	}
+	
+	public function deleteOpenApi(){
+		$openapi_id = $this->input->get_post('openapi_id');
+	
+		// load sitemap model
+		$this->load->model('Openapi/Openapi_model','openapi');
+		// insert file information in DB
+		$ret_data = $this->openapi->delete($openapi_id) ;
+	
+		return json_encode(array($ret_data));
+	}
+	
+	public function modifyOpenApi() {
+		$this->load->model('Openapi/Openapi_model','openapi');
+
+		// get modify data
+		$openapi_id = $this->input->get_post('openapi_id');
+		$data['provider'] = $this->input->get_post('provider');
+		$data['api_key'] = $this->input->get_post('api_key');
+		$data['secret_key'] = $this->input->get_post('secret_key');
+
+		$this->openapi->update($data,$openapi_id);
+
+		echo json_encode('success');
+	}
+	
+	public function blog(){
+		$this->load->library('sg_layout') ;
+	
+		$this->sg_layout->layout('admin/layout') ;
+		$this->sg_layout->module('admin_mgr') ;
+	
+		$this->sg_layout->add('setting/header') ;
+		$this->sg_layout->add('setting/sidebar') ;
+		$this->sg_layout->add('setting/blog') ;
+		$this->sg_layout->add('setting/footer') ;
+			
+		$this->load->model('admin_model') ;
+	
+		$data = array() ;			
+	
+		$data['action'] = 'blog' ;
 		$this->sg_layout->show($data) ;
 	}
 }
