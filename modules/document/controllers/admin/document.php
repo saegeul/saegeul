@@ -22,10 +22,7 @@ class Document extends MX_Controller {
         } 
     }
 
-    public function save(){
-        $this->username = "root";
-        $this->email = "root@saegeul.com";
-        $this->uid = '1';
+    public function save(){ 
         $this->load->model('Document_model','document_model') ; 
 
         $insert_data;
@@ -33,6 +30,7 @@ class Document extends MX_Controller {
         $insert_data->ip_address = $this->input->ip_address();
         $insert_data->content = $this->input->post('content');
         $insert_data->title = $this->input->post('title');
+        $insert_data->description = $this->input->post('description') ; 
         $insert_data->username = 'jaehee' ; 
         $insert_data->email = 'jaehee@saegeul.com' ; 
         $insert_data->uid = 1 ; 
@@ -178,6 +176,7 @@ class Document extends MX_Controller {
 
         $this->sg_layout->show($data) ; 
     }
+
     public function modify_document($doc_id=null)
     {
         $data['action'] = 'writeform';

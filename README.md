@@ -1,12 +1,12 @@
 > 새글은 소셜큐레이션/클라우드 환경에 적합한 설치형 CMS이다.
 
-'Key Features 
+### Key Features 
 
  1. 설치형 오픈소스 CMS
  2. Cloud Storage 연동 
  3. Social Network Service와 연동을 통한 소셜 큐레이션 
 
-Installation
+### Installation
 
  1. 최신버전을 다운로드 받습니다.
  2. 다운받은 파일의 압축을 풉니다. 

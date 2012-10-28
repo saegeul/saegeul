@@ -34,6 +34,8 @@ class Dashboard extends MX_Controller {
 		$data['admin'] = $result['userList'];
 		$data['site'] = $this->getSiteInfo();
 		$data['email'] = $this->getEmailInfo();
+		$result = $this->document_list();
+		$data['recentDoc'] = $result['documentList'];
 
 		$this->load->library('sg_layout');
 
@@ -66,6 +68,27 @@ class Dashboard extends MX_Controller {
 		$this->sg_layout->show($data);
 	}
 
+	public function document_list($page=1,$list_count=5){
+		$this->load->model('document/Document_model','document');
+	
+		$search_param = null;
+		$is_trash = 0;
+		$data['search_key'] = '';
+		$data['search_keyword'] = '';
+	
+		if($this->input->get_post('search_key') && $this->input->get_post('search_keyword')){
+			$search_param = array();
+			$data['search_key'] =  $search_param['search_key'] = $this->input->get_post('search_key');
+			$data['search_keyword'] = $search_param['search_keyword'] = $this->input->get_post('search_keyword');
+		}
+		$result = $this->document->getDocumentList($page,$list_count,$search_param,$is_trash);
+	
+		$data['documentList'] = $result['list'];
+		$data['pagination'] = $result['pagination'];
+		
+		return $data;
+	}
+	
 	public function userList($page=1,$list_count=10,$level=""){
 		$this->load->model('member/users','user');
 
@@ -113,9 +136,10 @@ class Dashboard extends MX_Controller {
 		foreach($map as $key => $row){ //modules list
 			$module_info = array();
 			$module_info['module_name'] = $key;
-			$module_info['module_schema'] = "";
-			$module_info['module_schema_cnt'] = 0;
-			$module_info['module_schema_is_exists'] = 0;
+			$module_info['module_schema_installed'] = "";
+			$module_info['module_schema_not_installed'] = "";
+			$module_info['module_schema_all_cnt'] = 0;
+			$module_info['module_schema_installed_cnt'] = 0;
 			$path = './modules/'.$key.'/schemas' ;
 			for($i=0 ; $i < count($row) ;$i++){
 				if($row[$i] == 'schemas'){
@@ -123,13 +147,16 @@ class Dashboard extends MX_Controller {
 					$schema_list = directory_map($path);
 					for($j = 0 ; $j < count($schema_list) ;$j++){
 						if(strpos($schema_list[$j],'xml')){
-							$module_info['module_schema_cnt'] = ++$xml_cnt;
+							$module_info['module_schema_all_cnt'] = ++$xml_cnt;
 							$result = explode('.',$schema_list[$j]);
-							$module_info['module_schema'] = $module_info['module_schema'] . $result[0];
-							if($j < count($schema_list) - 1)
-								$module_info['module_schema'] = $module_info['module_schema'] . " , ";
-							if($this->sg_dbutil->is_exists($result[0])==true)
-								++$module_info['module_schema_is_exists'];
+							if($this->sg_dbutil->is_exists($result[0])==true){
+								$module_info['module_schema_installed'] = $module_info['module_schema_installed'] . $result[0];
+								++$module_info['module_schema_installed_cnt'];
+								if($j < count($schema_list) - 1)
+									$module_info['module_schema_installed'] = $module_info['module_schema_installed'] . " , ";
+							}else{
+								$module_info['module_schema_not_installed'] =  $module_info['module_schema_not_installed'] . $result[0];
+							}
 						}
 					}
 				}

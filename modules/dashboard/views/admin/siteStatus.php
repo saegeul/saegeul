@@ -60,17 +60,25 @@
 		<div style="padding-right: 20px;">
 			<div class="newDocumentInfo well">
 				<h4>
-					최신글<a href="<?=base_url()?>"><span
+					최신글<a href="<?=base_url()?>admin/document/document_list"><span
 						class="pull-right label label-info">more</span> </a>
 				</h4>
 				<table class="table table-condensed table-hover">
-					<thead>
+					<tbody>
+						<?php foreach($recentDoc as $key => $rec) :?>
 						<tr>
-							<th>제목</th>
-							<th>작성자</th>
-							<th>등록일</th>
+							<td style="padding-top: 7px;padding-bottom: 7px;"><?=$rec->title?> <br>
+								<div style="margin-top: 5px;font-size:0.9em;color:#aaa;">
+									by
+									<?=$rec->username?>
+									<div class="pull-right">
+										<?=$rec->reg_date?>
+									</div>
+								</div>
+							</td>
 						</tr>
-					</thead>
+						<?php endforeach ;?>
+					</tbody>
 				</table>
 			</div>
 			<br>

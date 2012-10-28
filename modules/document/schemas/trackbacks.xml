@@ -1,0 +1,10 @@
+<table name="trackbacks">
+    <column name="tb_id" type="int" size="11" auto_increment="true" primary_key="true" />
+    <column name="doc_id" type="int" size="11" primary_key="true" />
+    <column name="url" type="varchar" size="200" />
+    <column name="title" type="varchar" size="100" />
+    <column name="blog_name" type="varchar" size="100" />
+    <column name="excerpt" type="text" />
+    <column name="ip_address" type="varchar" size="128" />
+	<column name="reg_date" type="datetime" />
+</table>

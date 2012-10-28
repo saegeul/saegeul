@@ -38,7 +38,7 @@
         <?php foreach($fileList as $key => $file) :?>
             <tr>
                 <td style="text-align:center;"><?=$file->doc_id ?></td>
-                <td><a target="_blank" href="<?=base_url();?>blog/welcome/<?=$file->doc_id;?>"><?=$file->title ?></a></td>
+                <td><a target="_blank" href="<?=base_url();?>blog/entry/<?=$file->doc_id;?>"><?=$file->title ?></a></td>
                 <td><?=$file->username ?></td>
                 <td><?=$file->reg_date ?></td>
                 <td style="text-algin:right;">0</td>
