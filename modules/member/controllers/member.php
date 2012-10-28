@@ -31,8 +31,7 @@ class Member extends MX_Controller
     function login()
     {
         $this->load->model('users','',TRUE);
-        if ($this->tank_auth->is_logged_in()) {									// logged in 濡쒓렇���섏뼱�덈떎硫�
-            $this->admin_or_user(); 
+        if ($this->tank_auth->is_logged_in()) {									// logged in 嚥≪뮄�뉛옙占쏙옙�뤿선占쎈뜄�롳쭖占�            $this->admin_or_user(); 
         } elseif ($this->tank_auth->is_logged_in(FALSE)) {						// logged in, not activated
             $this->admin_or_user(); 
         } else { 
@@ -58,12 +57,12 @@ class Member extends MX_Controller
 
     /**
      * Register user on the site
-     * �뚯썝媛�엯
+     * 占쎈슣�앭첎占쎌뿯
      * @return void
      */
     function register()
     {
-        if ($this->tank_auth->is_logged_in()) {									// logged in //�대� 濡쒓렇�몃맂 �곹깭�쇰㈃,
+        if ($this->tank_auth->is_logged_in()) {									// logged in //占쎈�占�嚥≪뮄�뉛옙紐껊쭆 占쎄낱源�옙�겹늺,
             redirect('');
 
         } elseif ($this->tank_auth->is_logged_in(FALSE)) {						// logged in, not activated
@@ -521,10 +520,11 @@ class Member extends MX_Controller
 
 		$data['result']=$this->users->admin_db();
 			
-		// �명똿 - �ㅼ젙
-		$base_segment = 3; // CI�섏씠吏��멸렇癒쇳듃 二쇱냼�꾩튂媛�		$page_view = 10; // ���섏씠吏�뿉 蹂댁뿬以��덉퐫����		$base_url = base_url(); // base_url
+			$base_segment = 3; 
+				$page_view = 10; 
+					$base_url = base_url(); // base_url
 		$act_url = $base_url . "member/admin_member";
-		$page_per_block = 5; // �섏씠吏��대룞 媛쒖닔 ( 1 .. 5)
+		$page_per_block = 5; // 占쎌꼷�좑쭪占쏙옙��짗 揶쏆뮇��( 1 .. 5)
 			
 		
 		$data = "";
@@ -552,8 +552,7 @@ class Member extends MX_Controller
 		$data['total_page'] = ceil($data['total_record'] / $page_view); 
 		$data['cur_admin'] = $this->tank_auth->get_user_id();
 		
-		// ��- �뺤쓽
-		$data['base_url'] = $base_url;
+			$data['base_url'] = $base_url;
 		$data['act_url'] = $act_url;
 
 		$this->load->view('member/admin_member',$data);
@@ -566,8 +565,7 @@ class Member extends MX_Controller
 		$id=$_GET['id'];
 		if($this->users->check_level($id) != 'admin'){
 			
-			//$this->users->delete_user($id);
-			//echo ("<script>alert('Selected user is unregistered')</script>");
+			
 			
 		}
 		else
@@ -579,7 +577,6 @@ class Member extends MX_Controller
 		
 		}
 
-		//redirect('/member/admin/member/admin_member/');
 		$this->admin_member();
 	}
 
@@ -595,10 +592,9 @@ class Member extends MX_Controller
 		$this->admin_member();
 	}
 
-	//admin怨�user瑜�援щ텇�댁꽌 �섏씠吏�� �대룞
 	function admin_or_user(){
 		if($this->users->check_level($this->tank_auth->get_user_id())){
-			redirect('admin/member/admin_member');
+			redirect('admin/dashboard/siteCurrentStatus');
 		} else { 
 			redirect('/member/main_page/');
 		} 
@@ -723,8 +719,7 @@ class Member extends MX_Controller
 
 		$email_activation = $this->config->item('email_activation', 'tank_auth');
 
-		if ($this->form_validation->run()) {								// �좏슚��泥댄겕 �듦낵
-			if (!is_null($data = $this->tank_auth->create_user(
+		if ($this->form_validation->run()) {									if (!is_null($data = $this->tank_auth->create_user(
 					$use_username ? $this->form_validation->set_value('username') : '',
 					$this->form_validation->set_value('email'),
 					$this->form_validation->set_value('password'),
@@ -804,8 +799,7 @@ class Member extends MX_Controller
 
 		$email_activation = $this->config->item('email_activation', 'tank_auth');
 
-		if ($this->form_validation->run()) {								// �좏슚��泥댄겕 �듦낵
-			if (!is_null($data = $this->tank_auth->create_user(
+		if ($this->form_validation->run()) {									if (!is_null($data = $this->tank_auth->create_user(
 					$use_username ? $this->form_validation->set_value('username') : '',
 					$this->form_validation->set_value('email'),
 					$this->form_validation->set_value('password'),
