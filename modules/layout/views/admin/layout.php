@@ -41,10 +41,6 @@ var base_url = '<?=base_url();?>' ;
 					<?php endif;?>><a
 						href="<?=base_url()?>admin/clouddrive/checkOauth">Cloud Drive</a>
 					</li>
-					<li <?php if($this->uri->segment(2)=='webzine'):?> class="active"
-					<?php endif;?>><a
-						href="<?=base_url()?>admin/document/writeform">Page</a>
-					</li>
 					<li <?php if($this->uri->segment(2)=='filebox'):?> class="active"
 					<?php endif;?>><a
 						href="<?=base_url()?>admin/filebox/fileList">File</a>
@@ -62,12 +58,10 @@ var base_url = '<?=base_url();?>' ;
 								<span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu">
-								<li><a href="<?=base_url()?>document/admin/document/writeform"><i
+								<li><a href="<?=base_url()?>admin/document/writeform"><i
 										class="icon-plus"></i> DOCUMENT</a></li>
-								<li><a href="<?=base_url()?>filebox/admin/filebox/uploadForm"><i
+								<li><a href="<?=base_url()?>admin/filebox/uploadForm"><i
 										class="icon-plus"></i> FILE</a></li>
-								<li><a href="<?=base_url()?>page/admin/page/createPage"><i
-										class="icon-plus"></i> PAGE</a></li>
 							</ul>
 						</div>
 					</li>

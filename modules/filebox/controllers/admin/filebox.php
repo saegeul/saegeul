@@ -104,7 +104,7 @@ class Filebox extends MX_Controller {
 		$args->image_height = $upload_data['image_height'];
 		$args->image_thumb_path = $upload_data['image_thumb_path'];
 		$args->image_type = $upload_data['image_type'];
-		$args->reg_date = standard_date('DATE_ATOM',time());;
+		$args->reg_date = standard_date('DATE_ATOM',time());
 		$args->uid = $this->uid;
 		$args->username = $this->username;
 		$args->email = $this->email;

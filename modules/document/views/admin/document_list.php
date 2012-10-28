@@ -20,9 +20,7 @@
     </form> <!-- 검색부분    -->
     <br>
     
-    <!-- 회원목록 테이블 시작   --> 
     <table class="table table-hover table-stripped"> 
-    <!-- 회원목록    -->
         <thead class="row">
             <tr>
                 <th class="span1" >번호</th>
@@ -35,15 +33,15 @@
             </tr>
         </thead>
         <tbody>
-        <?php foreach($fileList as $key => $file) :?>
+        <?php foreach($document_list as $key => $doc) :?>
             <tr>
-                <td style="text-align:center;"><?=$file->doc_id ?></td>
-                <td><a target="_blank" href="<?=base_url();?>blog/entry/<?=$file->doc_id;?>"><?=$file->title ?></a></td>
-                <td><?=$file->username ?></td>
-                <td><?=$file->reg_date ?></td>
+                <td style="text-align:center;"><?=$doc->doc_id ?></td>
+                <td><a target="_blank" href="<?=base_url();?>blog/read/<?=$doc->doc_id;?>"><?=$doc->title ?></a></td>
+                <td><?=$doc->username ?></td>
+                <td><?=$doc->reg_date ?></td>
                 <td style="text-algin:right;">0</td>
-                <td><button class="btn btn-info btn-small modify_btn" value="<?=$file->doc_id?>" >수정</button> </td>
-                <td><button class="btn btn-warning btn-small trash_btn" value="<?=$file->doc_id?>">휴지통</button> </td> 
+                <td><a class="btn btn-info btn-small" href="<?=base_url()?>admin/document/correctform/<?=$doc->doc_id?>" value="<?=$doc->doc_id?>" >수정</button> </td>
+                <td><button class="btn btn-warning btn-small trash_btn" value="<?=$doc->doc_id?>">휴지통</button> </td> 
             </tr>
         <?php endforeach ;?>
         </tbody> 

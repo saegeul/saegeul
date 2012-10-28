@@ -17,7 +17,7 @@ class Document_model extends CI_Model {
 
 	public function getDocument($docu_id) {
 		$this->db->select('*');
-		$this->db->from('documents');
+		$this->db->from($this->table);
 		$this->db->where('doc_id', $docu_id);
 
 		$query = $this->db->get();

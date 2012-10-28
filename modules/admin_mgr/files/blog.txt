@@ -14,7 +14,8 @@ $config['listCount']="{listCount}";
 $config['rssCount']="{rssCount}";
 $config['facebookId']="{facebookId}";
 $config['commentCount']="{commentCount}";
-$config['thema']="{thema}";
+$config['commentWidth']="{commentWidth}";
+$config['theme']="{theme}";
 
 /* End of file blog.php */
 /* Location: ./application/config/blog.php */
