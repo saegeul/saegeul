@@ -6,7 +6,7 @@ DOC.ListPanel = function(config){
         $footer ,
         $body ,
         item_config = config.item_config , 
-        selected_item_config = config.selected_item_cofig||item_config,
+        selected_item_config = config.selected_item_config||item_config,
         display_item_config = config.display_item_config||selected_item_config,
         height = config.height || 350,
         width = config.width || '100%' , 
@@ -109,11 +109,11 @@ DOC.ListPanel = function(config){
         var _height = height+'px'; 
         var _body_height = (height-80)+'px'; 
         
-        var header_html =  '<form class="clearfix"><div class="pull-right"><div class="input-append"><input class="span2 search_keyword" size="20" type="text"/><button class="btn search_btn" type="submit"><i class="icon icon-search"> </i> Search</button></div></div></form><hr/>' ; 
+        var header_html =  '<form style="height:30px;"><div class="pull-right"><div class="input-append"><input class="span2 search_keyword" size="20" type="text"/><button class="btn search_btn" type="submit"><i class="icon icon-search"> </i> Search</button></div></div></form>' ; 
 
         var pagination_html = '<ul class="pager"><li class="previous"><a href="#" class="_prev_btn">&larr; Prev</a></li><li class="next"><a href="#" class="_next_btn">Next &rarr; </a></li> </ul>' ; 
 
-        $el = $('<div id="'+uid+'"  style="border-radius:5px ;background:#fff;padding:10px;border:1px solid #fefefe;">'+header_html+'<div class="_panel_body" style="overflow:auto;height:200px;overflow-x:hidden;"><ul class="clearfix simple_list"><li><div class="alert alert-info">'+greetings +'</div></li></ul></div>'+pagination_html+'<div class="alert alert-block"><h4>선택된 아이템</h4><div class="selected_items"><ul class="clearfix simple_list"> </ul> </div></div></div>') ; 
+        $el = $('<div id="'+uid+'"  style="border-radius:5px ;background:#fff;padding:10px;border:1px solid #fefefe;"><div style="padding-left:300px;"><div style="margin-left:-300px;width:280px;float:left;margin-top:60px;"><div class="alert alert-block" style="height:300px;overflow:auto;overflow-x:hidden;"><h4>선택된 아이템</h4><div class="selected_items"><ul class="clearfix simple_list"> </ul> </div></div> </div><div>'+header_html+'<div class="_panel_body" style="overflow:auto;height:370px;overflow-x:hidden;"><ul class="clearfix simple_list"><li><div class="alert alert-info" style="height:300px;">'+greetings +'</div></li></ul></div>'+pagination_html+'</div></div></div>') ; 
 
         $el.appendTo($('#'+target_id)); 
 
