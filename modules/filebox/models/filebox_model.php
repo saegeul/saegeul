@@ -105,10 +105,12 @@ class Filebox_model extends CI_Model {
             $this->db->where('is_image',1);
             $total_rows = $this->db->count_all_results($this->table);
         }else{
-            $this->db->like($search_param['option'],$search_param['value']);
+            $this->db->like('tag',$search_param['value']);
+            $this->db->or_like('original_file_name',$search_param['value']);
             $query = $this->db->get($this->table);
 
-            $this->db->like($search_param['option'],$search_param['value']);
+            $this->db->like('tag',$search_param['value']);
+            $this->db->or_like('original_file_name',$search_param['value']);
             $total_rows = $this->db->count_all_results($this->table);
         }
 

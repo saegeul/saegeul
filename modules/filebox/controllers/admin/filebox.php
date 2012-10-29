@@ -298,14 +298,16 @@ class Filebox extends MX_Controller {
 
 	public function getImageList(){
 		$page = $this->input->get_post('page');
-		$page = 1 ;
 		$list_count = 10 ;
+
+        if($page==''){
+            $page = 1 ; 
+        }
 
 		$this->load->model('Filebox/Filebox_model','filebox') ;
 
-		if($this->input->get_post('key') && $this->input->get_post('keyword')){
-			$search_param['option'] = $this->input->get('key');
-			$search_param['value'] = $this->input->get('keyword');
+		if($this->input->get_post('search_keyword')){
+			$search_param['value'] = $this->input->get('search_keyword');
 			$result = $this->filebox->getImageList($page,$list_count,$search_param);
 		}else {
 			$result = $this->filebox->getImageList($page,$list_count);

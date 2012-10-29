@@ -31,9 +31,15 @@ class Document extends MX_Controller {
         $insert_data->content = $this->input->post('content');
         $insert_data->title = $this->input->post('title');
         $insert_data->description = $this->input->post('description') ; 
-        $insert_data->username = 'jaehee' ; 
-        $insert_data->email = 'jaehee@saegeul.com' ; 
-        $insert_data->uid = 1 ; 
+        
+
+        $this->load->library('tank_auth');
+
+		// get session data
+		$insert_data->username = $this->tank_auth->get_username();
+		$insert_data->uid = $this->tank_auth->get_user_id();
+		$insert_data->email = $this->tank_auth->get_useremail();
+
 
 		$this->document_model->insert($insert_data); 
         $this->load->helper('url') ; 

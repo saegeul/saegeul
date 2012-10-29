@@ -1,11 +1,12 @@
 var DOC = DOC || {} ; 
 DOC.Element = DOC.Element||{} ; 
 
-DOC.Element.Twitter = function(oConfig){
+
+DOC.Element.Naver_blog = function(oConfig){
     oConfig = oConfig||{} ; 
     var data = {}, 
         editor = null,
-        wrapper_cls = oConfig.wrapper_cls||'alert alert-warning' , 
+        wrapper_cls = oConfig.wrapper_cls||'alert alert-warning ' , 
         uid = DOC.Util.uid() ,
         publisher = null, 
         is_editing = false , 
@@ -18,7 +19,7 @@ DOC.Element.Twitter = function(oConfig){
     }; 
 
     that.html = function(){
-        return '<div class="'+wrapper_cls+'"><strong>트위터에서 가져온 글</strong><hr/>'+editor.getContent()+'</div>' ;
+        return '<div class="'+wrapper_cls+'"><strong>네이버 블로그에서 가져온 글</strong><hr/>'+editor.getContent()+'</div>' ;
     }; 
 
     that.is_empty = function(){ //data is null ?
@@ -30,70 +31,59 @@ DOC.Element.Twitter = function(oConfig){
 
     that.remove = function(){
 
-    }; 
+    };
 
     that.editor = function($el){ 
         that.turnOnEditor() ; 
-        var $twitter_area = $('<div class="well"><div id="twitter_editor"></div><hr/><a class="btn btn-large btn-primary save_btn" >SAVE </a></div>');
+        var $editor_area = $('<div class="well"><div id="_naver_blog_editor"></div><hr/><a class="btn btn-large btn-primary save_btn" >SAVE </a></div>');
 
         if(that.is_empty()){
-            $twitter_area .appendTo($('#document_body')) ; 
+            $editor_area .appendTo($('#document_body')) ; 
         } else {
-            $twitter_area.insertBefore($el) ; 
+            $editor_area.insertBefore($el) ; 
             $el.remove() ; 
             $el = null ; 
         } 
 
-        var twitEditor = DOC.ListPanel({
-            target_id : 'twitter_editor',
-            url : base_url+'openapi/twitter_api/search' , 
-            greetings : '<div style="height:100px;"><strong>트위터 글을 인용해보세요.</strong><p>트위터 상에 올라온 글들을 인용하고, 발행해보세요. 검색하고 한번의 클릭이면 됩니다. </p></div>',
-            //li_css : '',
+        var naver_blogEditor = DOC.ListPanel({
+            target_id : '_naver_blog_editor',
+            url : base_url+'openapi/naver_api/search' , 
+            greetings : '<div style="height:100px;"><strong>네이버 블로그 검색결과를 인용해보세요.</strong><p>검색어를 입력하면 네이버 블로그를 검색할 수 있어요.</p></div>',
             item_config :{
-                tmpl : '<div class="clearfix"><div style="padding-left:70px;"><div style="margin-left:-70px ;float:left ;"><a href="http://www.twitter.com/{from_user}" target="_blank"><img src="{profile_image_url}"/></a></div><div><p>{text}</p><p>{created_at}</p></div></div></div>', 
+                tmpl : '<div class="clearfix"><div style=""><div><div><a href="{link}" target="_blank">{title}</a></div><p>{description}</p><p style="text-align:right;"><a href="{bloggerlink}" target="_blank"> 출처 : {bloggername}</a></p></div></div></div>', 
+                //item_wrapper_css : 'width:150px;height:150px;overflow:hidden;float:left;margin:10px;',
                 display_fields : [{
-                    name : 'text', 
-                    data_format : DOC.Util.autolink
+                    name : 'title' 
                 },{
-                   name : 'profile_image_url' 
+                    name : 'link' 
                 },{
-                   name : 'created_at' 
+                    name : 'description' 
                 },{
-                   name : 'from_user' 
+                    name : 'pubDate' 
+                },{
+                    name : 'bloggername' 
+                },{
+                    name : 'bloggerlink' 
                 }] ,
-                width : 200, 
-                height : 200 
-            },
-            selected_item_config :{
-                tmpl : '<div class="clearfix"><div style="padding-left:70px;"><div style="margin-left:-70px ;float:left ;"><a href="http://www.twitter.com/{from_user}" target="_blank"><img src="{profile_image_url}"/></a></div><div><p>{text}</p><p>{created_at}</p></div></div></div>', 
-                display_fields : [{
-                    name : 'text', 
-                    data_format : DOC.Util.autolink
-                },{
-                   name : 'profile_image_url' 
-                },{
-                   name : 'created_at' 
-                },{
-                   name : 'from_user' 
-                }] ,
-                width : 200, 
+                width : 200 , 
                 height : 200 
             } 
+              
         }) ; 
 
-        editor = twitEditor ; 
+        editor = naver_blogEditor ; 
 
 
         if(!that.is_empty()){
-            twitEditor.setSelectedItems(data.selectedItems) ; 
+            naver_blogEditor.setSelectedItems(data.selectedItems) ; 
         }; 
 
-        twitEditor.render() ; 
+        naver_blogEditor.render() ; 
 
-        $twitter_area.find('.save_btn').click(function(){
+        $editor_area.find('.save_btn').click(function(){
             that.offEditor() ; 
-            $twitter_area.find('.save_btn').unbind('click'); 
-            $twitter_area.remove() ; 
+            $editor_area.find('.save_btn').unbind('click'); 
+            $editor_area.remove() ; 
         });
     }; 
 
@@ -185,4 +175,5 @@ DOC.Element.Twitter = function(oConfig){
     } 
 
     return that ;
+
 }; 

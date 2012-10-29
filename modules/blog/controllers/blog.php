@@ -12,9 +12,9 @@ class Blog extends MX_Controller {
 
         $params = array() ; 
         $params['site_title'] = 'saegeul' ;
-		$params['site_url'] = 'http://localhost'  ;
+		$params['site_url'] = base_url().'blog'  ;
 		$params['site_description'] = $params['site_title'];
-		$params['pubDate'] = '20122222'; 
+		$params['pubDate'] = date(); 
 
         $items ='' ; 
 

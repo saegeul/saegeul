@@ -10,6 +10,7 @@
 <?echo js_asset('document','doc.element.youtube.js')?>
 <?echo js_asset('document','doc.element.image.js')?>
 <?echo js_asset('document','doc.element.file.js')?>
+<?echo js_asset('document','doc.element.naver_blog.js')?>
 
 <div class="_content" >
     <form action ="save"  method="post" id="document_form" class="form-inline" > 
@@ -56,7 +57,7 @@ $(function(){
                 Element : DOC.Element.File
             },{
                 btn_tmpl : '<button class="btn"><i class="icon icon-book"></i> 네이버 블로그</button>', 
-                Element : DOC.Element.File
+                Element : DOC.Element.Naver_blog
             },{
                 btn_tmpl : '<button class="btn"><i class="icon icon-book"></i> 유튜브 </button>', 
                 Element : DOC.Element.Youtube
