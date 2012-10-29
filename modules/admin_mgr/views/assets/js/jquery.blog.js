@@ -7,12 +7,13 @@ $(document).ready(function() {
 		var comment_count = $('#inputCommentCount').val();
 		var comment_width = $('#inputCommentWidth').val();
 		var theme = $(':input:radio[name=theme]:checked').val();
+		var naverApiKey = $('#inputNaverKey').val();
 		$.ajax({
 			type : "GET",
 			url : "/saegeul/admin_mgr/setting/setBlog",
 			contentType : "application/json; charset=utf-8",
 			dataType : "json",
-			data : "list_count=" +list_count + "&rss_count=" + rss_count + "&facebook_id=" +facebook_id + "&comment_count=" + comment_count + "&comment_width=" + comment_width + "&theme=" + theme,
+			data : "list_count=" +list_count + "&rss_count=" + rss_count + "&facebook_id=" +facebook_id + "&comment_count=" + comment_count + "&comment_width=" + comment_width + "&theme=" + theme + "&naverApiKey=" + naverApiKey,
 			error : function() {
 				alert("error");
 			},

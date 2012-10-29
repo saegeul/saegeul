@@ -393,6 +393,7 @@ public function site(){
 		$data['commentCount'] = $this->config->item('commentCount');
 		$data['commentWidth'] = $this->config->item('commentWidth');
 		$data['theme'] = $this->config->item('theme');
+		$data['naverApiKey'] = $this->config->item('naverApiKey');
 	
 		$data['action'] = 'blog' ;
 		$this->sg_layout->show($data) ;
@@ -405,7 +406,8 @@ public function site(){
 				'facebookId'=>'',
 				'commentCount'=>'',
 				'commentWidth'=>'',
-				'theme'=>''
+				'theme'=>'',
+				'naverApiKey'=>''
 		);
 		
 		$listCount = $this->input->get_post('list_count');
@@ -414,6 +416,7 @@ public function site(){
 		$commentCount = $this->input->get_post('comment_count');
 		$commentWidth = $this->input->get_post('comment_width');
 		$theme = $this->input->get_post('theme');
+		$naverApiKey = $this->input->get_post('naverApiKey');
 		
 		$params['listCount'] = $listCount;
 		$params['rssCount'] = $rssCount;
@@ -421,6 +424,7 @@ public function site(){
 		$params['commentCount'] = $commentCount;
 		$params['commentWidth'] = $commentWidth;
 		$params['theme'] = $theme;
+		$params['naverApiKey'] = $naverApiKey;
 		
 		$this->load->helper('file') ;
 		$f = read_file('./modules/admin_mgr/files/blog.txt') ;

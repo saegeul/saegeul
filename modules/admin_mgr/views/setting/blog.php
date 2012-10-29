@@ -50,6 +50,14 @@
 				<p class="help-block" style="margin-top:10px;">페이스북 테마를 선택하세요.</p>
 			</div>
 		</div>
+		<legend>Naver</legend>
+		<div class="control-group">
+			<label class="control-label">API KEY</label>
+			<div class="controls">
+				<input type="text" id="inputNaverKey" value="<?=isset($naverApiKey)?$naverApiKey:""?>">
+				<p class="help-block">네이버 API 키를 적어주세요.</p>
+			</div>
+		</div>
 		<div class="form-actions">
 			<a href="javascript:void(0)"
 				class="btn btn-primary modifyData pull-right">수정</a>
