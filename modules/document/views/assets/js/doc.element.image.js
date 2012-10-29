@@ -76,12 +76,12 @@ DOC.Element.Image = function(oConfig){
                 height : 200 
             },
             display_item_config :{
-                tmpl : '<div class="clearfix"><img src="'+base_url+'{full_path}" class="img-polaroid" alt="{original_file_name}"/> </div>', 
+                tmpl : '<div class="clearfix"><img src="'+base_url+'{large_thumbnail_url}" original_path="'+base_url+'{full_path}" class="img-polaroid" alt="{original_file_name}"/> </div>', 
                 item_wrapper_css : '',
                 display_fields : [{
                     name : 'full_path'
                 },{
-                    name : 'thumbnail_url' 
+                    name : 'large_thumbnail_url' 
                 },{
                     name : 'original_file_name'    
                 }] ,

@@ -20,17 +20,17 @@ class Gallery extends MX_Controller {
 
     }
 
-    public function index($page=1,$list_count=10){
+    public function showGallery($page=1,$list_count=10){
     	$data['action'] = 'gallery';
     
     	$this->load->library('sg_layout');
     	$this->sg_layout->layout('admin/layout');
     	$this->sg_layout->module('gallery');
     
-    	$this->sg_layout->add('header');
-    	$this->sg_layout->add('sidebar');
-    	$this->sg_layout->add('gallery');
-    	$this->sg_layout->add('footer');
+    	$this->sg_layout->add('admin/header');
+    	$this->sg_layout->add('admin/sidebar');
+    	$this->sg_layout->add('admin/gallery');
+    	$this->sg_layout->add('admin/footer');
     
     	$this->sg_layout->show($data) ;
     }

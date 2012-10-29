@@ -14,8 +14,10 @@ Thumbs.db
 user_guide/
 filebox/files/
 files/
+
 !modules/*/files/
 application/config/email.php
+application/config/blog.php
 application/config/database.php
 application/libraries/KTOpen*
 application/libraries/libraries/

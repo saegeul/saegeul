@@ -6,12 +6,49 @@ class Blog extends MX_Controller {
 		$this->sg_layout->module('blog') ;
 	}
 
-	public function index($document_id){
-		$this->load->database() ;
-		$this->load->model('document/document_model','document_model');
-		$document = $this->document_model->getDocument($document_id) ;
+    public function rss(){ 
+		$this->load->helper('file') ;
+		$f = read_file('./modules/blog/files/rss_tmpl.txt') ; 
 
-		print_r($document) ;
+        $params = array() ; 
+        $params['site_title'] = 'saegeul' ;
+		$params['site_url'] = 'http://localhost'  ;
+		$params['site_description'] = $params['site_title'];
+		$params['pubDate'] = '20122222'; 
+
+        $items ='' ; 
+
+        $this->load->model('document/document_model') ; 
+
+        $result = $this->document_model->getDocumentList(1,30)  ; 
+
+        $list = $result['list'] ; 
+
+        $item_str = '' ; 
+
+        foreach($list as $key => $row){
+            $title = $row->title ; 
+            $description = htmlspecialchars($row->content) ; 
+            $link = base_url().'blog/read/'.$row->doc_id ; 
+            $pubDate = $row->reg_date ; 
+
+            $item_str = $item_str.sprintf("<item><title>%s</title><description>%s</description><link>%s</link><pubDate>%s</pubDate></item>",$title,$description,$link,$pubDate) ;  
+        }
+
+        //$item_str = sprintf("<item><title>%s</title><description>%s</description><link>%s</link><pubDate>%s</pubDate></item>",'hi','hi','http://www.naver.com','pubdate') ; 
+
+        $params['items'] = $item_str ; 
+
+
+        foreach($params as $key => $value){
+			$f = str_replace('{'.$key.'}', $value ,$f);
+		}
+
+        print_r($f) ; 
+    }
+
+	public function index(){
+	    $this->page(1) ; 	
 	}
 
 	public function page($page = 1){
@@ -52,6 +89,11 @@ class Blog extends MX_Controller {
 		$data = array() ;
 		$data['document'] = $document ;
 
+        $facebook_info->comment_count = $this->config->item('commentCount','blog'); 
+        $facebook_info->appId = $this->config->item('facebookId','blog'); 
+        $data['facebook_info'] = $facebook_info ; 
+        $this->config->item('theme','blog');
+
 		$this->sg_layout->add('header') ;
 		$this->sg_layout->add('readpage') ;
 		$this->sg_layout->add('sidebar') ;
@@ -59,8 +101,7 @@ class Blog extends MX_Controller {
 		$this->sg_layout->addHeaderData($data) ;
 		$this->sg_layout->show($data) ;
 
-        $this->config->item('commentCount','blog'); 
-        $this->config->item('theme','blog'); 
+         
 
 		//$this->load->view('readpage',$data) ;
 	}
