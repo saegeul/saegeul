@@ -60,6 +60,36 @@ class Blog extends MX_Controller {
         print_r($f) ; 
     }
 
+    public function search(){
+        $this->load->database() ;
+		
+		$this->config->load('blog', FALSE, TRUE);
+		$listCount = ($this->config->item('listCount')==FALSE)?10:$this->config->item('listCount');
+		
+        $param = array() ; 
+	    $param['search_key'] = 'title' ; 	
+	    $param['search_keyword'] = $this->input->get_post('search_keyword') ; 
+
+		$this->load->model('document/document_model','document_model');
+		$result = $this->document_model->getDocumentList($page=1,100,$param);
+
+		$data = array() ;
+
+        $data['search_keyword'] = $this->input->get_post('search_keyword') ; 
+
+		$data['document_list'] = $result['list'] ;
+		$data['pagination'] = $result['pagination'] ;
+		$data['site_info'] = $this->site_info; 
+
+		$this->sg_layout->add('header') ;
+		$this->sg_layout->add('search_result') ;
+		$this->sg_layout->add('sidebar') ;
+		$this->sg_layout->add('footer') ;
+		$this->sg_layout->addHeaderData($data) ;
+
+		$this->sg_layout->show($data) ;
+    }
+
 	public function index(){
 	    $this->page(1) ; 	
 	}
