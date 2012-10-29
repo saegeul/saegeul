@@ -12,6 +12,17 @@ class Openapi_model extends CI_Model {
 	public function insert($args){
 		$this->db->insert($this->table, $args);
 	}
+
+    public function getKeys($provider){
+        $query =  $this->db->get_where($this->table,array('provider'=>$provider)) ; 
+        $list = $query->result() ; 
+        
+        if(count($list)){ 
+            return $list[0] ; 
+        }
+
+        return null; 
+    }
 	
 	public function getApiList($page=1,$list_count=10,$search_param=null){
 		$this->db->limit($list_count , ($page-1)*$list_count );
