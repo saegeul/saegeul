@@ -10,6 +10,14 @@
 <div class="">
     <div>
         <h1 style="text-align:center;"><?=$document->title;?> </h1>
+        <div style="text-align:right;">
+            <span><?=date("Y-m-d",strtotime($document->reg_date));?></span>
+        </div>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
 
         <div>
             <?=$document->content;?> 
