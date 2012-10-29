@@ -38,7 +38,7 @@
 |
 */
 
-$route['default_controller'] = "welcome";
+$route['default_controller'] = "blog";
 $route['admin/([a-z]+)/(:any)'] = "$1/admin/$1/$2";
 
 $route['404_override'] = '';

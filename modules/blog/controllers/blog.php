@@ -1,9 +1,22 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed') ; 
 class Blog extends MX_Controller {
+    var $site_info ; 
 	public function __construct(){
 		$this->load->library('sg_layout') ;
 		$this->sg_layout->layout('simpleblog/layout') ;
 		$this->sg_layout->module('blog') ;
+
+        $this->site_info = $this->getSiteInfo() ; 
+	}
+
+    public function getSiteInfo(){
+		$this->load->model('admin_mgr/admin_model') ;
+		$ret_data = $this->admin_model->getsiteInfo();
+		$ret->title = $ret_data [0]->title ;
+		$ret->site_url = $ret_data[0]->site_url ;
+		$ret->on_register = $ret_data[0]->on_register;
+		
+		return $ret ;
 	}
 
     public function rss(){ 
@@ -11,10 +24,10 @@ class Blog extends MX_Controller {
 		$f = read_file('./modules/blog/files/rss_tmpl.txt') ; 
 
         $params = array() ; 
-        $params['site_title'] = 'saegeul' ;
+        $params['site_title'] = $this->site_info->title; 
 		$params['site_url'] = base_url().'blog'  ;
-		$params['site_description'] = $params['site_title'];
-		$params['pubDate'] = date(); 
+		$params['site_description'] = $this->site_info->title;
+		$params['pubDate'] = date("Y-m-d H:i:s"); 
 
         $items ='' ; 
 
@@ -47,6 +60,36 @@ class Blog extends MX_Controller {
         print_r($f) ; 
     }
 
+    public function search(){
+        $this->load->database() ;
+		
+		$this->config->load('blog', FALSE, TRUE);
+		$listCount = ($this->config->item('listCount')==FALSE)?10:$this->config->item('listCount');
+		
+        $param = array() ; 
+	    $param['search_key'] = 'title' ; 	
+	    $param['search_keyword'] = $this->input->get_post('search_keyword') ; 
+
+		$this->load->model('document/document_model','document_model');
+		$result = $this->document_model->getDocumentList($page=1,100,$param);
+
+		$data = array() ;
+
+        $data['search_keyword'] = $this->input->get_post('search_keyword') ; 
+
+		$data['document_list'] = $result['list'] ;
+		$data['pagination'] = $result['pagination'] ;
+		$data['site_info'] = $this->site_info; 
+
+		$this->sg_layout->add('header') ;
+		$this->sg_layout->add('search_result') ;
+		$this->sg_layout->add('sidebar') ;
+		$this->sg_layout->add('footer') ;
+		$this->sg_layout->addHeaderData($data) ;
+
+		$this->sg_layout->show($data) ;
+    }
+
 	public function index(){
 	    $this->page(1) ; 	
 	}
@@ -65,6 +108,7 @@ class Blog extends MX_Controller {
 
 		$data['document_list'] = $result['list'] ;
 		$data['pagination'] = $result['pagination'] ;
+		$data['site_info'] = $this->site_info; 
 
 		$this->sg_layout->add('header') ;
 		$this->sg_layout->add('welcome') ;
@@ -87,6 +131,7 @@ class Blog extends MX_Controller {
 		$document = $this->document_model->getDocument($id);
 
 		$data = array() ;
+		$data['site_info'] = $this->site_info; 
 		$data['document'] = $document ;
 
         $facebook_info->comment_count = $this->config->item('commentCount','blog'); 

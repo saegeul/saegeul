@@ -8,6 +8,9 @@ class Naver_api extends MX_Controller {
     public function search(){
         $search_keyword = urlencode($this->input->get_post('search_keyword'));
         $NAVER_API_KEY ='94856a7222b21977747dc427adeb3959'; 
+		$this->config->load('blog', FALSE, TRUE);
+        $NAVER_API_KEY = $this->config->item('naverApiKey') ; 
+
 
         //$list_count = 20 ; 
         $url = 'http://openapi.naver.com/search?key='.$NAVER_API_KEY.'&target=blog&display=20&query='.$search_keyword ; 

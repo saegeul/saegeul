@@ -116,7 +116,7 @@ class setting extends MX_Controller {
 			
 	}
 
-public function site(){
+    public function site(){
 		$this->load->library('sg_layout') ;
 
 		$this->sg_layout->layout('admin/layout') ;
