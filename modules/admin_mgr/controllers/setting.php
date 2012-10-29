@@ -151,9 +151,9 @@ class setting extends MX_Controller {
 	}
 	
 	public function getSiteInfo($param){
-		$ret->title = $param[0]->title ;
-		$ret->site_url = $param[0]->site_url ;
-		$ret->on_register = $param[0]->on_register;
+		$ret->title = isset($param[0]->title)?$param[0]->title:"" ;
+		$ret->site_url = isset($param[0]->site_url)?$param[0]->site_url:"" ;
+		$ret->on_register = isset($param[0]->on_register)?$param[0]->on_register:"";
 		
 		return $ret ;
 	}
