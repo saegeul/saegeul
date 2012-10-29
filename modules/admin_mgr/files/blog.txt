@@ -16,6 +16,7 @@ $config['facebookId']="{facebookId}";
 $config['commentCount']="{commentCount}";
 $config['commentWidth']="{commentWidth}";
 $config['theme']="{theme}";
+$config['naverApiKey']="{naverApiKey}";
 
 /* End of file blog.php */
 /* Location: ./application/config/blog.php */

@@ -55,7 +55,7 @@ class Blog extends MX_Controller {
 		$this->load->database() ;
 		
 		$this->config->load('blog', FALSE, TRUE);
-		$listCount = $this->config->item('listCount');
+		$listCount = ($this->config->item('listCount')==FALSE)?10:$this->config->item('listCount');
 		
 		
 		$this->load->model('document/document_model','document_model');
