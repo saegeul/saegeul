@@ -134,8 +134,10 @@ class Blog extends MX_Controller {
 		$data['site_info'] = $this->site_info; 
 		$data['document'] = $document ;
 
-        $facebook_info->comment_count = $this->config->item('commentCount','blog'); 
-        $facebook_info->appId = $this->config->item('facebookId','blog'); 
+		$this->config->load('blog', FALSE, TRUE);
+
+        $facebook_info->comment_count = $this->config->item('commentCount'); 
+        $facebook_info->appId = $this->config->item('facebookId'); 
         $data['facebook_info'] = $facebook_info ; 
         $this->config->item('theme','blog');
 
