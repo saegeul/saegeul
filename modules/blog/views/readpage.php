@@ -25,8 +25,13 @@
     </div>
 
     <div style="text-align:center;">
+
         <div>
-            <div class="fb-comments" data-href="<?=base_url()?>blog/read/<?=$document->doc_id?>" data-num-posts="<?=$facebook_info->comment_count?>" data-width="700"></div>
+            <hr/>
+            <div class="alert alert-info"> 
+            <h1>comment </h1>
+            <div class="fb-comments" data-href="<?=base_url()?>blog/read/<?=$document->doc_id?>" data-num-posts="<?=$facebook_info->comment_count?>" data-width="800"></div>
+            </div>
         </div>
     </div>
 </div> 
