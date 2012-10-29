@@ -72,10 +72,12 @@ DOC.Element.Youtube = function(oConfig){
                 height : 200  
             },
             display_item_config :{
-                tmpl : '<div class="clearfix"><div class="img-polaroid" style="width:480px;margin:0 auto;padding:20px;padding-bottom:20px;"><img src="{thumbnail_url}"   /><h6>{title}</h6><div><a target="_blank" href="{youtube_link}">Youtube 바로가기 </a> </div> </div> </div>', 
+                tmpl : '<div class="clearfix"><div class="img-polaroid" style="width:480px;margin:0 auto;padding:20px;padding-bottom:20px;"><a class="youtube_player" youtube_src="{content}"><img src="{thumbnail_url}"   /></a><h6>{title}</h6><div><a target="_blank" href="{youtube_link}">Youtube 바로가기 </a> </div> </div> </div>', 
                 //item_wrapper_css : 'width:150px;height:150px;overflow:hidden;float:left;margin:10px;',
                 display_fields : [{
                     name : 'thumbnail_url' 
+                },{
+                    name : 'content' 
                 },{
                     name : 'title' 
                 },{

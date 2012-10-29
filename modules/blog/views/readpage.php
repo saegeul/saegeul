@@ -22,3 +22,18 @@
         </div>
     </div>
 </div> 
+
+<script>
+jQuery(function($){
+    $('.youtube_player').click(function(){
+        var youtube_src = $(this).attr('youtube_src') ; 
+        var $this =$(this) ; 
+        $(this).find('img').fadeOut('1000',function(){ 
+            
+            var html = '<iframe width="480" height="360" frameborder="0" allowfullscreen src="'+youtube_src+'"></iframe>' ; 
+
+            $(html).appendTo($this) ; 
+        }); 
+    });;
+});
+</script>
