@@ -49,8 +49,7 @@ if($key != "" && $keyword != ""){
 <div class="_content">
 
 	<form class="form-search" name="search_form">
-
-
+<a class="btn btn-primary btn-large" href="<?=base_url()?>admin/member/logout">로그아웃 </a>
 		<!-- 검색부분    -->
 
 		<div align="right">

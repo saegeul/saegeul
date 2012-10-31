@@ -556,6 +556,8 @@ class Member extends MX_Controller
 	}
 
 	function admin_member($page=1){
+		
+		
 		$this->load->model('users','',TRUE);
 		$data = "";
 
@@ -699,7 +701,7 @@ class Member extends MX_Controller
 		$data['errors'] = array();
 
 		 if(!$ret = $this->_check_validation($fields)){
-            echo "validation error"  ; 
+            //echo "validation error"  ; 
         }
 
         if ($this->tank_auth->login(
