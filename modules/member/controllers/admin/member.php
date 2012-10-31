@@ -651,8 +651,8 @@ class Member extends MX_Controller
 		if($this->users->check_level($this->tank_auth->get_user_id())){
 			redirect('admin/dashboard/siteCurrentStatus');
 					} else { 
-			redirect('/member/main_page/');
-		} 
+			redirect('admin/dashboard/siteCurrentStatus');
+								} 
 	}
 
     function _check_validation($fields){ 
