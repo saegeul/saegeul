@@ -53,7 +53,7 @@ $captcha = array(
 			</h1>
 			<hr />
 			<form class="form-horizontal" method="post"
-				action="<?=$this->uri->uri_string()?>">
+				action="<?=base_url()?>admin/member/do_login">
 
 				<div class="control-group">
 					<div class="control-label">

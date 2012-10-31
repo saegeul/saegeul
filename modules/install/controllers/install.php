@@ -210,7 +210,7 @@ class Install extends MX_Controller {
 		
 		$email_activation = $this->config->item('email_activation', 'tank_auth');
 		
-		if ($this->form_validation->run()) {								// �좏슚��泥댄겕 �듦낵
+		if ($this->form_validation->run()) {								
 			if (!is_null($data = $this->tank_auth->create_user(
 					$this->form_validation->set_value('username'),
 					$this->form_validation->set_value('email'),

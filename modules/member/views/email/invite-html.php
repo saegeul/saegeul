@@ -12,7 +12,7 @@
 <?php echo $site_name; ?>에서 당신을 초대하였습니다. 메일 하단에 당신의 가입정보가 명시되어 있습니다. 보안에 유의하여 보관해 주시기 바랍니다.<br />
 당신의 이메일 주소가 유효한지 확인하여 활성화 하기 위해서 다음 링크를 클릭해 주시기 바랍니다.:<br />
 <br />
-<big style="font: 16px/18px Arial, Helvetica, sans-serif;"><b><a href="<?php echo site_url('/member/activate/'.$user_id.'/'.$new_email_key); ?>" style="color: #3366cc;">이메일 인증 및 활성화 하기...</a></b></big><br />
+<big style="font: 16px/18px Arial, Helvetica, sans-serif;"><b><a href="<?php echo site_url('/admin/member/activate/'.$user_id.'/'.$new_email_key); ?>" style="color: #3366cc;">이메일 인증 및 활성화 하기...</a></b></big><br />
 <br />
 Link 제대로 동작 하지 않는다면, 다음 링크를 웹브라우저의 주소창에 복사하여 이동해 주시기 바랍니다:<br />
 

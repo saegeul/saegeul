@@ -31,7 +31,7 @@
         <?php endforeach;?>
         </ul>
         <hr/>
-            <a class="btn btn-primary btn-large" href="<?=base_url()?>member/do_login"><i class="icon icon-white icon-user"></i> 관리자 로그인 페이지로 이동... </a>
+            <a class="btn btn-primary btn-large" href="<?=base_url()?>admin/member/do_login"><i class="icon icon-white icon-user"></i> 관리자 로그인 페이지로 이동... </a>
         </div>
     </div>
 </div>
