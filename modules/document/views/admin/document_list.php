@@ -3,6 +3,8 @@
 <?php $this->load->helper('form') ?>
 <?echo js_asset('document','jquery.documentlist.js')?>
 
+
+
 <div class="_content">
     <form class="well well-small form-search" name="search_form">
                 <!-- 검색부분    -->
@@ -82,3 +84,20 @@
 		</ul>
 	</div>
 </div>
+
+
+<!-- Modal -->
+<div class="modal Modal" id="recycleModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"  style="top:500px;">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">알림</h3>
+  </div>
+  <div class="modal-body">
+    <p> 휴지통으로 이동하시겠습니까?</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button id="recycle" class="btn btn-primary"> Ok </button>
+  </div>
+</div>
+
