@@ -31,7 +31,6 @@
                 <th class="span1" >등록일</th>
                 <th class="span1" >조회수</th>
                 <th class="span1" ></th>
-                <th class="span1" ></th>
             </tr>
         </thead>
         <tbody>
@@ -42,7 +41,6 @@
                 <td><?=$doc->username ?></td>
                 <td><?=$doc->reg_date ?></td>
                 <td style="text-algin:right;">0</td>
-                <td><a class="btn btn-info btn-small" href="<?=base_url()?>admin/document/correctform/<?=$doc->doc_id?>" value="<?=$doc->doc_id?>" >수정</button> </td>
                 <td><button class="btn btn-warning btn-small trash_btn" value="<?=$doc->doc_id?>">휴지통</button> </td> 
             </tr>
         <?php endforeach ;?>
@@ -84,8 +82,6 @@
 		</ul>
 	</div>
 </div>
-
-
 <!-- Modal -->
 <div class="modal hide fade" id="recycleModal" style="top:400px;">
   <div class="modal-header">

@@ -86,31 +86,31 @@
 </div>
 
 <!-- Modal -->
-<div class="modal" id="restoreModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"  style="top:500px;">
+<div class="modal hide fade" id="restoreModal" style="top:400px;">
   <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <button type="button" class="close" data-dismiss="modal">×</button>
     <h3 id="myModalLabel">알림</h3>
   </div>
   <div class="modal-body">
     <p>문서목록으로 이동하시겠습니까?</p>
   </div>
   <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button class="btn" data-dismiss="modal">Close</button>
     <button id="recycle" class="btn btn-primary"> Ok </button>
   </div>
 </div>
 
 <!-- Modal -->
-<div class="modal" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"  style="top:500px;">
+<div class="modal hide fade" id="deleteModal" tabindex="-1" style="top:400px;">
   <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <button type="button" class="close" data-dismiss="modal">×</button>
     <h3 id="myModalLabel">알림</h3>
   </div>
   <div class="modal-body">
     <p>완전히 삭제하시겠습니까?</p>
   </div>
   <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button class="btn" data-dismiss="modal">Close</button>
     <button id="recycle" class="btn btn-primary"> Ok </button>
   </div>
 </div>
