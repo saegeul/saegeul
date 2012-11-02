@@ -19,4 +19,19 @@ $(document).ready(function () {
 		var oauth_token = $(this).parent().prev().prev().text();
 		location.href="/saegeul/admin/clouddrive/ucloudView";
 	});
+	
+	$("#deletesSession").live('click',function(e) {
+		$.ajax({
+		       type: "GET",
+		       url: "/saegeul/admin/clouddrive/deleteSession",
+		       contentType: "application/json; charset=utf-8",
+		       dataType: "json",
+		       data: "",
+		       error: function() { 
+		        },
+		       success: function(data){
+		    	   location.reload();
+				}
+		});
+	});
 });

@@ -314,6 +314,12 @@ class Clouddrive extends MX_Controller {
 		$download_file = file_get_contents($upload_file_url); // Read the file's contents
 		force_download($file_name, $download_file);
 	}
+	
+	public function deleteSession() {
+		$access_session = array('session_kt_ucloud_oauth_token' => '', 'session_kt_ucloud_oauth_verifier' => '', 'session_kt_ucloud_oauth_token_secret' => '');
+		$this->session->unset_userdata($access_session);
+		echo json_encode("success");
+	}
 }
 
 /* End of file Oauth.php */

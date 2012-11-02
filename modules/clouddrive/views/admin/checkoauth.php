@@ -55,6 +55,7 @@
 						<td><?=$oauth_token?></td>
 						<td><?=$oauth_token_secret?></td>
 						<td><button class="btn btn-success" type="button" id='clouddrive'>OK</button>
+						<td><button class="btn btn-warning" type="button" id='deletesSession'>세션삭제</button>
 						</td>
 					</tr>
 					<?php 
