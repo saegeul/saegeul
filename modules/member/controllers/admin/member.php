@@ -48,7 +48,7 @@ class Member extends MX_Controller
 	{
 		$this->tank_auth->logout();
 
-		redirect('/member/login/');
+		redirect('/admin/member/login/');
 
 		//$this->_show_message($this->lang->line('auth_message_logged_out'));
 
@@ -86,7 +86,7 @@ class Member extends MX_Controller
 	function send_again()
 	{
 		if (!$this->tank_auth->is_logged_in(FALSE)) {							// not logged in or activated
-			redirect('/member/login/');
+			redirect('/admin/member/login/');
 
 		} else {
 			$this->form_validation->set_rules('email', 'Email', 'trim|required|xss_clean|valid_email');
@@ -132,7 +132,7 @@ class Member extends MX_Controller
 		
 				
 			$this->tank_auth->logout();
-			$this->_show_message($this->lang->line('auth_message_activation_completed').' '.anchor('/member/login/', 'Login'));
+			$this->_show_message($this->lang->line('auth_message_activation_completed').' '.anchor('/admin/member/login/', 'Login'));
 				
 
 		} else {																// fail
@@ -564,8 +564,8 @@ class Member extends MX_Controller
 		$base_segment = 3; 		
 		$page_view = 6; 		
 		$base_url = base_url(); // base_url
-		$act_url = $base_url . "member/admin/member/admin_member";
-		$page_per_block = 5; // 占쎌꼷�좑쭪占쏙옙��짗 揶쏆뮇��( 1 .. 5)
+		$act_url = $base_url . "admin/member/admin_member";
+		$page_per_block = 5; // 
 			
 		$data = "";
 
@@ -651,8 +651,8 @@ class Member extends MX_Controller
 		if($this->users->check_level($this->tank_auth->get_user_id())){
 			redirect('admin/dashboard/siteCurrentStatus');
 					} else { 
-			redirect('/member/main_page/');
-		} 
+			redirect('admin/dashboard/siteCurrentStatus');
+								} 
 	}
 
     function _check_validation($fields){ 
@@ -699,7 +699,7 @@ class Member extends MX_Controller
 		$data['errors'] = array();
 
 		 if(!$ret = $this->_check_validation($fields)){
-            echo "validation error"  ; 
+            //echo "validation error"  ; 
         }
 
         if ($this->tank_auth->login(
