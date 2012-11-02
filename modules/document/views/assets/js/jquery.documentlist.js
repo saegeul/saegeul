@@ -1,8 +1,4 @@
-
-
 $(document).ready(function (e) {
-    $('.modal').modal('toggle');
-    $('.modal').modal('hide');
 
     $(".search_btn").click(function() {
         document.search_form.submit();
