@@ -44,6 +44,22 @@ $(document).ready(function (e) {
             $('#restoreModal').modal('hide');
         });
     });
-
+    
+    $(".documentClick").click(function() {
+    	var row = $(this).parent().parent().get(0);
+    	var doc_id = $(row.cells[0]).html();
+    	$.ajax({
+			type : "GET",
+			url : "/saegeul/admin/document/countHit",
+			contentType : "application/json; charset=utf-8",
+			dataType : "json",
+			data : "doc_id=" + doc_id,
+			error : function() {
+			},
+			success : function(data) {
+				location.href="/saegeul/blog/read/" + doc_id;
+			}
+		});
+    });
 });
 

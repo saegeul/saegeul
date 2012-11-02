@@ -290,6 +290,21 @@ class Document extends MX_Controller {
 
     public function remove(){ 
     }
+    
+    public function countHit() {
+    	$doc_id = $this->input->get_post('doc_id');
+    	
+    	$this->load->model('Document_model','document');
+    	
+    	$doc_obj = $this->document->getDocument($doc_id) ;
+    	
+    	// update DB
+    	$new_hit_cnt = number_format($doc_obj->hit) + 1;
+    	$data = array('hit' => $new_hit_cnt);
+    	$this->document->update($data,$doc_id);
+    	
+    	echo json_encode("success");
+    }
 } 
 /* End of file document.php */
 /* Location : ./modules/document/document.php */

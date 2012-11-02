@@ -36,11 +36,11 @@
         <tbody>
         <?php foreach($document_list as $key => $doc) :?>
             <tr>
-                <td style="text-align:center;"><?=$doc->doc_id ?></td>
-                <td><a target="_blank" href="<?=base_url();?>blog/read/<?=$doc->doc_id;?>"><?=$doc->title ?></a></td>
+                <td><?=$doc->doc_id ?></td>
+                <td><a class="documentClick" ><?=$doc->title ?></a></td>
                 <td><?=$doc->username ?></td>
                 <td><?=$doc->reg_date ?></td>
-                <td style="text-algin:right;">0</td>
+                <td><?=$doc->hit?></td>
                 <td><button class="btn btn-warning btn-small trash_btn" value="<?=$doc->doc_id?>">휴지통</button> </td> 
             </tr>
         <?php endforeach ;?>

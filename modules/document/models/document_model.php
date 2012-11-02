@@ -168,5 +168,13 @@ class Document_model extends CI_Model {
 		$query = $this->db->get();
 		return $query->result();
 	}
+	
+	function update($data,$doc_id)
+	{
+		if($this->db->update($this->table,$data,array('doc_id' => $doc_id))){
+			return $doc_id;
+		}
+		return null;
+	}
 }
 ?>
