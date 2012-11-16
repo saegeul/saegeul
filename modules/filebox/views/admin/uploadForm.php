@@ -11,7 +11,7 @@
 			<p class="dropfiletext">Drop files here</p>
 		</div>
 		<br>
-		<form id="fileupload" action="/saegeul/admin/filebox/process" method="POST"
+		<form id="fileupload" action="<?=base_url()?>admin/filebox/process" method="POST"
 			enctype="multipart/form-data">
 			<div class="row fileupload-buttonbar">
 				<div class="span7">
